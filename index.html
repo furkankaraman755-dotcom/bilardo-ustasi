@@ -41,6 +41,13 @@ button:disabled{opacity:.45}
 .item .nm{font-weight:700;font-size:15px}
 .item .st{font-size:12px;color:#9fb7a8;margin-top:3px}
 .item button{flex:none;min-width:96px;font-size:14px;height:40px}
+#pvm{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;z-index:6;padding:12px}
+.pbox{background:#17221d;border:2px solid #e8c15a;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;align-items:center;max-height:100%}
+.ptop{display:flex;width:100%;align-items:center;gap:8px}.ptop b{flex:1;font-size:18px}
+#pvc{border-radius:10px}#pvst{font-size:12px;color:#9fb7a8}
+#pvmsg{color:#f3d77a;font-size:13px;min-height:16px;text-align:center}
+#pvbtn{min-width:190px}.pvhint{font-size:12px;color:#e8c15a;margin-top:4px}
+.item canvas,.item .info{cursor:pointer}
 #smsg{min-height:18px;font-size:13px;color:#f3d77a}
 /* oyun */
 #game{padding:calc(8px + env(safe-area-inset-top)) 8px calc(10px + env(safe-area-inset-bottom));gap:6px}
@@ -71,7 +78,7 @@ input[type=range]{width:100%;accent-color:#e8c15a;height:28px}
 <!-- ANA MENÜ -->
 <div id="menu" class="screen show">
   <div class="logo"><div class="ic">🎱</div><h1>Bilardo Ustası</h1></div>
-  <div class="coins">🪙 <span class="cv">0</span></div>
+  <div class="coins" id="mcoins">🪙 <span class="cv">0</span></div>
   <div class="mcard">
     <b>🤖 Bilgisayara Karşı</b>
     <div class="diffs">
@@ -106,6 +113,13 @@ input[type=range]{width:100%;accent-color:#e8c15a;height:28px}
     <button id="gmenu" aria-label="Menü">☰</button>
   </div>
 </div>
+<div id="pvm"><div class="pbox">
+  <div class="ptop"><b id="pvname"></b><button id="pvx" aria-label="Kapat">✕</button></div>
+  <canvas id="pvcue"></canvas>
+  <canvas id="pvc"></canvas>
+  <div id="pvst"></div><div id="pvmsg"></div>
+  <button id="pvbtn"></button>
+</div></div>
 <div id="over"><div class="box"><h2 id="ot"></h2><p id="op"></p><div class="earn" id="oe"></div>
   <div class="row"><button id="omenu">Menü</button><button id="again" class="gold">Tekrar</button></div></div></div>
 
@@ -165,23 +179,69 @@ function renderShop(){
     info.innerHTML=`<div class="nm">${it.name}</div><div class="st">${shopTab==='cues'
       ?`Güç +${Math.round((it.pow-1)*100)}% · Nişan çizgisi +${Math.round((it.aim-1)*100)}%`
       :'Masa görünümü'}</div>`;
-    const btn=document.createElement('button');
-    if(on){btn.textContent='✓ Kullanılıyor';btn.disabled=true;}
-    else if(has){btn.textContent='Kullan';btn.onclick=()=>{if(shopTab==='cues')save.cue=it.id;else save.table=it.id;persist();renderShop();};}
-    else{btn.textContent='🪙 '+it.price.toLocaleString('tr-TR');btn.className='gold';
-      btn.onclick=()=>{
-        if(save.coins<it.price){$('smsg').textContent=`Yetersiz para: ${(it.price-save.coins).toLocaleString('tr-TR')} 🪙 daha lazım. Maç kazanarak para topla!`;return;}
-        save.coins-=it.price;owned.push(it.id);if(shopTab==='cues')save.cue=it.id;else save.table=it.id;
-        persist();refreshCoins();$('smsg').textContent=`${it.name} satın alındı ve takıldı! 🎉`;renderShop();};}
+    const kind=shopTab,btn=document.createElement('button');setBtn(btn,it,kind);
+    const ph=document.createElement('div');ph.className='pvhint';ph.textContent='👁 Önizle';info.append(ph);
+    cv.onclick=info.onclick=()=>openPreview(it,kind);
     d.append(cv,info,btn);box.append(d);
   }
 }
+const ownList=k=>k==='cues'?save.cues:save.tables;
+const isOn=(it,k)=>(k==='cues'?save.cue:save.table)===it.id;
+const statText=(it,k)=>k==='cues'?`Güç +${Math.round((it.pow-1)*100)}% · Nişan çizgisi +${Math.round((it.aim-1)*100)}%`:'Masa görünümü';
+function setBtn(btn,it,k){
+  btn.className='';btn.disabled=false;
+  if(isOn(it,k)){btn.textContent='✓ Kullanılıyor';btn.disabled=true;}
+  else if(ownList(k).includes(it.id))btn.textContent='Kullan';
+  else{btn.textContent='🪙 '+it.price.toLocaleString('tr-TR')+(btn.id==='pvbtn'?' · Satın al':'');btn.className='gold';}
+  btn.onclick=e=>{e.stopPropagation();act(it,k);};
+}
+function act(it,k){
+  if(isOn(it,k))return;
+  if(!ownList(k).includes(it.id)){
+    if(save.coins<it.price){const m=`Yetersiz para: ${(it.price-save.coins).toLocaleString('tr-TR')} 🪙 daha lazım. Maç kazanarak para topla!`;$('smsg').textContent=m;$('pvmsg').textContent=m;return;}
+    save.coins-=it.price;ownList(k).push(it.id);$('smsg').textContent=`${it.name} satın alındı ve takıldı! 🎉`;
+  }else $('smsg').textContent='';
+  if(k==='cues')save.cue=it.id;else save.table=it.id;
+  persist();refreshCoins();renderShop();
+  if(pvOpen){openPreview(it,k);$('pvmsg').textContent='✓ Takıldı!';}
+}
+let pvOpen=false;
+function openPreview(it,k){
+  pvOpen=true;$('pvm').style.display='flex';
+  $('pvname').textContent=it.name;$('pvst').textContent=statText(it,k);$('pvmsg').textContent='';
+  setBtn($('pvbtn'),it,k);
+  const T=k==='tables'?it:tableById(save.table),C=k==='cues'?it:cueById(save.cue),dpr=window.devicePixelRatio||1;
+  // büyük sopa görseli
+  const qc=$('pvcue'),qw=Math.min(innerWidth-60,340),qh=k==='cues'?34:0;
+  qc.style.display=k==='cues'?'block':'none';
+  if(k==='cues'){qc.style.width=qw+'px';qc.style.height=qh+'px';qc.width=qw*dpr;qc.height=qh*dpr;const q=qc.getContext('2d');q.setTransform(dpr,0,0,dpr,0,0);drawCue(q,6,qh/2,qw-6,qh/2,C,12);}
+  // masa
+  const pc=$('pvc'),avail=Math.min(innerWidth-60,(innerHeight-(k==='cues'?250:210))*W/H),sc=avail/W;
+  pc.style.width=W*sc+'px';pc.style.height=H*sc+'px';pc.width=Math.round(W*sc*dpr);pc.height=Math.round(H*sc*dpr);
+  const c=pc.getContext('2d');c.setTransform(sc*dpr,0,0,sc*dpr,0,0);
+  const old=ctx;ctx=c;
+  drawTable(T);
+  const gap=2*R*1.005,rowH=Math.sqrt(3)*R*1.005,ids=[1,9,2,10,8,3,11,4,12,5,13,6,14,7,15];let n=0;
+  for(let r=0;r<5;r++)for(let q=0;q<=r;q++)drawBall({id:ids[n++],x:TW/2+(q-r/2)*gap,y:TH/4-r*rowH});
+  const cb={id:0,x:TW/2,y:TH*.47};
+  const cx=cb.x+RAIL,cy=cb.y+RAIL;
+  c.setLineDash([5,5]);c.strokeStyle='rgba(255,255,255,.7)';c.lineWidth=1.3;c.beginPath();c.moveTo(cx,cy-R);c.lineTo(cx,RAIL+TH/4+R+4);c.stroke();c.setLineDash([]);
+  drawBall(cb);
+  c.strokeStyle='rgba(0,0,0,.3)';c.lineWidth=7;c.lineCap='round';c.beginPath();c.moveTo(cx+3,cy+R+12);c.lineTo(cx+3,cy+R+342);c.stroke();
+  drawCue(c,cx,cy+R+8,cx,cy+R+338,C,6.5);
+  ctx=old;
+}
+$('pvx').onclick=()=>{pvOpen=false;$('pvm').style.display='none';};
+$('pvm').onclick=e=>{if(e.target.id==='pvm')$('pvx').onclick();};
+// TEST: menüdeki paraya 3 sn içinde 5 kez dokununca +10.000 para (Play Store'dan önce kaldırılacak)
+let tapN=0,tapT=0;
+$('mcoins').onclick=()=>{const t=Date.now();if(t-tapT>3000)tapN=0;tapT=t;if(++tapN>=5){tapN=0;save.coins+=10000;persist();refreshCoins();}};
 $('bshop').onclick=()=>{$('smsg').textContent='';renderShop();show('shop');};
 $('sback').onclick=()=>show('menu');
 
 /* ================= OYUN SABİTLERİ ================= */
 const TW=380,TH=760,RAIL=26,R=10,W=TW+2*RAIL,H=TH+2*RAIL,MAXV=24;
-const cv=$('c'),ctx=cv.getContext('2d');
+const cv=$('c');let ctx=cv.getContext('2d');
 let scale=1,dprK=1;
 const POCKETS=[{x:0,y:0,r:19},{x:TW,y:0,r:19},{x:0,y:TH,r:19},{x:TW,y:TH,r:19},{x:-5,y:TH/2,r:18},{x:TW+5,y:TH/2,r:18}];
 const AIMPTS=[{x:3,y:3},{x:TW-3,y:3},{x:3,y:TH-3},{x:TW-3,y:TH-3},{x:-3,y:TH/2,mid:1},{x:TW+3,y:TH/2,mid:1}];
@@ -432,8 +492,8 @@ function drawMiniTable(c,w,h,t){
   c.fillStyle='#fff';c.beginPath();c.arc(w*.3,h/2,3,0,7);c.fill();c.fillStyle='#d22b2b';c.beginPath();c.arc(w*.65,h/2,3,0,7);c.fill();
 }
 function rrp(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
-function drawTable(){
-  const T=tableById(save.table);
+function drawTable(T){
+  T=T||tableById(save.table);
   let g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,T.w1);g.addColorStop(.5,T.w2);g.addColorStop(1,T.w1);
   ctx.fillStyle=g;rrp(ctx,0,0,W,H,16);ctx.fill();
   ctx.fillStyle=T.c;ctx.fillRect(RAIL-6,RAIL-6,TW+12,TH+12);
