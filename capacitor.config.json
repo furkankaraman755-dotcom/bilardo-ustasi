@@ -1,0 +1,6 @@
+{
+  "appId": "com.bilardoustasi.oyun",
+  "appName": "Bilardo Ustası",
+  "webDir": "www",
+  "android": { "backgroundColor": "#0c1411" }
+}
