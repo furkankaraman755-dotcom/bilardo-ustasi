@@ -38,9 +38,9 @@ jobs:
           npx cap add android
           npx cap sync android
 
-      - name: Dikey ekran kilidi
+      - name: Yatay ekran kilidi
         run: |
-          sed -i 's/MainActivity"/MainActivity" android:screenOrientation="portrait"/' android/app/src/main/AndroidManifest.xml
+          sed -i 's/MainActivity"/MainActivity" android:screenOrientation="sensorLandscape"/' android/app/src/main/AndroidManifest.xml
 
       - name: APK derle
         run: |
