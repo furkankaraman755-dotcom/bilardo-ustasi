@@ -789,13 +789,13 @@ let sfxOut=null,noiseBuf=null;
 function sfxInit(){
   if(sfxOut||!ac)return;
   const bus=ac.createGain();bus.gain.value=1;
-  const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=7500;lp.Q.value=.4;
+  const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=9000;lp.Q.value=.3;
   const cmp=ac.createDynamicsCompressor();cmp.threshold.value=-16;cmp.ratio.value=3.5;cmp.attack.value=.002;cmp.release.value=.12;
   const out=ac.createGain();out.gain.value=.95;
   // kısa oda yankısı (salon hissi)
   const conv=ac.createConvolver(),L=Math.floor(ac.sampleRate*.45),ir=ac.createBuffer(2,L,ac.sampleRate);
   for(let ch=0;ch<2;ch++){const d=ir.getChannelData(ch);for(let i=0;i<L;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/L,3.2)*(i<ac.sampleRate*.008?0:1);}
-  conv.buffer=ir;const wet=ac.createGain();wet.gain.value=.16;
+  conv.buffer=ir;const wet=ac.createGain();wet.gain.value=.06;
   bus.connect(lp);lp.connect(cmp);bus.connect(conv).connect(wet).connect(cmp);cmp.connect(out).connect(ac.destination);sfxOut=bus;
   noiseBuf=ac.createBuffer(1,ac.sampleRate*.4,ac.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
 }
@@ -811,40 +811,47 @@ function reson(x,sr,f,q){ // ikinci derece rezonans filtresi
   const w=2*Math.PI*f/sr,r=Math.exp(-w/(2*q)),a1=-2*r*Math.cos(w),a2=r*r,y=new Float32Array(x.length);let y1=0,y2=0;
   for(let i=0;i<x.length;i++){const v=x[i]-a1*y1-a2*y2;y[i]=v;y2=y1;y1=v;}return y;}
 function lpf(x,sr,f){const a=Math.exp(-2*Math.PI*f/sr),y=new Float32Array(x.length);let p=0;for(let i=0;i<x.length;i++){p=x[i]*(1-a)+p*a;y[i]=p;}return y;}
+function hpf(x,sr,f){const a=Math.exp(-2*Math.PI*f/sr),y=new Float32Array(x.length);let px=0,py=0;for(let i=0;i<x.length;i++){py=a*(py+x[i]-px);px=x[i];y[i]=py;}return y;}
 function buildSB(){
   SB={click:[],cue:[],cush:[],drop:[],roll:[],rail:[]};
-  for(let v=0;v<6;v++){
-    // top-top: çok kısa temas darbesi + fenolik topun parlak rezonansları
-    SB.click.push(synth(.09,(d,sr)=>{const n=d.length,imp=new Float32Array(n);const cw=Math.floor(sr*.00025);for(let i=0;i<cw;i++)imp[i]=Math.sin(Math.PI*i/cw);
-      const modes=[[2950+v*55,22],[4180+v*70,30],[5520+v*40,26],[7300+v*90,20],[1180+v*25,9]];
-      for(const [f,q] of modes){const y=reson(imp,sr,f*(.97+Math.random()*.06),q);for(let i=0;i<n;i++)d[i]+=y[i]*(f<2000?.6:1);}
-      for(let i=0;i<n;i++){const t=i/sr;d[i]=d[i]*Math.exp(-t/.016)+(Math.random()*2-1)*Math.exp(-t/.0012)*.35;}}));
-    // istaka: deri uç + ahşap gövde ("tok")
-    SB.cue.push(synth(.14,(d,sr)=>{const n=d.length,imp=new Float32Array(n);const cw=Math.floor(sr*.0011);for(let i=0;i<cw;i++)imp[i]=Math.sin(Math.PI*i/cw);
-      for(const [f,q,g] of [[540+v*20,6,1],[1250+v*35,8,.6],[2400+v*40,10,.35],[180+v*6,4,.7]]){const y=reson(imp,sr,f,q);for(let i=0;i<n;i++)d[i]+=y[i]*g;}
-      for(let i=0;i<n;i++){const t=i/sr;d[i]=d[i]*Math.exp(-t/.03)+(Math.random()*2-1)*Math.exp(-t/.004)*.25;}}));
-    // bant: kauçuk yastık + ahşap gövde boğuk "tup"
-    SB.cush.push(synth(.18,(d,sr)=>{const n=d.length;let x=new Float32Array(n);for(let i=0;i<n;i++)x[i]=(Math.random()*2-1)*Math.exp(-i/sr/.012);x=lpf(lpf(x,sr,520),sr,520);
-      const imp=new Float32Array(n);const cw=Math.floor(sr*.004);for(let i=0;i<cw;i++)imp[i]=Math.sin(Math.PI*i/cw);const y=reson(imp,sr,95+v*6,3),z=reson(imp,sr,310+v*12,5);
-      for(let i=0;i<n;i++){const t=i/sr;d[i]=x[i]*2.2+(y[i]*.9+z[i]*.35)*Math.exp(-t/.05);}}));
-    // cebe düşüş: deri/ağa çarpma "dum" + iç tahtaya tık
-    SB.drop.push(synth(.35,(d,sr)=>{const n=d.length;let x=new Float32Array(n);for(let i=0;i<n;i++)x[i]=(Math.random()*2-1)*Math.exp(-i/sr/.03);x=lpf(lpf(x,sr,380),sr,380);
-      const imp=new Float32Array(n);const cw=Math.floor(sr*.006);for(let i=0;i<cw;i++)imp[i]=Math.sin(Math.PI*i/cw);const y=reson(imp,sr,70+v*5,3),z=reson(imp,sr,220+v*10,4);
-      const k0=Math.floor(sr*(.055+v*.006)),k1=Math.floor(sr*.0004);for(let i=0;i<k1;i++)imp[k0+i]+=Math.sin(Math.PI*i/k1)*.5;const w=reson(imp,sr,1450+v*60,12);
-      for(let i=0;i<n;i++){const t=i/sr;d[i]=x[i]*2+(y[i]+z[i]*.5)*Math.exp(-t/.09)+w[i]*.25*Math.exp(-Math.max(0,t-.055)/.02);}}));
-    // top dönüş rayında yuvarlanma (metal tel üzerinde gürültü)
-    SB.roll.push(synth(.55,(d,sr)=>{const n=d.length;let x=new Float32Array(n);for(let i=0;i<n;i++)x[i]=Math.random()*2-1;x=reson(x,sr,620+v*40,1.5);const y=reson(x,sr,2300,6);
-      for(let i=0;i<n;i++){const t=i/sr,env=Math.min(1,t/.04)*Math.exp(-t/.25)*(1+.35*Math.sin(2*Math.PI*(28+v*3)*t));d[i]=(x[i]*.7+y[i]*.15)*env;}}));
-    // rayda topa çarpma: biraz daha boğuk tık + tel çınlaması
-    SB.rail.push(synth(.12,(d,sr)=>{const n=d.length,imp=new Float32Array(n);const cw=Math.floor(sr*.0003);for(let i=0;i<cw;i++)imp[i]=Math.sin(Math.PI*i/cw);
-      for(const [f,q,g] of [[2650+v*50,18,1],[3900+v*60,22,.7],[1050+v*20,8,.5],[5200,30,.35]]){const y=reson(imp,sr,f,q);for(let i=0;i<n;i++)d[i]+=y[i]*g;}
-      for(let i=0;i<n;i++)d[i]*=Math.exp(-i/sr/.02);}));
+  const R0=()=>Math.random()*2-1;
+  for(let v=0;v<8;v++){
+    // top-top: iki sert topun çok kısa, kuru "tık"ı (çınlama yok)
+    SB.click.push(synth(.05,(d,sr)=>{const n=d.length;let x=new Float32Array(n);
+      for(let i=0;i<n;i++){const t=i/sr;x[i]=R0()*Math.exp(-t/(.0018+v*.0001));}
+      x=hpf(x,sr,1400);const body=reson(x,sr,2300+v*90,2.2),air=reson(x,sr,4600+v*120,2.5);
+      for(let i=0;i<n;i++){const t=i/sr;d[i]=(x[i]*.55+body[i]*.35+air[i]*.2)*Math.exp(-t/.007);}}));
+    // istaka: deri ucun yumuşak "tok"u
+    SB.cue.push(synth(.08,(d,sr)=>{const n=d.length;let x=new Float32Array(n);
+      for(let i=0;i<n;i++){const t=i/sr;x[i]=R0()*Math.exp(-t/.004);}
+      x=lpf(hpf(x,sr,250),sr,2600);const b=reson(x,sr,780+v*25,2);
+      for(let i=0;i<n;i++){const t=i/sr;d[i]=(x[i]*.6+b[i]*.5)*Math.exp(-t/.018);}}));
+    // bant: kauçuğa çarpmanın boğuk "pof"u
+    SB.cush.push(synth(.12,(d,sr)=>{const n=d.length;let x=new Float32Array(n);
+      for(let i=0;i<n;i++){const t=i/sr;x[i]=R0()*Math.exp(-t/.01);}
+      x=lpf(lpf(x,sr,420),sr,420);const b=reson(x,sr,140+v*8,1.5);
+      for(let i=0;i<n;i++){const t=i/sr;d[i]=(x[i]*.8+b[i]*.4)*Math.exp(-t/.03);}}));
+    // cep: topun cebe düşüp içerideki diğer topa çarpması
+    SB.drop.push(synth(.3,(d,sr)=>{const n=d.length;let th=new Float32Array(n);
+      for(let i=0;i<n;i++){const t=i/sr;th[i]=R0()*Math.exp(-t/.012);}
+      th=lpf(lpf(th,sr,300),sr,300);
+      const k0=Math.floor(sr*(.07+v*.008));let ck=new Float32Array(n);for(let i=k0;i<n;i++){const t=(i-k0)/sr;ck[i]=R0()*Math.exp(-t/.0016);}
+      ck=hpf(ck,sr,1300);const cb=reson(ck,sr,2100+v*80,2);
+      for(let i=0;i<n;i++){const t=i/sr;d[i]=th[i]*1.3*Math.exp(-t/.05)+(ck[i]*.35+cb[i]*.25);}}));
+    // rayda yuvarlanma: tel üzerinde hafif tıkırtılı uğultu
+    SB.roll.push(synth(.5,(d,sr)=>{const n=d.length;let x=new Float32Array(n);for(let i=0;i<n;i++)x[i]=R0();x=lpf(hpf(x,sr,300),sr,1400);
+      for(let i=0;i<n;i++){const t=i/sr,env=Math.min(1,t/.05)*Math.exp(-t/.22),tick=(Math.sin(2*Math.PI*(34+v*4)*t)>.92)?1.8:1;d[i]=x[i]*env*tick;}}));
+    // rayda top-top
+    SB.rail.push(synth(.05,(d,sr)=>{const n=d.length;let x=new Float32Array(n);
+      for(let i=0;i<n;i++){const t=i/sr;x[i]=R0()*Math.exp(-t/.0022);}
+      x=hpf(x,sr,1100);const b=reson(x,sr,1900+v*70,2);
+      for(let i=0;i<n;i++){const t=i/sr;d[i]=(x[i]*.5+b[i]*.4)*Math.exp(-t/.008);}}));
   }
 }
 function play(kind,vol,rate,when){
   if(!ac)return;sfxInit();if(!SB)buildSB();
   const arr=SB[kind],src=ac.createBufferSource(),g=ac.createGain();src.buffer=arr[Math.floor(Math.random()*arr.length)];
-  src.playbackRate.value=(rate||1)*(.96+Math.random()*.08);g.gain.value=vol;src.connect(g).connect(sfxOut);src.start(ac.currentTime+(when||0));
+  src.playbackRate.value=(rate||1)*(.97+Math.random()*.06);g.gain.value=vol;src.connect(g).connect(sfxOut);src.start(ac.currentTime+(when||0));
 }
 function ballClick(t,k){ // fenolik reçine top sesi: parlak, kısa, çok parçalı "tık"
   noise(t,jit(3400),1.4,.018,.32*k);
@@ -854,10 +861,10 @@ function ballClick(t,k){ // fenolik reçine top sesi: parlak, kısa, çok parça
 function snd(v,freq,dur){
   if(!ac||v<0.25||sndCount>4)return;sndCount++;
   try{sfxInit();const t=ac.currentTime,k=Math.min(1,v/20);
-    if(freq===2400)play('cue',.35+k*.55,.95+k*.1);
-    else if(freq===1900)play('click',.06+Math.pow(k,.8)*.9,.97+k*.06);
-    else if(freq===600)play('cush',.12+k*.75,.95+k*.1);
-    else{play('drop',.85,1);play('roll',.35,1,.18);}
+    if(freq===2400)play('cue',.25+k*.5,1);
+    else if(freq===1900)play('click',.04+Math.pow(k,.9)*.75,1);
+    else if(freq===600)play('cush',.08+k*.5,1);
+    else{play('drop',.6,1);play('roll',.18,1,.22);}
   }catch(e){}
 }
 
@@ -1292,18 +1299,30 @@ function railDeco(T,x,y,w,h,vert){ // bant üstü süs paneli
   if(T.pt===2){c.strokeStyle='rgba(0,0,0,.3)';const n=vert?Math.floor(h/12):Math.floor(w/12);for(let i=0;i<n;i++){const cx=vert?x+w/2:x+7+i*12,cy=vert?y+7+i*12:y+h/2;c.beginPath();c.arc(cx,cy,3,0,7);c.stroke();}}
   c.restore();
 }
-function realPocket(c,p){ // yeşil masa fotoğrafındaki gibi: ahşaba oyulmuş, kenarı bordo, içi simsiyah derin delik
-  const mid=p.x===TW/2,ox=mid?0:(p.x<TW/2?-1:1),oy=p.y<TH/2?-1:1,L=Math.hypot(ox,oy),ux=ox/L,uy=oy/L,off=mid?7:6;
-  const x=p.x+RAIL+ux*off,y=p.y+RAIL+uy*off,r=p.r+(mid?1.5:2.5);
-  // ahşaptaki oyuk gölgesi
-  const og=c.createRadialGradient(x,y,r*.95,x,y,r+6);og.addColorStop(0,'rgba(0,0,0,.55)');og.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=og;c.beginPath();c.arc(x,y,r+6,0,7);c.fill();
-  // delik: içe doğru kararan bordo kenar
-  const hg=c.createRadialGradient(x+ux*r*.3,y+uy*r*.3,1,x,y,r);hg.addColorStop(0,'#000');hg.addColorStop(.5,'#080101');hg.addColorStop(.78,'#2a0404');hg.addColorStop(.94,'#5a0d0b');hg.addColorStop(1,'#3a0806');
+function drawCushions(c,T){
+  const k=10,E=T.real?30:25,M=T.real?25:21,J=T.real?11:8;
+  const segs=[[RAIL+E,RAIL+TW/2-M,'t'],[RAIL+TW/2+M,RAIL+TW-E,'t'],[RAIL+E,RAIL+TW/2-M,'b'],[RAIL+TW/2+M,RAIL+TW-E,'b'],[RAIL+E,RAIL+TH-E,'l'],[RAIL+E,RAIL+TH-E,'r']];
+  for(const [a0,a1,sd] of segs){c.beginPath();
+    if(sd==='t'){c.moveTo(a0-J,RAIL-k);c.lineTo(a1+J,RAIL-k);c.lineTo(a1,RAIL);c.lineTo(a0,RAIL);}
+    if(sd==='b'){c.moveTo(a0-J,RAIL+TH+k);c.lineTo(a1+J,RAIL+TH+k);c.lineTo(a1,RAIL+TH);c.lineTo(a0,RAIL+TH);}
+    if(sd==='l'){c.moveTo(RAIL-k,a0-J);c.lineTo(RAIL-k,a1+J);c.lineTo(RAIL,a1);c.lineTo(RAIL,a0);}
+    if(sd==='r'){c.moveTo(RAIL+TW+k,a0-J);c.lineTo(RAIL+TW+k,a1+J);c.lineTo(RAIL+TW,a1);c.lineTo(RAIL+TW,a0);}
+    c.closePath();const cg=sd==='t'||sd==='b'?c.createLinearGradient(0,sd==='t'?RAIL-k:RAIL+TH+k,0,sd==='t'?RAIL:RAIL+TH):c.createLinearGradient(sd==='l'?RAIL-k:RAIL+TW+k,0,sd==='l'?RAIL:RAIL+TW,0);
+    cg.addColorStop(0,T.real?'#8fd6f5':'#7fd0f2');cg.addColorStop(1,T.c);c.fillStyle=cg;c.fill();c.strokeStyle='rgba(0,40,80,.35)';c.lineWidth=1;c.stroke();}
+}
+function realPocket(c,p){ // fotoğraftaki gibi: ahşap çerçevenin içinde net daire, kenarı bordo, merkezi siyah
+  const mid=p.x===TW/2,ox=mid?0:(p.x<TW/2?-1:1),oy=p.y<TH/2?-1:1,L=Math.hypot(ox,oy),ux=ox/L,uy=oy/L,off=mid?-3:-4;
+  const x=p.x+RAIL+ux*off,y=p.y+RAIL+uy*off,r=mid?21:24;
+  // ahşapta ince gölge
+  c.fillStyle='rgba(30,8,0,.45)';c.beginPath();c.arc(x+ux*1.5,y+uy*1.5,r+2.5,0,7);c.fill();
+  // delik: bordo kenardan siyah merkeze
+  const hg=c.createRadialGradient(x+ux*r*.25,y+uy*r*.25,1,x,y,r);
+  hg.addColorStop(0,'#000');hg.addColorStop(.45,'#0a0000');hg.addColorStop(.75,'#3a0606');hg.addColorStop(.93,'#6e1410');hg.addColorStop(1,'#8a2018');
   c.fillStyle=hg;c.beginPath();c.arc(x,y,r,0,7);c.fill();
-  // masaya bakan tarafta derin iç gölge
-  const ig=c.createRadialGradient(x-ux*r*.55,y-uy*r*.55,r*.2,x-ux*r*.15,y-uy*r*.15,r*1.15);ig.addColorStop(0,'rgba(0,0,0,0)');ig.addColorStop(1,'rgba(0,0,0,.85)');c.fillStyle=ig;c.beginPath();c.arc(x,y,r,0,7);c.fill();
-  c.strokeStyle='rgba(0,0,0,.6)';c.lineWidth=1.2;c.beginPath();c.arc(x,y,r,0,7);c.stroke();
-  c.strokeStyle='rgba(255,120,90,.18)';c.lineWidth=1;c.beginPath();c.arc(x,y,r-1.5,Math.atan2(uy,ux)-1.2,Math.atan2(uy,ux)+1.2);c.stroke();
+  // dış tarafta (bant yönünde) derinlik gölgesi
+  const sg=c.createLinearGradient(x+ux*r,y+uy*r,x-ux*r,y-uy*r);sg.addColorStop(0,'rgba(0,0,0,.75)');sg.addColorStop(.6,'rgba(0,0,0,0)');
+  c.fillStyle=sg;c.beginPath();c.arc(x,y,r,0,7);c.fill();
+  c.strokeStyle='rgba(20,0,0,.8)';c.lineWidth=1;c.beginPath();c.arc(x,y,r,0,7);c.stroke();
 }
 function goldPocket(c,p){ // altın/metalik çerçeveli, derin siyah hazneli 3B cep
   const mid=p.x===TW/2,ox=mid?0:(p.x<TW/2?-1:1),oy=p.y<TH/2?-1:1,L=Math.hypot(ox,oy),ux=ox/L,uy=oy/L,off=mid?6:4;
@@ -1413,15 +1432,7 @@ function drawClassic(T){ // kırmızı ahşap bantlı, gümüş köşeli, açık
   g=c.createRadialGradient(W/2,H/2,30,W/2,H/2,W*.58);g.addColorStop(0,T.f1);g.addColorStop(1,T.f2);
   c.fillStyle=g;c.fillRect(RAIL-10,RAIL-10,TW+20,TH+20);c.fillStyle=feltTex(T);c.fillRect(RAIL-10,RAIL-10,TW+20,TH+20);
   if(T.real){c.strokeStyle='rgba(255,240,215,.7)';c.lineWidth=1.4;c.strokeRect(RAIL-10.5,RAIL-10.5,TW+21,TH+21);}
-  // yastıklar (açık mavi, eğimli)
-  const k=10,segs=[[RAIL+25,RAIL+TW/2-21,'t'],[RAIL+TW/2+21,RAIL+TW-25,'t'],[RAIL+25,RAIL+TW/2-21,'b'],[RAIL+TW/2+21,RAIL+TW-25,'b'],[RAIL+25,RAIL+TH-25,'l'],[RAIL+25,RAIL+TH-25,'r']];
-  for(const [a0,a1,sd] of segs){c.beginPath();
-    if(sd==='t'){c.moveTo(a0-8,RAIL-k);c.lineTo(a1+8,RAIL-k);c.lineTo(a1,RAIL);c.lineTo(a0,RAIL);}
-    if(sd==='b'){c.moveTo(a0-8,RAIL+TH+k);c.lineTo(a1+8,RAIL+TH+k);c.lineTo(a1,RAIL+TH);c.lineTo(a0,RAIL+TH);}
-    if(sd==='l'){c.moveTo(RAIL-k,a0-8);c.lineTo(RAIL-k,a1+8);c.lineTo(RAIL,a1);c.lineTo(RAIL,a0);}
-    if(sd==='r'){c.moveTo(RAIL+TW+k,a0-8);c.lineTo(RAIL+TW+k,a1+8);c.lineTo(RAIL+TW,a1);c.lineTo(RAIL+TW,a0);}
-    c.closePath();const cg=sd==='t'||sd==='b'?c.createLinearGradient(0,sd==='t'?RAIL-k:RAIL+TH+k,0,sd==='t'?RAIL:RAIL+TH):c.createLinearGradient(sd==='l'?RAIL-k:RAIL+TW+k,0,sd==='l'?RAIL:RAIL+TW,0);
-    cg.addColorStop(0,'#7fd0f2');cg.addColorStop(1,T.c);c.fillStyle=cg;c.fill();c.strokeStyle='rgba(0,40,80,.35)';c.lineWidth=1;c.stroke();}
+  drawCushions(c,T);
   c.strokeStyle='rgba(0,30,60,.35)';c.lineWidth=1.2;c.strokeRect(RAIL,RAIL,TW,TH);
   g=c.createLinearGradient(0,RAIL,0,RAIL+12);g.addColorStop(0,'rgba(0,30,60,.25)');g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(RAIL,RAIL,TW,12);
   // başlangıç çizgisi
@@ -1435,14 +1446,14 @@ function drawClassic(T){ // kırmızı ahşap bantlı, gümüş köşeli, açık
   c.restore();
   // cepler: koyu kırmızı-siyah, köşeye oturan
   if(T.gold){for(const p of POCKETS)goldPocket(c,p);}
-  else if(T.real){for(const p of POCKETS)realPocket(c,p);}
+  else if(T.real){for(const p of POCKETS)realPocket(c,p);drawCushions(c,T);}
   else for(const p of POCKETS){const mid=p.x===TW/2,ox=mid?0:(p.x<TW/2?-1:1),oy=p.y<TH/2?-1:1,L=Math.hypot(ox,oy),ux=ox/L,uy=oy/L,off=mid?7:5;
     const x=p.x+RAIL+ux*off,y=p.y+RAIL+uy*off,r=p.r+(mid?.5:2);
     const pg=c.createRadialGradient(x+ux*r*.3,y+uy*r*.3,1,x,y,r);pg.addColorStop(0,'#000');pg.addColorStop(.55,'#120203');pg.addColorStop(.9,'#3a0708');pg.addColorStop(1,'#5a1012');
     c.fillStyle=pg;c.beginPath();c.arc(x,y,r,0,7);c.fill();
     const sg=c.createLinearGradient(x-ux*r,y-uy*r,x+ux*r,y+uy*r);sg.addColorStop(0,'rgba(0,0,0,.85)');sg.addColorStop(.5,'rgba(0,0,0,0)');c.fillStyle=sg;c.beginPath();c.arc(x,y,r,0,7);c.fill();}
   c.save();c.beginPath();c.rect(RAIL,RAIL,TW,TH);c.clip();
-  for(const p of POCKETS){const x=p.x+RAIL,y=p.y+RAIL,sh=c.createRadialGradient(x,y,p.r*.7,x,y,p.r+12);sh.addColorStop(0,'rgba(0,20,40,.45)');sh.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=sh;c.beginPath();c.arc(x,y,p.r+12,0,7);c.fill();}
+  if(!T.real)for(const p of POCKETS){const x=p.x+RAIL,y=p.y+RAIL,sh=c.createRadialGradient(x,y,p.r*.7,x,y,p.r+12);sh.addColorStop(0,'rgba(0,20,40,.45)');sh.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=sh;c.beginPath();c.arc(x,y,p.r+12,0,7);c.fill();}
   c.restore();
 }
 function drawTable(T){
@@ -1726,7 +1737,7 @@ function drawSinks(){
 /* ---- cam silindir top haznesi ---- */
 function tubeAdd(b){if(tube.some(t=>t.id===b.id))return;tube.push({id:b.id,s:null,v:0,M:(b.M||[1,0,0,0,1,0,0,0,1]).slice(),rv:0,x:0,wob:Math.random()*6});}
 function clack(k){ // rayda top-top çarpışma sesi
-  if(!ac)return;try{k=Math.min(1,Math.max(.12,k));play('rail',.25+k*.6,1);}catch(e){}
+  if(!ac)return;try{k=Math.min(1,Math.max(.12,k));play('rail',.15+k*.45,1);}catch(e){}
 }
 let tubeLast=0;
 function railPath(w,h,r){ // sağ üstten başlayıp kıvrılarak aşağı inen kanal
