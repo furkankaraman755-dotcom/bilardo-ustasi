@@ -50,7 +50,7 @@ button:disabled{opacity:.45}
 .dlist{display:flex;flex-direction:column;gap:6px;max-height:52vh;overflow:auto;width:100%}
 .avg{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;margin:8px 0}.avg button{font-size:22px;padding:4px;height:40px}.avg button.on{outline:3px solid #e8c15a}
 .srow{display:flex;align-items:center;gap:10px;justify-content:space-between;margin:3px 0;font-size:13px}.srow button{padding:5px 12px}.srow input[type=range]{flex:1}
-#emoBtn{flex:none;align-self:flex-start;width:34px;height:28px;border-radius:10px;font-size:16px;padding:0;background:linear-gradient(#ffd54a,#e8a412);border:none;margin-top:1px}
+#emoBtn{flex:none;width:40px;height:34px;border-radius:10px;font-size:18px;padding:0;background:linear-gradient(#ffd54a,#e8a412);border:none}
 #emoBar{position:absolute;top:54px;left:50%;transform:translateX(-50%);display:none;gap:4px;background:rgba(10,14,20,.92);border:1px solid #2a3442;border-radius:14px;padding:6px;z-index:20}
 #emoBar button{font-size:22px;width:40px;height:40px;padding:0;background:transparent}
 .bub{position:absolute;top:52px;font-size:30px;background:#fff;border-radius:16px;padding:2px 8px;box-shadow:0 4px 12px rgba(0,0,0,.5);z-index:19;animation:bub 2.6s forwards;pointer-events:none}
@@ -156,9 +156,10 @@ button:disabled{opacity:.45}
 /* oyun (yatay) */
 #game{background:radial-gradient(circle at 12% 18%,rgba(255,170,80,.22),transparent 22%),radial-gradient(circle at 88% 14%,rgba(255,205,130,.18),transparent 20%),radial-gradient(circle at 82% 88%,rgba(255,140,60,.14),transparent 24%),radial-gradient(circle at 18% 86%,rgba(130,170,255,.12),transparent 24%),radial-gradient(ellipse at 50% 50%,#2a221a,#0a0806 75%);padding:calc(4px + env(safe-area-inset-top)) calc(6px + env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) calc(6px + env(safe-area-inset-left));gap:4px;overflow:hidden;touch-action:none}
 #hud{display:flex;gap:6px;width:100%;align-items:center;height:52px;flex:none}
-#hud .hl,#hud .hr{width:64px;flex:none;display:flex;align-items:center;justify-content:center;height:100%}
+#hud .hl{width:var(--ml,64px);flex:none;display:flex;align-items:center;justify-content:flex-start;gap:6px;height:100%}
+#hud .hr{width:var(--mr,64px);flex:none;display:flex;align-items:center;justify-content:center;height:100%}
 #hud .hcen{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:6px;height:100%}
-.pside{flex:1;display:flex;align-items:center;gap:6px;min-width:0;max-width:330px}
+.pside{flex:1;display:flex;align-items:center;gap:6px;min-width:0;max-width:250px}
 .pside.l{flex-direction:row-reverse}
 .pav{width:48px;height:48px;border-radius:12px;padding:3px;flex:none;background:conic-gradient(#3fd14a calc(var(--t,1)*360deg),#2a3442 0)}
 .pside:not(.on) .pav{background:#2a3442}
@@ -172,17 +173,17 @@ button:disabled{opacity:.45}
 .pside.r .brow{justify-content:flex-start}
 .brow{background:#1c222c;border-radius:14px;padding:2px 4px;box-shadow:inset 0 1px 3px rgba(0,0,0,.6);width:max-content;margin-left:auto}
 .pside.r .brow{margin-left:0;margin-right:auto}
-.brow i{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#05070a 55%,#2a313d 100%);box-shadow:inset 0 2px 4px #000,0 1px 0 rgba(160,170,200,.35);flex:none;display:flex;align-items:center;justify-content:center}
-.brow i img{width:18px;height:18px;display:block}
+.brow i{width:19px;height:19px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#05070a 55%,#2a313d 100%);box-shadow:inset 0 2px 4px #000,0 1px 0 rgba(160,170,200,.35);flex:none;display:flex;align-items:center;justify-content:center}
+.brow i img{width:17px;height:17px;display:block}
 .stake{flex:none;align-self:center;background:#141a22;border:2px solid #2a3442;border-radius:12px;padding:4px 10px;text-align:center;font-weight:900;color:#f3d77a;font-size:13px;line-height:1.1;min-width:64px}
-.hm{width:50px;height:46px;min-width:0;font-size:22px;flex:none;background:linear-gradient(#4fd14a,#1e8a22)!important;color:#fff;border-radius:12px}
-#mid{position:relative;flex:1;display:flex;align-items:center;justify-content:center;width:100%;min-height:0;padding:0 114px 0 64px;box-sizing:border-box}
+.hm{width:48px;height:44px;min-width:0;font-size:22px;flex:none;background:linear-gradient(#4fd14a,#1e8a22)!important;color:#fff;border-radius:12px}
+#mid{position:relative;flex:1;display:flex;align-items:center;justify-content:center;width:100%;min-height:0;padding:0 var(--ml,64px);box-sizing:border-box}
 #hud{position:relative;z-index:4}
 .tblwrap{position:relative}
 #c{display:block;touch-action:none;border-radius:16px;box-shadow:0 10px 34px rgba(0,0,0,.6)}
 .side{position:absolute;top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:64px;z-index:3;pointer-events:none}
 .side>*{pointer-events:auto}
-.side.lft{left:0}.side.rgt{right:0}
+.side.lft{left:0;width:var(--ml,64px)}.side.rgt{right:0;width:var(--mr,64px)}
 .side .lbl{text-shadow:0 1px 3px #000;color:#e8efe9}
 .side.rgt{justify-content:flex-start;padding-top:6px}
 .cueb{position:static}
@@ -313,7 +314,7 @@ button:disabled{opacity:.45}
 <!-- OYUN -->
 <div id="game" class="screen">
   <canvas id="cueLayer" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:60;pointer-events:none"></canvas>
-  <div id="hud"><div class="hl"><button id="gmenu" class="hm" aria-label="Menü">☰</button></div><div class="hcen"><button id="emoBtn" aria-label="Emoji">💬</button><div class="pside l" id="p0"></div><div class="stake" id="stake"></div><div class="pside r" id="p1"></div></div><div class="hr"><canvas id="spin" title="Falso"></canvas></div><div id="emoBar"></div></div>
+  <div id="hud"><div class="hl"><button id="gmenu" class="hm" aria-label="Menü">☰</button><button id="emoBtn" aria-label="Sohbet">💬</button></div><div class="hcen"><div class="pside l" id="p0"></div><div class="stake" id="stake"></div><div class="pside r" id="p1"></div></div><div class="hr"><canvas id="spin" title="Falso"></canvas></div><div id="emoBar"></div></div>
   <div id="mid">
     <div class="side lft"><div class="lbl">Güç<br><b id="pv">0%</b></div><canvas id="pbar"></canvas></div>
     <div class="tblwrap"><canvas id="c"></canvas><div id="toast"></div><canvas id="tube"></canvas><canvas id="tray" style="display:none"></canvas></div>
@@ -432,6 +433,8 @@ const KEY='bilardo_ustasi_v1';
 let save={coins:1000,cues:['basic'],tables:['green','blue','pro','osm','mor'],cue:'basic',table:'osm',wins:0,losses:0,name:'',pid:0,level:1,xp:0,cash:5,lastDaily:0,streak:0,rw:{},chestCnt:0,chestNext:2,eco:2,gems:10,cl:{},slots:[null,null,null,null],free:{day:0,n:0,next:0},offer:-1,lucky:0,week:{id:0,earn:0}};
 
 try{const s=JSON.parse(localStorage.getItem(KEY));if(s)save=Object.assign(save,s);}catch(e){}
+// TEST: yayından önce kaldırılacak — bir kerelik 5 milyar altın
+if(!save.test5b){save.test5b=1;save.coins+=5e9;}
 // yeni ekonomiye geçiş: eski kayıtlar en az 1.000 ile başlar
 if(!save.eco||save.eco<2){save.eco=2;save.coins=Math.max(save.coins,1000);}
 if(!save.rw)save.rw={};
@@ -965,8 +968,9 @@ function resize(){
   if(!$('game').classList.contains('show'))return;
   const g=$('game'),cs=getComputedStyle(g);
   const gw=g.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight),gh=g.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);
-  const hudH=$('hud').offsetHeight; // masa HUD'un altında başlar, üstüne taşmaz
-  scale=Math.max(.2,Math.min((gw-64-114)/W,(gh-hudH-6)/H));
+  const hudH=$('hud').offsetHeight,TUBE=50,SIDE=64; // masa ekranın tam ortasında; kenarlarda kontroller
+  scale=Math.max(.2,Math.min((gw-2*(SIDE+TUBE))/W,(gh-hudH-6)/H));
+  const m=Math.floor((gw-W*scale)/2);g.style.setProperty('--ml',m+'px');g.style.setProperty('--mr',(m-TUBE)+'px');
   const dpr=window.devicePixelRatio||1;dprK=scale*dpr;
   cv.style.width=W*scale+'px';cv.style.height=H*scale+'px';
   cv.width=Math.round(W*dprK);cv.height=Math.round(H*dprK);
@@ -1306,6 +1310,7 @@ function scheduleAI(){
 }
 function aiTurn(){
   if(over||!isAI(turn)){aiBusy=false;return;}
+  if($('dlg').style.display==='flex'){aiTimer=setTimeout(aiTurn,600);return;}
   const D=DIFF[diff],targets=legalTargets(1);
   let cands=[];
   if(ballInHand){
@@ -1746,7 +1751,7 @@ function loop(ts){
     if(moving){acc+=dt;let n=0;
       while(acc>=STEP&&moving&&n<8){for(let i=0;i<10;i++)physStep(.1);if(!friction()){moving=false;endShot();}acc-=STEP;n++;}
       if(n>=8)acc=0;}
-    else{acc=0;if(timerOn()&&!over&&!aiBusy&&!isAI(turn)&&tMax){tLeft-=dt/1000;if(tLeft<=0){tMax=0;timeUp();}}}
+    else{acc=0;if(timerOn()&&!over&&!aiBusy&&!isAI(turn)&&tMax){if($('dlg').style.display!=='flex'){tLeft-=dt/1000;if(tLeft<=0){tMax=0;timeUp();}}}}
     if(ts-tUi>120){tUi=ts;for(let i=0;i<2;i++){const el=$('p'+i);if(el)el.style.setProperty('--t',i===turn&&timerOn()&&tMax&&!moving&&!isAI(turn)?Math.max(0,tLeft/tMax).toFixed(3):1);}}
     { // istaka çizim açısı hedefe yumuşakça yaklaşır (kare hızından bağımsız)
       const d=angDiff(aim,aimDraw);
@@ -1931,11 +1936,34 @@ $('cueBtn').onclick=()=>{
   $('qcX').onclick=closeDlg;
 };
 let quitArm=0;
+function leaveGame(){clearTimeout(aiTimer);aiBusy=false;over=true;$('over').style.display='none';closeDlg();refreshCoins();show('menu');}
+function forfeit(){ // pes et: oyuncu kaybeder, rakip kazanır
+  closeDlg();if(over)return;
+  if(mode==='ai')return gameOver(1,'Pes ettin. '+NAMES[1]+' kazandı.');
+  if(mode==='2p')return gameOver(1-turn,NAMES[turn]+' pes etti.');
+  leaveGame();
+}
 $('gmenu').onclick=()=>{
-  const paid=(gopt.kind==='match'||gopt.kind==='event')&&!over;
-  if(paid&&Date.now()-quitArm>3000){quitArm=Date.now();setMsg('Çıkarsan maçı kaybedersin. Çıkmak için ☰ düğmesine tekrar bas.');return;}
-  if(paid){save.losses++;addXp(10);persist();}
-  clearTimeout(aiTimer);aiBusy=false;over=true;$('over').style.display='none';refreshCoins();show('menu');};
+  const ranked=mode!=='solo';
+  dlg(`<h2 style="margin:0 0 10px">☰ Menü</h2><div style="display:flex;flex-direction:column;gap:8px;max-width:300px;margin:auto">
+    <button class="gold" id="gmCont">▶ Oyuna Devam Et</button>
+    <button id="gmQuit" style="background:#7a1c22">${ranked?'🏳️ Pes Et':'🚪 Oyundan Çık'}</button>
+    <button id="gmClose">✕ Menüyü Kapat</button></div>`);
+  $('gmCont').onclick=$('gmClose').onclick=closeDlg;
+  $('gmQuit').onclick=()=>{
+    if(!ranked||over)return leaveGame();
+    dlg(`<h3 style="margin:0 0 8px">Maçtan pes etmek istediğine emin misin?</h3><div class="stats">${gopt.room?'Giriş ücretin geri verilmez, '+NAMES[1]+' kazanır.':'Maçı kaybedersin.'}</div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:12px"><button id="gmY" style="background:#7a1c22">Evet, pes et</button><button class="gold" id="gmN">Hayır</button></div>`);
+    $('gmY').onclick=forfeit;$('gmN').onclick=closeDlg;};
+};
+// arka plan: maçtan çıkıp 20 saniye içinde dönmeyen kaybeder
+const AWAY_MS=20000;let awayT=0,awayTimer=0;
+document.addEventListener('visibilitychange',()=>{
+  const live=$('game').classList.contains('show')&&!over&&(mode==='ai'||mode==='2p');
+  if(document.hidden){if(live){awayT=Date.now();clearTimeout(awayTimer);awayTimer=setTimeout(()=>{if(awayT&&!over)awayLose();},AWAY_MS);}}
+  else if(awayT){clearTimeout(awayTimer);const gone=Date.now()-awayT;awayT=0;if(!over&&live!==false){if(gone>=AWAY_MS)awayLose();else setMsg('Tekrar hoş geldin! ('+Math.round(gone/1000)+' sn uzaktaydın, 20 sn sınırı var)');}}
+});
+function awayLose(){awayT=0;if(over)return;closeDlg();if(mode==='ai')gameOver(1,'Oyundan 20 saniyeden uzun süre ayrıldın — maçı kaybettin.');else if(mode==='2p')gameOver(1-turn,NAMES[turn]+' oyundan ayrıldı.');}
 $('omenu').onclick=()=>{$('over').style.display='none';show('menu');};
 $('again').onclick=()=>{
   const k=gopt.kind;
