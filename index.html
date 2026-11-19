@@ -6,26 +6,26 @@
 <title>Bilardo Ustası</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;background:#0c1411;color:#e8efe9;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
-button{font:inherit;border:0;border-radius:12px;background:#24352b;color:#e8efe9;height:46px;min-width:46px;font-size:16px;cursor:pointer}
+html,body{margin:0;height:100%;background:#06061a;color:#e8efe9;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+button{font:inherit;border:0;border-radius:12px;background:#2a2a6a;color:#e8efe9;height:46px;min-width:46px;font-size:16px;cursor:pointer}
 button:active{filter:brightness(1.25)}
 button:disabled{opacity:.45}
 .gold{background:#e8c15a!important;color:#1b1a10!important;font-weight:700}
 .screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;overflow-y:auto;touch-action:pan-y}
 .screen.show{display:flex}
-.coins{background:#1a2620;border:1px solid #3a4d40;border-radius:20px;padding:6px 14px;font-weight:700;color:#f3d77a}
+.coins{background:#1a2620;border:1px solid #3a3a8a;border-radius:20px;padding:6px 14px;font-weight:700;color:#f3d77a}
 /* giriş */
-#login{justify-content:center;background:radial-gradient(circle at 50% 30%,#1d5a3a,#0c1411 70%);padding:calc(10px + env(safe-area-inset-top)) 20px 10px}
+#login{justify-content:center;background:radial-gradient(circle at 50% 30%,#2a1f6e,#06061a 70%);padding:calc(10px + env(safe-area-inset-top)) 20px 10px}
 .lbox{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;max-width:340px}
 .logo{text-align:center}.logo .ic{font-size:44px;line-height:1}.logo h1{margin:4px 0 0;font-size:26px}
 .lg{width:100%;height:46px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px}
 .lg.g{background:#fff;color:#222}.lg.f{background:#1877f2;color:#fff}
 .gi{font-weight:900;color:#4285f4;font-size:20px}.fi{font-weight:900;font-size:22px;font-family:Arial,sans-serif}
 .or{font-size:12px;color:#9fb7a8}
-#lname{width:100%;height:44px;border-radius:12px;border:1px solid #3a4d40;background:#0f1a15;color:#fff;padding:0 14px;font-size:16px}
+#lname{width:100%;height:44px;border-radius:12px;border:1px solid #3a3a8a;background:#0d0d2a;color:#fff;padding:0 14px;font-size:16px}
 #lmsg{font-size:12px;color:#f3d77a;text-align:center;min-height:16px}
 /* ana menü */
-#menu{justify-content:flex-start;gap:10px;padding:calc(6px + env(safe-area-inset-top)) calc(10px + env(safe-area-inset-right)) 8px calc(10px + env(safe-area-inset-left));background:radial-gradient(ellipse at 50% 120%,#1d7a74 0%,#123c3a 35%,#0c1411 75%)}
+#menu{justify-content:flex-start;gap:10px;padding:calc(6px + env(safe-area-inset-top)) calc(10px + env(safe-area-inset-right)) 8px calc(10px + env(safe-area-inset-left));background:radial-gradient(ellipse at 50% 120%,#3a1f8a 0%,#16134a 38%,#06061a 75%)}
 .tbar{display:flex;align-items:stretch;gap:6px;width:100%;height:54px}
 .prof{cursor:pointer;display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.45);border:1px solid rgba(232,193,90,.35);border-radius:14px;padding:4px 10px;min-width:0}
 .av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;border:2px solid #fff;flex:none}
@@ -44,7 +44,7 @@ button:disabled{opacity:.45}
 .ib{position:relative;width:62px;height:46px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:19px;padding:0;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.1);border-radius:12px}
 .ib span{font-size:9px;color:#cfe3d4;white-space:nowrap}
 .ib em{position:absolute;top:-4px;right:-4px;background:#e2453c;color:#fff;font-style:normal;font-size:10px;font-weight:800;border-radius:10px;padding:0 5px;display:none}
-.mis{display:flex;align-items:center;gap:10px;background:#0f1a15;border:1px solid #2a3a32;border-radius:12px;padding:8px 10px;text-align:left;width:100%;box-sizing:border-box}
+.mis{display:flex;align-items:center;gap:10px;background:#0d0d2a;border:1px solid #2a2a6a;border-radius:12px;padding:8px 10px;text-align:left;width:100%;box-sizing:border-box}
 .mis .t{flex:1;font-size:13px;font-weight:700}.mis .bar{height:7px;background:#0b1410;border-radius:4px;overflow:hidden;margin-top:4px}.mis .bar i{display:block;height:100%;background:#3fd14a}
 .mis .rw{font-size:12px;color:#f3d77a;white-space:nowrap}.mis button{min-width:74px;padding:6px 8px;font-size:12px}
 .dlist{display:flex;flex-direction:column;gap:6px;max-height:52vh;overflow:auto;width:100%}
@@ -66,7 +66,7 @@ button:disabled{opacity:.45}
 .t1{background:linear-gradient(160deg,#5fd34a,#239a2c)}.t2{background:linear-gradient(160deg,#9b5de5,#5a2aa5)}.t3{background:linear-gradient(160deg,#3c8dde,#1e4fa8)}
 .stats{font-size:12px;color:#9fb7a8}
 /* liste ekranları (1'e 1, etkinlik, özel) */
-.lscr{padding:calc(8px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) 10px calc(12px + env(safe-area-inset-left));gap:10px;background:#0f1a15}
+.lscr{padding:calc(8px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) 10px calc(12px + env(safe-area-inset-left));gap:10px;background:#0d0d2a}
 .rooms{display:flex;gap:10px;width:100%;max-width:900px;overflow-x:auto;padding-bottom:6px;touch-action:pan-x}
 .room{flex:1 0 170px;border-radius:16px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;border:2px solid rgba(255,255,255,.15);box-shadow:0 4px 14px rgba(0,0,0,.4)}
 .room h3{margin:0;font-size:17px}.room .rw{font-size:13px;color:#e8efe9}
@@ -77,11 +77,11 @@ button:disabled{opacity:.45}
 .r1{background:linear-gradient(160deg,#2b6e47,#163d28)}.r2{background:linear-gradient(160deg,#2d5f9a,#17345a)}.r3{background:linear-gradient(160deg,#7a3a9a,#3f1d55)}.r4{background:linear-gradient(160deg,#9a7a2a,#4f3b0f)}
 #dlg{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;z-index:7;padding:12px}
 @keyframes mmr{to{transform:rotate(360deg)}}
-#dlg .box{max-height:calc(100vh - 16px);overflow:auto;box-sizing:border-box;background:#17221d;border:2px solid #e8c15a;border-radius:16px;padding:16px;text-align:center;max-width:560px;width:100%}
+#dlg .box{max-height:calc(100vh - 16px);overflow:auto;box-sizing:border-box;background:#13133a;border:2px solid #e8c15a;border-radius:16px;padding:16px;text-align:center;max-width:560px;width:100%}
 .days{display:flex;gap:6px;justify-content:center;margin:12px 0}
-.day{flex:1;max-width:64px;border-radius:10px;background:#0f1a15;border:2px solid #24352b;padding:6px 2px;font-size:11px}
+.day{flex:1;max-width:64px;border-radius:10px;background:#0d0d2a;border:2px solid #2a2a6a;padding:6px 2px;font-size:11px}
 .day b{display:block;font-size:13px;color:#f3d77a}.day.done{opacity:.45}.day.now{border-color:#e8c15a;background:#2a2a14}
-#grot{display:none;position:fixed;inset:0;background:#0c1411;z-index:20;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;font-size:18px}
+#grot{display:none;position:fixed;inset:0;background:#06061a;z-index:20;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;font-size:18px}
 #grot .big{font-size:56px}
 @media (orientation:portrait){#grot{display:flex}}
 /* yeni: menü alt satır, sandık yuvaları, istekalar, mağaza, lig */
@@ -124,21 +124,21 @@ button:disabled{opacity:.45}
 .pk{flex:1 0 140px;background:#1f2a3a;border-radius:12px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:4px;border:2px solid #2f3e55}
 .pk .big{font-size:34px}.pk b{font-size:17px}.pk button{width:100%;height:36px;font-size:13px}
 .fr{display:flex;align-items:center;gap:10px;background:#1f2a3a;border-radius:12px;padding:8px 12px;width:100%;max-width:560px}
-.fr .n{width:28px;height:28px;border-radius:50%;background:#0f1a15;display:flex;align-items:center;justify-content:center;font-weight:800}
+.fr .n{width:28px;height:28px;border-radius:50%;background:#0d0d2a;display:flex;align-items:center;justify-content:center;font-weight:800}
 .fr b{flex:1;font-size:16px}.fr button{min-width:120px;height:38px}
 .lg2{width:100%;max-width:760px;background:#1f2a3a;border-radius:14px;padding:12px;display:flex;gap:14px;align-items:center}
 .lg2 .ic{font-size:54px}
 .lrow{display:flex;align-items:center;gap:10px;background:#2a2340;border-radius:10px;padding:8px 12px;width:100%;max-width:760px}
 .lrow.me{background:#6a1414}
 /* market */
-#shop{padding:calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom));gap:10px;background:#0f1a15}
+#shop{padding:calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom));gap:10px;background:#0d0d2a}
 .top{display:flex;align-items:center;gap:10px;width:100%;max-width:520px}
 .top h2{flex:1;margin:0;font-size:20px}
 .tabs{display:flex;gap:8px;width:100%;max-width:520px}
 .tabs button{flex:1}
 .tabs button.on{background:#e8c15a;color:#1b1a10;font-weight:700}
 #items{display:flex;flex-direction:column;gap:10px;width:100%;max-width:520px;padding-bottom:20px}
-.item{display:flex;align-items:center;gap:12px;background:#17221d;border:2px solid #24352b;border-radius:14px;padding:10px}
+.item{display:flex;align-items:center;gap:12px;background:#13133a;border:2px solid #2a2a6a;border-radius:14px;padding:10px}
 .item.eq{border-color:#e8c15a}
 .item canvas{flex:none;border-radius:8px}
 .item .info{flex:1;min-width:0}
@@ -146,7 +146,7 @@ button:disabled{opacity:.45}
 .item .st{font-size:12px;color:#9fb7a8;margin-top:3px}
 .item button{flex:none;min-width:96px;font-size:14px;height:40px}
 #pvm{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;z-index:6;padding:12px}
-.pbox{background:#17221d;border:2px solid #e8c15a;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;align-items:center;max-height:100%}
+.pbox{background:#13133a;border:2px solid #e8c15a;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;align-items:center;max-height:100%}
 .ptop{display:flex;width:100%;align-items:center;gap:8px}.ptop b{flex:1;font-size:18px}
 #pvc{border-radius:10px}#pvst{font-size:12px;color:#9fb7a8}
 #pvmsg{color:#f3d77a;font-size:13px;min-height:16px;text-align:center}
@@ -154,28 +154,28 @@ button:disabled{opacity:.45}
 .item canvas,.item .info{cursor:pointer}
 #smsg{min-height:18px;font-size:13px;color:#f3d77a}
 /* oyun (yatay) */
-#game{background:radial-gradient(circle at 12% 18%,rgba(255,170,80,.22),transparent 22%),radial-gradient(circle at 88% 14%,rgba(255,205,130,.18),transparent 20%),radial-gradient(circle at 82% 88%,rgba(255,140,60,.14),transparent 24%),radial-gradient(circle at 18% 86%,rgba(130,170,255,.12),transparent 24%),radial-gradient(ellipse at 50% 50%,#2a221a,#0a0806 75%);padding:calc(4px + env(safe-area-inset-top)) calc(6px + env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) calc(6px + env(safe-area-inset-left));gap:4px;overflow:hidden;touch-action:none}
+#game{background:radial-gradient(circle at 12% 18%,rgba(255,170,80,.22),transparent 22%),radial-gradient(circle at 88% 14%,rgba(255,205,130,.18),transparent 20%),radial-gradient(circle at 82% 88%,rgba(255,140,60,.14),transparent 24%),radial-gradient(circle at 18% 86%,rgba(130,170,255,.12),transparent 24%),radial-gradient(ellipse at 50% 50%,#1a1650,#05051a 75%);padding:calc(4px + env(safe-area-inset-top)) calc(6px + env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) calc(6px + env(safe-area-inset-left));gap:4px;overflow:hidden;touch-action:none}
 #hud{display:flex;gap:6px;width:100%;align-items:center;height:52px;flex:none}
 #hud .hl{width:var(--ml,64px);flex:none;display:flex;align-items:center;justify-content:flex-start;gap:6px;height:100%}
 #hud .hr{width:var(--mr,64px);flex:none;display:flex;align-items:center;justify-content:center;height:100%}
 #hud .hcen{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:6px;height:100%}
 .pside{flex:1;display:flex;align-items:center;gap:6px;min-width:0;max-width:250px}
 .pside.l{flex-direction:row-reverse}
-.pav{width:48px;height:48px;border-radius:12px;padding:3px;flex:none;background:conic-gradient(#3fd14a calc(var(--t,1)*360deg),#2a3442 0)}
-.pside:not(.on) .pav{background:#2a3442}
+.pav{width:48px;height:48px;border-radius:12px;padding:3px;flex:none;background:conic-gradient(#22f2e0 calc(var(--t,1)*360deg),#20224a 0);box-shadow:0 0 10px rgba(110,90,255,.45)}
+.pside:not(.on) .pav{background:linear-gradient(135deg,#6a3cff,#1fa8ff)}
 .pav .in{font-size:22px!important;width:100%;height:100%;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff}
 .pinfo{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
-.pname{display:flex;align-items:center;gap:6px;background:linear-gradient(90deg,#0b0f14,#1c2633);border-radius:8px;padding:1px 10px;font-weight:800;font-size:13px;height:20px;box-sizing:border-box;justify-content:space-between;white-space:nowrap;overflow:hidden}
-.pside.r .pname{background:linear-gradient(270deg,#0b0f14,#1c2633)}
-.pside.on .pname{box-shadow:0 0 0 2px #3fd14a}
+.pname{display:flex;align-items:center;gap:6px;background:linear-gradient(90deg,#08081e,#1c1f5a);border:1px solid rgba(120,110,255,.45);border-radius:8px;padding:1px 10px;font-weight:800;font-size:13px;height:20px;box-sizing:border-box;justify-content:space-between;white-space:nowrap;overflow:visible}
+.pside.r .pname{background:linear-gradient(270deg,#08081e,#1c1f5a)}
+.pside.on .pname{box-shadow:0 0 0 1.5px #22f2e0,0 0 10px rgba(34,242,224,.6)}
 .lvs{font-size:11px;background:#5a6472;color:#fff;border-radius:10px;padding:0 6px}
 .brow{display:flex;gap:3px;justify-content:flex-end}
 .pside.r .brow{justify-content:flex-start}
-.brow{background:#1c222c;border-radius:14px;padding:2px 4px;box-shadow:inset 0 1px 3px rgba(0,0,0,.6);width:max-content;margin-left:auto}
+.brow{background:#0b0c26;border:1px solid rgba(110,100,255,.3);border-radius:14px;padding:2px 4px;box-shadow:inset 0 1px 3px rgba(0,0,0,.6);width:max-content;margin-left:auto}
 .pside.r .brow{margin-left:0;margin-right:auto}
 .brow i{width:19px;height:19px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#05070a 55%,#2a313d 100%);box-shadow:inset 0 2px 4px #000,0 1px 0 rgba(160,170,200,.35);flex:none;display:flex;align-items:center;justify-content:center}
 .brow i img{width:17px;height:17px;display:block}
-.stake{flex:none;align-self:center;background:#141a22;border:2px solid #2a3442;border-radius:12px;padding:4px 10px;text-align:center;font-weight:900;color:#f3d77a;font-size:13px;line-height:1.1;min-width:64px}
+.stake{flex:none;align-self:center;background:linear-gradient(#141448,#07071e);border:1.5px solid #7a5bff;box-shadow:0 0 10px rgba(122,91,255,.5);border-radius:12px;padding:4px 10px;text-align:center;font-weight:900;color:#f3d77a;font-size:13px;line-height:1.1;min-width:64px}
 .hm{width:48px;height:44px;min-width:0;font-size:22px;flex:none;background:linear-gradient(#4fd14a,#1e8a22)!important;color:#fff;border-radius:12px}
 #mid{position:relative;flex:1;display:flex;align-items:center;justify-content:center;width:100%;min-height:0;padding:0 var(--ml,64px);box-sizing:border-box}
 #hud{position:relative;z-index:4}
@@ -190,9 +190,9 @@ button:disabled{opacity:.45}
 #tube{position:absolute;top:0;left:calc(100% + 1px);pointer-events:none}
 #pbar{touch-action:none;border-radius:14px;cursor:grab}
 .lbl{font-size:11px;color:#9fb7a8;text-align:center}
-#spin{touch-action:none;cursor:pointer;border-radius:50%;box-shadow:0 3px 12px rgba(0,0,0,.6)}
+#spin{touch-action:none;cursor:pointer;border-radius:50%;box-shadow:0 3px 12px rgba(0,0,0,.6),0 0 12px rgba(34,242,224,.55)}
 .cueb canvas{display:block;margin:auto}
-.cueb{width:58px;height:58px;overflow:hidden;padding:0;border-radius:12px;background:linear-gradient(160deg,#2c6fb8,#173f72)!important;border:2px solid #4a8ad8;flex:none}
+.cueb{width:58px;height:58px;overflow:hidden;padding:0;border-radius:12px;background:linear-gradient(160deg,#3a2c9e,#10125a)!important;border:2px solid #7a5bff;box-shadow:0 0 12px rgba(122,91,255,.6);flex:none}
 #toast{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);background:rgba(5,8,12,.78);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:12px;padding:4px 12px;border-radius:10px;max-width:62%;text-align:center;pointer-events:none;transition:opacity .3s;opacity:0}
 #spinBig{position:absolute;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:5}
 .sbx{display:flex;flex-direction:column;align-items:center;gap:8px}
@@ -200,11 +200,11 @@ button:disabled{opacity:.45}
 .sbt .bars i{width:9px;height:18px}.sbt .bars i.on{background:#3fd14a}
 #spinL{touch-action:none;cursor:crosshair}
 .side button{width:56px;height:42px;font-size:18px}
-#rot{display:none;position:absolute;inset:0;background:#0c1411;z-index:4;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;font-size:18px}
+#rot{display:none;position:absolute;inset:0;background:#06061a;z-index:4;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;font-size:18px}
 #rot .big{font-size:56px}
 
 #over{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:5}
-#over .box{background:#17221d;border:2px solid #e8c15a;border-radius:16px;padding:22px 24px;text-align:center;width:290px}
+#over .box{background:#13133a;border:2px solid #e8c15a;border-radius:16px;padding:22px 24px;text-align:center;width:290px}
 #over h2{margin:0 0 6px;font-size:22px}
 #over p{margin:0 0 6px;color:#cfe3d4}
 #over .earn{font-size:20px;font-weight:700;color:#f3d77a;min-height:26px;margin-bottom:14px}
@@ -213,6 +213,12 @@ button:disabled{opacity:.45}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute"><defs>
+ <linearGradient id="crG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6c2"/><stop offset=".35" stop-color="#ffd54a"/><stop offset=".7" stop-color="#e09a12"/><stop offset="1" stop-color="#8a5208"/></linearGradient>
+ <linearGradient id="crB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe680"/><stop offset=".5" stop-color="#c98a10"/><stop offset="1" stop-color="#6a3c04"/></linearGradient>
+ <radialGradient id="crJ" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#ffd0f0"/><stop offset=".5" stop-color="#e0247a"/><stop offset="1" stop-color="#6a0630"/></radialGradient>
+ <radialGradient id="crJ2" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#d8fbff"/><stop offset=".5" stop-color="#29b6f6"/><stop offset="1" stop-color="#063a6a"/></radialGradient>
+</defs></svg>
 
 <!-- GİRİŞ -->
 <div id="login" class="screen">
@@ -231,7 +237,7 @@ button:disabled{opacity:.45}
 <div id="menu" class="screen">
   <div class="tbar">
     <div class="prof"><div class="av" id="av"></div><div><b id="pname"></b><div class="sm">ID: <span id="pid"></span> · 🏅<span id="pbd">0</span></div></div>
-      <div class="lvl"><span>⭐ <span id="plv"></span></span><div class="xpb"><i id="pxp"></i></div></div></div>
+      <div class="lvl"><span id="plvC"></span><span id="plv" style="display:none"></span><div class="xpb"><i id="pxp"></i></div></div></div>
     <button class="tb" id="tCues">🎱<span>İstekalar</span></button>
     <button class="tb" id="tFree">🪙<span>Ücretsiz Ödüller</span><em id="fDot">!</em></button>
     <button class="tb" id="tLead">⭐<span>Liderlik</span></button>
@@ -403,6 +409,7 @@ const CHEST_MIN=[15,60,180,480]; // sandık açılma süreleri (dakika)
 const LEAGUES=[{n:'Bronz Ligi',ic:'🥉',min:0,rw:0},{n:'Gümüş Ligi',ic:'🥈',min:100e3,rw:10e3},{n:'Altın Ligi',ic:'🥇',min:1e6,rw:100e3},{n:'Elmas Ligi',ic:'💎',min:10e6,rw:1e6},{n:'Usta Ligi',ic:'👑',min:100e6,rw:10e6}];
 const FREE=[{t:'c',v:1000},{t:'c',v:2500},{t:'c',v:5000},{t:'chest',v:0}];
 const TABLES=[ // f=çuha, c=yastık, w=bant, a=süs/altın, d=nişan noktası, pt=desen (0 çizgi, 1 kafes, 2 halka)
+ {id:'neon',  name:'Neon Gece',   price:0,      f1:'#2f8bff',f2:'#0a2a8a',c:'#1446c8',w1:'#14133f',w2:'#06061c',a:'#9b5dff',d:'#5ff6ff',pt:0,style:'neon'},
  {id:'green', name:'Klasik Yeşil',price:3000,      f1:'#2fa063',f2:'#17603a',c:'#124f30',w1:'#7a4520',w2:'#3e220d',a:'#d9b45a',d:'#f3e3b5',pt:0},
  {id:'blue',  name:'Okyanus',     price:0,   f1:'#2f8cef',f2:'#1552b0',c:'#11458e',w1:'#1d3566',w2:'#0e1d3d',a:'#e2b64a',d:'#ffffff',pt:3,p1:'#2a63b8',p2:'#e9f1ff'},
  {id:'red',   name:'Bordo',       price:10000,  f1:'#9e2a30',f2:'#5a1016',c:'#4a0c12',w1:'#3a1a12',w2:'#1a0a07',a:'#d9b45a',d:'#7fe0e0',pt:2},
@@ -428,6 +435,16 @@ const BADGE_WINS=20;
 const TOUR={name:'Hafta Sonu Turnuvası',fee:1000,prize:7500,cash:2,rounds:['easy','mid','hard']};
 const DAILY=[500,750,1000,1500,2000,3000,5000];
 
+/* ---- seviye tacı (altın, 3B, üzerinde seviye) ---- */
+function crownHTML(lv,h){h=h||26;const w=h*1.3,fs=String(lv).length>2?10.5:String(lv).length>1?12.5:14;
+  return `<svg class="crown" viewBox="0 0 52 40" width="${w}" height="${h}" style="flex:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.7)) drop-shadow(0 0 4px rgba(255,200,60,.45))">
+   <path d="M4 32 L6 10 L16 19 L26 3 L36 19 L46 10 L48 32 Z" fill="url(#crG)" stroke="#6a3c04" stroke-width="1.4" stroke-linejoin="round"/>
+   <path d="M8 13 L16 21 L26 7 L36 21 L44 13" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.2"/>
+   <rect x="3" y="30" width="46" height="8" rx="2.5" fill="url(#crB)" stroke="#6a3c04" stroke-width="1.2"/>
+   <circle cx="6" cy="9" r="3" fill="url(#crJ2)"/><circle cx="26" cy="3.6" r="3.4" fill="url(#crJ)"/><circle cx="46" cy="9" r="3" fill="url(#crJ2)"/>
+   <circle cx="14" cy="34" r="1.8" fill="url(#crJ)"/><circle cx="38" cy="34" r="1.8" fill="url(#crJ)"/>
+   <text x="26" y="${String(lv).length>2?27:28}" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="${fs*1.5}" fill="#fff" stroke="#4a2602" stroke-width="3" paint-order="stroke">${lv}</text>
+  </svg>`;}
 /* ================= KAYIT ================= */
 const KEY='bilardo_ustasi_v1';
 let save={coins:1000,cues:['basic'],tables:['green','blue','pro','osm','mor'],cue:'basic',table:'osm',wins:0,losses:0,name:'',pid:0,level:1,xp:0,cash:5,lastDaily:0,streak:0,rw:{},chestCnt:0,chestNext:2,eco:2,gems:10,cl:{},slots:[null,null,null,null],free:{day:0,n:0,next:0},offer:-1,lucky:0,week:{id:0,earn:0}};
@@ -444,6 +461,7 @@ if(!save.tables.includes('pro')){save.tables.push('pro');save.table='pro';}
 if(!save.tables.includes('osm')){save.tables.push('osm');}
 if(!save.tables.includes('mor')){save.tables.push('mor');}
 if(!save.v19){save.v19=1;save.table='osm';}
+if(!save.v29){save.v29=1;save.table='neon';if(!save.tables.includes('neon'))save.tables.push('neon');}
 if(!save.tables.includes('blue')){save.tables.push('blue');if(save.table==='green')save.table='blue';}
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(save));}catch(e){}}
 const cueById=id=>ALL_CUES.find(c=>c.id===id)||CUES[0];
@@ -483,7 +501,7 @@ function oppAv(o,sz){return `<div class="av" style="background:${o.bg};width:${s
 function openOpp(){
   const o=OPP;if(!o)return;
   dlg(`<div style="display:flex;align-items:center;gap:12px;justify-content:center">${oppAv(o,54)}
-    <div style="text-align:left"><b style="font-size:20px">${o.name}</b><div class="stats">ID: ${o.id} · ⭐ Seviye ${o.lvl}</div>
+    <div style="text-align:left"><b style="font-size:20px">${o.name}</b><div class="stats" style="display:flex;align-items:center;gap:6px">ID: ${o.id} · ${crownHTML(o.lvl,24)} Seviye</div>
     <div class="stats">Oyun ${o.games} · Galibiyet ${o.wins} · Kazanma %${Math.round(o.wins/o.games*100)}</div><div class="stats">🏅 Rozet ${o.badges} · İstaka ${o.cues}</div></div></div>
     <button id="opClose" style="margin-top:12px;min-width:140px">Kapat</button>`);
   $('opClose').onclick=closeDlg;
@@ -493,9 +511,9 @@ function matchmake(room,go){
   dlg(`<h3 style="margin:4px 0 10px">Rakip aranıyor…</h3><div id="mmSpin" style="font-size:40px;animation:mmr 1s linear infinite;display:inline-block">🎱</div><div class="stats" style="margin-top:8px">${room?room.name+' · 🪙 '+fmt(room.prize):'Turnuva'}</div>`);
   setTimeout(()=>{
     dlg(`<div style="display:flex;align-items:center;justify-content:center;gap:18px">
-      <div>${`<div class="av" style="background:${myAvC()};width:58px;height:58px;font-size:26px;margin:auto">${myAvT()}</div>`}<b>${me}</b><div class="stats">⭐ ${save.level}</div></div>
+      <div>${`<div class="av" style="background:${myAvC()};width:58px;height:58px;font-size:26px;margin:auto">${myAvT()}</div>`}<b>${me}</b><div style="margin-top:2px">${crownHTML(save.level,28)}</div></div>
       <b style="font-size:30px;color:#f3d77a">VS</b>
-      <div>${oppAv(OPP,58).replace('class="av" style="','class="av" style="margin:auto;')}<b>${OPP.name}</b><div class="stats">⭐ ${OPP.lvl}</div></div></div>
+      <div>${oppAv(OPP,58).replace('class="av" style="','class="av" style="margin:auto;')}<b>${OPP.name}</b><div style="margin-top:2px">${crownHTML(OPP.lvl,28)}</div></div></div>
       <div class="stats" style="margin-top:10px">${room?'🏆 '+fmt(room.prize):''}</div>`);
     setTimeout(()=>{closeDlg();go();},1500);
   },900+Math.random()*1400);
@@ -505,7 +523,7 @@ function refreshCoins(){
   $('stats').textContent=`Galibiyet: ${save.wins} · Mağlubiyet: ${save.losses}`;
   $('cash').textContent=save.cash;$('pname').textContent=save.name||'Oyuncu';$('pid').textContent=save.pid||'-';
   $('av').textContent=myAvT();$('av').style.background=myAvC();extrasDots();
-  $('plv').textContent=save.level;$('pbd').textContent=ROOMS.filter(r=>(save.rw[r.id]||0)>=BADGE_WINS).length;$('pxp').style.width=Math.min(100,save.xp/xpNeed(save.level)*100)+'%';
+  $('plv').textContent=save.level;$('plvC').innerHTML=crownHTML(save.level,24);$('pbd').textContent=ROOMS.filter(r=>(save.rw[r.id]||0)>=BADGE_WINS).length;$('pxp').style.width=Math.min(100,save.xp/xpNeed(save.level)*100)+'%';
   $('dDot').style.display=dailyReady()?'block':'none';
   document.querySelectorAll('.gv').forEach(e=>e.textContent=save.gems);
   ['cash2','cash3'].forEach(i=>{const e=$(i);if(e)e.textContent=fmt(save.cash);});
@@ -559,7 +577,7 @@ function showLoot(title,color,icon,loot){
     let h='<div style="display:flex;flex-direction:column;gap:6px;align-items:center">';
     loot.forEach((it,k)=>{
       if(it.cue){const c=it.cue,lv=cueLv(c.id),cl=save.cl[c.id]||{pc:0};
-        h+=`<div style="background:#0f1a15;border-radius:10px;padding:6px 10px;width:100%"><canvas id="lc${k}"></canvas><div><b>${c.name}</b> <span class="stats">${c.rar?RAR[c.rar]:'Zafer'}</span></div><div style="color:#f3d77a;font-size:13px">${it.res==='new'?'🎉 Yeni istaka!':'+'+it.n+' parça ('+cl.pc+'/'+pcNeed(c)+' · '+lv+'. seviye)'}</div></div>`;}
+        h+=`<div style="background:#0d0d2a;border-radius:10px;padding:6px 10px;width:100%"><canvas id="lc${k}"></canvas><div><b>${c.name}</b> <span class="stats">${c.rar?RAR[c.rar]:'Zafer'}</span></div><div style="color:#f3d77a;font-size:13px">${it.res==='new'?'🎉 Yeni istaka!':'+'+it.n+' parça ('+cl.pc+'/'+pcNeed(c)+' · '+lv+'. seviye)'}</div></div>`;}
       else if(it.coins)h+=`<div style="color:#f3d77a;font-weight:800">+${fmt(it.coins)} 🪙</div>`;
       else if(it.gems)h+=`<div style="color:#e48cff;font-weight:800">+${it.gems} 💎</div>`;
     });
@@ -574,7 +592,7 @@ setInterval(()=>{if($('menu').classList.contains('show'))renderSlots();},1000);
 function openProfile(){
   const badges=ROOMS.filter(r=>(save.rw[r.id]||0)>=BADGE_WINS);
   let h=`<div style="display:flex;align-items:center;gap:12px;justify-content:center"><div class="av" style="background:${myAvC()};width:54px;height:54px;font-size:24px">${myAvT()}</div>
-    <div style="text-align:left"><b style="font-size:20px">${save.name}</b><div class="stats">ID: ${save.pid} · ⭐ Seviye ${save.level}</div><div class="stats">Galibiyet ${save.wins} · Mağlubiyet ${save.losses} · İstaka ${save.cues.length} · Koleksiyon gücü ${collPower()}</div></div></div>
+    <div style="text-align:left"><b style="font-size:20px">${save.name}</b><div class="stats" style="display:flex;align-items:center;gap:6px">ID: ${save.pid} · ${crownHTML(save.level,24)} Seviye</div><div class="stats">Galibiyet ${save.wins} · Mağlubiyet ${save.losses} · İstaka ${save.cues.length} · Koleksiyon gücü ${collPower()}</div></div></div>
     <h3 style="margin:12px 0 6px">🏅 Rozetler (${badges.length}/${ROOMS.length})</h3><div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-height:40vh;overflow:auto">`;
   for(const r of ROOMS){const w=save.rw[r.id]||0,ok=w>=BADGE_WINS;
     h+=`<div class="day ${ok?'now':'done'}" style="min-width:74px;opacity:${ok?1:.55}">${ok?'🏅':'🔒'}<b>${r.name}</b>${ok?'Usta':w+'/'+BADGE_WINS}</div>`;}
@@ -1242,7 +1260,7 @@ function updateHud(){
       if(g){const ids=g==='solid'?[1,2,3,4,5,6,7]:[9,10,11,12,13,14,15];row=ids.map(id=>{const b=balls.find(x=>x.id===id);return b&&!b.pot?bdot(id):'<i></i>';}).join('');if(!remaining(g))row=bdot(8);}
       else row='<i></i>'.repeat(7);}
     else row=`<span class="lbl">${G()==='lucky'?'Tek atış':'Serbest çalışma'}</span>`;
-    const lv=!ai&&(i===0||mode==='2p')?`<span class="lvs">⭐${save.level}</span>`:ai&&OPP?`<span class="lvs">⭐${OPP.lvl}</span>`:'';
+    const lv=(!ai&&(i===0||mode==='2p')?crownHTML(mode==='2p'?1:save.level,28):ai&&OPP?crownHTML(OPP.lvl,28):'').replace('style="flex:none;','style="flex:none;margin:-5px -2px;');
     el.innerHTML=`<div class="pav"><div class="in" style="background:${av.bg}">${av.t}</div></div><div class="pinfo"><div class="pname">${i===0?lv:''}<span style="overflow:hidden;text-overflow:ellipsis">${NAMES[i]}</span>${i===1?lv:''}</div><div class="brow">${row}</div></div>`;
   }
   const r=gopt.room;
@@ -1558,10 +1576,59 @@ function drawClassic(T){ // kırmızı ahşap bantlı, gümüş köşeli, açık
   if(T.gold)for(const p of POCKETS){const x=p.x+RAIL,y=p.y+RAIL,sh=c.createRadialGradient(x,y,p.r*.7,x,y,p.r+12);sh.addColorStop(0,'rgba(0,20,40,.45)');sh.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=sh;c.beginPath();c.arc(x,y,p.r+12,0,7);c.fill();}
   c.restore();
 }
+function neonLine(c,draw,w,cols,blur){ // parlayan çok renkli çizgi
+  c.save();c.lineCap='round';c.lineJoin='round';
+  const g=cols.length>1?c.createLinearGradient(0,0,W,H):null;if(g)cols.forEach((col,i)=>g.addColorStop(i/(cols.length-1),col));
+  c.strokeStyle=g||cols[0];c.shadowColor=cols[Math.floor(cols.length/2)];
+  c.globalAlpha=.35;c.lineWidth=w*3.2;c.shadowBlur=blur*1.6;draw();c.stroke();
+  c.globalAlpha=.9;c.lineWidth=w;c.shadowBlur=blur;draw();c.stroke();
+  c.globalAlpha=.9;c.strokeStyle='rgba(255,255,255,.7)';c.shadowBlur=0;c.lineWidth=w*.35;draw();c.stroke();c.restore();
+}
+function crownLogo(c,x,y,s,col){ // ortadaki saydam 8 numaralı taç logosu
+  c.save();c.translate(x,y);c.scale(s,s);c.strokeStyle=col;c.fillStyle=col;c.lineWidth=3;c.lineJoin='round';
+  c.beginPath();c.moveTo(-46,-6);c.lineTo(-40,-46);c.lineTo(-20,-24);c.lineTo(0,-58);c.lineTo(20,-24);c.lineTo(40,-46);c.lineTo(46,-6);c.closePath();c.stroke();
+  c.globalAlpha*=.35;c.fill();c.globalAlpha/=.35;
+  for(const [px,py] of [[-40,-50],[0,-63],[40,-50]]){c.beginPath();c.arc(px,py,4.5,0,7);c.fill();}
+  c.beginPath();c.arc(0,30,34,0,7);c.stroke();c.globalAlpha*=.25;c.fill();c.globalAlpha/=.25;
+  c.beginPath();c.arc(0,30,17,0,7);c.stroke();
+  c.font='900 26px Arial Black,Arial,sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('8',0,31);
+  c.lineWidth=2;c.beginPath();c.moveTo(-70,4);c.quadraticCurveTo(-40,-2,-46,-6);c.moveTo(70,4);c.quadraticCurveTo(40,-2,46,-6);c.stroke();
+  c.restore();
+}
+function drawNeon(T){ // lacivert-parlak mavi çuha, mor-mavi-turkuaz neon kenarlar
+  const c=ctx,NC=['#b04dff','#5b6cff','#1fa8ff','#22f2e0','#5b6cff','#b04dff'];
+  c.fillStyle='#03030c';rrp(c,0,0,W,H,22);c.fill();
+  let g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,'#1b1a52');g.addColorStop(.5,'#0b0b2c');g.addColorStop(1,'#1b1a52');
+  c.fillStyle=g;rrp(c,3,3,W-6,H-6,20);c.fill();
+  // karbon dokusu
+  c.save();rrp(c,3,3,W-6,H-6,20);c.clip();c.strokeStyle='rgba(120,140,255,.05)';c.lineWidth=1;for(let i=-H;i<W;i+=6){c.beginPath();c.moveTo(i,0);c.lineTo(i+H,H);c.stroke();}c.restore();
+  // dış ve iç neon şeritler
+  neonLine(c,()=>{c.beginPath();rrp(c,7,7,W-14,H-14,17);},2.2,NC,14);
+  // nişan noktaları
+  const yT=(RAIL-10)/2+3,yB=H-yT;c.save();c.shadowColor='#5ff6ff';c.shadowBlur=8;c.fillStyle='#bff9ff';
+  for(let i=1;i<8;i++){if(i===4)continue;for(const y of [yT,yB]){c.beginPath();c.arc(RAIL+TW*i/8,y,2.2,0,7);c.fill();}}
+  for(let i=1;i<4;i++)for(const x of [yT,W-yT]){c.beginPath();c.arc(x,RAIL+TH*i/4,2.2,0,7);c.fill();}c.restore();
+  // çuha: ortada parlak mavi, kenara doğru lacivert
+  g=c.createRadialGradient(W/2,H/2,20,W/2,H/2,W*.62);g.addColorStop(0,'#3d9bff');g.addColorStop(.45,'#1d5fe0');g.addColorStop(1,'#0a2470');
+  c.fillStyle=g;c.fillRect(RAIL-10,RAIL-10,TW+20,TH+20);c.fillStyle=feltTex(T);c.fillRect(RAIL-10,RAIL-10,TW+20,TH+20);
+  // ince parlak ızgara ışığı
+  c.save();c.beginPath();c.rect(RAIL,RAIL,TW,TH);c.clip();c.strokeStyle='rgba(140,200,255,.05)';for(let x=RAIL;x<RAIL+TW;x+=38){c.beginPath();c.moveTo(x,RAIL);c.lineTo(x,RAIL+TH);c.stroke();}for(let y=RAIL;y<RAIL+TH;y+=38){c.beginPath();c.moveTo(RAIL,y);c.lineTo(RAIL+TW,y);c.stroke();}c.restore();
+  // başlangıç çizgisi ve logo
+  c.strokeStyle='rgba(160,220,255,.22)';c.lineWidth=1.2;c.beginPath();c.moveTo(RAIL+TW*.25,RAIL);c.lineTo(RAIL+TW*.25,RAIL+TH);c.stroke();
+  c.save();c.globalAlpha=.16;c.shadowColor='#9fe8ff';c.shadowBlur=10;crownLogo(c,W/2,H/2+4,1.15,'#dff4ff');c.restore();
+  // cepler, bantlar, neon bant burnu, cep parıltısı
+  for(const p of POCKETS)realPocket(c,p,T);
+  drawCushions(c,T,'#6fc3ff');
+  for(let i=0;i<6;i++){const s=CUSH[i];neonLine(c,()=>{c.beginPath();c.moveTo(s[0]+RAIL,s[1]+RAIL);c.lineTo(s[2]+RAIL,s[3]+RAIL);},1.1,i%2?['#22f2e0','#1fa8ff']:['#1fa8ff','#b04dff'],8);}
+  for(const p of POCKETS){const mid=p.x===TW/2,out=Math.atan2(mid?(p.y<0?-1:1):(p.y<TH/2?-1:1),mid?0:(p.x<TW/2?-1:1));
+    c.save();c.shadowColor=mid?'#22f2e0':'#b04dff';c.shadowBlur=10;c.strokeStyle=mid?'rgba(80,240,230,.55)':'rgba(190,110,255,.55)';c.lineWidth=1.4;
+    c.beginPath();c.arc(p.x+RAIL,p.y+RAIL,p.r+.5,out+Math.PI*.35,out+Math.PI*1.65);c.stroke();c.restore();}
+}
 function drawTable(T){
   T=T||tableById(save.table);const c=ctx;
   if(T.style==='classic')return drawClassic(T);
   if(T.style==='palace')return drawClassic(T);
+  if(T.style==='neon')return drawNeon(T);
   // dış çerçeve
   let g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,T.w1);g.addColorStop(.5,T.w2);g.addColorStop(1,T.w1);
   c.fillStyle=g;rrp(c,0,0,W,H,20);c.fill();
@@ -1677,12 +1744,16 @@ function drawAim(){
   }
   if(!isAI(turn)&&!gopt.noGuide){
     ctx.save();ctx.lineCap='round';
-    const x0=cx+dx*R,y0=cy+dy*R,fade=(a)=>{const g=ctx.createLinearGradient(x0,y0,gx,gy);g.addColorStop(0,`rgba(255,255,255,${a})`);g.addColorStop(1,`rgba(255,255,255,${a*.22})`);return g;};
-    const fadeD=(a)=>{const g=ctx.createLinearGradient(x0,y0,gx,gy);g.addColorStop(0,`rgba(0,20,40,${a})`);g.addColorStop(1,`rgba(0,20,40,${a*.2})`);return g;};
-    ctx.strokeStyle=fadeD(.45);ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(gx,gy);ctx.stroke();   // ince koyu kenarlık
-    ctx.strokeStyle=fade(.95);ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(gx,gy);ctx.stroke();   // ince beyaz çizgi
-    ctx.strokeStyle='rgba(0,20,40,.4)';ctx.lineWidth=2.6;ctx.beginPath();ctx.arc(gx,gy,R,0,7);ctx.stroke();
-    ctx.strokeStyle='rgba(255,255,255,.6)';ctx.lineWidth=1.1;ctx.beginPath();ctx.arc(gx,gy,R,0,7);ctx.stroke();
+    // gökkuşağı neon nişan çizgisi: kırmızı→turuncu→sarı→yeşil→mavi→mor, ileri doğru hafifçe saydamlaşır
+    const x0=cx+dx*R,y0=cy+dy*R,RB=[[255,40,60],[255,140,30],[255,230,40],[40,230,90],[40,150,255],[170,70,255]],ph=(performance.now()/1600)%1;
+    const rb=(a,k)=>{const g=ctx.createLinearGradient(x0,y0,gx,gy);for(let i=0;i<=6;i++){const t=i/6,c=RB[(i+Math.floor(ph*6))%6];g.addColorStop(t,`rgba(${c[0]},${c[1]},${c[2]},${a*(1-t*k)})`);}return g;};
+    ctx.strokeStyle='rgba(0,10,30,.35)';ctx.lineWidth=3.4;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(gx,gy);ctx.stroke();
+    ctx.shadowColor='rgba(150,220,255,.9)';ctx.shadowBlur=7;
+    ctx.strokeStyle=rb(.5,.6);ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(gx,gy);ctx.stroke();   // neon parıltı
+    ctx.strokeStyle=rb(1,.5);ctx.lineWidth=2.4;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(gx,gy);ctx.stroke();    // renkli çekirdek
+    ctx.shadowBlur=0;
+    ctx.strokeStyle='rgba(0,10,30,.4)';ctx.lineWidth=2.6;ctx.beginPath();ctx.arc(gx,gy,R,0,7);ctx.stroke();
+    ctx.shadowColor='#b48cff';ctx.shadowBlur=6;ctx.strokeStyle='rgba(220,200,255,.9)';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(gx,gy,R,0,7);ctx.stroke();ctx.shadowBlur=0;
     if(pr.b){
       const bx=pr.b.x+RAIL,by=pr.b.y+RAIL,nx=(bx-gx)/(2*R),ny=(by-gy)/(2*R);
       const g=groups[turn],lt=legalTargets(turn),ok=G()==='9'||G()==='practice'||G()==='lucky'?(G()!=='9'||lt[0]===pr.b):(!g||groupOf(pr.b.id)===(remaining(g)?g:'eight'))&&(g||pr.b.id!==8);
@@ -1717,7 +1788,14 @@ function drawCueLayer(){
   const ex=sx-dx*L,ey=sy-dy*L,wd=6.5*S;
   clx.setTransform(dpr,0,0,dpr,0,0);clx.globalAlpha=d.fade==null?1:d.fade;
   clx.strokeStyle='rgba(0,0,0,.35)';clx.lineWidth=wd*1.15;clx.lineCap='round';clx.beginPath();clx.moveTo(sx+3*S,sy+4*S);clx.lineTo(ex+3*S,ey+4*S);clx.stroke();
-  drawCue(clx,sx,sy,ex,ey,d.C,wd);clx.globalAlpha=1;
+  drawCue(clx,sx,sy,ex,ey,d.C,wd);
+  // RGB ışık: istaka boyunca akan renkli neon şerit
+  const hue=(performance.now()/12)%360,mx=sx-dx*L*.42,my=sy-dy*L*.42,rg=clx.createLinearGradient(mx,my,ex,ey);
+  for(let i=0;i<=6;i++)rg.addColorStop(i/6,`hsl(${(hue+i*60)%360},100%,60%)`);
+  clx.save();clx.globalCompositeOperation='lighter';clx.lineCap='round';clx.strokeStyle=rg;clx.shadowColor=`hsl(${hue},100%,60%)`;
+  clx.globalAlpha=(d.fade==null?1:d.fade)*.2;clx.lineWidth=wd*1.5;clx.shadowBlur=10;clx.beginPath();clx.moveTo(mx,my);clx.lineTo(ex,ey);clx.stroke();
+  clx.globalAlpha=(d.fade==null?1:d.fade)*.95;clx.lineWidth=wd*.2;clx.shadowBlur=5;clx.beginPath();clx.moveTo(mx,my);clx.lineTo(ex+dx*wd,ey+dy*wd);clx.stroke();
+  clx.restore();clx.globalAlpha=1;
 }
 let tblImg=null,tblKey='';
 function tableImage(){ // masa her karede yeniden çizilmez, bir kez çizilip saklanır
@@ -1804,15 +1882,20 @@ function hold(id,d){
 }
 /* ---- güç çubuğu: aşağı çek, bırakınca vur ---- */
 const pb=$('pbar'),sp=$('spin');let pDrag=false,pStart=0;
-function drawPbar(){
+function drawPbar(){ // ince, yuvarlatılmış RGB güç çubuğu
   const c=pb.getContext('2d'),dpr=window.devicePixelRatio||1,w=pb.width/dpr,h=pb.height/dpr;if(!w||!h)return;
   c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,w,h);
-  c.fillStyle='#17221d';rrp(c,0,0,w,h,12);c.fill();c.strokeStyle='#2f4538';c.lineWidth=1.5;c.stroke();
-  const p=isAI(turn)?0:power/100,fh=(h-8)*p;
-  if(fh>0){const g=c.createLinearGradient(0,4,0,h-4);g.addColorStop(0,'#3fbf6a');g.addColorStop(.55,'#e8c15a');g.addColorStop(1,'#e2453c');
-    c.save();rrp(c,4,4,w-8,h-8,9);c.clip();c.fillStyle=g;c.globalAlpha=.85;c.fillRect(4,4,w-8,fh);c.restore();}
-  c.save();rrp(c,0,0,w,h,12);c.clip();
-  const off=6+p*(h*.55);drawCue(c,w/2,off,w/2,off+h*1.25,cueById(save.cue),8);c.restore();
+  const bw=14,x=(w-bw)/2,y=6,bh=h-12,p=isAI(turn)?0:power/100;
+  const g=c.createLinearGradient(0,y,0,y+bh);[['#a24dff',0],['#3f6dff',.25],['#22e07a',.5],['#ffe23a',.75],['#ff3048',1]].forEach(([col,t])=>g.addColorStop(t,col));
+  c.fillStyle='#080a1e';rrp(c,x-4,y-4,bw+8,bh+8,(bw+8)/2);c.fill();
+  c.strokeStyle='rgba(140,120,255,.55)';c.lineWidth=1.2;c.stroke();
+  c.save();rrp(c,x,y,bw,bh,bw/2);c.clip();c.globalAlpha=.18;c.fillStyle=g;c.fillRect(x,y,bw,bh);
+  c.globalAlpha=1;c.shadowColor='#ffffff';c.shadowBlur=8;c.fillRect(x,y,bw,bh*p);c.restore();
+  for(let i=1;i<10;i++){c.fillStyle='rgba(255,255,255,.18)';c.fillRect(x+2,y+bh*i/10,bw-4,1);}
+  // tutamaç
+  const hy=y+bh*p;c.save();c.shadowColor=p>.75?'#ff3048':p>.5?'#ffe23a':p>.25?'#22e07a':'#7f6dff';c.shadowBlur=12;
+  c.fillStyle='#f4f6ff';rrp(c,x-6,hy-5,bw+12,10,5);c.fill();c.restore();
+  c.fillStyle='#2a2f55';rrp(c,x-2,hy-1.5,bw+4,3,1.5);c.fill();
   $('pv').textContent=Math.round(p*100)+'%';
 }
 pb.addEventListener('pointerdown',e=>{if(!humanTurn())return;ensureAudio();pb.setPointerCapture(e.pointerId);pDrag=true;pStart=e.clientY;power=0;drawPbar();});
