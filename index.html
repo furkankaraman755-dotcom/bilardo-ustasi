@@ -39,6 +39,25 @@ button:disabled{opacity:.45}
 .cur{display:flex;align-items:center;gap:4px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:0 12px;font-weight:800;font-size:15px;white-space:nowrap}
 .cur.cash{color:#6fdc7a}.cur.coins{color:#f3d77a;cursor:pointer}
 .sp1{flex:1}
+.mrow2{display:flex;align-items:center;gap:6px;width:100%;max-width:1000px;justify-content:center}
+.mrow2 .mtitle{flex:1;text-align:center;white-space:nowrap}
+.ib{position:relative;width:62px;height:46px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:19px;padding:0;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.1);border-radius:12px}
+.ib span{font-size:9px;color:#cfe3d4;white-space:nowrap}
+.ib em{position:absolute;top:-4px;right:-4px;background:#e2453c;color:#fff;font-style:normal;font-size:10px;font-weight:800;border-radius:10px;padding:0 5px;display:none}
+.mis{display:flex;align-items:center;gap:10px;background:#0f1a15;border:1px solid #2a3a32;border-radius:12px;padding:8px 10px;text-align:left;width:100%;box-sizing:border-box}
+.mis .t{flex:1;font-size:13px;font-weight:700}.mis .bar{height:7px;background:#0b1410;border-radius:4px;overflow:hidden;margin-top:4px}.mis .bar i{display:block;height:100%;background:#3fd14a}
+.mis .rw{font-size:12px;color:#f3d77a;white-space:nowrap}.mis button{min-width:74px;padding:6px 8px;font-size:12px}
+.dlist{display:flex;flex-direction:column;gap:6px;max-height:52vh;overflow:auto;width:100%}
+.avg{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;margin:8px 0}.avg button{font-size:22px;padding:4px;height:40px}.avg button.on{outline:3px solid #e8c15a}
+.srow{display:flex;align-items:center;gap:10px;justify-content:space-between;margin:3px 0;font-size:13px}.srow button{padding:5px 12px}.srow input[type=range]{flex:1}
+#emoBtn{flex:none;width:38px;height:38px;border-radius:12px;font-size:20px;padding:0;background:#141a22;border:2px solid #2a3442}
+#emoBar{position:absolute;top:46px;left:50%;transform:translateX(-50%);display:none;gap:4px;background:rgba(10,14,20,.92);border:1px solid #2a3442;border-radius:14px;padding:6px;z-index:20}
+#emoBar button{font-size:22px;width:40px;height:40px;padding:0;background:transparent}
+.bub{position:absolute;top:44px;font-size:30px;background:#fff;border-radius:16px;padding:2px 8px;box-shadow:0 4px 12px rgba(0,0,0,.5);z-index:19;animation:bub 2.6s forwards;pointer-events:none}
+@keyframes bub{0%{transform:scale(.3);opacity:0}10%{transform:scale(1.1);opacity:1}18%{transform:scale(1)}85%{opacity:1}100%{opacity:0}}
+#scr{position:relative;width:240px;height:240px;margin:8px auto}#scr .g{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:#f3e7c4;border-radius:12px;padding:4px}
+#scr .g div{background:#fff8e2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#3a2a10;flex-direction:column}
+#scr canvas{position:absolute;inset:0;width:240px;height:240px;border-radius:12px;touch-action:none}
 .mtitle{font-size:22px;font-weight:900;letter-spacing:.5px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
 .tiles{display:flex;gap:12px;width:100%;max-width:900px;flex:1;max-height:260px;min-height:140px}
 .tile{flex:1;height:auto;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:15px;color:#fff;border:3px solid rgba(255,255,255,.25);box-shadow:0 6px 18px rgba(0,0,0,.45),inset 0 -6px 0 rgba(0,0,0,.18);text-shadow:0 2px 4px rgba(0,0,0,.4)}
@@ -58,7 +77,7 @@ button:disabled{opacity:.45}
 .r1{background:linear-gradient(160deg,#2b6e47,#163d28)}.r2{background:linear-gradient(160deg,#2d5f9a,#17345a)}.r3{background:linear-gradient(160deg,#7a3a9a,#3f1d55)}.r4{background:linear-gradient(160deg,#9a7a2a,#4f3b0f)}
 #dlg{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;z-index:7;padding:12px}
 @keyframes mmr{to{transform:rotate(360deg)}}
-#dlg .box{background:#17221d;border:2px solid #e8c15a;border-radius:16px;padding:16px;text-align:center;max-width:560px;width:100%}
+#dlg .box{max-height:calc(100vh - 16px);overflow:auto;box-sizing:border-box;background:#17221d;border:2px solid #e8c15a;border-radius:16px;padding:16px;text-align:center;max-width:560px;width:100%}
 .days{display:flex;gap:6px;justify-content:center;margin:12px 0}
 .day{flex:1;max-width:64px;border-radius:10px;background:#0f1a15;border:2px solid #24352b;padding:6px 2px;font-size:11px}
 .day b{display:block;font-size:13px;color:#f3d77a}.day.done{opacity:.45}.day.now{border-color:#e8c15a;background:#2a2a14}
@@ -219,7 +238,15 @@ button:disabled{opacity:.45}
     <div class="cur cash">💵 <span id="cash">0</span></div>
     <div class="cur coins" id="mcoins">🪙 <span class="cv">0</span></div>
   </div>
-  <div class="mtitle">🎱 Bilardo Ustası</div>
+  <div class="mrow2">
+    <button class="ib" id="xMis">📋<span>Görevler</span><em id="dMis"></em></button>
+    <button class="ib" id="xWheel">🎡<span>Çark</span><em id="dWheel"></em></button>
+    <button class="ib" id="xScr">🎫<span>Kazı Kazan</span><em id="dScr"></em></button>
+    <div class="mtitle">🎱 Bilardo Ustası</div>
+    <button class="ib" id="xAch">🎖️<span>Başarımlar</span><em id="dAch"></em></button>
+    <button class="ib" id="xInbox">✉️<span>Gelen Kutusu</span><em id="dInbox"></em></button>
+    <button class="ib" id="xSet">⚙️<span>Ayarlar</span></button>
+  </div>
   <div class="tiles">
     <button class="tile t1" id="m1v1"><span class="ic">🎱</span><b>1'e 1</b><span>Oyna</span></button>
     <button class="tile t2" id="mEv"><span class="ic">🏆</span><b>Etkinlikler</b><span>Turnuva</span></button>
@@ -284,7 +311,7 @@ button:disabled{opacity:.45}
 <!-- OYUN -->
 <div id="game" class="screen">
   <canvas id="cueLayer" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:60;pointer-events:none"></canvas>
-  <div id="hud"><button id="gmenu" class="hm" aria-label="Menü">☰</button><div class="pside l" id="p0"></div><div class="stake" id="stake"></div><div class="pside r" id="p1"></div></div>
+  <div id="hud"><button id="gmenu" class="hm" aria-label="Menü">☰</button><div class="pside l" id="p0"></div><div class="stake" id="stake"></div><button id="emoBtn" aria-label="Emoji">😊</button><div id="emoBar"></div><div class="pside r" id="p1"></div></div>
   <div id="mid">
     <div class="side lft"><div class="lbl">Güç<br><b id="pv">0%</b></div><canvas id="pbar"></canvas></div>
     <div class="tblwrap"><canvas id="c"></canvas><div id="toast"></div><canvas id="tube"></canvas><canvas id="tray" style="display:none"></canvas></div>
@@ -461,7 +488,7 @@ function matchmake(room,go){
   dlg(`<h3 style="margin:4px 0 10px">Rakip aranıyor…</h3><div id="mmSpin" style="font-size:40px;animation:mmr 1s linear infinite;display:inline-block">🎱</div><div class="stats" style="margin-top:8px">${room?room.name+' · 🪙 '+fmt(room.prize):'Turnuva'}</div>`);
   setTimeout(()=>{
     dlg(`<div style="display:flex;align-items:center;justify-content:center;gap:18px">
-      <div>${`<div class="av" style="background:${AVC[(save.pid||0)%AVC.length]};width:58px;height:58px;font-size:26px;margin:auto">${me[0].toLocaleUpperCase('tr-TR')}</div>`}<b>${me}</b><div class="stats">⭐ ${save.level}</div></div>
+      <div>${`<div class="av" style="background:${myAvC()};width:58px;height:58px;font-size:26px;margin:auto">${myAvT()}</div>`}<b>${me}</b><div class="stats">⭐ ${save.level}</div></div>
       <b style="font-size:30px;color:#f3d77a">VS</b>
       <div>${oppAv(OPP,58).replace('class="av" style="','class="av" style="margin:auto;')}<b>${OPP.name}</b><div class="stats">⭐ ${OPP.lvl}</div></div></div>
       <div class="stats" style="margin-top:10px">${room?'🏆 '+fmt(room.prize):''}</div>`);
@@ -472,7 +499,7 @@ function refreshCoins(){
   document.querySelectorAll('.cv').forEach(e=>e.textContent=save.coins.toLocaleString('tr-TR'));
   $('stats').textContent=`Galibiyet: ${save.wins} · Mağlubiyet: ${save.losses}`;
   $('cash').textContent=save.cash;$('pname').textContent=save.name||'Oyuncu';$('pid').textContent=save.pid||'-';
-  $('av').textContent=(save.name||'O')[0].toLocaleUpperCase('tr-TR');$('av').style.background=AVC[save.pid%AVC.length];
+  $('av').textContent=myAvT();$('av').style.background=myAvC();extrasDots();
   $('plv').textContent=save.level;$('pbd').textContent=ROOMS.filter(r=>(save.rw[r.id]||0)>=BADGE_WINS).length;$('pxp').style.width=Math.min(100,save.xp/xpNeed(save.level)*100)+'%';
   $('dDot').style.display=dailyReady()?'block':'none';
   document.querySelectorAll('.gv').forEach(e=>e.textContent=save.gems);
@@ -541,7 +568,7 @@ setInterval(()=>{if($('menu').classList.contains('show'))renderSlots();},1000);
 /* ---- profil ---- */
 function openProfile(){
   const badges=ROOMS.filter(r=>(save.rw[r.id]||0)>=BADGE_WINS);
-  let h=`<div style="display:flex;align-items:center;gap:12px;justify-content:center"><div class="av" style="background:${AVC[save.pid%AVC.length]};width:54px;height:54px;font-size:24px">${(save.name||'O')[0].toLocaleUpperCase('tr-TR')}</div>
+  let h=`<div style="display:flex;align-items:center;gap:12px;justify-content:center"><div class="av" style="background:${myAvC()};width:54px;height:54px;font-size:24px">${myAvT()}</div>
     <div style="text-align:left"><b style="font-size:20px">${save.name}</b><div class="stats">ID: ${save.pid} · ⭐ Seviye ${save.level}</div><div class="stats">Galibiyet ${save.wins} · Mağlubiyet ${save.losses} · İstaka ${save.cues.length} · Koleksiyon gücü ${collPower()}</div></div></div>
     <h3 style="margin:12px 0 6px">🏅 Rozetler (${badges.length}/${ROOMS.length})</h3><div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-height:40vh;overflow:auto">`;
   for(const r of ROOMS){const w=save.rw[r.id]||0,ok=w>=BADGE_WINS;
@@ -702,7 +729,7 @@ function renderLead(msg){
   body.innerHTML=`${msg?`<div class="stats" style="color:#f3d77a">${msg}</div>`:''}<div class="lg2"><div class="ic">${L.ic}</div><div style="flex:1"><b style="font-size:22px;color:#f3d77a">${L.n}</b><div class="stats">Bitmesine: ${hm(end)}</div>
     <div class="stats">Lig ödülü: ${L.rw?'+'+fmt(L.rw)+' 🪙 +1 💎':'—'}</div></div><div style="text-align:right"><div class="stats">Haftalık kazanç</div><b style="font-size:22px">🪙 ${fmt(e)}</b></div></div>
     ${N?`<div class="lrow" style="background:#1f5a1f">${N.ic} <b>${N.n}</b>'ne yükselmek için haftalık kazancın <b>${fmt(N.min)}</b> 🪙 olmalı.</div>`:''}
-    <div class="lrow me"><b style="width:40px">#1</b><div class="av" style="background:${AVC[save.pid%AVC.length]};width:32px;height:32px;font-size:15px">${(save.name||'O')[0].toLocaleUpperCase('tr-TR')}</div><b style="flex:1">${save.name} ⭐${save.level}</b><b>🪙 ${fmt(e)}</b></div>
+    <div class="lrow me"><b style="width:40px">#1</b><div class="av" style="background:${myAvC()};width:32px;height:32px;font-size:15px">${myAvT()}</div><b style="flex:1">${save.name} ⭐${save.level}</b><b>🪙 ${fmt(e)}</b></div>
     <div class="stats">Diğer oyuncular çevrim içi sürümle bu listeye gelecek.</div>`;
 }
 let pvOpen=false;
@@ -745,7 +772,7 @@ document.querySelectorAll('.back').forEach(b=>b.onclick=()=>show('menu'));
 $('lgG').onclick=$('lgF').onclick=()=>{$('lmsg').textContent='Google ve Facebook girişi Play Store sürümünde açılacak. Şimdilik misafir olarak başla, hesabın sonra bağlanır.';};
 $('lgGuest').onclick=()=>{
   const n=$('lname').value.trim();if(n.length<2){$('lmsg').textContent='Adını yaz (en az 2 harf).';return;}
-  save.name=n;save.pid=100000+Math.floor(Math.random()*900000);persist();refreshCoins();show('menu');
+  save.name=n;save.pid=100000+Math.floor(Math.random()*900000);persist();inboxCheck();refreshCoins();show('menu');
 };
 /* ---- 1'e 1 masalar ---- */
 function renderRooms(){
@@ -801,7 +828,7 @@ $('mMini').onclick=()=>{
   dlg(`<h2 style="margin:0">🎯 Şanslı Atış</h2><div class="stats" style="margin:8px 0">Tek atış hakkın var! Topu hangi deliğe sokarsan o deliğin ödülünü kazanırsın.<br>Günde 1 ücretsiz deneme, sonrası 1 💵.</div>
     <div style="display:flex;gap:8px;justify-content:center"><button class="gold" id="lsGo">${free?'Ücretsiz oyna':'💵 1 ile oyna'}</button><button id="lsNo">Kapat</button></div><div id="lsM" class="stats"></div>`);
   $('lsNo').onclick=closeDlg;
-  $('lsGo').onclick=()=>{if(free)save.lucky=Date.now();else{if(save.cash<1){$('lsM').textContent='Yeterli 💵 yok.';return;}save.cash-=1;}persist();closeDlg();startGame('solo',null,{kind:'lucky',game:'lucky',label:'Şanslı Atış'});};
+  $('lsGo').onclick=()=>{if(free)save.lucky=Date.now();else{if(save.cash<1){$('lsM').textContent='Yeterli 💵 yok.';return;}save.cash-=1;}persist();closeDlg();track('lucky');startGame('solo',null,{kind:'lucky',game:'lucky',label:'Şanslı Atış'});};
 };
 $('sback').onclick=()=>show('menu');
 
@@ -847,7 +874,8 @@ const cueOf=p=>cueEff(isAI(p)?CUES[0]:cueById(save.cue));
 let ac=null;
 function ensureAudio(){try{if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume().catch(()=>{});if(!SB){sfxInit();setTimeout(()=>{if(!SB)buildSB();},0);}}catch(e){}}
 /* ---- tok ve yumuşak ses efektleri ---- */
-let sfxOut=null,noiseBuf=null;
+let sfxOut=null,noiseBuf=null,masterOut=null;
+function applyVol(){if(masterOut){const st=save.set||{};masterOut.gain.value=st.mute?0:.95*(st.vol==null?1:st.vol);}}
 function sfxInit(){
   if(sfxOut||!ac)return;
   const bus=ac.createGain();bus.gain.value=1;
@@ -858,7 +886,7 @@ function sfxInit(){
   const conv=ac.createConvolver(),L=Math.floor(ac.sampleRate*.45),ir=ac.createBuffer(2,L,ac.sampleRate);
   for(let ch=0;ch<2;ch++){const d=ir.getChannelData(ch);for(let i=0;i<L;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/L,3.2)*(i<ac.sampleRate*.008?0:1);}
   conv.buffer=ir;const wet=ac.createGain();wet.gain.value=.06;
-  bus.connect(lp);lp.connect(cmp);bus.connect(conv).connect(wet).connect(cmp);cmp.connect(out).connect(ac.destination);sfxOut=bus;
+  bus.connect(lp);lp.connect(cmp);bus.connect(conv).connect(wet).connect(cmp);cmp.connect(out).connect(ac.destination);sfxOut=bus;masterOut=out;applyVol();
   noiseBuf=ac.createBuffer(1,ac.sampleRate*.4,ac.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
 }
 function tone(t,f0,f1,dur,vol,type){const o=ac.createOscillator(),g=ac.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f1,t+dur);
@@ -1068,7 +1096,7 @@ function shoot(){
   cueAnim={t0:performance.now(),x:cue.x+RAIL,y:cue.y+RAIL,a:aim,back:R+6+power*.45,C:cueOf(turn)};
   const sp=pw2v(power)*cueOf(turn).pow;
   cue.vx=Math.cos(aim)*sp;cue.vy=Math.sin(aim)*sp;
-  const sk=cueOf(turn).spinK;shotSpin=isAI(turn)?null:{x:spinX*sk,y:spinY*sk,dx:Math.cos(aim),dy:Math.sin(aim),used:0};
+  const sk=cueOf(turn).spinK;shotSpin=isAI(turn)?null:{x:spinX*sk,y:spinY*sk,dx:Math.cos(aim),dy:Math.sin(aim),used:0};if(!isAI(turn)&&Math.hypot(spinX,spinY)>.25&&mode==='ai')track('spin',1);
   cue.sv=isAI(turn)||(!spinX&&!spinY)?null:{t:-spinY*sk*.45*(.4+sp/MAXV),s:spinX*sk*.35*(.4+sp/MAXV),dx:Math.cos(aim),dy:Math.sin(aim)};
   if(!isAI(turn)){spinX=spinY=0;drawSpin();}
   $('spinBig').style.display='none';
@@ -1088,6 +1116,7 @@ function respawnCue(){cue.pot=false;cue.vx=cue.vy=0;[cue.x,cue.y]=freeSpot(TW*0.
 function endShot(){
   drawTray();
   const p=turn,s=shotCtx,potted=shotPotted.filter(i=>i!==0),scratch=shotPotted.includes(0);
+  try{shotHook(p,potted,scratch);}catch(e){}
   if(G()==='practice'){
     if(scratch){respawnCue();ballInHand=true;}
     if(!balls.some(b=>b.id&&!b.pot)){setMsg('Harika! Tüm toplar girdi. Yeni dizilim…');setTimeout(()=>{if(G()==='practice')newGame();},900);}
@@ -1180,6 +1209,7 @@ function gameOver(w,why){
     else{title='😞 Turnuvadan elendin';again='Yeni turnuva';}
     persist();refreshCoins();
   }
+  try{overHook(w,k);}catch(e){}
   $('ot').textContent=title;$('again').textContent=again;
   $('op').textContent=why;$('oe').textContent=earn;$('olv').textContent=up;
   $('ochest').style.display=pendingChest?'block':'none';
@@ -1200,7 +1230,7 @@ function updateHud(){
   for(let i=0;i<2;i++){
     const el=$('p'+i);el.classList.toggle('on',turn===i&&!over);
     el.style.visibility=mode==='solo'&&i===1?'hidden':'visible';
-    const ai=isAI(i),av=ai&&OPP?{t:OPP.name[0].toLocaleUpperCase('tr-TR'),bg:OPP.bg}:{t:(NAMES[i]||'O')[0].toLocaleUpperCase('tr-TR'),bg:AVC[((save.pid||0)+i*3)%AVC.length]};
+    const ai=isAI(i),av=ai&&OPP?{t:OPP.name[0].toLocaleUpperCase('tr-TR'),bg:OPP.bg}:(i===0&&mode!=='2p')?{t:myAvT(),bg:myAvC()}:{t:(NAMES[i]||'O')[0].toLocaleUpperCase('tr-TR'),bg:AVC[((save.pid||0)+i*3)%AVC.length]};
     let row='';
     if(G()==='9')row=lo.slice(0,7).map(b=>bdot(b.id)).join('');
     else if(G()==='8'){const g=groups[i];
@@ -1751,7 +1781,7 @@ cv.addEventListener('pointermove',e=>{
       const da=(rx*my-ry*mx)/r2;
       // ekran hızına göre kazanç: yavaş = mikro ayar, hızlı = geniş açı
       const v=Math.hypot(e.clientX-A.sx,e.clientY-A.sy)/Math.max(1,now-A.t),k=Math.min(1,Math.max(0,(v-SPEED_SLOW)/(SPEED_FAST-SPEED_SLOW)));
-      aim=Math.atan2(Math.sin(aim+da*(SENSITIVITY+(FAST_GAIN-SENSITIVITY)*k)),Math.cos(aim+da*(SENSITIVITY+(FAST_GAIN-SENSITIVITY)*k)));
+      const SEN=SENSITIVITY*((save.set&&save.set.sens)||1);aim=Math.atan2(Math.sin(aim+da*(SEN+(FAST_GAIN-SEN)*k)),Math.cos(aim+da*(SEN+(FAST_GAIN-SEN)*k)));
     }
     A.px=p.x;A.py=p.y;A.sx=e.clientX;A.sy=e.clientY;A.t=now;
   }
@@ -1915,6 +1945,246 @@ $('again').onclick=()=>{
 addEventListener('resize',resize);
 
 refreshCoins();show(save.pid?'menu':'login');loop();
+/* ================= EKSTRALAR: görevler, çark, kazı kazan, başarımlar, gelen kutusu, ayarlar, avatar, emoji ================= */
+const today=()=>new Date().toDateString();
+save.set=Object.assign({vol:1,mute:false,sens:1},save.set||{});
+save.st=Object.assign({pots:0,tours:0,spins:0,matches:0,scr:0},save.st||{});
+save.ach=save.ach||{};save.inbox=save.inbox||[];
+const AV_EMO=['🎱','😎','🦁','🐺','🦅','🐉','👑','🔥','⚡','🐯','🦊','🐼','🤠','🧔','👩','🧑‍🚀','🐻','🦈','🐍','🦂','🎯','💎','🏆','🌙'];
+function myAvT(){return save.avatar&&save.avatar.e?save.avatar.e:(save.name||'O')[0].toLocaleUpperCase('tr-TR');}
+function myAvC(){return save.avatar&&save.avatar.c?save.avatar.c:AVC[(save.pid||0)%AVC.length];}
+function give(rw){const t=[];if(!rw)return '';
+  if(rw.coins){save.coins+=rw.coins;t.push('+'+fmt(rw.coins)+' 🪙');}
+  if(rw.cash){save.cash+=rw.cash;t.push('+'+rw.cash+' 💵');}
+  if(rw.gems){save.gems+=rw.gems;t.push('+'+rw.gems+' 💎');}
+  if(rw.xp){const u=addXp(rw.xp);t.push('+'+rw.xp+' XP');if(u)t.push(u);}
+  persist();refreshCoins();return t.join(' ');}
+const rwTxt=rw=>[rw.coins?fmt(rw.coins)+' 🪙':'',rw.cash?rw.cash+' 💵':'',rw.gems?rw.gems+' 💎':'',rw.xp?rw.xp+' XP':''].filter(Boolean).join(' + ');
+
+/* ---- günlük görevler ---- */
+const MISSIONS=[
+ {id:'play3',t:'3 maç oyna',ev:'play',n:3,rw:{coins:500,xp:30}},
+ {id:'play5',t:'5 maç oyna',ev:'play',n:5,rw:{coins:900,xp:50}},
+ {id:'win1',t:'1 maç kazan',ev:'win',n:1,rw:{coins:400}},
+ {id:'win2',t:'2 maç kazan',ev:'win',n:2,rw:{coins:1000,xp:40}},
+ {id:'win4',t:'4 maç kazan',ev:'win',n:4,rw:{cash:2}},
+ {id:'pot10',t:'Maçlarda 10 top sok',ev:'pot',n:10,rw:{coins:600}},
+ {id:'pot25',t:'Maçlarda 25 top sok',ev:'pot',n:25,rw:{cash:1,coins:500}},
+ {id:'spin5',t:'5 kez falsolu vuruş yap',ev:'spin',n:5,rw:{coins:450}},
+ {id:'hi1',t:'Bursa veya üstü bir masada kazan',ev:'winHi',n:1,rw:{coins:1500}},
+ {id:'lucky',t:'Şanslı Atış oyna',ev:'lucky',n:1,rw:{coins:300}},
+ {id:'wheel',t:'Çarkı çevir',ev:'wheel',n:1,rw:{coins:250}},
+ {id:'scr',t:'Kazı kazan oyna',ev:'scr',n:1,rw:{coins:300}},
+];
+function msDay(){
+  if(save.ms&&save.ms.day===today())return save.ms;
+  const pool=MISSIONS.slice(),ids=[];while(ids.length<3){const m=pool.splice(Math.random()*pool.length|0,1)[0];if(!ids.some(i=>MISSIONS.find(x=>x.id===i).ev===m.ev))ids.push(m.id);}
+  save.ms={day:today(),ids,prog:{},done:{},bonus:false};persist();return save.ms;
+}
+function track(ev,n){
+  n=n||1;const m=msDay();
+  for(const id of m.ids){const d=MISSIONS.find(x=>x.id===id);if(d.ev===ev)m.prog[id]=Math.min(d.n,(m.prog[id]||0)+n);}
+  if(ev==='pot')save.st.pots+=n;if(ev==='tour')save.st.tours+=n;if(ev==='wheel')save.st.spins+=n;if(ev==='scr')save.st.scr+=n;if(ev==='play')save.st.matches+=n;
+  persist();extrasDots();
+}
+function openMissions(){
+  const m=msDay();let h='<h2 style="margin:0 0 4px">📋 Günlük Görevler</h2><div class="stats">Her gün yenilenir · üçünü bitir, +5 💎 bonus al</div><div class="dlist" style="margin-top:8px">';
+  for(const id of m.ids){const d=MISSIONS.find(x=>x.id===id),pr=m.prog[id]||0,ok=pr>=d.n,dn=m.done[id];
+    h+=`<div class="mis"><div style="font-size:24px">${dn?'✅':ok?'🎁':'🎯'}</div><div class="t">${d.t}<div class="bar"><i style="width:${pr/d.n*100}%"></i></div><div class="stats" style="text-align:left">${pr}/${d.n}</div></div><div class="rw">${rwTxt(d.rw)}</div>
+      <button ${ok&&!dn?'class="gold"':'disabled'} data-m="${id}">${dn?'Alındı':ok?'Al':'Devam'}</button></div>`;}
+  const all=m.ids.every(i=>m.done[i]);
+  h+=`<div class="mis"><div style="font-size:24px">💎</div><div class="t">Tüm görevler bonusu</div><div class="rw">5 💎</div><button ${all&&!m.bonus?'class="gold"':'disabled'} id="msB">${m.bonus?'Alındı':'Al'}</button></div>`;
+  h+='</div><div id="msM" class="stats" style="min-height:16px"></div><button id="msX" style="min-width:140px;margin-top:6px">Kapat</button>';
+  dlg(h);$('msX').onclick=()=>{closeDlg();refreshCoins();};
+  document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{const id=b.dataset.m,d=MISSIONS.find(x=>x.id===id);if((m.prog[id]||0)<d.n||m.done[id])return;m.done[id]=1;const t=give(d.rw);openMissions();$('msM').textContent=t;});
+  $('msB').onclick=()=>{if(!all||m.bonus)return;m.bonus=true;const t=give({gems:5});openMissions();$('msM').textContent=t;};
+}
+
+/* ---- şans çarkı ---- */
+const WHEEL=[{t:'250',rw:{coins:250},c:'#3c8dde',w:22},{t:'1 💵',rw:{cash:1},c:'#2fa84f',w:10},{t:'500',rw:{coins:500},c:'#9b5de5',w:20},{t:'3 💎',rw:{gems:3},c:'#00a8a8',w:8},
+  {t:'1K',rw:{coins:1000},c:'#e2453c',w:16},{t:'100',rw:{coins:100},c:'#ff9800',w:14},{t:'2,5K',rw:{coins:2500},c:'#e91e63',w:7},{t:'10K',rw:{coins:10000},c:'#c9962e',w:3}];
+const WHEEL_H=8;
+const wheelFree=()=>Date.now()-(save.wheel||0)>=WHEEL_H*HOUR;
+function drawWheel(cv,rot){
+  const c=cv.getContext('2d'),S=cv.width,r=S/2-6,n=WHEEL.length;c.clearRect(0,0,S,S);c.save();c.translate(S/2,S/2);
+  c.fillStyle='#e8c15a';c.beginPath();c.arc(0,0,r+5,0,7);c.fill();
+  for(let i=0;i<n;i++){const a0=rot+i*2*Math.PI/n-Math.PI/2-Math.PI/n,a1=a0+2*Math.PI/n;
+    c.fillStyle=WHEEL[i].c;c.beginPath();c.moveTo(0,0);c.arc(0,0,r,a0,a1);c.closePath();c.fill();c.strokeStyle='rgba(255,255,255,.5)';c.lineWidth=2;c.stroke();
+    c.save();c.rotate((a0+a1)/2);c.fillStyle='#fff';c.font=`900 ${S*.07}px Arial`;c.textAlign='right';c.textBaseline='middle';c.fillText(WHEEL[i].t+(WHEEL[i].rw.coins?' 🪙':''),r-10,0);c.restore();}
+  c.fillStyle='#1a1208';c.beginPath();c.arc(0,0,r*.16,0,7);c.fill();c.fillStyle='#f0cf6a';c.font=`900 ${S*.08}px Arial`;c.textAlign='center';c.textBaseline='middle';c.fillText('★',0,1);
+  c.restore();
+  c.fillStyle='#fff';c.strokeStyle='#1a1208';c.lineWidth=2;c.beginPath();c.moveTo(S/2-12,2);c.lineTo(S/2+12,2);c.lineTo(S/2,26);c.closePath();c.fill();c.stroke();
+}
+function openWheel(){
+  const free=wheelFree(),left=Math.ceil((WHEEL_H*HOUR-(Date.now()-(save.wheel||0)))/60000);
+  dlg(`<h2 style="margin:0">🎡 Şans Çarkı</h2><canvas id="whC" width="520" height="520" style="width:min(260px,52vh);height:min(260px,52vh);display:block;margin:6px auto"></canvas>
+    <div id="whM" class="stats" style="min-height:18px">${free?'Ücretsiz çevirme hakkın var!':'Sonraki ücretsiz: '+Math.floor(left/60)+' sa '+left%60+' dk'}</div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:6px"><button class="gold" id="whGo">${free?'Ücretsiz Çevir':'Çevir (5 💎)'}</button><button id="whX">Kapat</button></div>`);
+  const cv=$('whC');let rot=0,busy=false;drawWheel(cv,0);
+  $('whX').onclick=()=>{if(!busy){closeDlg();refreshCoins();}};
+  $('whGo').onclick=()=>{
+    if(busy)return;const fr=wheelFree();
+    if(!fr){if(save.gems<5){$('whM').textContent='Yeterli 💎 yok.';return;}save.gems-=5;}else save.wheel=Date.now();
+    persist();refreshCoins();ensureAudio();busy=true;
+    let tot=WHEEL.reduce((a,b)=>a+b.w,0),x=Math.random()*tot,k=0;for(;k<WHEEL.length;k++){x-=WHEEL[k].w;if(x<0)break;}k=Math.min(k,WHEEL.length-1);
+    const n=WHEEL.length,target=-k*2*Math.PI/n+(Math.random()-.5)*1.2*Math.PI/n,start=rot,end=target-2*Math.PI*(6+Math.floor(Math.random()*2)),t0=performance.now(),D=4200;let lastSeg=-1;
+    const step=now=>{const q=Math.min(1,(now-t0)/D),e=1-Math.pow(1-q,3.2);rot=start+(end-start)*e;drawWheel(cv,rot);
+      const seg=Math.floor(((-rot+Math.PI/n)/(2*Math.PI/n))%n+n)%n;if(seg!==lastSeg){lastSeg=seg;try{play('click',.25,1.8);}catch(_){}}
+      if(q<1)requestAnimationFrame(step);else{busy=false;const t=give(WHEEL[k].rw);track('wheel');$('whM').innerHTML=`<b style="color:#f3d77a;font-size:18px">🎉 ${t}</b>`;$('whGo').textContent='Tekrar (5 💎)';rot=rot%(2*Math.PI);}};
+    requestAnimationFrame(step);
+  };
+}
+
+/* ---- kazı kazan ---- */
+const SCR_P=[{t:'250',rw:{coins:250},ic:'🪙'},{t:'500',rw:{coins:500},ic:'🪙'},{t:'1K',rw:{coins:1000},ic:'🪙'},{t:'5K',rw:{coins:5000},ic:'🪙'},{t:'2',rw:{cash:2},ic:'💵'},{t:'5',rw:{gems:5},ic:'💎'}];
+const scrFree=()=>save.scrDay!==today();
+function openScratch(){
+  const free=scrFree();
+  dlg(`<h2 style="margin:0">🎫 Kazı Kazan</h2><div class="stats">Aynı ödülden 3 tane bulursan kazanırsın!</div>
+    <div id="scr"></div><div id="scM" class="stats" style="min-height:18px"></div>
+    <div style="display:flex;gap:8px;justify-content:center"><button class="gold" id="scGo">${free?'Ücretsiz Kart':'Kart Al (1 💵)'}</button><button id="scX">Kapat</button></div>`);
+  $('scX').onclick=()=>{closeDlg();refreshCoins();};
+  $('scGo').onclick=()=>{
+    if(!scrFree()){if(save.cash<1){$('scM').textContent='Yeterli 💵 yok.';return;}save.cash-=1;}else save.scrDay=today();
+    persist();refreshCoins();track('scr');$('scGo').disabled=true;
+    // sonucu önceden belirle
+    const win=Math.random()<.42,wi=win?[0,0,0,1,1,1,2,2,4,3,5][Math.random()*11|0]:-1,cells=[];
+    if(win)cells.push(wi,wi,wi);const cnt={};if(win)cnt[wi]=3;
+    while(cells.length<9){const j=Math.random()*SCR_P.length|0;if(j===wi||(cnt[j]||0)>=2)continue;cnt[j]=(cnt[j]||0)+1;cells.push(j);}
+    shuffle(cells);
+    $('scr').innerHTML='<div class="g">'+cells.map(j=>`<div><span style="font-size:22px">${SCR_P[j].ic}</span>${SCR_P[j].t}</div>`).join('')+'</div><canvas width="480" height="480"></canvas>';
+    const cv=$('scr').querySelector('canvas'),c=cv.getContext('2d');
+    const g=c.createLinearGradient(0,0,480,480);g.addColorStop(0,'#c9ced6');g.addColorStop(.5,'#f4f5f8');g.addColorStop(1,'#9aa1ad');c.fillStyle=g;c.fillRect(0,0,480,480);
+    c.fillStyle='rgba(60,70,80,.55)';c.font='900 44px Arial';c.textAlign='center';c.fillText('KAZI',240,230);c.font='700 26px Arial';c.fillText('parmağınla sürt',240,275);
+    c.globalCompositeOperation='destination-out';let down=false,mv=0,done=false;
+    const at=e=>{const r=cv.getBoundingClientRect();return [(e.clientX-r.left)/r.width*480,(e.clientY-r.top)/r.height*480];};
+    const fin=()=>{if(done)return;done=true;cv.style.transition='opacity .4s';cv.style.opacity=0;
+      if(win){const t=give(SCR_P[wi].rw);$('scM').innerHTML=`<b style="color:#f3d77a;font-size:18px">🎉 3× ${SCR_P[wi].ic} ${SCR_P[wi].t} — ${t}</b>`;}
+      else $('scM').textContent='Bu sefer olmadı. Yarın yine ücretsiz kart var!';
+      $('scGo').disabled=false;$('scGo').textContent='Kart Al (1 💵)';};
+    const rub=e=>{if(!down||done)return;const [x,y]=at(e);c.beginPath();c.arc(x,y,34,0,7);c.fill();
+      if(++mv%8===0){const d=c.getImageData(0,0,480,480).data;let clr=0,tot=0;for(let i=3;i<d.length;i+=4*97){tot++;if(d[i]<40)clr++;}if(clr/tot>.45)fin();}};
+    cv.onpointerdown=e=>{down=true;cv.setPointerCapture(e.pointerId);rub(e);};cv.onpointermove=rub;cv.onpointerup=cv.onpointercancel=()=>down=false;
+  };
+}
+
+/* ---- başarımlar ---- */
+const ACH=[
+ {id:'win',ic:'🏆',t:'Galibiyet',v:()=>save.wins,tiers:[[1,{coins:500}],[10,{coins:2000}],[50,{cash:3}],[100,{cash:5,gems:10}],[500,{gems:40}]]},
+ {id:'pot',ic:'🎱',t:'Sokulan top',v:()=>save.st.pots,tiers:[[50,{coins:500}],[250,{coins:2500}],[1000,{cash:3}],[5000,{gems:25}]]},
+ {id:'lvl',ic:'⭐',t:'Seviye',v:()=>save.level,tiers:[[5,{coins:1000}],[10,{cash:2}],[25,{cash:5}],[50,{gems:30}],[100,{gems:80}]]},
+ {id:'cue',ic:'🎯',t:'İstaka koleksiyonu',v:()=>save.cues.length,tiers:[[3,{coins:1000}],[8,{cash:2}],[15,{gems:10}],[30,{gems:30}]]},
+ {id:'bdg',ic:'🏅',t:'Masa rozetleri',v:()=>ROOMS.filter(r=>(save.rw[r.id]||0)>=BADGE_WINS).length,tiers:[[1,{cash:2}],[5,{gems:15}],[10,{gems:40}],[17,{gems:100}]]},
+ {id:'tour',ic:'👑',t:'Turnuva şampiyonluğu',v:()=>save.st.tours,tiers:[[1,{coins:2000}],[5,{cash:4}],[20,{gems:25}]]},
+ {id:'mat',ic:'🎮',t:'Oynanan maç',v:()=>save.st.matches,tiers:[[10,{coins:1000}],[50,{cash:2}],[200,{gems:15}],[1000,{gems:50}]]},
+ {id:'whl',ic:'🎡',t:'Çark çevirme',v:()=>save.st.spins,tiers:[[5,{coins:500}],[25,{cash:2}],[100,{gems:10}]]},
+];
+const achClaimable=a=>{const k=save.ach[a.id]||0;return k<a.tiers.length&&a.v()>=a.tiers[k][0];};
+function openAch(){
+  let h='<h2 style="margin:0 0 6px">🎖️ Başarımlar</h2><div class="dlist">';
+  for(const a of ACH){const k=save.ach[a.id]||0,fin=k>=a.tiers.length,tg=fin?a.tiers[a.tiers.length-1]:a.tiers[k],v=a.v(),ok=!fin&&v>=tg[0];
+    h+=`<div class="mis"><div style="font-size:24px">${a.ic}</div><div class="t">${a.t} ${'★'.repeat(k)}<span style="opacity:.35">${'★'.repeat(a.tiers.length-k)}</span>
+      <div class="bar"><i style="width:${Math.min(100,v/tg[0]*100)}%"></i></div><div class="stats" style="text-align:left">${fmt(Math.min(v,tg[0]))}/${fmt(tg[0])}</div></div>
+      <div class="rw">${fin?'Tamamlandı':rwTxt(tg[1])}</div><button ${ok?'class="gold"':'disabled'} data-a="${a.id}">${fin?'✓':ok?'Al':'—'}</button></div>`;}
+  h+='</div><div id="acM" class="stats" style="min-height:16px"></div><button id="acX" style="min-width:140px;margin-top:6px">Kapat</button>';
+  dlg(h);$('acX').onclick=()=>{closeDlg();refreshCoins();};
+  document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const a=ACH.find(x=>x.id===b.dataset.a);if(!achClaimable(a))return;const k=save.ach[a.id]||0;save.ach[a.id]=k+1;const t=give(a.tiers[k][1]);openAch();$('acM').textContent=t;});
+}
+
+/* ---- gelen kutusu ---- */
+function inboxCheck(){
+  if(!save.name)return;
+  if(!save.inboxInit){save.inboxInit=1;
+    save.inbox.unshift({id:Date.now()+1,ic:'🎉',t:'Bilardo Ustası\'na hoş geldin!',txt:'Hoş geldin hediyen hazır. İyi oyunlar!',rw:{coins:500,gems:2}});
+    save.inbox.unshift({id:Date.now()+2,ic:'📰',t:'Yeni özellikler',txt:'Günlük görevler, şans çarkı, kazı kazan, başarımlar, avatarlar ve maç içi emojiler eklendi.'});}
+  if(save.inDay!==today()){save.inDay=today();const v=150+Math.min(save.level,20)*50;
+    save.inbox.unshift({id:Date.now(),ic:'🎁',t:'Günlük hediye',txt:'Bugünkü hediyen geldi.',rw:{coins:v}});}
+  save.inbox=save.inbox.slice(0,20);persist();
+}
+function openInbox(){
+  inboxCheck();let h='<h2 style="margin:0 0 6px">✉️ Gelen Kutusu</h2><div class="dlist">';
+  if(!save.inbox.length)h+='<div class="stats">Mesaj yok.</div>';
+  for(const m of save.inbox)h+=`<div class="mis"><div style="font-size:24px">${m.ic}</div><div class="t">${m.t}<div class="stats" style="text-align:left">${m.txt}</div></div>
+    ${m.rw?`<div class="rw">${rwTxt(m.rw)}</div><button ${m.c?'disabled':'class="gold"'} data-i="${m.id}">${m.c?'Alındı':'Al'}</button>`:''}</div>`;
+  const any=save.inbox.some(m=>m.rw&&!m.c);
+  h+=`</div><div id="ibM" class="stats" style="min-height:16px"></div><div style="display:flex;gap:8px;justify-content:center;margin-top:6px">${any?'<button class="gold" id="ibAll">Hepsini Al</button>':''}<button id="ibX" style="min-width:120px">Kapat</button></div>`;
+  dlg(h);$('ibX').onclick=()=>{closeDlg();refreshCoins();};
+  const take=ms=>{const t=[];for(const m of ms){if(m.rw&&!m.c){m.c=1;t.push(give(m.rw));}}openInbox();$('ibM').textContent=t.join(' · ');};
+  document.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>take(save.inbox.filter(m=>String(m.id)===b.dataset.i)));
+  if(any)$('ibAll').onclick=()=>take(save.inbox);
+}
+
+/* ---- ayarlar & avatar ---- */
+function openSettings(){
+  const st=save.set;
+  dlg(`<h2 style="margin:0 0 6px">⚙️ Ayarlar</h2><div style="max-width:420px;margin:auto">
+    <div class="srow"><span>🔊 Ses</span><button id="stMute" style="min-width:90px">${st.mute?'Kapalı':'Açık'}</button></div>
+    <div class="srow"><span>Ses düzeyi</span><input type="range" id="stVol" min="0" max="1" step=".05" value="${st.vol}"></div>
+    <div class="srow"><span>🎯 Nişan hassasiyeti</span><input type="range" id="stSens" min=".4" max="2" step=".05" value="${st.sens}"><b id="stSv" style="width:40px">${st.sens.toFixed(2)}×</b></div>
+    <div class="srow"><span>✏️ Adın</span><input id="stName" maxlength="14" value="${(save.name||'').replace(/"/g,'')}" style="flex:1;padding:6px;border-radius:8px;border:1px solid #2a3a32;background:#0b1410;color:#fff"><button id="stNm">Kaydet</button></div>
+    <div class="srow"><span>🙂 Avatar</span><div class="av" style="background:${myAvC()}">${myAvT()}</div><button id="stAv">Değiştir</button></div>
+    <div class="srow"><span>🌐 Dil</span><b>Türkçe</b></div>
+    <div class="srow"><span>👤 Hesap</span><span class="stats">ID: ${save.pid} · Misafir · Google/Facebook bağlama Play Store sürümünde</span></div>
+    <div class="srow"><span>⚠️ İlerlemeyi sıfırla</span><button id="stRst" style="background:#7a1c22">Sıfırla</button></div>
+    <div id="stM" class="stats" style="min-height:16px"></div><button id="stX" style="min-width:140px">Kapat</button></div>`);
+  $('stX').onclick=closeDlg;
+  $('stMute').onclick=()=>{st.mute=!st.mute;$('stMute').textContent=st.mute?'Kapalı':'Açık';persist();applyVol();};
+  $('stVol').oninput=e=>{st.vol=+e.target.value;persist();applyVol();};
+  $('stVol').onchange=()=>{ensureAudio();try{play('click',.6,1);}catch(_){}};
+  $('stSens').oninput=e=>{st.sens=+e.target.value;$('stSv').textContent=st.sens.toFixed(2)+'×';persist();};
+  $('stNm').onclick=()=>{const n=$('stName').value.trim();if(n.length<2){$('stM').textContent='En az 2 harf.';return;}save.name=n;persist();refreshCoins();$('stM').textContent='Ad kaydedildi.';};
+  $('stAv').onclick=openAvatar;
+  let arm=0;$('stRst').onclick=()=>{if(!arm){arm=1;$('stM').textContent='Emin misin? Tüm para, istaka ve seviyeler silinir. Onaylamak için tekrar bas.';return;}
+    localStorage.removeItem(KEY);location.reload();};
+}
+function openAvatar(){
+  const cur=save.avatar||{};
+  let h='<h2 style="margin:0 0 4px">🙂 Avatar Seç</h2><div class="avg">'+`<button data-e="" class="${!cur.e?'on':''}" style="font-size:16px;font-weight:900">${(save.name||'O')[0].toLocaleUpperCase('tr-TR')}</button>`+AV_EMO.map(e=>`<button data-e="${e}" class="${cur.e===e?'on':''}">${e}</button>`).join('')+'</div>';
+  h+='<div class="avg" style="grid-template-columns:repeat(7,1fr)">'+AVC.map(c=>`<button data-c="${c}" class="${myAvC()===c?'on':''}" style="background:${c}"></button>`).join('')+'</div>';
+  h+=`<div style="display:flex;align-items:center;gap:10px;justify-content:center"><div class="av" id="avP" style="width:54px;height:54px;font-size:26px;background:${myAvC()}">${myAvT()}</div><button class="gold" id="avOk">Tamam</button></div>`;
+  dlg(h);const sel={e:cur.e||'',c:myAvC()};
+  const upd=()=>{$('avP').textContent=sel.e||(save.name||'O')[0].toLocaleUpperCase('tr-TR');$('avP').style.background=sel.c;};
+  document.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{sel.e=b.dataset.e;document.querySelectorAll('[data-e]').forEach(x=>x.classList.toggle('on',x===b));upd();});
+  document.querySelectorAll('.avg [data-c]').forEach(b=>b.onclick=()=>{sel.c=b.dataset.c;document.querySelectorAll('.avg [data-c]').forEach(x=>x.classList.toggle('on',x===b));upd();});
+  $('avOk').onclick=()=>{save.avatar={e:sel.e,c:sel.c};persist();refreshCoins();closeDlg();};
+}
+
+/* ---- maç içi emoji ---- */
+const EMO=['😀','😂','😎','😮','😡','😢','👍','👏','🔥','🙏','💪','GG'];
+function bubble(i,e){
+  const hud=$('hud'),el=$('p'+i),b=document.createElement('div');b.className='bub';b.textContent=e;
+  if(e==='GG'){b.style.fontSize='20px';b.style.fontWeight='900';b.style.color='#1a1208';}
+  const r=el.getBoundingClientRect(),hr=hud.getBoundingClientRect();
+  b.style.left=(i===0?r.left-hr.left+20:r.right-hr.left-70)+'px';hud.append(b);setTimeout(()=>b.remove(),2700);
+}
+function botEmo(e,ms){if(mode!=='ai'||!OPP)return;setTimeout(()=>{if($('game').classList.contains('show'))bubble(1,e);},ms||900+Math.random()*900);}
+$('emoBar').innerHTML=EMO.map(e=>`<button data-emo="${e}">${e}</button>`).join('');
+$('emoBtn').onclick=e=>{e.stopPropagation();const b=$('emoBar');b.style.display=b.style.display==='flex'?'none':'flex';};
+$('emoBar').onclick=e=>{const t=e.target.closest('[data-emo]');if(!t)return;$('emoBar').style.display='none';bubble(0,t.dataset.emo);
+  if(mode==='ai'&&Math.random()<.55){const rep={'😀':['😀','👍'],'😂':['😂','😅'],'😎':['😎','💪','😏'],'😮':['😎','😮'],'😡':['😂','😏','🙄'],'😢':['😅','🙏'],'👍':['👍','🙏'],'👏':['🙏','😎'],'🔥':['🔥','💪'],'🙏':['🙏','👍'],'💪':['💪','😎'],'GG':['GG','👍']}[t.dataset.emo]||['👍'];botEmo(pick(rep),1100+Math.random()*1200);}};
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('#emoBar,#emoBtn'))$('emoBar').style.display='none';});
+function shotHook(p,potted,scratch){
+  if(mode!=='ai')return;const ranked=gopt.kind==='match'||gopt.kind==='event';
+  if(you(p)){const n=potted.filter(id=>id!==8&&(!groups[p]||groupOf(id)===groups[p])).length;if(ranked&&n)track('pot',n);
+    if(potted.length>=2&&Math.random()<.3)botEmo(pick(['😮','👏','👍','🔥']));else if(scratch&&Math.random()<.35)botEmo(pick(['😅','😏']));}
+  else{if(potted.length>=2&&Math.random()<.25)botEmo(pick(['😎','💪','🔥']));else if(scratch&&Math.random()<.3)botEmo(pick(['😢','🙈','😡']));}
+}
+function overHook(w,k){
+  if(k==='match'||k==='event'){track('play');if(w===0){track('win');if(gopt.room&&gopt.room.idx>=1)track('winHi');if(k==='event'&&gopt.round>=2)track('tour');}}
+  if(mode==='ai')botEmo(w===0?pick(['GG','👏','😢']):pick(['GG','😎','🙏']),700);
+}
+
+/* ---- menü düğmeleri ve rozet noktaları ---- */
+function extrasDots(){
+  if(!save.inbox||!save.st||!$("dMis"))return;
+  const dot=(id,n)=>{const e=$(id);if(!e)return;e.style.display=n?'block':'none';e.textContent=n===true?'!':n;};
+  const m=msDay();dot('dMis',m.ids.filter(i=>(m.prog[i]||0)>=MISSIONS.find(x=>x.id===i).n&&!m.done[i]).length+(m.ids.every(i=>m.done[i])&&!m.bonus?1:0));
+  dot('dWheel',wheelFree()?true:0);dot('dScr',scrFree()?true:0);dot('dAch',ACH.filter(achClaimable).length);
+  dot('dInbox',save.inbox.filter(x=>x.rw&&!x.c).length);
+}
+$('xMis').onclick=openMissions;$('xWheel').onclick=openWheel;$('xScr').onclick=openScratch;$('xAch').onclick=openAch;$('xInbox').onclick=openInbox;$('xSet').onclick=openSettings;
+inboxCheck();refreshCoins();setInterval(()=>{if($('menu').classList.contains('show'))extrasDots();},30000);
+
 </script>
 </body>
 </html>
