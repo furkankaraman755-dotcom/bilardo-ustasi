@@ -135,14 +135,14 @@ button:disabled{opacity:.45}
 #smsg{min-height:18px;font-size:13px;color:#f3d77a}
 /* oyun (yatay) */
 #game{background:radial-gradient(circle at 12% 18%,rgba(255,170,80,.22),transparent 22%),radial-gradient(circle at 88% 14%,rgba(255,205,130,.18),transparent 20%),radial-gradient(circle at 82% 88%,rgba(255,140,60,.14),transparent 24%),radial-gradient(circle at 18% 86%,rgba(130,170,255,.12),transparent 24%),radial-gradient(ellipse at 50% 50%,#2a221a,#0a0806 75%);padding:calc(4px + env(safe-area-inset-top)) calc(6px + env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) calc(6px + env(safe-area-inset-left));gap:4px;overflow:hidden;touch-action:none}
-#hud{display:flex;gap:10px;width:100%;align-items:center;height:56px;flex:none}
+#hud{display:flex;gap:8px;width:100%;align-items:center;height:44px;flex:none}
 .pside{flex:1;display:flex;align-items:center;gap:8px;min-width:0}
 .pside.r{flex-direction:row-reverse}
-.pav{width:50px;height:50px;border-radius:12px;padding:3px;flex:none;background:conic-gradient(#3fd14a calc(var(--t,1)*360deg),#2a3442 0)}
+.pav{width:40px;height:40px;border-radius:12px;padding:3px;flex:none;background:conic-gradient(#3fd14a calc(var(--t,1)*360deg),#2a3442 0)}
 .pside:not(.on) .pav{background:#2a3442}
-.pav .in{width:100%;height:100%;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff}
+.pav .in{font-size:18px!important;width:100%;height:100%;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff}
 .pinfo{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
-.pname{display:flex;align-items:center;gap:6px;background:linear-gradient(90deg,#0b0f14,#1c2633);border-radius:8px;padding:3px 10px;font-weight:800;font-size:14px;justify-content:flex-end;white-space:nowrap;overflow:hidden}
+.pname{display:flex;align-items:center;gap:6px;background:linear-gradient(90deg,#0b0f14,#1c2633);border-radius:8px;padding:2px 10px;font-weight:800;font-size:13px;justify-content:flex-end;white-space:nowrap;overflow:hidden}
 .pside.r .pname{justify-content:flex-start;flex-direction:row-reverse;background:linear-gradient(270deg,#0b0f14,#1c2633)}
 .pside.on .pname{box-shadow:0 0 0 2px #3fd14a}
 .lvs{font-size:11px;background:#5a6472;color:#fff;border-radius:10px;padding:0 6px}
@@ -150,10 +150,10 @@ button:disabled{opacity:.45}
 .pside.r .brow{justify-content:flex-start}
 .brow{background:#1c222c;border-radius:14px;padding:3px 5px;box-shadow:inset 0 1px 3px rgba(0,0,0,.6);width:max-content;margin-left:auto}
 .pside.r .brow{margin-left:0;margin-right:auto}
-.brow i{width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#05070a 55%,#2a313d 100%);box-shadow:inset 0 2px 4px #000,0 1px 0 rgba(160,170,200,.35);flex:none;display:flex;align-items:center;justify-content:center}
-.brow i img{width:22px;height:22px;display:block}
-.stake{flex:none;background:#141a22;border:2px solid #2a3442;border-radius:12px;padding:3px 14px;text-align:center;font-weight:900;color:#f3d77a;font-size:15px;line-height:1.15;min-width:70px}
-.hm{width:46px;height:46px;min-width:0;font-size:22px;flex:none;background:linear-gradient(#4fd14a,#1e8a22)!important;color:#fff;border-radius:12px}
+.brow i{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#05070a 55%,#2a313d 100%);box-shadow:inset 0 2px 4px #000,0 1px 0 rgba(160,170,200,.35);flex:none;display:flex;align-items:center;justify-content:center}
+.brow i img{width:18px;height:18px;display:block}
+.stake{flex:none;background:#141a22;border:2px solid #2a3442;border-radius:12px;padding:2px 12px;text-align:center;font-weight:900;color:#f3d77a;font-size:13px;line-height:1.1;min-width:64px}
+.hm{width:40px;height:40px;min-width:0;font-size:22px;flex:none;background:linear-gradient(#4fd14a,#1e8a22)!important;color:#fff;border-radius:12px}
 #mid{position:relative;flex:1;display:flex;align-items:center;justify-content:center;width:100%;min-height:0}
 #hud{position:relative;z-index:4}
 .tblwrap{position:relative}
@@ -282,6 +282,7 @@ button:disabled{opacity:.45}
 
 <!-- OYUN -->
 <div id="game" class="screen">
+  <canvas id="cueLayer" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:60;pointer-events:none"></canvas>
   <div id="hud"><button id="gmenu" class="hm" aria-label="Menü">☰</button><div class="pside l" id="p0"></div><div class="stake" id="stake"></div><div class="pside r" id="p1"></div></div>
   <div id="mid">
     <div class="side lft"><div class="lbl">Güç<br><b id="pv">0%</b></div><canvas id="pbar"></canvas></div>
@@ -873,8 +874,8 @@ function resize(){
   if(!$('game').classList.contains('show'))return;
   const g=$('game'),cs=getComputedStyle(g);
   const gw=g.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight),gh=g.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);
-  const hudH=$('hud').offsetHeight,ov=RAIL*.55; // üst bant HUD'un altına biraz girer
-  scale=Math.max(.2,Math.min((gw-220)/W,(gh-hudH-6)/(H-ov)));
+  const hudH=$('hud').offsetHeight,ov=RAIL*.8; // üst bant HUD'un altına biraz girer
+  scale=Math.max(.2,Math.min((gw-176)/W,(gh-hudH-2)/(H-ov)));
   $('mid').style.marginTop=(-ov*scale)+'px';
   const dpr=window.devicePixelRatio||1;dprK=scale*dpr;
   cv.style.width=W*scale+'px';cv.style.height=H*scale+'px';
@@ -1006,6 +1007,7 @@ function remaining(g){return balls.filter(b=>!b.pot&&groupOf(b.id)===g).length;}
 function shoot(){
   aimDraw=aim;
   if(moving||over)return;ensureAudio();
+  cueAnim={t0:performance.now(),x:cue.x+RAIL,y:cue.y+RAIL,a:aim,back:R+6+power*.45,C:cueOf(turn)};
   const sp=pw2v(power)*cueOf(turn).pow;
   cue.vx=Math.cos(aim)*sp;cue.vy=Math.sin(aim)*sp;
   const sk=cueOf(turn).spinK;shotSpin=isAI(turn)?null:{x:spinX*sk,y:spinY*sk,dx:Math.cos(aim),dy:Math.sin(aim),used:0};
@@ -1608,9 +1610,31 @@ function drawAim(){
     }
     ctx.restore();
   }
-  const back=R+6+power*.45,len=330,sx=cx-dx*back,sy=cy-dy*back,ex=cx-dx*(back+len),ey=cy-dy*(back+len);
-  ctx.strokeStyle='rgba(0,0,0,.3)';ctx.lineWidth=7;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(sx+3,sy+4);ctx.lineTo(ex+3,ey+4);ctx.stroke();
-  drawCue(ctx,sx,sy,ex,ey,C,6.5);
+  cueDraw={x:cx,y:cy,a:aimDraw,back:R+6+power*.45,C};
+}
+/* ---- istaka: her zaman en üst katmanda, tam boy, kırpılmadan ---- */
+let cueDraw=null,cueAnim=null;
+const cl=$('cueLayer'),clx=cl.getContext('2d');
+function drawCueLayer(){
+  const dpr=window.devicePixelRatio||1,w=innerWidth,h=innerHeight;
+  if(cl.width!==Math.round(w*dpr)||cl.height!==Math.round(h*dpr)){cl.width=Math.round(w*dpr);cl.height=Math.round(h*dpr);}
+  clx.setTransform(1,0,0,1,0,0);clx.clearRect(0,0,cl.width,cl.height);
+  if(!$('game').classList.contains('show')||$('over').style.display==='flex'||$('spinBig').style.display==='flex'||$('dlg').style.display==='flex')return;
+  let d=cueDraw;
+  if(cueAnim){const k=(performance.now()-cueAnim.t0)/1;if(k>420){cueAnim=null;d=null;}else{
+      const p=Math.min(1,k/90),fade=k<200?1:Math.max(0,1-(k-200)/220);d={...cueAnim,back:cueAnim.back+(R*.5-cueAnim.back)*p*p,fade};}}
+  if(!d)return;
+  const r=cv.getBoundingClientRect(),S=r.width/W,dx=Math.cos(d.a),dy=Math.sin(d.a);
+  const tx=r.left+d.x*S,ty=r.top+d.y*S,sx=tx-dx*d.back*S,sy=ty-dy*d.back*S;
+  // ekran kenarına kadar sığan en uzun boy (istaka hiç kırpılmasın)
+  const m=6;let L=330*S;
+  if(dx>1e-4)L=Math.min(L,(sx-m)/dx);if(dx<-1e-4)L=Math.min(L,(w-m-sx)/-dx);
+  if(dy>1e-4)L=Math.min(L,(sy-m)/dy);if(dy<-1e-4)L=Math.min(L,(h-m-sy)/-dy);
+  L=Math.max(L,110*S);
+  const ex=sx-dx*L,ey=sy-dy*L,wd=6.5*S;
+  clx.setTransform(dpr,0,0,dpr,0,0);clx.globalAlpha=d.fade==null?1:d.fade;
+  clx.strokeStyle='rgba(0,0,0,.35)';clx.lineWidth=wd*1.15;clx.lineCap='round';clx.beginPath();clx.moveTo(sx+3*S,sy+4*S);clx.lineTo(ex+3*S,ey+4*S);clx.stroke();
+  drawCue(clx,sx,sy,ex,ey,d.C,wd);clx.globalAlpha=1;
 }
 let tblImg=null,tblKey='';
 function tableImage(){ // masa her karede yeniden çizilmez, bir kez çizilip saklanır
@@ -1620,6 +1644,7 @@ function tableImage(){ // masa her karede yeniden çizilmez, bir kez çizilip sa
   return tblImg;
 }
 function draw(){
+  cueDraw=null;
   ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);ctx.drawImage(tableImage(),0,0);
   ctx.setTransform(dprK,0,0,dprK,0,0);
   if(G()==='lucky'){ctx.font='bold 12px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
@@ -1651,7 +1676,7 @@ function loop(ts){
       else aimDraw+=d*(1-Math.pow(SMOOTHING,dt/16.7));
       aimDraw=Math.atan2(Math.sin(aimDraw),Math.cos(aimDraw));
     }
-    draw();drawTube(ts);
+    draw();drawTube(ts);drawCueLayer();
   }
   requestAnimationFrame(loop);
 }
