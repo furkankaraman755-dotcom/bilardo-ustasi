@@ -148,10 +148,10 @@ button:disabled{opacity:.45}
 .lvs{font-size:11px;background:#5a6472;color:#fff;border-radius:10px;padding:0 6px}
 .brow{display:flex;gap:3px;justify-content:flex-end}
 .pside.r .brow{justify-content:flex-start}
-.brow i{width:17px;height:17px;border-radius:50%;background:#070a0e;box-shadow:inset 0 2px 4px #000;flex:none}
-.brow i.b{box-shadow:inset -2px -2px 3px rgba(0,0,0,.35),inset 2px 2px 3px rgba(255,255,255,.35)}
-.brow i.st{background:radial-gradient(circle,#fff 32%,transparent 34%),linear-gradient(#f4f1e8 22%,var(--c) 22% 78%,#f4f1e8 78%)!important}
-.brow i.so{background:radial-gradient(circle,#fff 32%,var(--c) 34%)!important}
+.brow{background:#1c222c;border-radius:14px;padding:3px 5px;box-shadow:inset 0 1px 3px rgba(0,0,0,.6);width:max-content;margin-left:auto}
+.pside.r .brow{margin-left:0;margin-right:auto}
+.brow i{width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#05070a 55%,#2a313d 100%);box-shadow:inset 0 2px 4px #000,0 1px 0 rgba(160,170,200,.35);flex:none;display:flex;align-items:center;justify-content:center}
+.brow i img{width:22px;height:22px;display:block}
 .stake{flex:none;background:#141a22;border:2px solid #2a3442;border-radius:12px;padding:3px 14px;text-align:center;font-weight:900;color:#f3d77a;font-size:15px;line-height:1.15;min-width:70px}
 .hm{width:46px;height:46px;min-width:0;font-size:22px;flex:none;background:linear-gradient(#4fd14a,#1e8a22)!important;color:#fff;border-radius:12px}
 #mid{position:relative;flex:1;display:flex;align-items:center;justify-content:center;width:100%;min-height:0}
@@ -356,7 +356,7 @@ const LEAGUES=[{n:'Bronz Ligi',ic:'🥉',min:0,rw:0},{n:'Gümüş Ligi',ic:'🥈
 const FREE=[{t:'c',v:1000},{t:'c',v:2500},{t:'c',v:5000},{t:'chest',v:0}];
 const TABLES=[ // f=çuha, c=yastık, w=bant, a=süs/altın, d=nişan noktası, pt=desen (0 çizgi, 1 kafes, 2 halka)
  {id:'green', name:'Klasik Yeşil',price:3000,      f1:'#2fa063',f2:'#17603a',c:'#124f30',w1:'#7a4520',w2:'#3e220d',a:'#d9b45a',d:'#f3e3b5',pt:0},
- {id:'blue',  name:'Okyanus',     price:0,   f1:'#3a7fd0',f2:'#163f7a',c:'#143a70',w1:'#1d3566',w2:'#0e1d3d',a:'#e2b64a',d:'#ffffff',pt:3,p1:'#2a63b8',p2:'#e9f1ff'},
+ {id:'blue',  name:'Okyanus',     price:0,   f1:'#2f8cef',f2:'#1552b0',c:'#11458e',w1:'#1d3566',w2:'#0e1d3d',a:'#e2b64a',d:'#ffffff',pt:3,p1:'#2a63b8',p2:'#e9f1ff'},
  {id:'red',   name:'Bordo',       price:10000,  f1:'#9e2a30',f2:'#5a1016',c:'#4a0c12',w1:'#3a1a12',w2:'#1a0a07',a:'#d9b45a',d:'#7fe0e0',pt:2},
  {id:'black', name:'Gece',        price:50000,  f1:'#3a4048',f2:'#16191d',c:'#111417',w1:'#2a2d33',w2:'#0c0d10',a:'#9fe8ff',d:'#9fe8ff',pt:1},
  {id:'purple',name:'Mor Lüks',    price:250000, f1:'#8150c4',f2:'#3e1f6e',c:'#331a5c',w1:'#e8e8ee',w2:'#8a8a98',a:'#f0cf6a',d:'#4f2a80',pt:2},
@@ -750,7 +750,7 @@ const cv=$('c');let ctx=cv.getContext('2d');
 let scale=1,dprK=1;
 const POCKETS=[{x:0,y:0,r:24},{x:TW,y:0,r:24},{x:0,y:TH,r:24},{x:TW,y:TH,r:24},{x:TW/2,y:-6,r:22},{x:TW/2,y:TH+6,r:22}];
 const AIMPTS=[{x:3,y:3},{x:TW-3,y:3},{x:3,y:TH-3},{x:TW-3,y:TH-3},{x:TW/2,y:-3,mid:1},{x:TW/2,y:TH+3,mid:1}];
-const COL=['#ffffff','#e3a400','#0f2f9e','#b8101a','#45126e','#e0560a','#0b6b30','#5c0c12','#070707'];
+const COL=['#ffffff','#f9a80d','#1668dd','#e5121f','#6c2cc2','#ff6b0b','#16a43b','#931b14','#0b0b0b'];
 const col=id=>id<=8?COL[id]:COL[id-8];
 const groupOf=id=>id===0?'cue':id===8?'eight':id<8?'solid':'stripe';
 const LABEL={solid:'Düz',stripe:'Çizgili'};
@@ -1052,7 +1052,14 @@ function gameOver(w,why){
 }
 let toastT=0;
 function setMsg(t){const el=$('toast');if(!t){el.style.opacity=0;return;}el.textContent=t;el.style.opacity=1;clearTimeout(toastT);toastT=setTimeout(()=>el.style.opacity=0,3500);}
-const bdot=id=>`<i class="b ${id>8?'st':id===8?'so':''}" style="background:${col(id)};--c:${col(id)}"></i>`;
+const hudImg={};
+function ballImg(id){ // HUD için numaralı, parlak top resmi (önden görünüm)
+  if(hudImg[id])return hudImg[id];
+  const S=72,c=document.createElement('canvas');c.width=c.height=S;const o=ctx;ctx=c.getContext('2d');
+  const k=S/(2*R+2);ctx.setTransform(k,0,0,k,0,0);drawBall({id,x:R+1-RAIL,y:R+1-RAIL,noShadow:1});ctx=o;
+  return hudImg[id]=c.toDataURL();
+}
+const bdot=id=>`<i><img src="${ballImg(id)}" alt="${id}"></i>`;
 function updateHud(){
   const lo=balls.filter(b=>!b.pot&&b.id).sort((a,b)=>a.id-b.id);
   for(let i=0;i<2;i++){
@@ -1279,13 +1286,13 @@ function hexRgb(h){if(rgbCache[h])return rgbCache[h];const n=parseInt(h.slice(1)
 function glyph(id){ // numara için 64×64 alfa haritası
   if(glyphCache[id])return glyphCache[id];
   const c=document.createElement('canvas');c.width=c.height=64;const q=c.getContext('2d');
-  q.fillStyle='#000';q.font=`900 ${id>9?34:42}px Arial,Helvetica,sans-serif`;q.textAlign='center';q.textBaseline='middle';q.fillText(id,32,35);
+  q.fillStyle='#000';q.font=`900 ${id>9?32:40}px Arial Black,Arial,Helvetica,sans-serif`;q.textAlign='center';q.textBaseline='middle';q.fillText(id,32,34);
   const d=q.getImageData(0,0,64,64).data,a=new Uint8Array(4096);for(let i=0;i<4096;i++)a[i]=d[i*4+3];return glyphCache[id]=a;
 }
 function ballTex(b,S){ // topun yön matrisine göre kürenin yüzeyini piksel piksel boya
   const cnv=b._cv||(b._cv=document.createElement('canvas'));if(cnv.width!==S){cnv.width=cnv.height=S;}
   const q=cnv.getContext('2d'),img=q.createImageData(S,S),d=img.data,M=b.M||[1,0,0,0,1,0,0,0,1];
-  const id=b.id,base=id===0?[248,247,242]:hexRgb(col(id)),W8=[246,243,234],stripe=id>8,gl=id>0?glyph(id):null,rr=S/2;
+  const id=b.id,base=id===0?[248,247,242]:hexRgb(col(id)),W8=[250,248,242],stripe=id>8,gl=id>0?glyph(id):null,rr=S/2;
   for(let py=0;py<S;py++){const v=(py+.5-rr)/rr;
     for(let px=0;px<S;px++){const u=(px+.5-rr)/rr,s2=u*u+v*v;if(s2>=1)continue;
       const z=Math.sqrt(1-s2),qx=M[0]*u+M[3]*v+M[6]*z,qy=M[1]*u+M[4]*v+M[7]*z,qz=M[2]*u+M[5]*v+M[8]*z;
@@ -1293,9 +1300,9 @@ function ballTex(b,S){ // topun yön matrisine göre kürenin yüzeyini piksel p
       if(id===0&&(qz>.965||qz<-.965)){r=214;g=48;bl=52;} // beyaz topta dönüşü gösteren küçük nokta
       if(id>0){
         if(stripe&&(qy>.5||qy<-.5)){r=W8[0];g=W8[1];bl=W8[2];}
-        if(qz>.86||qz<-.86){ // numara dairesi (iki yüzde)
-          r=253;g=252;bl=247;
-          const sx=qz>0?qx:-qx,gx=Math.round((sx/.51*.5+.5)*63),gy=Math.round((qy/.51*.5+.5)*63);
+        if(qz>.82||qz<-.82){ // numara dairesi (iki yüzde)
+          r=255;g=255;bl=250;
+          const sx=qz>0?qx:-qx,gx=Math.round((sx/.57*.5+.5)*63),gy=Math.round((qy/.57*.5+.5)*63);
           if(gx>=0&&gx<64&&gy>=0&&gy<64){const a=gl[gy*64+gx]/255;r=r*(1-a)+13*a;g=g*(1-a)+13*a;bl=bl*(1-a)+13*a;}
         }
       }
@@ -1307,8 +1314,9 @@ function ballTex(b,S){ // topun yön matrisine göre kürenin yüzeyini piksel p
 function drawBall(b){
   const x=b.x+RAIL,y=b.y+RAIL,c=ctx;
   // gölge
+  if(!b.noShadow){
   const sh=c.createRadialGradient(x+3,y+4,R*.2,x+3,y+4,R*1.15);sh.addColorStop(0,'rgba(0,0,0,.62)');sh.addColorStop(1,'rgba(0,0,0,0)');
-  c.fillStyle=sh;c.beginPath();c.arc(x+3,y+4,R*1.15,0,7);c.fill();
+  c.fillStyle=sh;c.beginPath();c.arc(x+3,y+4,R*1.15,0,7);c.fill();}
   // dönen yüzey
   const t=c.getTransform(),S=Math.max(8,Math.min(160,Math.round(2*R*Math.hypot(t.a,t.b))));
   const tex=(b._cv&&b._S===S&&b._ver===(b.rv||0))?b._cv:ballTex(b,S);
@@ -1316,9 +1324,9 @@ function drawBall(b){
   c.save();c.beginPath();c.arc(x,y,R,0,7);c.clip();
   // hacim gölgelendirmesi (ışık sabit, top döner)
   const g=c.createRadialGradient(x-R*.32,y-R*.38,R*.05,x,y,R*1.02);
-  g.addColorStop(0,'rgba(255,255,255,.5)');g.addColorStop(.3,'rgba(255,255,255,.04)');g.addColorStop(.72,'rgba(0,0,0,.2)');g.addColorStop(1,'rgba(0,0,0,.7)');
+  g.addColorStop(0,'rgba(255,255,255,.55)');g.addColorStop(.28,'rgba(255,255,255,.06)');g.addColorStop(.7,'rgba(0,0,0,.08)');g.addColorStop(1,'rgba(0,0,0,.55)');
   c.fillStyle=g;c.fillRect(x-R,y-R,2*R,2*R);
-  c.strokeStyle='rgba(255,255,255,.14)';c.lineWidth=R*.18;c.beginPath();c.arc(x,y,R*.9,.35,1.55);c.stroke();
+  c.strokeStyle='rgba(255,255,255,.22)';c.lineWidth=R*.18;c.beginPath();c.arc(x,y,R*.9,.35,1.55);c.stroke();
   c.fillStyle='rgba(255,255,255,.95)';c.beginPath();c.ellipse(x-R*.36,y-R*.42,R*.2,R*.12,-.65,0,7);c.fill();
   c.fillStyle='rgba(255,255,255,.35)';c.beginPath();c.ellipse(x+R*.38,y+R*.42,R*.1,R*.06,-.65,0,7);c.fill();
   c.restore();
