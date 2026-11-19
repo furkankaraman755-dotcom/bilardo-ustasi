@@ -162,7 +162,9 @@ button:disabled{opacity:.45}
 .side>*{pointer-events:auto}
 .side.lft{left:0}.side.rgt{right:0}
 .side .lbl{text-shadow:0 1px 3px #000;color:#e8efe9}
-.cueb{position:absolute;bottom:2px;left:2px}
+.side.rgt{justify-content:flex-start;padding-top:2px}
+.cueb{position:static}
+#ret{margin-top:4px}
 #pbar{touch-action:none;border-radius:14px;cursor:grab}
 .lbl{font-size:11px;color:#9fb7a8;text-align:center}
 #spin{touch-action:none;cursor:pointer;border-radius:50%;box-shadow:0 3px 12px rgba(0,0,0,.6)}
@@ -282,9 +284,9 @@ button:disabled{opacity:.45}
 <div id="game" class="screen">
   <div id="hud"><button id="gmenu" class="hm" aria-label="Menü">☰</button><div class="pside l" id="p0"></div><div class="stake" id="stake"></div><div class="pside r" id="p1"></div></div>
   <div id="mid">
-    <div class="side lft"><div class="lbl">Güç<br><b id="pv">0%</b></div><canvas id="pbar"></canvas><button id="cueBtn" class="cueb" aria-label="İstaka seç"><canvas id="cueIc"></canvas></button></div>
+    <div class="side lft"><div class="lbl">Güç<br><b id="pv">0%</b></div><canvas id="pbar"></canvas></div>
     <div class="tblwrap"><canvas id="c"></canvas><div id="toast"></div></div>
-    <div class="side rgt"><canvas id="spin" title="Falso"></canvas><div class="lbl">Falso</div></div>
+    <div class="side rgt"><canvas id="spin" title="Falso"></canvas><div class="lbl">Falso</div><button id="cueBtn" class="cueb" aria-label="İstaka seç"><canvas id="cueIc"></canvas></button><canvas id="ret"></canvas></div>
     <div id="spinBig"><div class="sbx"><div class="sbt">Falso <span id="sbBars"></span></div><canvas id="spinL"></canvas><div class="lbl">Beyaz topun neresine vuracağını seç · boş yere dokun: kapat</div></div></div>
   </div>
 </div>
@@ -353,8 +355,8 @@ const CHEST_MIN=[15,60,180,480]; // sandık açılma süreleri (dakika)
 const LEAGUES=[{n:'Bronz Ligi',ic:'🥉',min:0,rw:0},{n:'Gümüş Ligi',ic:'🥈',min:100e3,rw:10e3},{n:'Altın Ligi',ic:'🥇',min:1e6,rw:100e3},{n:'Elmas Ligi',ic:'💎',min:10e6,rw:1e6},{n:'Usta Ligi',ic:'👑',min:100e6,rw:10e6}];
 const FREE=[{t:'c',v:1000},{t:'c',v:2500},{t:'c',v:5000},{t:'chest',v:0}];
 const TABLES=[ // f=çuha, c=yastık, w=bant, a=süs/altın, d=nişan noktası, pt=desen (0 çizgi, 1 kafes, 2 halka)
- {id:'green', name:'Klasik Yeşil',price:0,      f1:'#2fa063',f2:'#17603a',c:'#124f30',w1:'#7a4520',w2:'#3e220d',a:'#d9b45a',d:'#f3e3b5',pt:0},
- {id:'blue',  name:'Okyanus',     price:3000,   f1:'#3d86cc',f2:'#1b4f8a',c:'#173f6e',w1:'#24345a',w2:'#121b33',a:'#e8c15a',d:'#ffffff',pt:1},
+ {id:'green', name:'Klasik Yeşil',price:3000,      f1:'#2fa063',f2:'#17603a',c:'#124f30',w1:'#7a4520',w2:'#3e220d',a:'#d9b45a',d:'#f3e3b5',pt:0},
+ {id:'blue',  name:'Okyanus',     price:0,   f1:'#3a7fd0',f2:'#163f7a',c:'#143a70',w1:'#1d3566',w2:'#0e1d3d',a:'#e2b64a',d:'#ffffff',pt:3,p1:'#2a63b8',p2:'#e9f1ff'},
  {id:'red',   name:'Bordo',       price:10000,  f1:'#9e2a30',f2:'#5a1016',c:'#4a0c12',w1:'#3a1a12',w2:'#1a0a07',a:'#d9b45a',d:'#7fe0e0',pt:2},
  {id:'black', name:'Gece',        price:50000,  f1:'#3a4048',f2:'#16191d',c:'#111417',w1:'#2a2d33',w2:'#0c0d10',a:'#9fe8ff',d:'#9fe8ff',pt:1},
  {id:'purple',name:'Mor Lüks',    price:250000, f1:'#8150c4',f2:'#3e1f6e',c:'#331a5c',w1:'#e8e8ee',w2:'#8a8a98',a:'#f0cf6a',d:'#4f2a80',pt:2},
@@ -377,7 +379,7 @@ const DAILY=[500,750,1000,1500,2000,3000,5000];
 
 /* ================= KAYIT ================= */
 const KEY='bilardo_ustasi_v1';
-let save={coins:1000,cues:['basic'],tables:['green'],cue:'basic',table:'green',wins:0,losses:0,name:'',pid:0,level:1,xp:0,cash:5,lastDaily:0,streak:0,rw:{},chestCnt:0,chestNext:2,eco:2,gems:10,cl:{},slots:[null,null,null,null],free:{day:0,n:0,next:0},offer:-1,lucky:0,week:{id:0,earn:0}};
+let save={coins:1000,cues:['basic'],tables:['green','blue'],cue:'basic',table:'blue',wins:0,losses:0,name:'',pid:0,level:1,xp:0,cash:5,lastDaily:0,streak:0,rw:{},chestCnt:0,chestNext:2,eco:2,gems:10,cl:{},slots:[null,null,null,null],free:{day:0,n:0,next:0},offer:-1,lucky:0,week:{id:0,earn:0}};
 
 try{const s=JSON.parse(localStorage.getItem(KEY));if(s)save=Object.assign(save,s);}catch(e){}
 // yeni ekonomiye geçiş: eski kayıtlar en az 1.000 ile başlar
@@ -385,6 +387,7 @@ if(!save.eco||save.eco<2){save.eco=2;save.coins=Math.max(save.coins,1000);}
 if(!save.rw)save.rw={};
 for(const [k,v] of Object.entries({gems:10,cl:{},slots:[null,null,null,null],free:{day:0,n:0,next:0},offer:-1,lucky:0,week:{id:0,earn:0}}))if(save[k]===undefined)save[k]=v;
 for(const id of save.cues)if(!save.cl[id])save.cl[id]={lv:1,pc:0};
+if(!save.tables.includes('blue')){save.tables.push('blue');if(save.table==='green')save.table='blue';}
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(save));}catch(e){}}
 const cueById=id=>ALL_CUES.find(c=>c.id===id)||CUES[0];
 const MAXLV=5;
@@ -772,7 +775,7 @@ function resize(){
   const g=$('game'),cs=getComputedStyle(g);
   const gw=g.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight),gh=g.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);
   const hudH=$('hud').offsetHeight,ov=RAIL*.55; // üst bant HUD'un altına biraz girer
-  scale=Math.max(.2,Math.min((gw-70)/W,(gh-hudH-6)/(H-ov)));
+  scale=Math.max(.2,Math.min((gw-110)/W,(gh-hudH-6)/(H-ov)));
   $('mid').style.marginTop=(-ov*scale)+'px';
   const dpr=window.devicePixelRatio||1;dprK=scale*dpr;
   cv.style.width=W*scale+'px';cv.style.height=H*scale+'px';
@@ -780,6 +783,7 @@ function resize(){
   const ph=Math.max(100,Math.min(H*scale*.62,300));pb.style.width='44px';pb.style.height=ph+'px';pb.width=44*dpr;pb.height=ph*dpr;
   sp.style.width=sp.style.height='60px';sp.width=sp.height=60*dpr;
   const ci=$('cueIc');ci.style.width=ci.style.height='52px';ci.width=ci.height=52*dpr;
+  const rh=Math.max(70,H*scale-ov*scale-150),re=$('ret');re.style.width='48px';re.style.height=rh+'px';re.width=48*dpr;re.height=rh*dpr;drawRet();
   const big=Math.min(H*scale*.7,320);spL.style.width=spL.style.height=big+'px';spL.width=spL.height=big*dpr;
   drawPbar();drawSpin();drawCueIcon();
 }
@@ -815,11 +819,18 @@ function newGame(){
   else if(G()==='lucky')setMsg('Şanslı Atış · Topu bir deliğe sok, o deliğin ödülünü kazan!');
   else if(G()==='practice')setMsg('Egzersiz · Rakip yok, süre yok. İstediğin kadar çalış.');
   else if(gopt.label)setMsg(gopt.label+' · Açılış senin! Masaya dokunarak nişan al, soldaki çubuğu çekip bırak.');
-  updateHud();startTimer();
+  updateHud();startTimer();potOrder=[];drawRet();
 }
 
 /* ================= FİZİK ================= */
-function pot(b){if(b.pot)return;b.pot=true;b.vx=b.vy=0;shotPotted.push(b.id);snd(12,180,.18);}
+function pot(b){if(b.pot)return;b.pot=true;b.vx=b.vy=0;shotPotted.push(b.id);if(b.id)potOrder.push(b.id);snd(12,180,.18);}
+// güç eğrisi: az çekiş yumuşak/kısa, çok çekiş sert/uzun
+const GEXP=1.4,pw2v=p=>MAXV*Math.pow(Math.max(0,p)/100,GEXP),v2pw=v=>100*Math.pow(Math.min(1,Math.max(0,v)/MAXV),1/GEXP);
+// çuha sürtünmesi: sabit yuvarlanma direnci + hızla artan kısım (yavaş top yumuşak durur)
+const decel=v=>Math.max(0,v-(0.0055+v*0.0085));
+// bant sekmesi: sert gelen top daha güçlü seker
+const cushE=v=>Math.min(.88,.66+Math.abs(v)*.012);
+let potOrder=[];
 // falso: yan falso bant dönüşünü, üst/alt falso ilk çarpışmadan sonrasını etkiler
 let inDir=null;
 function side(b){inDir=b===cue&&shotSpin&&Math.abs(shotSpin.x)>.02?{x:b.vx,y:b.vy}:null;}
@@ -837,12 +848,12 @@ function physStep(f){
     if(b.pot)continue;
     const gapV=b.y<18||b.y>TH-18,gapH=b.x<18||b.x>TW-18||Math.abs(b.x-TW/2)<20;
     if(!gapV){
-      if(b.x<R){side(b);b.x=R;b.vx=-b.vx*.78;sideKick(b);snd(Math.abs(b.vx),600,.05);}
-      else if(b.x>TW-R){side(b);b.x=TW-R;b.vx=-b.vx*.78;sideKick(b);snd(Math.abs(b.vx),600,.05);}
+      if(b.x<R){side(b);b.x=R;b.vx=-b.vx*cushE(b.vx);sideKick(b);snd(Math.abs(b.vx),600,.05);}
+      else if(b.x>TW-R){side(b);b.x=TW-R;b.vx=-b.vx*cushE(b.vx);sideKick(b);snd(Math.abs(b.vx),600,.05);}
     }
     if(!gapH){
-      if(b.y<R){side(b);b.y=R;b.vy=-b.vy*.78;sideKick(b);snd(Math.abs(b.vy),600,.05);}
-      else if(b.y>TH-R){side(b);b.y=TH-R;b.vy=-b.vy*.78;sideKick(b);snd(Math.abs(b.vy),600,.05);}
+      if(b.y<R){side(b);b.y=R;b.vy=-b.vy*cushE(b.vy);sideKick(b);snd(Math.abs(b.vy),600,.05);}
+      else if(b.y>TH-R){side(b);b.y=TH-R;b.vy=-b.vy*cushE(b.vy);sideKick(b);snd(Math.abs(b.vy),600,.05);}
     }
     if(b.x<-2*R||b.x>TW+2*R||b.y<-2*R||b.y>TH+2*R)pot(b);
   }
@@ -869,7 +880,7 @@ function friction(){
   for(const b of balls){if(b.pot)continue;
     const s=Math.hypot(b.vx,b.vy);
     if(s<.05){b.vx=b.vy=0;continue;}
-    const ns=Math.max(0,s*.989-.012);b.vx*=ns/s;b.vy*=ns/s;any=true;
+    const ns=decel(s);b.vx*=ns/s;b.vy*=ns/s;any=true;
   }
   return any;
 }
@@ -878,7 +889,7 @@ function friction(){
 function remaining(g){return balls.filter(b=>!b.pot&&groupOf(b.id)===g).length;}
 function shoot(){
   if(moving||over)return;ensureAudio();
-  const sp=power/100*MAXV*cueOf(turn).pow;
+  const sp=pw2v(power)*cueOf(turn).pow;
   cue.vx=Math.cos(aim)*sp;cue.vy=Math.sin(aim)*sp;
   const sk=cueOf(turn).spinK;shotSpin=isAI(turn)?null:{x:spinX*sk,y:spinY*sk,dx:Math.cos(aim),dy:Math.sin(aim),used:0};
   if(!isAI(turn)){spinX=spinY=0;drawSpin();}
@@ -895,8 +906,9 @@ function freeSpot(x,y){
     if(balls.every(o=>o.pot||o===cue||Math.hypot(o.x-px,o.y-py)>2*R+1))return[px,py];
   }return[x,y];
 }
-function respawnCue(){cue.pot=false;cue.vx=cue.vy=0;[cue.x,cue.y]=freeSpot(TW*0.25,TH/2);}
+function respawnCue(){cue.pot=false;cue.vx=cue.vy=0;[cue.x,cue.y]=freeSpot(TW*0.2,TH/2);}
 function endShot(){
+  drawRet();
   const p=turn,s=shotCtx,potted=shotPotted.filter(i=>i!==0),scratch=shotPotted.includes(0);
   if(G()==='practice'){
     if(scratch){respawnCue();ballInHand=true;}
@@ -927,7 +939,7 @@ function endShot(){
       return gameOver(1-p,(you(p)?'8 numarayı ':NAMES[p]+' 8 numarayı ')+(foul?'faulle sok':'erken sok')+(you(p)?'tun.':'tu.'));
     }
   }
-  if(scratch){cue.pot=false;cue.vx=cue.vy=0;[cue.x,cue.y]=freeSpot(TW*0.25,TH/2);}
+  if(scratch)respawnCue();
   let extra='';
   const real=potted.filter(i=>i!==8);
   if(!groups[p]&&!foul&&real.length&&!s.isBreak){
@@ -1018,7 +1030,7 @@ function updateHud(){
 }
 
 /* ================= YAPAY ZEKÂ ================= */
-function speedAfter(v,d){let s=0;while(v>0.05&&s<d){s+=v;v=v*.989-.012;}return s>=d?v:0;}
+function speedAfter(v,d){let s=0;while(v>0.05&&s<d){s+=v;v=decel(v);}return s>=d?v:0;}
 function neededStart(dist,vEnd){for(let v=0.5;v<=40;v+=0.25)if(speedAfter(v,dist)>=vEnd)return v;return 99;}
 function clearPath(ax,ay,bx,by,ignore){
   const dx=bx-ax,dy=by-ay,L2=dx*dx+dy*dy||1;
@@ -1047,9 +1059,9 @@ function bankShots(cx,cy,t){
       const cos=(ax*ux+ay*uy)/d1;if(cos<.45)continue;
       if(!clearPath(cx,cy,gx,gy,[cue,t])||!clearPath(t.x,t.y,bx,by,[t,cue])||!clearPath(bx,by,p.x,p.y,[t,cue]))continue;
       const d2a=Math.hypot(bx-t.x,by-t.y),d2b=Math.hypot(p.x-bx,p.y-by);
-      const vT=neededStart(d2a,neededStart(d2b+20,.6)/.78),v0=neededStart(d1,vT/(cos*.975));
+      const vT=neededStart(d2a,neededStart(d2b+20,.6)/.8),v0=neededStart(d1,vT/(cos*.975));
       if(v0>MAXV)continue;
-      res.push({aim:Math.atan2(ay,ax),power:Math.min(100,Math.max(15,v0/MAXV*100*1.1)),score:cos*cos*600/(d1+L*1.6+60)});
+      res.push({aim:Math.atan2(ay,ax),power:Math.min(100,Math.max(10,v2pw(v0*1.06))),score:cos*cos*600/(d1+L*1.6+60)});
     }}
   return res;
 }
@@ -1067,7 +1079,7 @@ function findShots(cx,cy,targets){
     if(!clearPath(t.x,t.y,p.x,p.y,[t,cue]))continue;
     const vT=neededStart(d2+20,.6),v0=neededStart(d1,vT/(cos*.975));
     if(v0>MAXV)continue;
-    res.push({aim:Math.atan2(ay,ax),power:Math.min(100,Math.max(12,v0/MAXV*100*1.12)),score:cos*cos*1000/(d1+d2*1.6+60)});
+    res.push({aim:Math.atan2(ay,ax),power:Math.min(100,Math.max(6,v2pw(v0*1.08))),score:cos*cos*1000/(d1+d2*1.6+60)});
   }
   return res.sort((a,b)=>b.score-a.score);
 }
@@ -1083,7 +1095,7 @@ function aiTurn(){
   if(ballInHand){
     let bestPos=[cue.x,cue.y],bestS=findShots(cue.x,cue.y,targets);
     for(let i=0;i<70;i++){
-      const x=R+Math.random()*(TW-2*R),y=R+Math.random()*(TH-2*R);
+      const x=R+Math.random()*(TW*.25-R),y=R+Math.random()*(TH-2*R);
       if(!balls.every(o=>o.pot||o===cue||Math.hypot(o.x-x,o.y-y)>2*R+1))continue;
       const s=findShots(x,y,targets);
       if(s.length&&(!bestS.length||s[0].score>bestS[0].score)){bestS=s;bestPos=[x,y];}
@@ -1139,8 +1151,23 @@ function feltTex(T){ // hafif kumaş dokusu
   for(let i=0;i<900;i++){q.fillStyle=Math.random()<.5?'rgba(255,255,255,.035)':'rgba(0,0,0,.05)';q.fillRect(Math.random()*96,Math.random()*96,1,1);}
   return feltCache[T.id]=ctx.createPattern(c,'repeat');
 }
+function lattice(c,x,y,w,h,p1,p2){ // mavi-beyaz kafes desen kutusu
+  c.save();rrp(c,x,y,w,h,3);c.clip();c.fillStyle=p1;c.fillRect(x,y,w,h);
+  c.strokeStyle=p2;c.lineWidth=1.6;const st=7;
+  for(let i=-h;i<w+h;i+=st){c.beginPath();c.moveTo(x+i,y);c.lineTo(x+i+h,y+h);c.stroke();c.beginPath();c.moveTo(x+i+h,y);c.lineTo(x+i,y+h);c.stroke();}
+  c.fillStyle=p2;for(let i=st/2;i<w;i+=st)for(let j=st/2;j<h;j+=st){c.beginPath();c.arc(x+i,y+j,.9,0,7);c.fill();}
+  c.restore();c.strokeStyle='rgba(0,0,0,.4)';c.lineWidth=1;rrp(c,x,y,w,h,3);c.stroke();
+}
 function railDeco(T,x,y,w,h,vert){ // bant üstü süs paneli
   const c=ctx;c.save();
+  if(T.pt===3){ // altın orta bölüm + iki ucta kafes desen
+    const L=vert?h:w,lat=Math.min(46,L*.24);
+    if(vert){lattice(c,x,y,w,lat,T.p1,T.p2);lattice(c,x,y+h-lat,w,lat,T.p1,T.p2);}
+    else{lattice(c,x,y,lat,h,T.p1,T.p2);lattice(c,x+w-lat,y,lat,h,T.p1,T.p2);}
+    const g=vert?c.createLinearGradient(x,0,x+w,0):c.createLinearGradient(0,y,0,y+h);g.addColorStop(0,'#fff0b0');g.addColorStop(.5,T.a);g.addColorStop(1,'#8a6416');
+    c.fillStyle=g;if(vert)rrp(c,x,y+lat+4,w,h-2*lat-8,3);else rrp(c,x+lat+4,y,w-2*lat-8,h,3);c.fill();
+    c.restore();return;
+  }
   c.fillStyle=T.a;c.globalAlpha=.9;rrp(c,x,y,w,h,Math.min(w,h)/2);c.fill();
   c.globalAlpha=1;c.strokeStyle='rgba(0,0,0,.35)';c.lineWidth=1;rrp(c,x+1.5,y+1.5,w-3,h-3,Math.min(w,h)/2-1);c.stroke();
   if(T.pt===1){c.fillStyle='rgba(0,0,0,.28)';const n=vert?Math.floor(h/9):Math.floor(w/9);for(let i=0;i<n;i++){const cx=vert?x+w/2:x+5+i*9,cy=vert?y+5+i*9:y+h/2;c.beginPath();c.moveTo(cx,cy-3);c.lineTo(cx+3,cy);c.lineTo(cx,cy+3);c.lineTo(cx-3,cy);c.fill();}}
@@ -1152,7 +1179,8 @@ function drawTable(T){
   // dış çerçeve
   let g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,T.w1);g.addColorStop(.5,T.w2);g.addColorStop(1,T.w1);
   c.fillStyle=g;rrp(c,0,0,W,H,20);c.fill();
-  c.strokeStyle='rgba(255,255,255,.18)';c.lineWidth=2;rrp(c,3,3,W-6,H-6,17);c.stroke();
+  const fg=c.createLinearGradient(0,0,W,H);fg.addColorStop(0,'#fff0b0');fg.addColorStop(.3,T.a);fg.addColorStop(.7,'#8a6416');fg.addColorStop(1,T.a);
+  c.strokeStyle=fg;c.lineWidth=5;rrp(c,2.5,2.5,W-5,H-5,18);c.stroke();
   c.strokeStyle='rgba(0,0,0,.45)';c.lineWidth=2;rrp(c,RAIL-12,RAIL-12,TW+24,TH+24,8);c.stroke();
   // süs panelleri (uzun bantlar ikiye, kısa bantlar bir)
   const t=10,yT=(RAIL-12)/2-t/2+1,yB=H-(RAIL-12)/2-t/2-1,xL=(RAIL-12)/2-t/2+1,xR=W-(RAIL-12)/2-t/2-1;
@@ -1181,8 +1209,10 @@ function drawTable(T){
   c.strokeStyle='rgba(255,255,255,.16)';c.lineWidth=1;c.beginPath();c.moveTo(RAIL+TW*.25,RAIL);c.lineTo(RAIL+TW*.25,RAIL+TH);c.stroke();
   // delikler
   for(const p of POCKETS){const x=p.x+RAIL,y=p.y+RAIL;
-    c.fillStyle=T.a;c.beginPath();c.arc(x,y,p.r+4,0,7);c.fill();
-    c.strokeStyle='rgba(0,0,0,.4)';c.lineWidth=1.5;c.stroke();
+    const rg=c.createRadialGradient(x-4,y-4,p.r*.6,x,y,p.r+8);rg.addColorStop(0,'#fff0b0');rg.addColorStop(.5,T.a);rg.addColorStop(1,'#7a4a12');
+    c.fillStyle=rg;c.beginPath();c.arc(x,y,p.r+8,0,7);c.fill();
+    c.fillStyle='#5a3410';c.beginPath();c.arc(x,y,p.r+3.5,0,7);c.fill();
+    c.strokeStyle='rgba(0,0,0,.45)';c.lineWidth=1.5;c.beginPath();c.arc(x,y,p.r+8,0,7);c.stroke();
     const pg=c.createRadialGradient(x,y,2,x,y,p.r+1);pg.addColorStop(0,'#000');pg.addColorStop(.75,'#090606');pg.addColorStop(1,'#2a1410');
     c.fillStyle=pg;c.beginPath();c.arc(x,y,p.r+1,0,7);c.fill();}
 }
@@ -1247,7 +1277,7 @@ function draw(){
     POCKETS.forEach((p,i)=>{const x=p.x+RAIL+(p.x<TW/2-1?28:p.x>TW/2+1?-28:0),y=p.y+RAIL+(p.y<TH/2?30:-30);ctx.fillStyle='rgba(0,0,0,.65)';rrp(ctx,x-26,y-10,52,20,8);ctx.fill();ctx.fillStyle='#f3d77a';ctx.fillText(fmt(luckyPr[i]),x,y+.5);});}
   for(const b of balls)if(!b.pot)drawBall(b);
   if(!moving&&!over&&!cue.pot&&(!isAI(turn)||aiShowAim)){
-    if(ballInHand&&!isAI(turn)){ctx.font='26px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('👆',cue.x+RAIL+10,cue.y+RAIL+24);}
+    if(ballInHand&&!isAI(turn)){ctx.save();ctx.strokeStyle='rgba(255,255,255,.35)';ctx.setLineDash([6,6]);ctx.beginPath();ctx.moveTo(RAIL+TW*.25,RAIL);ctx.lineTo(RAIL+TW*.25,RAIL+TH);ctx.stroke();ctx.restore();ctx.font='26px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('👆',cue.x+RAIL+10,cue.y+RAIL+24);}
     drawAim();
   }
 }
@@ -1276,16 +1306,20 @@ cv.addEventListener('pointerdown',e=>{
   if(!humanTurn())return;ensureAudio();cv.setPointerCapture(e.pointerId);
   const p=pt(e);
   if(ballInHand&&Math.hypot(p.x-cue.x,p.y-cue.y)<R*3.5){dragCue=true;return;}
-  aiming=true;setAim(p);
+  aiming=true;aimStart={x:p.x,y:p.y,a:aim,ang:Math.atan2(p.y-cue.y,p.x-cue.x),moved:false};
 });
 cv.addEventListener('pointermove',e=>{
   if(!humanTurn())return;const p=pt(e);
   if(dragCue){
-    const x=Math.min(TW-R,Math.max(R,p.x)),y=Math.min(TH-R,Math.max(R,p.y));
+    const x=Math.min(TW*.25,Math.max(R,p.x)),y=Math.min(TH-R,Math.max(R,p.y));
     if(balls.every(o=>o===cue||o.pot||Math.hypot(o.x-x,o.y-y)>2*R+.5)){cue.x=x;cue.y=y;}
-  }else if(aiming)setAim(p);
+  }else if(aiming){
+    const d=Math.hypot(p.x-aimStart.x,p.y-aimStart.y);if(d>4)aimStart.moved=true;
+    if(aimStart.moved){let da=Math.atan2(p.y-cue.y,p.x-cue.x)-aimStart.ang;da=Math.atan2(Math.sin(da),Math.cos(da));aim=aimStart.a+da*.35;}
+  }
 });
-const endP=()=>{dragCue=false;aiming=false;};
+let aimStart=null;
+const endP=e=>{if(aiming&&aimStart&&!aimStart.moved)setAim(aimStart);dragCue=false;aiming=false;};
 cv.addEventListener('pointerup',endP);cv.addEventListener('pointercancel',endP);
 function setAim(p){const dx=p.x-cue.x,dy=p.y-cue.y;if(dx*dx+dy*dy>4)aim=Math.atan2(dy,dx);}
 function hold(id,d){
@@ -1312,6 +1346,18 @@ pb.addEventListener('pointermove',e=>{if(!pDrag)return;const h=pb.getBoundingCli
 const pEnd=e=>{if(!pDrag)return;pDrag=false;if(power>=3&&humanTurn())shoot();else{power=0;drawPbar();}};
 pb.addEventListener('pointerup',pEnd);pb.addEventListener('pointercancel',()=>{pDrag=false;power=0;drawPbar();});
 /* ---- falso topu ---- */
+function drawRet(){ // sağdaki kavisli top dönüş kanalı
+  const el=$('ret'),dpr=window.devicePixelRatio||1,w=el.width/dpr,h=el.height/dpr;if(!w||!h)return;
+  const c=el.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,w,h);
+  const x=w-14,r=9,top=18;
+  const tube=(lw,col)=>{c.strokeStyle=col;c.lineWidth=lw;c.lineCap='round';c.beginPath();c.moveTo(2,4);c.quadraticCurveTo(x,4,x,top+6);c.lineTo(x,h-r-2);c.stroke();};
+  tube(r*2+8,'#3a4250');tube(r*2+4,'#0b0f14');tube(r*2,'#141a22');
+  c.strokeStyle='rgba(255,255,255,.18)';c.lineWidth=1;c.beginPath();c.moveTo(x-r-3,top+10);c.lineTo(x-r-3,h-r-2);c.stroke();
+  const ids=potOrder.filter(id=>{const b=balls.find(q=>q.id===id);return b&&b.pot;});
+  const n=Math.floor((h-top-8)/(2*r+1));
+  ids.slice(-n).forEach((id,i)=>{const cy=h-r-3-i*(2*r+1);const o=ctx;ctx=c;
+    const sc=r/R;c.save();c.translate(x,cy);c.scale(sc,sc);drawBall({id,x:-RAIL,y:-RAIL});c.restore();ctx=o;});
+}
 function drawCueBall(c,w,ring){
   const r=w/2-2;c.clearRect(0,0,w,w);
   const g=c.createRadialGradient(w*.36,w*.32,w*.04,w/2,w/2,r);g.addColorStop(0,'#ffffff');g.addColorStop(.55,'#f1eee6');g.addColorStop(1,'#bdb8ac');
