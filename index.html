@@ -315,6 +315,12 @@ const SENSITIVITY=0.22, FAST_GAIN=1.0, SPEED_SLOW=0.12, SPEED_FAST=1.1, SMOOTHIN
 /* ================= VERİLER ================= */
 const CUES=[ // Standart istekalar (altınla alınır). st = [Güç, Hedef Alma, Falso, Süre] (0-10)
  {id:'basic',    name:'Başlangıç', cat:'std',price:0,     st:[0,0,2,2],shaft:'#d9b77d',butt:'#5a3215',ring:'#2a1a0c'},
+ // ucuz istakalar: 250 çip, güç +%5 civarı
+ {id:'cam',      name:'Çam',       cat:'std',price:250,   st:[2.5,1,2.6,2.6],shaft:'#ecd29c',butt:'#9a5a24',ring:'#f2e2b8'},
+ {id:'kayin',    name:'Kayın',     cat:'std',price:250,   st:[2.5,1,2.6,2.6],shaft:'#e8cf9e',butt:'#6b3a1a',ring:'#1a1a1a'},
+ {id:'gurgen',   name:'Gürgen',    cat:'std',price:250,   st:[2.5,1,2.6,2.6],shaft:'#f0dcb0',butt:'#2c4a7a',ring:'#e8e8e8'},
+ {id:'ihlamur',  name:'Ihlamur',   cat:'std',price:250,   st:[2.5,1,2.6,2.6],shaft:'#f2e0b6',butt:'#2f6a3a',ring:'#d9b45a'},
+ {id:'sogut',    name:'Söğüt',     cat:'std',price:250,   st:[2.5,1,2.6,2.6],shaft:'#efdcae',butt:'#7a1c22',ring:'#f2e2b8'},
  {id:'bronze',   name:'Bronz',     cat:'std',price:5000,  st:[2,2,2,2],shaft:'#e0c08a',butt:'#8c4a1e',ring:'#cd7f32'},
  {id:'silver',   name:'Gümüş',     cat:'std',price:25000, st:[3,3,3,2],shaft:'#e6d2a8',butt:'#3a3f4a',ring:'#d5dae2'},
  {id:'gold',     name:'Altın',     cat:'std',price:100000,st:[4,4,3,3],shaft:'#f0dcb0',butt:'#1a1a1a',ring:'#e8c15a'},
@@ -360,7 +366,7 @@ const BOX_CUES=[
 ];
 BOX_CUES.forEach(c=>c.cat='surpriz');
 const ALL_CUES=[...CUES,...CHEST_CUES,...BOX_CUES];
-const SMAX=13;ALL_CUES.forEach(c=>c.st=c.st.map(v=>Math.min(SMAX,Math.round(v*1.3))));
+const SMAX=13;ALL_CUES.forEach(c=>c.st=c.price===250?c.st.slice():c.st.map(v=>Math.min(SMAX,Math.round(v*1.3))));
 const BOXES=[{rar:1,name:'Nadir Kutu',c1:5,c3:14,cls:'bx1',ic:'🗃️'},{rar:2,name:'Destansı Kutu',c1:16,c3:44,cls:'bx2',ic:'🧰'},{rar:3,name:'Efsanevi Kutu',c1:33,c3:89,cls:'bx3',ic:'💠'}];
 const CHEST_MIN=[15,60,180,480]; // sandık açılma süreleri (dakika)
 const LEAGUES=[{n:'Bronz Ligi',ic:'🥉',min:0,rw:0},{n:'Gümüş Ligi',ic:'🥈',min:100e3,rw:10e3},{n:'Altın Ligi',ic:'🥇',min:1e6,rw:100e3},{n:'Elmas Ligi',ic:'💎',min:10e6,rw:1e6},{n:'Usta Ligi',ic:'👑',min:100e6,rw:10e6}];
@@ -617,7 +623,7 @@ function act(it,k){
 /* ---- istekalar ekranı ---- */
 let cueTab='std';
 document.querySelectorAll('#cueTabs button').forEach(b=>b.onclick=()=>{cueTab=b.dataset.c;renderCues();});
-const bars=v=>'<div class="bars">'+Array.from({length:SMAX},(_,i)=>`<i class="${i<v?'on':''}"></i>`).join('')+'</div>';
+const bars=v=>'<div class="bars">'+Array.from({length:SMAX},(_,i)=>`<i class="${i<Math.round(v)?'on':''}"></i>`).join('')+'</div>';
 function renderCues(){
   document.querySelectorAll('#cueTabs button').forEach(x=>x.classList.toggle('on',x.dataset.c===cueTab));
   const cp=collPower();$('cpv').textContent=cp;$('cpb').style.width=Math.min(100,cp%50*2)+'%';
@@ -1596,17 +1602,20 @@ function drawAim(){
     ctx.restore();
   }
   if(!isAI(turn)&&!gopt.noGuide){
-    ctx.save();ctx.shadowColor='#2fb4ff';ctx.shadowBlur=12;
-    ctx.strokeStyle='#d8f2ff';ctx.lineWidth=2.6;
-    ctx.beginPath();ctx.moveTo(cx+dx*R,cy+dy*R);ctx.lineTo(gx,gy);ctx.stroke();ctx.setLineDash([]);
-    ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.beginPath();ctx.arc(gx,gy,R,0,7);ctx.stroke();
+    ctx.save();ctx.lineCap='round';
+    const x0=cx+dx*R,y0=cy+dy*R,fade=(a)=>{const g=ctx.createLinearGradient(x0,y0,gx,gy);g.addColorStop(0,`rgba(255,255,255,${a})`);g.addColorStop(1,`rgba(255,255,255,${a*.22})`);return g;};
+    const fadeD=(a)=>{const g=ctx.createLinearGradient(x0,y0,gx,gy);g.addColorStop(0,`rgba(0,20,40,${a})`);g.addColorStop(1,`rgba(0,20,40,${a*.2})`);return g;};
+    ctx.strokeStyle=fadeD(.45);ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(gx,gy);ctx.stroke();   // ince koyu kenarlık
+    ctx.strokeStyle=fade(.95);ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(gx,gy);ctx.stroke();   // ince beyaz çizgi
+    ctx.strokeStyle='rgba(0,20,40,.4)';ctx.lineWidth=2.6;ctx.beginPath();ctx.arc(gx,gy,R,0,7);ctx.stroke();
+    ctx.strokeStyle='rgba(255,255,255,.6)';ctx.lineWidth=1.1;ctx.beginPath();ctx.arc(gx,gy,R,0,7);ctx.stroke();
     if(pr.b){
       const bx=pr.b.x+RAIL,by=pr.b.y+RAIL,nx=(bx-gx)/(2*R),ny=(by-gy)/(2*R);
       const g=groups[turn],lt=legalTargets(turn),ok=G()==='9'||G()==='practice'||G()==='lucky'?(G()!=='9'||lt[0]===pr.b):(!g||groupOf(pr.b.id)===(remaining(g)?g:'eight'))&&(g||pr.b.id!==8);
-      ctx.strokeStyle=ok?'rgba(255,255,255,.95)':'rgba(255,80,80,.95)';ctx.lineWidth=2;if(!ok){ctx.save();ctx.strokeStyle='#ff4040';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(gx-6,gy-6);ctx.lineTo(gx+6,gy+6);ctx.moveTo(gx+6,gy-6);ctx.lineTo(gx-6,gy+6);ctx.stroke();ctx.restore();ctx.strokeStyle='rgba(255,80,80,.95)';}
+      ctx.strokeStyle=ok?'rgba(255,255,255,.7)':'rgba(255,80,80,.85)';ctx.lineWidth=1.2;if(!ok){ctx.save();ctx.strokeStyle='#ff4040';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(gx-6,gy-6);ctx.lineTo(gx+6,gy+6);ctx.moveTo(gx+6,gy-6);ctx.lineTo(gx-6,gy+6);ctx.stroke();ctx.restore();ctx.strokeStyle='rgba(255,80,80,.95)';}
       ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(bx+nx*60*C.aim,by+ny*60*C.aim);ctx.stroke();
       const dot=dx*nx+dy*ny,tx=dx-dot*nx,ty=dy-dot*ny;
-      ctx.strokeStyle='rgba(255,255,255,.55)';ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(gx+tx*40*C.aim,gy+ty*40*C.aim);ctx.stroke();
+      ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(gx+tx*40*C.aim,gy+ty*40*C.aim);ctx.stroke();
     }
     ctx.restore();
   }
