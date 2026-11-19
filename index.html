@@ -856,18 +856,18 @@ $('mMini').onclick=()=>{
 $('sback').onclick=()=>show('menu');
 
 /* ================= OYUN SABİTLERİ ================= */
-const TW=760,TH=396,RAIL=36,R=12.5,W=TW+2*RAIL,H=TH+2*RAIL,MAXV=27;
+const TW=760,TH=380,RAIL=42,CW=14,R=11.75,W=TW+2*RAIL,H=TH+2*RAIL,MAXV=27;
 const cv=$('c');let ctx=cv.getContext('2d');
 let scale=1,dprK=1;
 /* ---- cep geometrisi: köşe ağzı ≈2,3 top, orta ağzı ≈1,7 top; ağızdan içeri daralan çene, arkasında yuvarlak çukur ---- */
-const CJ=40,SJ=21; // köşe çene ucunun köşeye uzaklığı, orta ağzın yarı genişliği
-// köşe çapı 68px→55 (2,2 top), orta 48px→39 (1,56 top) — referans ölçüsü, sabit
-const POCKETS=[{x:-5,y:-5,r:27.5},{x:TW+5,y:-5,r:27.5},{x:-5,y:TH+5,r:27.5},{x:TW+5,y:TH+5,r:27.5},{x:TW/2,y:-16,r:19.5},{x:TW/2,y:TH+16,r:19.5}];
+const CJ=38,SJ=21; // köşe çene ucunun köşeye uzaklığı, orta ağzın yarı genişliği
+// referans (2. fotoğraf) ölçüsü: oyun alanı 2:1, köşe çukuru ≈2,1 top, orta ≈1,65 top, çukurlar banda gömülü — sabit
+const POCKETS=[{x:-12,y:-12,r:24.7},{x:TW+12,y:-12,r:24.7},{x:-12,y:TH+12,r:24.7},{x:TW+12,y:TH+12,r:24.7},{x:TW/2,y:-22,r:19.5},{x:TW/2,y:TH+22,r:19.5}];
 const CUSH=(()=>{const S=[];
   S.push([CJ,0,TW/2-SJ,0],[TW/2+SJ,0,TW-CJ,0],[CJ,TH,TW/2-SJ,TH],[TW/2+SJ,TH,TW-CJ,TH],[0,CJ,0,TH-CJ],[TW,CJ,TW,TH-CJ]);
   for(const cx of [0,TW])for(const cy of [0,TH]){const ix=cx?-1:1,iy=cy?-1:1;
-    S.push([cx+ix*CJ,cy,cx+ix*19,cy-iy*18],[cx,cy+iy*CJ,cx-ix*18,cy+iy*19]);}
-  for(const cy of [0,TH]){const o=cy?1:-1;S.push([TW/2-SJ,cy,TW/2-18.5,cy+o*13],[TW/2+SJ,cy,TW/2+18.5,cy+o*13]);}
+    S.push([cx+ix*CJ,cy,cx+ix*8,cy-iy*26],[cx,cy+iy*CJ,cx-ix*26,cy+iy*8]);}
+  for(const cy of [0,TH]){const o=cy?1:-1;S.push([TW/2-SJ,cy,TW/2-18.5,cy+o*16],[TW/2+SJ,cy,TW/2+18.5,cy+o*16]);}
   return S;})();
 function segHit(b,sg){
   const ex=sg[2]-sg[0],ey=sg[3]-sg[1];let t=((b.x-sg[0])*ex+(b.y-sg[1])*ey)/(ex*ex+ey*ey);t=t<0?0:t>1?1:t;
@@ -1424,7 +1424,7 @@ function railDeco(T,x,y,w,h,vert){ // bant üstü süs paneli
   c.restore();
 }
 function drawCushions(c,T,col){ // bant lastikleri: fizik çizgileriyle birebir (CUSH)
-  const k=10,jaws=CUSH.slice(6),jaw=(x,y)=>jaws.find(j=>Math.abs(j[0]-x)<.01&&Math.abs(j[1]-y)<.01);
+  const k=CW,jaws=CUSH.slice(6),jaw=(x,y)=>jaws.find(j=>Math.abs(j[0]-x)<.01&&Math.abs(j[1]-y)<.01);
   for(let i=0;i<6;i++){const [x0,y0,x1,y1]=CUSH[i],hz=i<4;
     const back=j=>{const dx=j[2]-j[0],dy=j[3]-j[1],dep=Math.abs(hz?dy:dx);return [j[0]+dx*k/dep+RAIL,j[1]+dy*k/dep+RAIL];};
     const A=back(jaw(x0,y0)),B=back(jaw(x1,y1));
@@ -1556,17 +1556,17 @@ function drawClassic(T){ // kırmızı ahşap bantlı, gümüş köşeli, açık
   // gümüş köşe kapakları
   if(!T.real)for(const [cx,cy] of [[0,0],[W,0],[0,H],[W,H]]){const sx=cx?-1:1,sy=cy?-1:1,ox=cx+sx*3,oy=cy+sy*3,L=RAIL+22;
     const mg=c.createLinearGradient(ox,oy,ox+sx*L,oy+sy*L);if(T.gold){mg.addColorStop(0,'#fff2b8');mg.addColorStop(.5,'#d9a63a');mg.addColorStop(1,'#7a5214');}else{mg.addColorStop(0,'#f4f5f8');mg.addColorStop(.5,'#c2c7d0');mg.addColorStop(1,'#8b919c');}
-    c.fillStyle=mg;c.beginPath();c.moveTo(ox+sx*20,oy);c.lineTo(ox+sx*L,oy);c.lineTo(ox+sx*L,oy+sy*(RAIL-10));c.lineTo(ox+sx*(RAIL-10),oy+sy*L);c.lineTo(ox,oy+sy*L);c.lineTo(ox,oy+sy*20);c.quadraticCurveTo(ox,oy,ox+sx*20,oy);c.fill();
+    c.fillStyle=mg;c.beginPath();c.moveTo(ox+sx*20,oy);c.lineTo(ox+sx*L,oy);c.lineTo(ox+sx*L,oy+sy*(RAIL-CW));c.lineTo(ox+sx*(RAIL-CW),oy+sy*L);c.lineTo(ox,oy+sy*L);c.lineTo(ox,oy+sy*20);c.quadraticCurveTo(ox,oy,ox+sx*20,oy);c.fill();
     c.strokeStyle='rgba(0,0,0,.25)';c.lineWidth=1;c.stroke();}
   // nişan noktaları (beyaz)
-  const yT=(RAIL-10)/2+2,yB=H-yT,xL=yT,xR=W-yT;
+  const yT=(RAIL-CW)/2+2,yB=H-yT,xL=yT,xR=W-yT;
   const dot=(x,y)=>{c.fillStyle='rgba(0,0,0,.35)';c.beginPath();c.arc(x+.6,y+.8,2.8,0,7);c.fill();c.fillStyle='#fff';c.beginPath();c.arc(x,y,2.5,0,7);c.fill();c.fillStyle='rgba(150,160,180,.8)';c.beginPath();c.arc(x+.6,y+.6,1.1,0,7);c.fill();};
   for(let i=1;i<8;i++){if(i===4)continue;dot(RAIL+TW*i/8,yT);dot(RAIL+TW*i/8,yB);}
   for(let i=1;i<4;i++){dot(xL,RAIL+TH*i/4);dot(xR,RAIL+TH*i/4);}
   // çuha
   g=c.createRadialGradient(W/2,H/2,30,W/2,H/2,W*.58);g.addColorStop(0,T.f1);g.addColorStop(1,T.f2);
-  c.fillStyle=g;c.fillRect(RAIL-10,RAIL-10,TW+20,TH+20);c.fillStyle=feltTex(T);c.fillRect(RAIL-10,RAIL-10,TW+20,TH+20);
-  if(T.real){c.strokeStyle='rgba(255,240,215,.7)';c.lineWidth=1.4;c.strokeRect(RAIL-10.5,RAIL-10.5,TW+21,TH+21);}
+  c.fillStyle=g;c.fillRect(RAIL-CW,RAIL-CW,TW+2*CW,TH+2*CW);c.fillStyle=feltTex(T);c.fillRect(RAIL-CW,RAIL-CW,TW+2*CW,TH+2*CW);
+  if(T.real){c.strokeStyle='rgba(255,240,215,.7)';c.lineWidth=1.4;c.strokeRect(RAIL-CW-.5,RAIL-CW-.5,TW+2*CW+1,TH+2*CW+1);}
   drawCushions(c,T);
   c.strokeStyle='rgba(0,30,60,.35)';c.lineWidth=1.2;c.strokeRect(RAIL,RAIL,TW,TH);
   g=c.createLinearGradient(0,RAIL,0,RAIL+12);g.addColorStop(0,'rgba(0,30,60,.25)');g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(RAIL,RAIL,TW,12);
@@ -1615,12 +1615,12 @@ function drawNeon(T){ // lacivert-parlak mavi çuha, mor-mavi-turkuaz neon kenar
   // dış ve iç neon şeritler
   neonLine(c,()=>{c.beginPath();rrp(c,7,7,W-14,H-14,17);},2.2,NC,14);
   // nişan noktaları
-  const yT=(RAIL-10)/2+3,yB=H-yT;c.save();c.shadowColor='#5ff6ff';c.shadowBlur=8;c.fillStyle='#bff9ff';
+  const yT=(RAIL-CW)/2+3,yB=H-yT;c.save();c.shadowColor='#5ff6ff';c.shadowBlur=8;c.fillStyle='#bff9ff';
   for(let i=1;i<8;i++){if(i===4)continue;for(const y of [yT,yB]){c.beginPath();c.arc(RAIL+TW*i/8,y,2.2,0,7);c.fill();}}
   for(let i=1;i<4;i++)for(const x of [yT,W-yT]){c.beginPath();c.arc(x,RAIL+TH*i/4,2.2,0,7);c.fill();}c.restore();
   // çuha: ortada parlak mavi, kenara doğru lacivert
   g=c.createRadialGradient(W/2,H/2,20,W/2,H/2,W*.62);g.addColorStop(0,'#3d9bff');g.addColorStop(.45,'#1d5fe0');g.addColorStop(1,'#0a2470');
-  c.fillStyle=g;c.fillRect(RAIL-10,RAIL-10,TW+20,TH+20);c.fillStyle=feltTex(T);c.fillRect(RAIL-10,RAIL-10,TW+20,TH+20);
+  c.fillStyle=g;c.fillRect(RAIL-CW,RAIL-CW,TW+2*CW,TH+2*CW);c.fillStyle=feltTex(T);c.fillRect(RAIL-CW,RAIL-CW,TW+2*CW,TH+2*CW);
   // ince parlak ızgara ışığı
   c.save();c.beginPath();c.rect(RAIL,RAIL,TW,TH);c.clip();c.strokeStyle='rgba(140,200,255,.05)';for(let x=RAIL;x<RAIL+TW;x+=38){c.beginPath();c.moveTo(x,RAIL);c.lineTo(x,RAIL+TH);c.stroke();}for(let y=RAIL;y<RAIL+TH;y+=38){c.beginPath();c.moveTo(RAIL,y);c.lineTo(RAIL+TW,y);c.stroke();}c.restore();
   // başlangıç çizgisi ve logo
@@ -1644,9 +1644,9 @@ function drawTable(T){
   c.fillStyle=g;rrp(c,0,0,W,H,20);c.fill();
   const fg=c.createLinearGradient(0,0,W,H);fg.addColorStop(0,'#fff0b0');fg.addColorStop(.3,T.a);fg.addColorStop(.7,'#8a6416');fg.addColorStop(1,T.a);
   c.strokeStyle=fg;c.lineWidth=5;rrp(c,2.5,2.5,W-5,H-5,18);c.stroke();
-  c.strokeStyle='rgba(0,0,0,.45)';c.lineWidth=2;rrp(c,RAIL-12,RAIL-12,TW+24,TH+24,8);c.stroke();
+  c.strokeStyle='rgba(0,0,0,.45)';c.lineWidth=2;rrp(c,RAIL-CW-2,RAIL-CW-2,TW+2*CW+4,TH+2*CW+4,8);c.stroke();
   // süs panelleri (uzun bantlar ikiye, kısa bantlar bir)
-  const t=10,yT=(RAIL-12)/2-t/2+1,yB=H-(RAIL-12)/2-t/2-1,xL=(RAIL-12)/2-t/2+1,xR=W-(RAIL-12)/2-t/2-1;
+  const t=10,yT=(RAIL-CW-2)/2-t/2+1,yB=H-(RAIL-CW-2)/2-t/2-1,xL=(RAIL-CW-2)/2-t/2+1,xR=W-(RAIL-CW-2)/2-t/2-1;
   for(const [x0,x1] of [[RAIL+40,RAIL+TW/2-34],[RAIL+TW/2+34,RAIL+TW-40]]){railDeco(T,x0,yT,x1-x0,t,0);railDeco(T,x0,yB,x1-x0,t,0);}
   railDeco(T,xL,RAIL+40,t,TH-80,1);railDeco(T,xR,RAIL+40,t,TH-80,1);
   // nişan noktaları
