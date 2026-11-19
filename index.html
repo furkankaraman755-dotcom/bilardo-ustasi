@@ -57,6 +57,7 @@ button:disabled{opacity:.45}
 .room.lock{filter:grayscale(.7) brightness(.7)}
 .r1{background:linear-gradient(160deg,#2b6e47,#163d28)}.r2{background:linear-gradient(160deg,#2d5f9a,#17345a)}.r3{background:linear-gradient(160deg,#7a3a9a,#3f1d55)}.r4{background:linear-gradient(160deg,#9a7a2a,#4f3b0f)}
 #dlg{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;z-index:7;padding:12px}
+@keyframes mmr{to{transform:rotate(360deg)}}
 #dlg .box{background:#17221d;border:2px solid #e8c15a;border-radius:16px;padding:16px;text-align:center;max-width:560px;width:100%}
 .days{display:flex;gap:6px;justify-content:center;margin:12px 0}
 .day{flex:1;max-width:64px;border-radius:10px;background:#0f1a15;border:2px solid #24352b;padding:6px 2px;font-size:11px}
@@ -432,6 +433,41 @@ const $=id=>document.getElementById(id);
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('show',s.id===id));refreshCoins();if(id==='game')resize();if(id==='menu')renderSlots();}
 const xpNeed=l=>100+l*40;
 const AVC=['#ff9800','#e2453c','#3c8dde','#2fa84f','#9b5de5','#e91e63','#00a8a8'];
+/* ---- rakip profili (gerçek oyuncu gibi) ---- */
+const OPP_N=['Emre','Burak','Mert','Can','Kaan','Serkan','Oğuz','Volkan','Hakan','Tolga','Yusuf','Onur','Barış','Selin','Ece','Deniz','Merve','Zeynep','Cem','Kerem','Umut','Arda','Eren','Sinan','Murat','Gökhan','Ali','Berk','Doruk','Elif','Seda','Tuna','Alper','Ozan','Ferhat','Batu','Koray','Emir','Yiğit','Efe','Ahmet','Mehmet','Mustafa','Hüseyin','İbrahim','Recep','Cansu','Gizem','Okan','Erkan'];
+const OPP_S=['Yılmaz','Kaya','Demir','Şahin','Çelik','Aydın','Öztürk','Arslan','Doğan','Kılıç','Aslan','Koç','Kurt','Polat','Erdem','Yıldız','Güneş','Tekin','Aksoy','Bulut'];
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pick=a=>a[Math.random()*a.length|0];
+function makeOpp(room){
+  const n=pick(OPP_N),sn=pick(OPP_S),k=Math.random();
+  const name=k<.25?n+' '+sn:k<.45?n+'_'+rnd(1,81):k<.6?n.toLocaleLowerCase('tr-TR')+rnd(10,99):k<.72?n+sn[0]+'.':k<.82?n+'Pro':k<.9?'Usta'+n:n;
+  // masa yükseldikçe rakibin seviyesi de yükselir; oyuncunun seviyesine yakın tutulur
+  const idx=room?room.idx:0,base=Math.max(room?2+idx*6:1,(save.level||1)-2);
+  const lvl=Math.max(1,base+rnd(0,room?7:4)),games=lvl*rnd(18,34)+rnd(5,40),wr=.44+Math.random()*.2+Math.min(.12,idx*.008);
+  return {name,lvl,id:100000+Math.floor(Math.random()*900000),games,wins:Math.round(games*wr),
+    badges:room?Math.min(idx,rnd(0,Math.max(0,idx-1))):0,bg:pick(AVC),cues:rnd(1,4+Math.min(20,idx*2))};
+}
+let OPP=null;
+function oppAv(o,sz){return `<div class="av" style="background:${o.bg};width:${sz}px;height:${sz}px;font-size:${sz*.45}px">${o.name[0].toLocaleUpperCase('tr-TR')}</div>`;}
+function openOpp(){
+  const o=OPP;if(!o)return;
+  dlg(`<div style="display:flex;align-items:center;gap:12px;justify-content:center">${oppAv(o,54)}
+    <div style="text-align:left"><b style="font-size:20px">${o.name}</b><div class="stats">ID: ${o.id} · ⭐ Seviye ${o.lvl}</div>
+    <div class="stats">Oyun ${o.games} · Galibiyet ${o.wins} · Kazanma %${Math.round(o.wins/o.games*100)}</div><div class="stats">🏅 Rozet ${o.badges} · İstaka ${o.cues}</div></div></div>
+    <button id="opClose" style="margin-top:12px;min-width:140px">Kapat</button>`);
+  $('opClose').onclick=closeDlg;
+}
+function matchmake(room,go){
+  OPP=makeOpp(room);const me=save.name||'Sen';
+  dlg(`<h3 style="margin:4px 0 10px">Rakip aranıyor…</h3><div id="mmSpin" style="font-size:40px;animation:mmr 1s linear infinite;display:inline-block">🎱</div><div class="stats" style="margin-top:8px">${room?room.name+' · 🪙 '+fmt(room.prize):'Turnuva'}</div>`);
+  setTimeout(()=>{
+    dlg(`<div style="display:flex;align-items:center;justify-content:center;gap:18px">
+      <div>${`<div class="av" style="background:${AVC[(save.pid||0)%AVC.length]};width:58px;height:58px;font-size:26px;margin:auto">${me[0].toLocaleUpperCase('tr-TR')}</div>`}<b>${me}</b><div class="stats">⭐ ${save.level}</div></div>
+      <b style="font-size:30px;color:#f3d77a">VS</b>
+      <div>${oppAv(OPP,58).replace('class="av" style="','class="av" style="margin:auto;')}<b>${OPP.name}</b><div class="stats">⭐ ${OPP.lvl}</div></div></div>
+      <div class="stats" style="margin-top:10px">${room?'🏆 '+fmt(room.prize):''}</div>`);
+    setTimeout(()=>{closeDlg();go();},1500);
+  },900+Math.random()*1400);
+}
 function refreshCoins(){
   document.querySelectorAll('.cv').forEach(e=>e.textContent=save.coins.toLocaleString('tr-TR'));
   $('stats').textContent=`Galibiyet: ${save.wins} · Mağlubiyet: ${save.losses}`;
@@ -717,7 +753,7 @@ function renderRooms(){
   for(const r of ROOMS){
     const lock=save.level<r.lvl,d=document.createElement('div');d.className='room '+r.cls+(lock?' lock':'');
     const w=save.rw[r.id]||0;
-    d.innerHTML=`<h3>${r.name}</h3><div class="rw">Rakip: Bilgisayar (${DIFF[r.diff].name})</div><div class="rw">Giriş: 🪙 ${fmt(r.fee)}</div><div class="pz">🏆 ${fmt(r.prize)}</div>${r.bank?'<div class="bk">🎱 8 numara bantla</div>':''}<div class="rw">${w>=BADGE_WINS?'🏅 Rozet kazanıldı':'🏅 '+w+'/'+BADGE_WINS}</div>`;
+    d.innerHTML=`<h3>${r.name}</h3><div class="rw">Rakipler: ⭐${Math.max(2+r.idx*6,save.level-2)}+ seviye</div><div class="rw">Giriş: 🪙 ${fmt(r.fee)}</div><div class="pz">🏆 ${fmt(r.prize)}</div>${r.bank?'<div class="bk">🎱 8 numara bantla</div>':''}<div class="rw">${w>=BADGE_WINS?'🏅 Rozet kazanıldı':'🏅 '+w+'/'+BADGE_WINS}</div>`;
     const b=document.createElement('button');b.className='gold';b.textContent=lock?`🔒 Seviye ${r.lvl}`:'Oyna';b.disabled=lock;
     b.onclick=()=>startRoom(r);d.append(b);box.append(d);
   }
@@ -725,8 +761,9 @@ function renderRooms(){
 function startRoom(r){
   if(save.coins<r.fee){$('rmsg').textContent=`Bu masa için ${fmt(r.fee-save.coins)} 🪙 daha lazım.`;if(!SPECIAL.includes(r))show('rooms');else show('priv');return false;}
   save.coins-=r.fee;persist();refreshCoins();
-  startGame('ai',r.diff,{kind:'match',room:r,game:r.game||'8',noGuide:!!r.noGuide,label:r.name+(r.bank?' · 8 numara bantla sokulmalı':'')});return true;
+  matchmake(r,()=>startGame('ai',r.diff,{kind:'match',room:r,game:r.game||'8',noGuide:!!r.noGuide,label:r.name+(r.bank?' · 8 numara bantla sokulmalı':'')}));return true;
 }
+$('p1').onclick=()=>{if(mode==='ai'&&OPP)openOpp();};
 $('m1v1').onclick=()=>{$('rmsg').textContent='Kazanan ödülün tamamını alır · 2-3 galibiyette bir sandık · bir masada '+BADGE_WINS+' galibiyet = rozet';renderRooms();show('rooms');const i=ROOMS.filter(r=>save.level>=r.lvl&&save.coins>=r.fee).length-1;const el=$('roomList').children[Math.max(0,i)];if(el)el.scrollIntoView({inline:'center'});};
 /* ---- etkinlik: turnuva ---- */
 function renderEvents(){
@@ -738,7 +775,7 @@ function renderEvents(){
     save.coins-=t.fee;persist();refreshCoins();startTourRound(0);
   };
 }
-function startTourRound(i){startGame('ai',TOUR.rounds[i],{kind:'event',round:i,label:`Turnuva · Tur ${i+1}/3`});}
+function startTourRound(i){matchmake({idx:2+i*3,name:`Turnuva · Tur ${i+1}/3`,prize:TOUR.prize},()=>startGame('ai',TOUR.rounds[i],{kind:'event',round:i,label:`Turnuva · Tur ${i+1}/3`}));}
 $('mEv').onclick=()=>{$('emsg').textContent='';renderEvents();show('events');};
 /* ---- özel oyna ---- */
 const SPECIAL=[
@@ -772,7 +809,7 @@ $('sback').onclick=()=>show('menu');
 const TW=760,TH=380,RAIL=34,R=12.5,W=TW+2*RAIL,H=TH+2*RAIL,MAXV=27;
 const cv=$('c');let ctx=cv.getContext('2d');
 let scale=1,dprK=1;
-const POCKETS=[{x:0,y:0,r:24},{x:TW,y:0,r:24},{x:0,y:TH,r:24},{x:TW,y:TH,r:24},{x:TW/2,y:-6,r:22},{x:TW/2,y:TH+6,r:22}];
+const POCKETS=[{x:0,y:0,r:23},{x:TW,y:0,r:23},{x:0,y:TH,r:23},{x:TW,y:TH,r:23},{x:TW/2,y:-6,r:21},{x:TW/2,y:TH+6,r:21}];
 const AIMPTS=[{x:3,y:3},{x:TW-3,y:3},{x:3,y:TH-3},{x:TW-3,y:TH-3},{x:TW/2,y:-3,mid:1},{x:TW/2,y:TH+3,mid:1}];
 const COL=['#ffffff','#f9a80d','#1668dd','#e5121f','#6c2cc2','#ff6b0b','#16a43b','#931b14','#0b0b0b'];
 const col=id=>id<=8?COL[id]:COL[id-8];
@@ -780,7 +817,7 @@ const groupOf=id=>id===0?'cue':id===8?'eight':id<8?'solid':'stripe';
 const LABEL={solid:'Düz',stripe:'Çizgili'};
 
 let balls=[],cue,aim=0,power=0,spinX=0,spinY=0,shotSpin=null,moving=false,over=false;
-let turn=0,groups=[null,null],ballInHand=false,shots=0,mode='ai',diff='mid',NAMES=['Sen','Bilgisayar'];
+let turn=0,groups=[null,null],ballInHand=false,shots=0,mode='ai',diff='mid',NAMES=['Sen','Rakip'];
 let aiShowAim=false,firstHit=null,shotPotted=[],shotCtx=null,dragCue=false,aiming=false,sndCount=0,aiBusy=false,aiTimer=null;
 const isAI=p=>mode==='ai'&&p===1;
 const G=()=>gopt.game||'8';
@@ -897,7 +934,8 @@ function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;
 let gopt={kind:'free'};
 function startGame(m,d,o){
   mode=m;diff=d||diff;gopt=o||{kind:m==='2p'?'2p':'free'};quitArm=0;ensureAudio();
-  NAMES=mode==='ai'?[save.name||'Sen','Bilgisayar ('+DIFF[diff].name+')']:mode==='solo'?[save.name||'Sen','—']:['Oyuncu 1','Oyuncu 2'];
+  if(mode==='ai'&&!(OPP&&(gopt.kind==='match'||gopt.kind==='event')))OPP=makeOpp(null);
+  NAMES=mode==='ai'?[save.name||'Sen',OPP.name]:mode==='solo'?[save.name||'Sen','—']:['Oyuncu 1','Oyuncu 2'];
   show('game');newGame();
 }
 function newGame(){
@@ -1073,9 +1111,9 @@ function endShot(){
     extra=NAMES[p]+': '+LABEL[g]+'. ';
   }
   const own=groups[p]?real.some(i=>groupOf(i)===groups[p]):real.length>0;
-  if(foul){turn=1-p;ballInHand=true;setMsg(extra+'Faul: '+why+'. '+(isAI(turn)?'Beyaz top bilgisayarda.':NAMES[turn]+' — beyaz top elinde (sürükle).'));}
+  if(foul){turn=1-p;ballInHand=true;setMsg(extra+'Faul: '+why+'. '+(isAI(turn)?'Beyaz top '+NAMES[turn]+' oyuncusunda.':NAMES[turn]+' — beyaz top elinde (sürükle).'));}
   else if(own){setMsg(extra+(you(p)?'Devam ediyorsun.':NAMES[p]+' devam ediyor.'));}
-  else{turn=1-p;setMsg(extra+(isAI(turn)?'Sıra bilgisayarda.':'Sıra '+NAMES[turn]+'.'));}
+  else{turn=1-p;setMsg(extra+(isAI(turn)?'Sıra '+NAMES[turn]+'.':'Sıra '+NAMES[turn]+'.'));}
   updateHud();
   if(isAI(turn))scheduleAI();else{power=0;drawPbar();startTimer();}
 }
@@ -1089,9 +1127,9 @@ function endShot9(p,s,potted,scratch){
     const n=balls.find(b=>b.id===9);n.pot=false;[n.x,n.y]=freeSpot(TW*0.72,TH/2);
   }
   if(scratch)respawnCue();
-  if(foul){turn=1-p;ballInHand=true;setMsg('Faul: '+why+'. '+(isAI(turn)?'Beyaz top bilgisayarda.':NAMES[turn]+' — beyaz top elinde.'));}
+  if(foul){turn=1-p;ballInHand=true;setMsg('Faul: '+why+'. '+(isAI(turn)?'Beyaz top '+NAMES[turn]+' oyuncusunda.':NAMES[turn]+' — beyaz top elinde.'));}
   else if(potted.length){setMsg(you(p)?'Devam ediyorsun.':NAMES[p]+' devam ediyor.');}
-  else{turn=1-p;setMsg(isAI(turn)?'Sıra bilgisayarda.':'Sıra '+NAMES[turn]+'.');}
+  else{turn=1-p;setMsg(isAI(turn)?'Sıra '+NAMES[turn]+'.':'Sıra '+NAMES[turn]+'.');}
   updateHud();
   if(isAI(turn))scheduleAI();else{power=0;drawPbar();startTimer();}
 }
@@ -1101,7 +1139,7 @@ function startTimer(){tMax=tLeft=cueOf(turn).time;}
 function timeUp(){
   if(!timerOn()||over)return;
   turn=1-turn;ballInHand=true;power=0;drawPbar();
-  setMsg('⏰ Süre doldu! '+(isAI(turn)?'Beyaz top bilgisayarda.':NAMES[turn]+' — beyaz top elinde.'));
+  setMsg('⏰ Süre doldu! '+(isAI(turn)?'Beyaz top '+NAMES[turn]+' oyuncusunda.':NAMES[turn]+' — beyaz top elinde.'));
   updateHud();if(isAI(turn))scheduleAI();else startTimer();
 }
 let pendingChest=null;
@@ -1148,18 +1186,18 @@ function updateHud(){
   for(let i=0;i<2;i++){
     const el=$('p'+i);el.classList.toggle('on',turn===i&&!over);
     el.style.visibility=mode==='solo'&&i===1?'hidden':'visible';
-    const ai=isAI(i),av=ai?{t:'🤖',bg:'#3a4656'}:{t:(NAMES[i]||'O')[0].toLocaleUpperCase('tr-TR'),bg:AVC[((save.pid||0)+i*3)%AVC.length]};
+    const ai=isAI(i),av=ai&&OPP?{t:OPP.name[0].toLocaleUpperCase('tr-TR'),bg:OPP.bg}:{t:(NAMES[i]||'O')[0].toLocaleUpperCase('tr-TR'),bg:AVC[((save.pid||0)+i*3)%AVC.length]};
     let row='';
     if(G()==='9')row=lo.slice(0,7).map(b=>bdot(b.id)).join('');
     else if(G()==='8'){const g=groups[i];
       if(g){const ids=g==='solid'?[1,2,3,4,5,6,7]:[9,10,11,12,13,14,15];row=ids.map(id=>{const b=balls.find(x=>x.id===id);return b&&!b.pot?bdot(id):'<i></i>';}).join('');if(!remaining(g))row=bdot(8);}
       else row='<i></i>'.repeat(7);}
     else row=`<span class="lbl">${G()==='lucky'?'Tek atış':'Serbest çalışma'}</span>`;
-    const lv=!ai&&(i===0||mode==='2p')?`<span class="lvs">⭐${save.level}</span>`:ai?`<span class="lvs">${DIFF[diff].name}</span>`:'';
+    const lv=!ai&&(i===0||mode==='2p')?`<span class="lvs">⭐${save.level}</span>`:ai&&OPP?`<span class="lvs">⭐${OPP.lvl}</span>`:'';
     el.innerHTML=`<div class="pav"><div class="in" style="background:${av.bg}">${av.t}</div></div><div class="pinfo"><div class="pname">${i===0?lv:''}<span style="overflow:hidden;text-overflow:ellipsis">${NAMES[i]}</span>${i===1?lv:''}</div><div class="brow">${row}</div></div>`;
   }
   const r=gopt.room;
-  $('stake').innerHTML=r?`🪙<br>${fmt(r.prize)}`:gopt.kind==='event'?`🏆<br>Tur ${gopt.round+1}/3`:G()==='lucky'?'🎯<br>Şans':G()==='practice'?'📴<br>Egzersiz':mode==='2p'?'👥<br>2 Kişi':'🤖<br>Antrenman';
+  $('stake').innerHTML=r?`🪙<br>${fmt(r.prize)}`:gopt.kind==='event'?`🏆<br>Tur ${gopt.round+1}/3`:G()==='lucky'?'🎯<br>Şans':G()==='practice'?'📴<br>Egzersiz':mode==='2p'?'👥<br>2 Kişi':'🎱<br>Antrenman';
 }
 
 /* ================= YAPAY ZEKÂ ================= */
@@ -1218,7 +1256,7 @@ function findShots(cx,cy,targets){
 }
 const gauss=()=>(Math.random()+Math.random()+Math.random()-1.5)*1.4;
 function scheduleAI(){
-  aiBusy=true;setMsg('Bilgisayar düşünüyor…');
+  aiBusy=true;setMsg('Sıra '+NAMES[1]+' oyuncusunda');
   aiTimer=setTimeout(aiTurn,500);
 }
 function aiTurn(){
@@ -1244,7 +1282,7 @@ function aiTurn(){
     nb=nb||targets[0];a=Math.atan2(nb.y-cue.y,nb.x-cue.x);pw=45;
   }
   aim=a+gauss()*D.err;power=Math.min(100,Math.max(8,pw*(1+gauss()*D.pErr)));
-  setMsg('Bilgisayar nişan alıyor…');aiShowAim=true;
+  setMsg(NAMES[1]+' nişan alıyor…');aiShowAim=true;
   aiTimer=setTimeout(()=>{aiBusy=false;if(!over&&isAI(turn))shoot();},D.think);
 }
 
@@ -1308,7 +1346,7 @@ function railDeco(T,x,y,w,h,vert){ // bant üstü süs paneli
   c.restore();
 }
 function drawCushions(c,T){
-  const k=10,E=T.real?30:25,M=T.real?25:21,J=T.real?11:8;
+  const k=10,E=22,M=19,J=8;
   const segs=[[RAIL+E,RAIL+TW/2-M,'t'],[RAIL+TW/2+M,RAIL+TW-E,'t'],[RAIL+E,RAIL+TW/2-M,'b'],[RAIL+TW/2+M,RAIL+TW-E,'b'],[RAIL+E,RAIL+TH-E,'l'],[RAIL+E,RAIL+TH-E,'r']];
   for(const [a0,a1,sd] of segs){c.beginPath();
     if(sd==='t'){c.moveTo(a0-J,RAIL-k);c.lineTo(a1+J,RAIL-k);c.lineTo(a1,RAIL);c.lineTo(a0,RAIL);}
@@ -1318,19 +1356,24 @@ function drawCushions(c,T){
     c.closePath();const cg=sd==='t'||sd==='b'?c.createLinearGradient(0,sd==='t'?RAIL-k:RAIL+TH+k,0,sd==='t'?RAIL:RAIL+TH):c.createLinearGradient(sd==='l'?RAIL-k:RAIL+TW+k,0,sd==='l'?RAIL:RAIL+TW,0);
     cg.addColorStop(0,T.real?'#8fd6f5':'#7fd0f2');cg.addColorStop(1,T.c);c.fillStyle=cg;c.fill();c.strokeStyle='rgba(0,40,80,.35)';c.lineWidth=1;c.stroke();}
 }
-function realPocket(c,p){ // fotoğraftaki gibi: ahşap çerçevenin içinde net daire, kenarı bordo, merkezi siyah
-  const mid=p.x===TW/2,ox=mid?0:(p.x<TW/2?-1:1),oy=p.y<TH/2?-1:1,L=Math.hypot(ox,oy),ux=ox/L,uy=oy/L,off=mid?-3:-4;
-  const x=p.x+RAIL+ux*off,y=p.y+RAIL+uy*off,r=mid?21:24;
-  // ahşapta ince gölge
-  c.fillStyle='rgba(30,8,0,.45)';c.beginPath();c.arc(x+ux*1.5,y+uy*1.5,r+2.5,0,7);c.fill();
-  // delik: bordo kenardan siyah merkeze
-  const hg=c.createRadialGradient(x+ux*r*.25,y+uy*r*.25,1,x,y,r);
-  hg.addColorStop(0,'#000');hg.addColorStop(.45,'#0a0000');hg.addColorStop(.75,'#3a0606');hg.addColorStop(.93,'#6e1410');hg.addColorStop(1,'#8a2018');
+function realPocket(c,p){ // bant ağzına oyulmuş gerçek boşluk: halka/çerçeve yok, içe doğru kararan oyuk
+  const mid=p.x===TW/2,ox=mid?0:(p.x<TW/2?-1:1),oy=p.y<TH/2?-1:1,L=Math.hypot(ox,oy),ux=ox/L,uy=oy/L,off=mid?2:5;
+  const x=p.x+RAIL+ux*off,y=p.y+RAIL+uy*off,r=mid?17:19;
+  // ağız çizgisi: çuha tarafında oyuk düz bir dudakla biter (yuvarlak leke gibi taşmaz)
+  const fx=p.x+RAIL,fy=(oy<0?0:TH)+RAIL,lip=mid?3:7,px=fx-ux*lip,py=fy-uy*lip,tx=-uy,ty=ux,B=80;
+  c.save();c.beginPath();c.moveTo(px+tx*B,py+ty*B);c.lineTo(px-tx*B,py-ty*B);c.lineTo(px-tx*B+ux*B,py-ty*B+uy*B);c.lineTo(px+tx*B+ux*B,py+ty*B+uy*B);c.closePath();c.clip();
+  const hg=c.createRadialGradient(x+ux*r*.35,y+uy*r*.35,0,x,y,r);
+  hg.addColorStop(0,'#000');hg.addColorStop(.55,'#030201');hg.addColorStop(.85,'#0b0705');hg.addColorStop(1,'#120b07');
   c.fillStyle=hg;c.beginPath();c.arc(x,y,r,0,7);c.fill();
-  // dış tarafta (bant yönünde) derinlik gölgesi
-  const sg=c.createLinearGradient(x+ux*r,y+uy*r,x-ux*r,y-uy*r);sg.addColorStop(0,'rgba(0,0,0,.75)');sg.addColorStop(.6,'rgba(0,0,0,0)');
-  c.fillStyle=sg;c.beginPath();c.arc(x,y,r,0,7);c.fill();
-  c.strokeStyle='rgba(20,0,0,.8)';c.lineWidth=1;c.beginPath();c.arc(x,y,r,0,7);c.stroke();
+  // ağızdan içeri inen duvar: dudak tarafı az görünür, derine doğru kararır
+  const wg=c.createLinearGradient(px,py,px+ux*r,py+uy*r);
+  wg.addColorStop(0,'rgba(46,30,18,.6)');wg.addColorStop(.5,'rgba(8,5,3,.2)');wg.addColorStop(1,'rgba(0,0,0,0)');
+  c.fillStyle=wg;c.beginPath();c.arc(x,y,r,0,7);c.fill();
+  c.restore();
+  // ağzın önünde çuhaya düşen hafif gölge
+  c.save();c.beginPath();c.rect(RAIL,RAIL,TW,TH);c.clip();
+  const sh=c.createRadialGradient(px,py,0,px,py,mid?16:18);sh.addColorStop(0,'rgba(0,0,0,.32)');sh.addColorStop(1,'rgba(0,0,0,0)');
+  c.fillStyle=sh;c.beginPath();c.arc(px,py,18,0,7);c.fill();c.restore();
 }
 function goldPocket(c,p){ // altın/metalik çerçeveli, derin siyah hazneli 3B cep
   const mid=p.x===TW/2,ox=mid?0:(p.x<TW/2?-1:1),oy=p.y<TH/2?-1:1,L=Math.hypot(ox,oy),ux=ox/L,uy=oy/L,off=mid?6:4;
@@ -1455,19 +1498,15 @@ function drawClassic(T){ // kırmızı ahşap bantlı, gümüş köşeli, açık
   // cepler: koyu kırmızı-siyah, köşeye oturan
   if(T.gold){for(const p of POCKETS)goldPocket(c,p);}
   else if(T.real){for(const p of POCKETS)realPocket(c,p);drawCushions(c,T);}
-  else for(const p of POCKETS){const mid=p.x===TW/2,ox=mid?0:(p.x<TW/2?-1:1),oy=p.y<TH/2?-1:1,L=Math.hypot(ox,oy),ux=ox/L,uy=oy/L,off=mid?7:5;
-    const x=p.x+RAIL+ux*off,y=p.y+RAIL+uy*off,r=p.r+(mid?.5:2);
-    const pg=c.createRadialGradient(x+ux*r*.3,y+uy*r*.3,1,x,y,r);pg.addColorStop(0,'#000');pg.addColorStop(.55,'#120203');pg.addColorStop(.9,'#3a0708');pg.addColorStop(1,'#5a1012');
-    c.fillStyle=pg;c.beginPath();c.arc(x,y,r,0,7);c.fill();
-    const sg=c.createLinearGradient(x-ux*r,y-uy*r,x+ux*r,y+uy*r);sg.addColorStop(0,'rgba(0,0,0,.85)');sg.addColorStop(.5,'rgba(0,0,0,0)');c.fillStyle=sg;c.beginPath();c.arc(x,y,r,0,7);c.fill();}
+  else{for(const p of POCKETS)realPocket(c,p);drawCushions(c,T);}
   c.save();c.beginPath();c.rect(RAIL,RAIL,TW,TH);c.clip();
-  if(!T.real)for(const p of POCKETS){const x=p.x+RAIL,y=p.y+RAIL,sh=c.createRadialGradient(x,y,p.r*.7,x,y,p.r+12);sh.addColorStop(0,'rgba(0,20,40,.45)');sh.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=sh;c.beginPath();c.arc(x,y,p.r+12,0,7);c.fill();}
+  if(T.gold)for(const p of POCKETS){const x=p.x+RAIL,y=p.y+RAIL,sh=c.createRadialGradient(x,y,p.r*.7,x,y,p.r+12);sh.addColorStop(0,'rgba(0,20,40,.45)');sh.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=sh;c.beginPath();c.arc(x,y,p.r+12,0,7);c.fill();}
   c.restore();
 }
 function drawTable(T){
   T=T||tableById(save.table);const c=ctx;
   if(T.style==='classic')return drawClassic(T);
-  if(T.style==='palace')return drawPalace(T);
+  if(T.style==='palace')return drawClassic(T);
   // dış çerçeve
   let g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,T.w1);g.addColorStop(.5,T.w2);g.addColorStop(1,T.w1);
   c.fillStyle=g;rrp(c,0,0,W,H,20);c.fill();
@@ -1499,28 +1538,8 @@ function drawTable(T){
   c.strokeStyle='rgba(255,255,255,.14)';c.lineWidth=1.5;c.strokeRect(RAIL-.5,RAIL-.5,TW+1,TH+1);
   g=c.createLinearGradient(0,RAIL,0,RAIL+14);g.addColorStop(0,'rgba(0,0,0,.28)');g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(RAIL,RAIL,TW,14);
   c.strokeStyle='rgba(255,255,255,.16)';c.lineWidth=1;c.beginPath();c.moveTo(RAIL+TW*.25,RAIL);c.lineTo(RAIL+TW*.25,RAIL+TH);c.stroke();
-  // cepler: bant köşesine oturan, içi derin ve gölgeli
-  for(const p of POCKETS){
-    const mid=p.x===TW/2,ox=mid?0:(p.x<TW/2?-1:1),oy=p.y<TH/2?-1:1;
-    const L=Math.hypot(ox,oy),ux=ox/L,uy=oy/L,off=mid?6:3;
-    const x=p.x+RAIL+ux*off,y=p.y+RAIL+uy*off,r=p.r+(mid?0:1);
-    const out=Math.atan2(uy,ux);
-    // bant içine oyulmuş yuva (koyu kahve/deri astar)
-    c.fillStyle='#24140a';c.beginPath();c.arc(x,y,r+5,0,7);c.fill();
-    // dış metal/deri kenar: sadece bant tarafında yay
-    const lg=c.createLinearGradient(x-ux*(r+9),y-uy*(r+9),x+ux*(r+9),y+uy*(r+9));lg.addColorStop(0,'#6a4416');lg.addColorStop(.5,T.a);lg.addColorStop(1,'#fff0b0');
-    c.strokeStyle=lg;c.lineWidth=4;c.lineCap='round';c.beginPath();c.arc(x,y,r+3.5,out-(mid?1.45:1.25),out+(mid?1.45:1.25));c.stroke();c.lineCap='butt';
-    // derin iç: merkezden kenara koyu-kahve geçiş + alt kısmında iç gölge
-    const pg=c.createRadialGradient(x+ux*r*.25,y+uy*r*.25,1,x,y,r);pg.addColorStop(0,'#000');pg.addColorStop(.6,'#050303');pg.addColorStop(.9,'#1a0d07');pg.addColorStop(1,'#2e1a0e');
-    c.fillStyle=pg;c.beginPath();c.arc(x,y,r,0,7);c.fill();
-    const sg=c.createLinearGradient(x-ux*r,y-uy*r,x+ux*r,y+uy*r);sg.addColorStop(0,'rgba(0,0,0,.85)');sg.addColorStop(.55,'rgba(0,0,0,0)');
-    c.fillStyle=sg;c.beginPath();c.arc(x,y,r,0,7);c.fill();
-    c.strokeStyle='rgba(255,255,255,.08)';c.lineWidth=1;c.beginPath();c.arc(x,y,r-1,out-1,out+1);c.stroke();
-  }
-  // cep ağzının çuhaya düşen gölgesi
-  c.save();c.beginPath();c.rect(RAIL,RAIL,TW,TH);c.clip();
-  for(const p of POCKETS){const x=p.x+RAIL,y=p.y+RAIL,sh=c.createRadialGradient(x,y,p.r*.7,x,y,p.r+14);sh.addColorStop(0,'rgba(0,0,0,.55)');sh.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=sh;c.beginPath();c.arc(x,y,p.r+14,0,7);c.fill();}
-  c.restore();
+  // cepler: banda oyulmuş koyu boşluk
+  for(const p of POCKETS)realPocket(c,p);
 }
 function dia(x,y){ctx.beginPath();ctx.ellipse(x,y,2.6,2.6,0,0,7);ctx.fill();}
 const glyphCache={},rgbCache={};
