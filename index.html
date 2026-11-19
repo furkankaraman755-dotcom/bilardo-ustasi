@@ -14,18 +14,55 @@ button:disabled{opacity:.45}
 .screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;overflow-y:auto;touch-action:pan-y}
 .screen.show{display:flex}
 .coins{background:#1a2620;border:1px solid #3a4d40;border-radius:20px;padding:6px 14px;font-weight:700;color:#f3d77a}
-/* menü */
-#menu{justify-content:center;gap:16px;padding:calc(20px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom));background:radial-gradient(circle at 50% 30%,#1d5a3a,#0c1411 70%)}
-.logo{text-align:center}
-.logo .ic{font-size:64px;line-height:1}
-.logo h1{margin:6px 0 0;font-size:30px;letter-spacing:.5px}
-.mcard{width:100%;max-width:340px;background:rgba(15,25,20,.85);border:1px solid #2f4538;border-radius:16px;padding:14px}
-.mcard b{display:block;margin-bottom:10px;font-size:16px}
-.diffs{display:flex;gap:8px}
-.diffs button{flex:1;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-.diffs small{font-size:12px;color:#f3d77a}
-.wide{width:100%;max-width:340px;height:52px;font-size:17px}
-.stats{font-size:13px;color:#9fb7a8}
+/* giriş */
+#login{justify-content:center;background:radial-gradient(circle at 50% 30%,#1d5a3a,#0c1411 70%);padding:calc(10px + env(safe-area-inset-top)) 20px 10px}
+.lbox{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;max-width:340px}
+.logo{text-align:center}.logo .ic{font-size:44px;line-height:1}.logo h1{margin:4px 0 0;font-size:26px}
+.lg{width:100%;height:46px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px}
+.lg.g{background:#fff;color:#222}.lg.f{background:#1877f2;color:#fff}
+.gi{font-weight:900;color:#4285f4;font-size:20px}.fi{font-weight:900;font-size:22px;font-family:Arial,sans-serif}
+.or{font-size:12px;color:#9fb7a8}
+#lname{width:100%;height:44px;border-radius:12px;border:1px solid #3a4d40;background:#0f1a15;color:#fff;padding:0 14px;font-size:16px}
+#lmsg{font-size:12px;color:#f3d77a;text-align:center;min-height:16px}
+/* ana menü */
+#menu{justify-content:flex-start;gap:10px;padding:calc(6px + env(safe-area-inset-top)) calc(10px + env(safe-area-inset-right)) 8px calc(10px + env(safe-area-inset-left));background:radial-gradient(ellipse at 50% 120%,#1d7a74 0%,#123c3a 35%,#0c1411 75%)}
+.tbar{display:flex;align-items:stretch;gap:6px;width:100%;height:54px}
+.prof{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.45);border:1px solid rgba(232,193,90,.35);border-radius:14px;padding:4px 10px;min-width:0}
+.av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;border:2px solid #fff;flex:none}
+.prof b{font-size:14px;display:block;white-space:nowrap;max-width:110px;overflow:hidden;text-overflow:ellipsis}
+.prof .sm{font-size:11px;color:#9fb7a8}
+.lvl{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:#f3d77a;font-weight:700}
+.xpb{width:56px;height:6px;background:#0b1410;border-radius:4px;overflow:hidden}.xpb i{display:block;height:100%;background:#e8c15a;width:0}
+.tb{position:relative;height:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:20px;padding:0 10px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.08)}
+.tb span{font-size:10px;color:#cfe3d4}
+.tb em{position:absolute;top:2px;right:4px;background:#e2453c;color:#fff;font-style:normal;font-size:11px;font-weight:800;border-radius:10px;padding:0 5px;display:none}
+.cur{display:flex;align-items:center;gap:4px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:0 12px;font-weight:800;font-size:15px;white-space:nowrap}
+.cur.cash{color:#6fdc7a}.cur.coins{color:#f3d77a;cursor:pointer}
+.sp1{flex:1}
+.mtitle{font-size:22px;font-weight:900;letter-spacing:.5px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.tiles{display:flex;gap:12px;width:100%;max-width:900px;flex:1;max-height:260px;min-height:140px}
+.tile{flex:1;height:auto;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:15px;color:#fff;border:3px solid rgba(255,255,255,.25);box-shadow:0 6px 18px rgba(0,0,0,.45),inset 0 -6px 0 rgba(0,0,0,.18);text-shadow:0 2px 4px rgba(0,0,0,.4)}
+.tile b{font-size:30px;font-weight:900}.tile span{font-size:18px;font-weight:700;opacity:.95}
+.tile .ic{font-size:30px}
+.t1{background:linear-gradient(160deg,#5fd34a,#239a2c)}.t2{background:linear-gradient(160deg,#9b5de5,#5a2aa5)}.t3{background:linear-gradient(160deg,#3c8dde,#1e4fa8)}
+.stats{font-size:12px;color:#9fb7a8}
+/* liste ekranları (1'e 1, etkinlik, özel) */
+.lscr{padding:calc(8px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) 10px calc(12px + env(safe-area-inset-left));gap:10px;background:#0f1a15}
+.rooms{display:flex;gap:10px;width:100%;max-width:900px;overflow-x:auto;padding-bottom:6px;touch-action:pan-x}
+.room{flex:1 0 170px;border-radius:16px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;border:2px solid rgba(255,255,255,.15);box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.room h3{margin:0;font-size:17px}.room .rw{font-size:13px;color:#e8efe9}
+.room .pz{font-size:20px;font-weight:900;color:#f3d77a}
+.room button{width:100%;margin-top:auto}
+.room.lock{filter:grayscale(.7) brightness(.7)}
+.r1{background:linear-gradient(160deg,#2b6e47,#163d28)}.r2{background:linear-gradient(160deg,#2d5f9a,#17345a)}.r3{background:linear-gradient(160deg,#7a3a9a,#3f1d55)}.r4{background:linear-gradient(160deg,#9a7a2a,#4f3b0f)}
+#dlg{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;z-index:7;padding:12px}
+#dlg .box{background:#17221d;border:2px solid #e8c15a;border-radius:16px;padding:16px;text-align:center;max-width:560px;width:100%}
+.days{display:flex;gap:6px;justify-content:center;margin:12px 0}
+.day{flex:1;max-width:64px;border-radius:10px;background:#0f1a15;border:2px solid #24352b;padding:6px 2px;font-size:11px}
+.day b{display:block;font-size:13px;color:#f3d77a}.day.done{opacity:.45}.day.now{border-color:#e8c15a;background:#2a2a14}
+#grot{display:none;position:fixed;inset:0;background:#0c1411;z-index:20;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;font-size:18px}
+#grot .big{font-size:56px}
+@media (orientation:portrait){#grot{display:flex}}
 /* market */
 #shop{padding:calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom));gap:10px;background:#0f1a15}
 .top{display:flex;align-items:center;gap:10px;width:100%;max-width:520px}
@@ -69,15 +106,7 @@ button:disabled{opacity:.45}
 .side button{width:56px;height:42px;font-size:18px}
 #rot{display:none;position:absolute;inset:0;background:#0c1411;z-index:4;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;font-size:18px}
 #rot .big{font-size:56px}
-@media (orientation:portrait){#game #rot{display:flex}}
-.mleft,.mright{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%}
-/* menü yatayda */
-@media (orientation:landscape) and (max-height:560px){
-  #menu{flex-direction:row;flex-wrap:wrap;align-content:center;gap:12px 28px}
-  .mleft,.mright{gap:10px;width:auto}
-  .mright{width:340px}
-  .logo .ic{font-size:44px}.logo h1{font-size:24px}
-}
+
 #over{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:5}
 #over .box{background:#17221d;border:2px solid #e8c15a;border-radius:16px;padding:22px 24px;text-align:center;width:290px}
 #over h2{margin:0 0 6px;font-size:22px}
@@ -89,30 +118,70 @@ button:disabled{opacity:.45}
 </head>
 <body>
 
-<!-- ANA MENÜ -->
-<div id="menu" class="screen show">
-  <div class="mleft">
-  <div class="logo"><div class="ic">🎱</div><h1>Bilardo Ustası</h1></div>
-  <div class="coins" id="mcoins">🪙 <span class="cv">0</span></div>
-  <div class="stats" id="stats"></div>
-  </div>
-  <div class="mright">
-  <div class="mcard">
-    <b>🤖 Bilgisayara Karşı</b>
-    <div class="diffs">
-      <button data-d="easy">Kolay<small>+100 🪙</small></button>
-      <button data-d="mid">Orta<small>+250 🪙</small></button>
-      <button data-d="hard">Zor<small>+600 🪙</small></button>
-    </div>
-  </div>
-  <button class="wide" id="b2p">👥 2 Kişilik (aynı telefon)</button>
-  <button class="wide gold" id="bshop">🛒 Market</button>
+<!-- GİRİŞ -->
+<div id="login" class="screen">
+  <div class="lbox">
+    <div class="logo"><div class="ic">🎱</div><h1>Bilardo Ustası</h1></div>
+    <button class="lg g" id="lgG"><span class="gi">G</span> Google ile giriş</button>
+    <button class="lg f" id="lgF"><span class="fi">f</span> Facebook ile giriş</button>
+    <div class="or">veya</div>
+    <input id="lname" maxlength="14" placeholder="Oyuncu adın" autocomplete="off">
+    <button class="lg gold" id="lgGuest">Misafir olarak oyna</button>
+    <div id="lmsg"></div>
   </div>
 </div>
 
+<!-- ANA MENÜ -->
+<div id="menu" class="screen">
+  <div class="tbar">
+    <div class="prof"><div class="av" id="av"></div><div><b id="pname"></b><div class="sm">ID: <span id="pid"></span></div></div>
+      <div class="lvl"><span>⭐ <span id="plv"></span></span><div class="xpb"><i id="pxp"></i></div></div></div>
+    <button class="tb" id="tCues">🎱<span>İstekalar</span></button>
+    <button class="tb" id="tDaily">🎁<span>Günlük Ödül</span><em id="dDot">!</em></button>
+    <button class="tb" id="tShop">🛒<span>Mağaza</span></button>
+    <div class="sp1"></div>
+    <div class="cur cash">💵 <span id="cash">0</span></div>
+    <div class="cur coins" id="mcoins">🪙 <span class="cv">0</span></div>
+  </div>
+  <div class="mtitle">🎱 Bilardo Ustası</div>
+  <div class="tiles">
+    <button class="tile t1" id="m1v1"><span class="ic">🎱</span><b>1'e 1</b><span>Oyna</span></button>
+    <button class="tile t2" id="mEv"><span class="ic">🏆</span><b>Etkinlikler</b><span>Turnuva</span></button>
+    <button class="tile t3" id="mPriv"><span class="ic">👥</span><b>Özel</b><span>Oyun</span></button>
+  </div>
+  <div class="stats" id="stats"></div>
+</div>
+
+<!-- 1'E 1 MASALAR -->
+<div id="rooms" class="screen lscr">
+  <div class="top"><button class="back">←</button><h2>1'e 1 Oyna · Masa seç</h2><div class="coins">🪙 <span class="cv">0</span></div></div>
+  <div class="rooms" id="roomList"></div>
+  <div id="rmsg" class="stats"></div>
+</div>
+
+<!-- ETKİNLİKLER -->
+<div id="events" class="screen lscr">
+  <div class="top"><button class="back">←</button><h2>Etkinlikler</h2><div class="coins">🪙 <span class="cv">0</span></div></div>
+  <div class="rooms" id="evList"></div>
+  <div id="emsg" class="stats"></div>
+</div>
+
+<!-- ÖZEL OYUN -->
+<div id="priv" class="screen lscr">
+  <div class="top"><button class="back">←</button><h2>Özel Oyun</h2><div class="coins">🪙 <span class="cv">0</span></div></div>
+  <div class="rooms">
+    <div class="room r2"><h3>👥 2 Kişilik</h3><div class="rw">Aynı telefonda arkadaşınla sırayla oyna</div><button class="gold" id="p2p">Başla</button></div>
+    <div class="room r1"><h3>🤖 Antrenman</h3><div class="rw">Bilgisayara karşı serbest maç<br>(ödül yok)</div>
+      <div style="display:flex;gap:6px;width:100%;margin-top:auto"><button data-tr="easy" style="flex:1">Kolay</button><button data-tr="mid" style="flex:1">Orta</button><button data-tr="hard" style="flex:1">Zor</button></div></div>
+  </div>
+</div>
+
+<div id="dlg"><div class="box" id="dlgBox"></div></div>
+<div id="grot"><div class="big">📱↻</div>Telefonu yan çevir</div>
+
 <!-- MARKET -->
-<div id="shop" class="screen">
-  <div class="top"><button id="sback">←</button><h2>Market</h2><div class="coins">🪙 <span class="cv">0</span></div></div>
+<div id="shop" class="screen lscr">
+  <div class="top"><button id="sback">←</button><h2>Mağaza</h2><div class="coins">🪙 <span class="cv">0</span></div></div>
   <div class="tabs"><button data-t="cues" class="on">Sopalar</button><button data-t="tables">Masalar</button></div>
   <div id="smsg"></div>
   <div id="items"></div>
@@ -131,7 +200,6 @@ button:disabled{opacity:.45}
       <button id="gmenu" aria-label="Menü">☰</button>
     </div>
   </div>
-  <div id="rot"><div class="big">📱↻</div>Telefonu yan çevir</div>
 </div>
 <div id="pvm"><div class="pbox">
   <div class="ptop"><b id="pvname"></b><button id="pvx" aria-label="Kapat">✕</button></div>
@@ -141,7 +209,7 @@ button:disabled{opacity:.45}
   <button id="pvbtn"></button>
 </div></div>
 <div id="over"><div class="box"><h2 id="ot"></h2><p id="op"></p><div class="earn" id="oe"></div>
-  <div class="row"><button id="omenu">Menü</button><button id="again" class="gold">Tekrar</button></div></div></div>
+  <div class="row"><button id="omenu">Menü</button><button id="again" class="gold">Tekrar</button></div><div id="olv" class="stats" style="margin-top:8px"></div></div></div>
 
 <script>
 /* ================= VERİLER ================= */
@@ -165,11 +233,20 @@ const DIFF={
  easy:{name:'Kolay',err:.05, pErr:.18,reward:100,think:1000,pick:3},
  mid: {name:'Orta', err:.018,pErr:.08,reward:250,think:850, pick:2},
  hard:{name:'Zor',  err:.005,pErr:.03,reward:600,think:700, pick:1},
+ pro: {name:'Usta', err:.002,pErr:.02,reward:0,  think:600, pick:1},
 };
+const ROOMS=[
+ {id:'r1',name:'Mahalle Kahvesi',fee:50,  prize:100,  diff:'easy',lvl:1,cls:'r1'},
+ {id:'r2',name:'Şehir Salonu',   fee:250, prize:500,  diff:'mid', lvl:2,cls:'r2'},
+ {id:'r3',name:'Büyük Salon',    fee:1000,prize:2000, diff:'hard',lvl:4,cls:'r3'},
+ {id:'r4',name:'Kraliyet Kulübü',fee:5000,prize:10000,diff:'pro', lvl:7,cls:'r4'},
+];
+const TOUR={name:'Hafta Sonu Turnuvası',fee:200,prize:1500,cash:2,rounds:['easy','mid','hard']};
+const DAILY=[100,150,200,300,400,500,1000];
 
 /* ================= KAYIT ================= */
 const KEY='bilardo_ustasi_v1';
-let save={coins:200,cues:['basic'],tables:['green'],cue:'basic',table:'green',wins:0,losses:0};
+let save={coins:200,cues:['basic'],tables:['green'],cue:'basic',table:'green',wins:0,losses:0,name:'',pid:0,level:1,xp:0,cash:5,lastDaily:0,streak:0};
 try{const s=JSON.parse(localStorage.getItem(KEY));if(s)save=Object.assign(save,s);}catch(e){}
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(save));}catch(e){}}
 const cueById=id=>CUES.find(c=>c.id===id)||CUES[0];
@@ -178,8 +255,36 @@ const tableById=id=>TABLES.find(t=>t.id===id)||TABLES[0];
 /* ================= EKRANLAR ================= */
 const $=id=>document.getElementById(id);
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('show',s.id===id));refreshCoins();if(id==='game')resize();}
-function refreshCoins(){document.querySelectorAll('.cv').forEach(e=>e.textContent=save.coins.toLocaleString('tr-TR'));
-  $('stats').textContent=`Galibiyet: ${save.wins} · Mağlubiyet: ${save.losses}`;}
+const xpNeed=l=>100+l*40;
+const AVC=['#ff9800','#e2453c','#3c8dde','#2fa84f','#9b5de5','#e91e63','#00a8a8'];
+function refreshCoins(){
+  document.querySelectorAll('.cv').forEach(e=>e.textContent=save.coins.toLocaleString('tr-TR'));
+  $('stats').textContent=`Galibiyet: ${save.wins} · Mağlubiyet: ${save.losses}`;
+  $('cash').textContent=save.cash;$('pname').textContent=save.name||'Oyuncu';$('pid').textContent=save.pid||'-';
+  $('av').textContent=(save.name||'O')[0].toLocaleUpperCase('tr-TR');$('av').style.background=AVC[save.pid%AVC.length];
+  $('plv').textContent=save.level;$('pxp').style.width=Math.min(100,save.xp/xpNeed(save.level)*100)+'%';
+  $('dDot').style.display=dailyReady()?'block':'none';
+}
+function addXp(n){
+  save.xp+=n;let up='';
+  while(save.xp>=xpNeed(save.level)){save.xp-=xpNeed(save.level);save.level++;save.cash+=1;save.coins+=save.level*25;up=`⭐ Seviye ${save.level}! +${save.level*25} 🪙 +1 💵`;}
+  return up;
+}
+/* ---- günlük ödül ---- */
+const HOUR=3600e3;
+function dailyReady(){return Date.now()-save.lastDaily>=20*HOUR;}
+function openDaily(){
+  const ready=dailyReady(),streak=ready&&Date.now()-save.lastDaily>48*HOUR?0:save.streak,day=ready?streak%7:(save.streak-1+7)%7;
+  let h='<h2 style="margin:0">🎁 Günlük Ödül</h2><div class="days">';
+  DAILY.forEach((v,i)=>{h+=`<div class="day ${i<day||(!ready&&i===day)?'done':''} ${ready&&i===day?'now':''}">Gün ${i+1}<b>${v}</b>🪙</div>`;});
+  const left=Math.ceil((20*HOUR-(Date.now()-save.lastDaily))/H);
+  h+='</div>'+(ready?`<button class="gold" id="dTake" style="min-width:200px">${DAILY[day]} 🪙 Al</button>`:`<div class="stats">Sonraki ödül yaklaşık ${left} saat sonra.</div>`)+' <button id="dClose">Kapat</button>';
+  dlg(h);
+  if(ready)$('dTake').onclick=()=>{save.coins+=DAILY[day];save.streak=streak+1;save.lastDaily=Date.now();persist();refreshCoins();openDaily();};
+  $('dClose').onclick=closeDlg;
+}
+function dlg(h){$('dlgBox').innerHTML=h;$('dlg').style.display='flex';}
+function closeDlg(){$('dlg').style.display='none';}
 
 /* ---- market ---- */
 let shopTab='cues';
@@ -256,7 +361,46 @@ $('pvm').onclick=e=>{if(e.target.id==='pvm')$('pvx').onclick();};
 // TEST: menüdeki paraya 3 sn içinde 5 kez dokununca +10.000 para (Play Store'dan önce kaldırılacak)
 let tapN=0,tapT=0;
 $('mcoins').onclick=()=>{const t=Date.now();if(t-tapT>3000)tapN=0;tapT=t;if(++tapN>=5){tapN=0;save.coins+=10000;persist();refreshCoins();}};
-$('bshop').onclick=()=>{$('smsg').textContent='';renderShop();show('shop');};
+function openShop(tab){shopTab=tab||shopTab;document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x.dataset.t===shopTab));$('smsg').textContent='';renderShop();show('shop');}
+$('tShop').onclick=()=>openShop('cues');$('tCues').onclick=()=>openShop('cues');$('tDaily').onclick=openDaily;
+document.querySelectorAll('.back').forEach(b=>b.onclick=()=>show('menu'));
+/* ---- giriş ---- */
+$('lgG').onclick=$('lgF').onclick=()=>{$('lmsg').textContent='Google ve Facebook girişi Play Store sürümünde açılacak. Şimdilik misafir olarak başla, hesabın sonra bağlanır.';};
+$('lgGuest').onclick=()=>{
+  const n=$('lname').value.trim();if(n.length<2){$('lmsg').textContent='Adını yaz (en az 2 harf).';return;}
+  save.name=n;save.pid=100000+Math.floor(Math.random()*900000);persist();refreshCoins();show('menu');
+};
+/* ---- 1'e 1 masalar ---- */
+function renderRooms(){
+  const box=$('roomList');box.innerHTML='';
+  for(const r of ROOMS){
+    const lock=save.level<r.lvl,d=document.createElement('div');d.className='room '+r.cls+(lock?' lock':'');
+    d.innerHTML=`<h3>${r.name}</h3><div class="rw">Rakip: Bilgisayar (${DIFF[r.diff].name})</div><div class="rw">Giriş: 🪙 ${r.fee.toLocaleString('tr-TR')}</div><div class="pz">🏆 ${r.prize.toLocaleString('tr-TR')}</div>`;
+    const b=document.createElement('button');b.className='gold';b.textContent=lock?`🔒 Seviye ${r.lvl}`:'Oyna';b.disabled=lock;
+    b.onclick=()=>startRoom(r);d.append(b);box.append(d);
+  }
+}
+function startRoom(r){
+  if(save.coins<r.fee){$('rmsg').textContent=`Bu masa için ${(r.fee-save.coins).toLocaleString('tr-TR')} 🪙 daha lazım.`;show('rooms');return false;}
+  save.coins-=r.fee;persist();refreshCoins();
+  startGame('ai',r.diff,{kind:'match',room:r,label:r.name});return true;
+}
+$('m1v1').onclick=()=>{$('rmsg').textContent='Kazanan, masadaki ödülün tamamını alır.';renderRooms();show('rooms');};
+/* ---- etkinlik: turnuva ---- */
+function renderEvents(){
+  const t=TOUR,box=$('evList');
+  box.innerHTML=`<div class="room r3" style="max-width:420px"><h3>🏆 ${t.name}</h3><div class="rw">3 tur: Kolay → Orta → Zor.<br>Hepsini kazanırsan büyük ödül!</div><div class="rw">Giriş: 🪙 ${t.fee}</div><div class="pz">🏆 ${t.prize.toLocaleString('tr-TR')} + 💵 ${t.cash}</div><button class="gold" id="tStart">Katıl</button></div>`;
+  $('tStart').onclick=()=>{
+    if(save.coins<t.fee){$('emsg').textContent=`Katılmak için ${t.fee-save.coins} 🪙 daha lazım.`;return;}
+    save.coins-=t.fee;persist();refreshCoins();startTourRound(0);
+  };
+}
+function startTourRound(i){startGame('ai',TOUR.rounds[i],{kind:'event',round:i,label:`Turnuva · Tur ${i+1}/3`});}
+$('mEv').onclick=()=>{$('emsg').textContent='';renderEvents();show('events');};
+/* ---- özel oyun ---- */
+$('mPriv').onclick=()=>show('priv');
+$('p2p').onclick=()=>{ensureAudio();startGame('2p');};
+document.querySelectorAll('[data-tr]').forEach(b=>b.onclick=()=>{ensureAudio();startGame('ai',b.dataset.tr,{kind:'free',label:'Antrenman'});});
 $('sback').onclick=()=>show('menu');
 
 /* ================= OYUN SABİTLERİ ================= */
@@ -297,9 +441,10 @@ function resize(){
   drawPbar();drawSpin();
 }
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
-function startGame(m,d){
-  mode=m;diff=d||diff;
-  NAMES=mode==='ai'?['Sen','Bilgisayar ('+DIFF[diff].name+')']:['Oyuncu 1','Oyuncu 2'];
+let gopt={kind:'free'};
+function startGame(m,d,o){
+  mode=m;diff=d||diff;gopt=o||{kind:m==='2p'?'2p':'free'};quitArm=0;ensureAudio();
+  NAMES=mode==='ai'?[save.name||'Sen','Bilgisayar ('+DIFF[diff].name+')']:['Oyuncu 1','Oyuncu 2'];
   show('game');newGame();
 }
 function newGame(){
@@ -317,6 +462,7 @@ function newGame(){
   $('over').style.display='none';
   setMsg('Açılış senin! Beyaz topu sürükleyip yerleştirebilir, masaya dokunarak nişan alabilirsin.');
   if(mode==='2p')setMsg('Açılış: '+NAMES[0]+'. Beyaz topu sürükleyebilir, masaya dokunarak nişan alabilirsin.');
+  else if(gopt.label)setMsg(gopt.label+' · Açılış senin! Masaya dokunarak nişan al, soldaki çubuğu çekip bırak.');
   updateHud();
 }
 
@@ -425,14 +571,19 @@ function endShot(){
 }
 function gameOver(w,why){
   over=true;clearTimeout(aiTimer);updateHud();
-  let earn='';
-  if(mode==='ai'){
-    if(w===0){const rw=DIFF[diff].reward;save.coins+=rw;save.wins++;earn='+'+rw+' 🪙';}
-    else{save.losses++;}
-    persist();
+  let earn='',up='',again='Tekrar',title=mode==='ai'?(w===0?'🏆 Kazandın!':'😞 Kaybettin'):'🏆 '+NAMES[w]+' kazandı!';
+  const k=gopt.kind;
+  if(k==='match'||k==='event'){
+    if(w===0)save.wins++;else save.losses++;
+    up=addXp(w===0?60:20);
+    if(k==='match'){if(w===0){save.coins+=gopt.room.prize;earn='+'+gopt.room.prize.toLocaleString('tr-TR')+' 🪙';}again='Tekrar ('+gopt.room.fee+' 🪙)';}
+    else if(w===0&&gopt.round<2){title=`✅ Tur ${gopt.round+1} kazanıldı!`;again='Sonraki tur →';}
+    else if(w===0){save.coins+=TOUR.prize;save.cash+=TOUR.cash;earn=`+${TOUR.prize.toLocaleString('tr-TR')} 🪙 +${TOUR.cash} 💵`;title='🏆 Turnuva şampiyonu!';again='Yeni turnuva';}
+    else{title='😞 Turnuvadan elendin';again='Yeni turnuva';}
+    persist();refreshCoins();
   }
-  $('ot').textContent=mode==='ai'?(w===0?'🏆 Kazandın!':'😞 Kaybettin'):'🏆 '+NAMES[w]+' kazandı!';
-  $('op').textContent=why;$('oe').textContent=earn;
+  $('ot').textContent=title;$('again').textContent=again;
+  $('op').textContent=why;$('oe').textContent=earn;$('olv').textContent=up;
   $('over').style.display='flex';
 }
 function setMsg(t){$('msg').textContent=t;}
@@ -668,14 +819,22 @@ sp.addEventListener('pointerdown',e=>{if(!humanTurn())return;sp.setPointerCaptur
 sp.addEventListener('pointermove',e=>{if(sDrag)setSpin(e);});
 sp.addEventListener('pointerup',()=>sDrag=false);
 sp.addEventListener('dblclick',()=>{spinX=spinY=0;drawSpin();});
-$('gmenu').onclick=()=>{clearTimeout(aiTimer);aiBusy=false;over=true;$('over').style.display='none';show('menu');};
+let quitArm=0;
+$('gmenu').onclick=()=>{
+  const paid=(gopt.kind==='match'||gopt.kind==='event')&&!over;
+  if(paid&&Date.now()-quitArm>3000){quitArm=Date.now();setMsg('Çıkarsan maçı kaybedersin. Çıkmak için ☰ düğmesine tekrar bas.');return;}
+  if(paid){save.losses++;addXp(10);persist();}
+  clearTimeout(aiTimer);aiBusy=false;over=true;$('over').style.display='none';refreshCoins();show('menu');};
 $('omenu').onclick=()=>{$('over').style.display='none';show('menu');};
-$('again').onclick=newGame;
-document.querySelectorAll('.diffs button').forEach(b=>b.onclick=()=>{ensureAudio();startGame('ai',b.dataset.d);});
-$('b2p').onclick=()=>{ensureAudio();startGame('2p');};
+$('again').onclick=()=>{
+  const k=gopt.kind;
+  if(k==='match'){if(!startRoom(gopt.room)){$('over').style.display='none';}}
+  else if(k==='event'){const won=$('again').textContent.startsWith('Sonraki');$('over').style.display='none';if(won)startTourRound(gopt.round+1);else{renderEvents();show('events');}}
+  else newGame();
+};
 addEventListener('resize',resize);
 
-refreshCoins();loop();
+refreshCoins();show(save.pid?'menu':'login');loop();
 </script>
 </body>
 </html>
