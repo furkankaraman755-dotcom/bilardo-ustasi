@@ -809,7 +809,25 @@ $('sback').onclick=()=>show('menu');
 const TW=760,TH=380,RAIL=34,R=12.5,W=TW+2*RAIL,H=TH+2*RAIL,MAXV=27;
 const cv=$('c');let ctx=cv.getContext('2d');
 let scale=1,dprK=1;
-const POCKETS=[{x:0,y:0,r:23},{x:TW,y:0,r:23},{x:0,y:TH,r:23},{x:TW,y:TH,r:23},{x:TW/2,y:-6,r:21},{x:TW/2,y:TH+6,r:21}];
+/* ---- cep geometrisi: köşe ağzı ≈2,3 top, orta ağzı ≈1,7 top; ağızdan içeri daralan çene, arkasında yuvarlak çukur ---- */
+const CJ=40,SJ=21; // köşe çene ucunun köşeye uzaklığı, orta ağzın yarı genişliği
+const POCKETS=[{x:-4,y:-4,r:25},{x:TW+4,y:-4,r:25},{x:-4,y:TH+4,r:25},{x:TW+4,y:TH+4,r:25},{x:TW/2,y:-15,r:18.5},{x:TW/2,y:TH+15,r:18.5}];
+const CUSH=(()=>{const S=[];
+  S.push([CJ,0,TW/2-SJ,0],[TW/2+SJ,0,TW-CJ,0],[CJ,TH,TW/2-SJ,TH],[TW/2+SJ,TH,TW-CJ,TH],[0,CJ,0,TH-CJ],[TW,CJ,TW,TH-CJ]);
+  for(const cx of [0,TW])for(const cy of [0,TH]){const ix=cx?-1:1,iy=cy?-1:1;
+    S.push([cx+ix*CJ,cy,cx+ix*18,cy-iy*16],[cx,cy+iy*CJ,cx-ix*16,cy+iy*18]);}
+  for(const cy of [0,TH]){const o=cy?1:-1;S.push([TW/2-SJ,cy,TW/2-18.5,cy+o*13],[TW/2+SJ,cy,TW/2+18.5,cy+o*13]);}
+  return S;})();
+function segHit(b,sg){
+  const ex=sg[2]-sg[0],ey=sg[3]-sg[1];let t=((b.x-sg[0])*ex+(b.y-sg[1])*ey)/(ex*ex+ey*ey);t=t<0?0:t>1?1:t;
+  const px=sg[0]+ex*t,py=sg[1]+ey*t,dx=b.x-px,dy=b.y-py,d2=dx*dx+dy*dy;
+  if(d2>=R*R||d2<1e-9)return;
+  const d=Math.sqrt(d2),nx=dx/d,ny=dy/d;b.x=px+nx*R;b.y=py+ny*R;
+  const vn=b.vx*nx+b.vy*ny;if(vn>=0)return;
+  side(b);const e=cushE(vn);b.vx-=(1+e)*vn*nx;b.vy-=(1+e)*vn*ny;sideKick(b);snd(-vn,600,.05);
+}
+// çukurun ağzına iyice yaklaşan top kenarda asılı kalmaz, içeri süzülür
+function pocketPull(b){for(const p of POCKETS){const dx=p.x-b.x,dy=p.y-b.y,d=Math.hypot(dx,dy);if(d<p.r+8&&d>.01)return {x:dx/d,y:dy/d};}return null;}
 const AIMPTS=[{x:3,y:3},{x:TW-3,y:3},{x:3,y:TH-3},{x:TW-3,y:TH-3},{x:TW/2,y:-3,mid:1},{x:TW/2,y:TH+3,mid:1}];
 const COL=['#ffffff','#f9a80d','#1668dd','#e5121f','#6c2cc2','#ff6b0b','#16a43b','#931b14','#0b0b0b'];
 const col=id=>id<=8?COL[id]:COL[id-8];
@@ -1005,16 +1023,12 @@ function physStep(f){
     if(b.pot)continue;
     for(const p of POCKETS){if((b.x-p.x)**2+(b.y-p.y)**2<p.r*p.r){b.pk=POCKETS.indexOf(p);pot(b);break;}}
     if(b.pot)continue;
-    const gapV=b.y<18||b.y>TH-18,gapH=b.x<18||b.x>TW-18||Math.abs(b.x-TW/2)<20;
-    if(!gapV){
-      if(b.x<R){side(b);b.x=R;b.vx=-b.vx*cushE(b.vx);sideKick(b);snd(Math.abs(b.vx),600,.05);}
-      else if(b.x>TW-R){side(b);b.x=TW-R;b.vx=-b.vx*cushE(b.vx);sideKick(b);snd(Math.abs(b.vx),600,.05);}
-    }
-    if(!gapH){
-      if(b.y<R){side(b);b.y=R;b.vy=-b.vy*cushE(b.vy);sideKick(b);snd(Math.abs(b.vy),600,.05);}
-      else if(b.y>TH-R){side(b);b.y=TH-R;b.vy=-b.vy*cushE(b.vy);sideKick(b);snd(Math.abs(b.vy),600,.05);}
-    }
-    if(b.x<-2*R||b.x>TW+2*R||b.y<-2*R||b.y>TH+2*R)pot(b);
+    if(b.x<CJ+R||b.x>TW-CJ-R||b.y<CJ+R||b.y>TH-CJ-R||Math.abs(b.x-TW/2)<SJ+R)for(const sg of CUSH)segHit(b,sg);
+    else{ // düz bant (hızlı yol)
+      if(b.x<R)segHit(b,CUSH[4]);else if(b.x>TW-R)segHit(b,CUSH[5]);
+      if(b.y<R)segHit(b,b.x<TW/2?CUSH[0]:CUSH[1]);else if(b.y>TH-R)segHit(b,b.x<TW/2?CUSH[2]:CUSH[3]);}
+    const pl=pocketPull(b);if(pl){b.vx+=pl.x*.02*f;b.vy+=pl.y*.02*f;}
+    if(b.x<-3*R||b.x>TW+3*R||b.y<-3*R||b.y>TH+3*R)pot(b);
   }
   for(let i=0;i<balls.length;i++){const a=balls[i];if(a.pot)continue;
     for(let j=i+1;j<balls.length;j++){const b=balls[j];if(b.pot)continue;
@@ -1040,7 +1054,7 @@ function friction(){
     rotBall(cue,-dy,dx,0,sv.t);rotBall(cue,0,0,1,sv.s);sv.t*=.955;sv.s*=.97;if(Math.abs(sv.t)+Math.abs(sv.s)<.004)cue.sv=null;}
   for(const b of balls){if(b.pot)continue;
     const s=Math.hypot(b.vx,b.vy);
-    if(s<.05){b.vx=b.vy=0;continue;}
+    if(s<.05){if(pocketPull(b)){any=true;continue;}b.vx=b.vy=0;continue;}
     const ns=decel(s);b.vx*=ns/s;b.vy*=ns/s;any=true;
   }
   return any;
@@ -1345,39 +1359,45 @@ function railDeco(T,x,y,w,h,vert){ // bant üstü süs paneli
   if(T.pt===2){c.strokeStyle='rgba(0,0,0,.3)';const n=vert?Math.floor(h/12):Math.floor(w/12);for(let i=0;i<n;i++){const cx=vert?x+w/2:x+7+i*12,cy=vert?y+7+i*12:y+h/2;c.beginPath();c.arc(cx,cy,3,0,7);c.stroke();}}
   c.restore();
 }
-function drawCushions(c,T){
-  const k=10,E=22,M=19,J=8;
-  const segs=[[RAIL+E,RAIL+TW/2-M,'t'],[RAIL+TW/2+M,RAIL+TW-E,'t'],[RAIL+E,RAIL+TW/2-M,'b'],[RAIL+TW/2+M,RAIL+TW-E,'b'],[RAIL+E,RAIL+TH-E,'l'],[RAIL+E,RAIL+TH-E,'r']];
-  for(const [a0,a1,sd] of segs){c.beginPath();
-    if(sd==='t'){c.moveTo(a0-J,RAIL-k);c.lineTo(a1+J,RAIL-k);c.lineTo(a1,RAIL);c.lineTo(a0,RAIL);}
-    if(sd==='b'){c.moveTo(a0-J,RAIL+TH+k);c.lineTo(a1+J,RAIL+TH+k);c.lineTo(a1,RAIL+TH);c.lineTo(a0,RAIL+TH);}
-    if(sd==='l'){c.moveTo(RAIL-k,a0-J);c.lineTo(RAIL-k,a1+J);c.lineTo(RAIL,a1);c.lineTo(RAIL,a0);}
-    if(sd==='r'){c.moveTo(RAIL+TW+k,a0-J);c.lineTo(RAIL+TW+k,a1+J);c.lineTo(RAIL+TW,a1);c.lineTo(RAIL+TW,a0);}
-    c.closePath();const cg=sd==='t'||sd==='b'?c.createLinearGradient(0,sd==='t'?RAIL-k:RAIL+TH+k,0,sd==='t'?RAIL:RAIL+TH):c.createLinearGradient(sd==='l'?RAIL-k:RAIL+TW+k,0,sd==='l'?RAIL:RAIL+TW,0);
-    cg.addColorStop(0,T.real?'#8fd6f5':'#7fd0f2');cg.addColorStop(1,T.c);c.fillStyle=cg;c.fill();c.strokeStyle='rgba(0,40,80,.35)';c.lineWidth=1;c.stroke();}
+function drawCushions(c,T,col){ // bant lastikleri: fizik çizgileriyle birebir (CUSH)
+  const k=10,jaws=CUSH.slice(6),jaw=(x,y)=>jaws.find(j=>Math.abs(j[0]-x)<.01&&Math.abs(j[1]-y)<.01);
+  for(let i=0;i<6;i++){const [x0,y0,x1,y1]=CUSH[i],hz=i<4;
+    const back=j=>{const dx=j[2]-j[0],dy=j[3]-j[1],dep=Math.abs(hz?dy:dx);return [j[0]+dx*k/dep+RAIL,j[1]+dy*k/dep+RAIL];};
+    const A=back(jaw(x0,y0)),B=back(jaw(x1,y1));
+    c.beginPath();c.moveTo(x0+RAIL,y0+RAIL);c.lineTo(x1+RAIL,y1+RAIL);c.lineTo(B[0],B[1]);c.lineTo(A[0],A[1]);c.closePath();
+    const cg=hz?c.createLinearGradient(0,A[1],0,y0+RAIL):c.createLinearGradient(A[0],0,x0+RAIL,0);
+    cg.addColorStop(0,col||(T.real?'#8fd6f5':'#7fd0f2'));cg.addColorStop(1,T.c);c.fillStyle=cg;c.fill();
+    c.strokeStyle='rgba(0,40,80,.35)';c.lineWidth=1;c.stroke();
+    // çene uçları yuvarlatılmış: burun hattında ince parlak çizgi
+    c.strokeStyle='rgba(255,255,255,.18)';c.beginPath();c.moveTo(x0+RAIL,y0+RAIL);c.lineTo(x1+RAIL,y1+RAIL);c.stroke();}
 }
-function realPocket(c,p){ // bant ağzına oyulmuş gerçek boşluk: halka/çerçeve yok, içe doğru kararan oyuk
-  const mid=p.x===TW/2,ox=mid?0:(p.x<TW/2?-1:1),oy=p.y<TH/2?-1:1,L=Math.hypot(ox,oy),ux=ox/L,uy=oy/L,off=mid?2:5;
-  const x=p.x+RAIL+ux*off,y=p.y+RAIL+uy*off,r=mid?17:19;
-  // ağız çizgisi: çuha tarafında oyuk düz bir dudakla biter (yuvarlak leke gibi taşmaz)
-  const fx=p.x+RAIL,fy=(oy<0?0:TH)+RAIL,lip=mid?3:7,px=fx-ux*lip,py=fy-uy*lip,tx=-uy,ty=ux,B=80;
-  c.save();c.beginPath();c.moveTo(px+tx*B,py+ty*B);c.lineTo(px-tx*B,py-ty*B);c.lineTo(px-tx*B+ux*B,py-ty*B+uy*B);c.lineTo(px+tx*B+ux*B,py+ty*B+uy*B);c.closePath();c.clip();
-  const hg=c.createRadialGradient(x+ux*r*.35,y+uy*r*.35,0,x,y,r);
-  hg.addColorStop(0,'#000');hg.addColorStop(.55,'#030201');hg.addColorStop(.85,'#0b0705');hg.addColorStop(1,'#120b07');
-  c.fillStyle=hg;c.beginPath();c.arc(x,y,r,0,7);c.fill();
-  // ağızdan içeri inen duvar: dudak tarafı az görünür, derine doğru kararır
-  const wg=c.createLinearGradient(px,py,px+ux*r,py+uy*r);
-  wg.addColorStop(0,'rgba(46,30,18,.6)');wg.addColorStop(.5,'rgba(8,5,3,.2)');wg.addColorStop(1,'rgba(0,0,0,0)');
+function shade(h,k){const n=parseInt(h.slice(1),16);return `rgb(${(n>>16)*k|0},${(n>>8&255)*k|0},${(n&255)*k|0})`;}
+function realPocket(c,p,T){ // gerçek cep: çuha ağızdan içeri uzanır, çene arkasında huni gibi derinleşen yuvarlak çukur
+  T=T||tableById(save.table);
+  const mid=p.x===TW/2,ox=mid?0:(p.x<TW/2?-1:1),oy=p.y<TH/2?-1:1,L=Math.hypot(ox,oy),ux=ox/L,uy=oy/L;
+  const x=p.x+RAIL,y=p.y+RAIL,r=p.r;
+  // 1) ağız rafı: çeneler arasındaki çuha (bant hizasından çukura kadar)
+  const jw=CUSH.slice(6).filter(j=>Math.hypot(j[2]-p.x,j[3]-p.y)<p.r+2);
+  if(jw.length===2){c.beginPath();c.moveTo(jw[0][0]+RAIL,jw[0][1]+RAIL);c.lineTo(jw[0][2]+RAIL,jw[0][3]+RAIL);c.lineTo(jw[1][2]+RAIL,jw[1][3]+RAIL);c.lineTo(jw[1][0]+RAIL,jw[1][1]+RAIL);c.closePath();
+    c.fillStyle=T.f2;c.fill();c.fillStyle=feltTex(T);c.fill();
+    const mg=c.createLinearGradient(x-ux*(r+14),y-uy*(r+14),x,y);mg.addColorStop(0,'rgba(0,0,0,0)');mg.addColorStop(1,'rgba(0,0,0,.45)');c.fillStyle=mg;c.fill();}
+  c.save();rrp(c,4,4,W-8,H-8,18);c.clip();
+  // 2) çukur: dudakta koyulaşmış çuha, aşağı inen yuvarlak duvar, dipte tam siyah
+  const wg=c.createRadialGradient(x+ux*r*.18,y+uy*r*.18,0,x,y,r);
+  wg.addColorStop(0,'#000');wg.addColorStop(.5,'#000');wg.addColorStop(.72,'#060606');wg.addColorStop(.86,shade(T.f2,.16));wg.addColorStop(.95,shade(T.f2,.32));wg.addColorStop(1,shade(T.f2,.45));
   c.fillStyle=wg;c.beginPath();c.arc(x,y,r,0,7);c.fill();
+  // 3) ışık yukarıdan: masa tarafındaki duvar dudağın gölgesinde, karşı duvar hafif aydınlık
+  const ng=c.createRadialGradient(x-ux*r*.55,y-uy*r*.55,r*.15,x-ux*r*.55,y-uy*r*.55,r*1.05);
+  ng.addColorStop(0,'rgba(0,0,0,.85)');ng.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=ng;c.beginPath();c.arc(x,y,r,0,7);c.fill();
+  c.strokeStyle='rgba(255,255,255,.07)';c.lineWidth=2;c.beginPath();c.arc(x,y,r-2.5,Math.atan2(uy,ux)-.9,Math.atan2(uy,ux)+.9);c.stroke();
+  // 4) dipte huni boğazı
+  const tg=c.createRadialGradient(x+ux*r*.22,y+uy*r*.22,0,x+ux*r*.22,y+uy*r*.22,r*.45);tg.addColorStop(0,'#000');tg.addColorStop(1,'rgba(0,0,0,0)');
+  c.fillStyle=tg;c.beginPath();c.arc(x+ux*r*.22,y+uy*r*.22,r*.45,0,7);c.fill();
   c.restore();
-  // ağzın önünde çuhaya düşen hafif gölge
-  c.save();c.beginPath();c.rect(RAIL,RAIL,TW,TH);c.clip();
-  const sh=c.createRadialGradient(px,py,0,px,py,mid?16:18);sh.addColorStop(0,'rgba(0,0,0,.32)');sh.addColorStop(1,'rgba(0,0,0,0)');
-  c.fillStyle=sh;c.beginPath();c.arc(px,py,18,0,7);c.fill();c.restore();
 }
 function goldPocket(c,p){ // altın/metalik çerçeveli, derin siyah hazneli 3B cep
   const mid=p.x===TW/2,ox=mid?0:(p.x<TW/2?-1:1),oy=p.y<TH/2?-1:1,L=Math.hypot(ox,oy),ux=ox/L,uy=oy/L,off=mid?6:4;
-  const x=p.x+RAIL+ux*off,y=p.y+RAIL+uy*off,r=p.r+(mid?0:1.5);
+  const x=p.x+RAIL,y=p.y+RAIL,r=p.r;
   // dış gölge
   const og=c.createRadialGradient(x,y,r,x,y,r+12);og.addColorStop(0,'rgba(0,0,0,.45)');og.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=og;c.beginPath();c.arc(x,y,r+12,0,7);c.fill();
   // metalik altın halka
@@ -1496,9 +1516,8 @@ function drawClassic(T){ // kırmızı ahşap bantlı, gümüş köşeli, açık
   c.lineWidth=3;c.beginPath();c.moveTo(-66,36);c.bezierCurveTo(0,52,80,20,150,40);c.stroke();c.beginPath();c.moveTo(-60,-34);c.bezierCurveTo(10,-56,90,-20,150,-44);c.stroke();
   c.restore();
   // cepler: koyu kırmızı-siyah, köşeye oturan
-  if(T.gold){for(const p of POCKETS)goldPocket(c,p);}
-  else if(T.real){for(const p of POCKETS)realPocket(c,p);drawCushions(c,T);}
-  else{for(const p of POCKETS)realPocket(c,p);drawCushions(c,T);}
+  if(T.gold){for(const p of POCKETS)goldPocket(c,p);drawCushions(c,T);}
+  else{for(const p of POCKETS)realPocket(c,p,T);drawCushions(c,T);}
   c.save();c.beginPath();c.rect(RAIL,RAIL,TW,TH);c.clip();
   if(T.gold)for(const p of POCKETS){const x=p.x+RAIL,y=p.y+RAIL,sh=c.createRadialGradient(x,y,p.r*.7,x,y,p.r+12);sh.addColorStop(0,'rgba(0,20,40,.45)');sh.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=sh;c.beginPath();c.arc(x,y,p.r+12,0,7);c.fill();}
   c.restore();
@@ -1538,8 +1557,8 @@ function drawTable(T){
   c.strokeStyle='rgba(255,255,255,.14)';c.lineWidth=1.5;c.strokeRect(RAIL-.5,RAIL-.5,TW+1,TH+1);
   g=c.createLinearGradient(0,RAIL,0,RAIL+14);g.addColorStop(0,'rgba(0,0,0,.28)');g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(RAIL,RAIL,TW,14);
   c.strokeStyle='rgba(255,255,255,.16)';c.lineWidth=1;c.beginPath();c.moveTo(RAIL+TW*.25,RAIL);c.lineTo(RAIL+TW*.25,RAIL+TH);c.stroke();
-  // cepler: banda oyulmuş koyu boşluk
-  for(const p of POCKETS)realPocket(c,p);
+  // cepler: banda oyulmuş çukur + fizikle aynı çeneli bantlar
+  for(const p of POCKETS)realPocket(c,p,T);drawCushions(c,T,T.f1);
 }
 function dia(x,y){ctx.beginPath();ctx.ellipse(x,y,2.6,2.6,0,0,7);ctx.fill();}
 const glyphCache={},rgbCache={};
@@ -1766,7 +1785,7 @@ const pEnd=e=>{if(!pDrag)return;pDrag=false;if(power>=3&&humanTurn())shoot();els
 pb.addEventListener('pointerup',pEnd);pb.addEventListener('pointercancel',()=>{pDrag=false;power=0;drawPbar();});
 /* ---- falso topu ---- */
 /* ---- cebe süzülme animasyonu ---- */
-let sinks=[],tube=[];const SINK_MS=380;
+let sinks=[],tube=[];const SINK_MS=460;
 function startSink(b){
   let pk=b.pk;if(pk==null){let bd=1e9;POCKETS.forEach((p,i)=>{const d=Math.hypot(p.x-b.x,p.y-b.y);if(d<bd){bd=d;pk=i;}});}
   sinks.push({b,x0:b.x,y0:b.y,pk,t0:performance.now(),M:b.M?b.M.slice():null});
@@ -1776,12 +1795,13 @@ function drawSinks(){
   sinks=sinks.filter(s=>{
     if(!s.b.pot)return false;
     const k=Math.min(1,(now-s.t0)/SINK_MS),e=k*k*(3-2*k),p=POCKETS[s.pk];
-    const mid=p.x===TW/2,ox=mid?0:(p.x<TW/2?-1:1),oy=p.y<TH/2?-1:1,L=Math.hypot(ox,oy),tx=p.x+ox/L*(mid?6:4),ty=p.y+oy/L*(mid?6:4);
-    const x=s.x0+(tx-s.x0)*e,y=s.y0+(ty-s.y0)*e,sc=1-.62*e;
-    ctx.save();ctx.beginPath();ctx.arc(tx+RAIL,ty+RAIL,p.r+(e>.35?0:40),0,7);ctx.clip();
+    // top ağızdan çukura kayar, sonra aşağı düşer: küçülür, kararır ve dudağın altında kaybolur
+    const mid=p.x===TW/2,ox=mid?0:(p.x<TW/2?-1:1),oy=p.y<TH/2?-1:1,L=Math.hypot(ox,oy),tx=p.x+ox/L*p.r*.22,ty=p.y+oy/L*p.r*.22;
+    const m=Math.min(1,k/.45),em=m*m*(3-2*m),f=Math.max(0,(k-.3)/.7),x=s.x0+(tx-s.x0)*em,y=s.y0+(ty-s.y0)*em,sc=1-.55*f*f;
+    ctx.save();ctx.beginPath();ctx.arc(p.x+RAIL,p.y+RAIL,p.r+(k<.25?60:0),0,7);ctx.clip();
     ctx.translate(x+RAIL,y+RAIL);ctx.scale(sc,sc);
     drawBall({id:s.b.id,x:-RAIL,y:-RAIL,M:s.M,noShadow:1,_cv:s._cv,_S:s._S,_ver:s._ver,rv:0,_own:s});
-    ctx.fillStyle=`rgba(0,0,0,${.85*e})`;ctx.beginPath();ctx.arc(0,0,R,0,7);ctx.fill();
+    ctx.fillStyle=`rgba(0,0,0,${Math.min(.95,.15*em+.85*f)})`;ctx.beginPath();ctx.arc(0,0,R,0,7);ctx.fill();
     ctx.restore();
     if(k>=1){if(s.b.id)tubeAdd(s.b);return false;}
     return true;
