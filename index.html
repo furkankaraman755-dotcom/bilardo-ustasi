@@ -1390,11 +1390,13 @@ function newGame(){
 /* ================= FİZİK ================= */
 function pot(b){if(b.pot)return;b.pot=true;b.vx=b.vy=0;shotPotted.push(b.id);if(b.id)potOrder.push(b.id);snd(12,180,.18);startSink(b);}
 // güç eğrisi: az çekiş yumuşak/kısa, çok çekiş sert/uzun
-const GEXP=1.3,pw2v=p=>MAXV*Math.pow(Math.max(0,p)/100,GEXP),v2pw=v=>100*Math.pow(Math.min(1,Math.max(0,v)/MAXV),1/GEXP);
+const GEXP=1.15,pw2v=p=>MAXV*Math.pow(Math.max(0,p)/100,GEXP),v2pw=v=>100*Math.pow(Math.min(1,Math.max(0,v)/MAXV),1/GEXP);
 // çuha sürtünmesi: sabit yuvarlanma direnci + hızla artan kısım (yavaş top yumuşak durur)
-const decel=v=>Math.max(0,v-(0.0075+v*0.0085)); // yuvarlanma direnci + hızla artan sürtünme: doğal yavaşlayıp durur
+// yuvarlanma direnci (sabit, gerçek çuhaya yakın) + hafif hız sönümü: toplar akıcı ilerler, sonunda yumuşakça durur
+const ROLL_RES=0.0065,LIN_DAMP=0.0045,STOP_V=0.05;
+const decel=v=>Math.max(0,v-(ROLL_RES+v*LIN_DAMP));
 // bant sekmesi: sert gelen top daha güçlü seker
-const cushE=v=>Math.min(.88,.66+Math.abs(v)*.012);
+const cushE=v=>Math.min(.9,.76+Math.abs(v)*.008); // bant: yavaş topta da canlı geri dönüş
 let potOrder=[];
 // falso: yan falso bant dönüşünü, üst/alt falso ilk çarpışmadan sonrasını etkiler
 let inDir=null;
@@ -1451,7 +1453,7 @@ function physStep(f){
         const rel=(a.vx-b.vx)*nx+(a.vy-b.vy)*ny;
         if(rel>0){
           const cb=a===cue?a:b===cue?b:null,sp0=cb?Math.hypot(cb.vx,cb.vy):0;
-          const j2=rel*.975;a.vx-=j2*nx;a.vy-=j2*ny;b.vx+=j2*nx;b.vy+=j2*ny;
+          const j2=rel*.982;a.vx-=j2*nx;a.vy-=j2*ny;b.vx+=j2*nx;b.vy+=j2*ny;
           if(cb&&shotSpin&&!shotSpin.used){shotSpin.used=1;spinContact(cb,sp0);}
           if(firstHit===null){if(a.id===0)firstHit=b.id;else if(b.id===0)firstHit=a.id;}
           snd(rel,1900,.05);
@@ -1466,7 +1468,7 @@ function friction(){
     rotBall(cue,-dy,dx,0,sv.t);rotBall(cue,0,0,1,sv.s);sv.t*=.955;sv.s*=.97;if(Math.abs(sv.t)+Math.abs(sv.s)<.004)cue.sv=null;}
   for(const b of balls){if(b.pot)continue;
     const s=Math.hypot(b.vx,b.vy);
-    if(s<.05){if(pocketPull(b)||b.curve){any=true;continue;}b.vx=b.vy=0;continue;}
+    if(s<STOP_V){if(pocketPull(b)||b.curve){any=true;continue;}b.vx=b.vy=0;continue;}
     const ns=decel(s);b.vx*=ns/s;b.vy*=ns/s;any=true;
   }
   return any;
@@ -2192,8 +2194,10 @@ function drawBall(b){
   const x=b.x+RAIL,y=b.y+RAIL,c=ctx;
   // gölge
   if(!b.noShadow){
-  const sh=c.createRadialGradient(x+3,y+4,R*.2,x+3,y+4,R*1.15);sh.addColorStop(0,'rgba(0,0,0,.62)');sh.addColorStop(1,'rgba(0,0,0,0)');
-  c.fillStyle=sh;c.beginPath();c.arc(x+3,y+4,R*1.15,0,7);c.fill();}
+  // yumuşak gölge (ışık sol üstte) + topun değdiği yerde koyu temas gölgesi
+  c.save();c.translate(x+R*.42,y+R*.5);c.scale(1.18,.92);const sh=c.createRadialGradient(0,0,R*.15,0,0,R*1.2);sh.addColorStop(0,'rgba(0,0,0,.55)');sh.addColorStop(.6,'rgba(0,0,0,.25)');sh.addColorStop(1,'rgba(0,0,0,0)');
+  c.fillStyle=sh;c.beginPath();c.arc(0,0,R*1.2,0,7);c.fill();c.restore();
+  const cs=c.createRadialGradient(x+R*.12,y+R*.16,0,x+R*.12,y+R*.16,R*.75);cs.addColorStop(0,'rgba(0,0,0,.55)');cs.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=cs;c.beginPath();c.arc(x+R*.12,y+R*.16,R*.75,0,7);c.fill();}
   // dönen yüzey
   const t=c.getTransform(),S=Math.max(8,Math.min(160,Math.round(2*R*Math.hypot(t.a,t.b))));
   const tex=(b._cv&&b._S===S&&b._ver===(b.rv||0))?b._cv:ballTex(b,S);
@@ -2201,12 +2205,16 @@ function drawBall(b){
   c.drawImage(tex,x-R,y-R,2*R,2*R);
   c.save();c.beginPath();c.arc(x,y,R,0,7);c.clip();
   // hacim gölgelendirmesi (ışık sabit, top döner)
-  const g=c.createRadialGradient(x-R*.32,y-R*.38,R*.05,x,y,R*1.02);
-  g.addColorStop(0,'rgba(255,255,255,.55)');g.addColorStop(.28,'rgba(255,255,255,.06)');g.addColorStop(.7,'rgba(0,0,0,.08)');g.addColorStop(1,'rgba(0,0,0,.55)');
+  // küre aydınlatması: sol üstten ışık, sağ altta gölge tarafı (terminatör), kenarda ortam kararması
+  const g=c.createRadialGradient(x-R*.38,y-R*.42,R*.02,x-R*.1,y-R*.12,R*1.28);
+  g.addColorStop(0,'rgba(255,255,255,.62)');g.addColorStop(.22,'rgba(255,255,255,.14)');g.addColorStop(.5,'rgba(0,0,0,0)');g.addColorStop(.78,'rgba(0,0,0,.22)');g.addColorStop(1,'rgba(0,0,0,.7)');
   c.fillStyle=g;c.fillRect(x-R,y-R,2*R,2*R);
-  c.strokeStyle='rgba(255,255,255,.22)';c.lineWidth=R*.18;c.beginPath();c.arc(x,y,R*.9,.35,1.55);c.stroke();
-  c.fillStyle='rgba(255,255,255,.95)';c.beginPath();c.ellipse(x-R*.36,y-R*.42,R*.2,R*.12,-.65,0,7);c.fill();
-  c.fillStyle='rgba(255,255,255,.35)';c.beginPath();c.ellipse(x+R*.38,y+R*.42,R*.1,R*.06,-.65,0,7);c.fill();
+  const rim=c.createRadialGradient(x,y,R*.72,x,y,R);rim.addColorStop(0,'rgba(0,0,0,0)');rim.addColorStop(1,'rgba(0,0,0,.32)');c.fillStyle=rim;c.fillRect(x-R,y-R,2*R,2*R);
+  // çuhadan yansıyan ışık (alt kenar) ve cilalı yüzey yansımaları
+  c.strokeStyle='rgba(180,230,200,.22)';c.lineWidth=R*.16;c.beginPath();c.arc(x,y,R*.9,.45,1.45);c.stroke();
+  c.fillStyle='rgba(255,255,255,.28)';c.beginPath();c.ellipse(x-R*.28,y-R*.34,R*.42,R*.26,-.65,0,7);c.fill();
+  c.fillStyle='rgba(255,255,255,.98)';c.beginPath();c.ellipse(x-R*.38,y-R*.45,R*.17,R*.1,-.65,0,7);c.fill();
+  c.fillStyle='rgba(255,255,255,.4)';c.beginPath();c.ellipse(x+R*.42,y+R*.46,R*.09,R*.05,-.65,0,7);c.fill();
   c.restore();
   c.strokeStyle='rgba(0,0,0,.35)';c.lineWidth=.8;c.beginPath();c.arc(x,y,R-.2,0,7);c.stroke();
 }
@@ -2324,12 +2332,12 @@ let lastTs=0,acc=0,tUi=0,aimDraw=0;
 const angDiff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b)); // -π..π, 0/360 geçişinde güvenli
 const STEP=1000/60;
 function loop(ts){
-  ts=ts||performance.now();const dt=Math.min(100,lastTs?ts-lastTs:STEP);lastTs=ts;
+  ts=ts||performance.now();const dt=Math.min(250,lastTs?ts-lastTs:STEP);lastTs=ts;
   sndCount=0;
   if($('game').classList.contains('show')){
     if(moving){acc+=dt;let n=0;
-      while(acc>=STEP&&moving&&n<8){for(let i=0;i<10;i++)physStep(.1);if(!friction()){moving=false;endShot();}acc-=STEP;n++;}
-      if(n>=8)acc=0;}
+      while(acc>=STEP&&moving&&n<15){for(let i=0;i<10;i++)physStep(.1);if(!friction()){moving=false;endShot();}acc-=STEP;n++;}
+      if(n>=15)acc=Math.min(acc,STEP*2);}
     else{acc=0;if(timerOn()&&!over&&!aiBusy&&!isAI(turn)&&tMax){if($('dlg').style.display!=='flex'){tLeft-=dt/1000;if(tLeft<=0){tMax=0;timeUp();}}}}
     if(ts-tUi>120){tUi=ts;for(let i=0;i<2;i++){const el=$('p'+i);if(el)el.style.setProperty('--t',i===turn&&timerOn()&&tMax&&!moving&&!isAI(turn)?Math.max(0,tLeft/tMax).toFixed(3):1);}}
     { // istaka çizim açısı hedefe yumuşakça yaklaşır (kare hızından bağımsız)
