@@ -368,7 +368,7 @@ h2,h3,.mtitle,.tile b,.hdr h2,.top h2,#over h2{font-family:var(--rc-font)!import
 .chip::after{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 34% 24%,rgba(255,255,255,.7),rgba(255,255,255,0) 42%),radial-gradient(circle at 70% 85%,rgba(255,215,140,.25),transparent 50%);pointer-events:none}
 @keyframes chip3d{0%{transform:perspective(200px) rotateY(0)}100%{transform:perspective(200px) rotateY(360deg)}}
 #mmScr .mmPot .chip,.vspot .chip,.chip.big{animation:chip3d 2.4s linear infinite;box-shadow:0 2px 0 #9a9a9a,0 4px 0 #6a6a6a,0 6px 0 #3a3a3a,0 9px 10px rgba(0,0,0,.7)!important}
-.cfly{animation:chip3d .5s linear infinite}
+.cfly{animation:none}
 
 .cpow{background:linear-gradient(180deg,#2a1048,#0e0619)!important;border:1px solid var(--rc-gold)!important;color:var(--rc-text)}
 .bars i{background:#1e0c36!important;border:1px solid rgba(201,162,78,.25)}.bars i.on{background:linear-gradient(180deg,#f6e3a8,#c9a24e)!important}
@@ -702,7 +702,7 @@ button:disabled{opacity:.55;filter:saturate(.6)}
  background:rgba(12,5,22,.8)!important;border:calc(var(--q)*1.5) solid rgba(240,200,110,.6)!important;box-shadow:0 calc(var(--q)*6) calc(var(--q)*14) rgba(0,0,0,.6)!important;padding:0!important}
 /* dönen çip: artık yan dönüp çubuk gibi görünmez, hafifçe sallanır */
 @keyframes chip3d{0%,100%{transform:perspective(200px) rotateY(-28deg)}50%{transform:perspective(200px) rotateY(28deg)}}
-.cfly{animation:cflySpin .5s linear infinite!important}@keyframes cflySpin{to{rotate:360deg}}
+.cfly{animation:none!important;rotate:none!important}
 /* ================= GİRİŞ EKRANI v2 (mor salon, altın çerçeve) ================= */
 #login{padding:0!important;overflow:hidden!important;background:#0d041a!important;justify-content:flex-start!important}
 #lBg{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -830,6 +830,77 @@ button:disabled{opacity:.55;filter:saturate(.6)}
 .qcBox .bars i.on{background:linear-gradient(180deg,#fff0a0,#ffc830 55%,#c88a10)!important}
 .qcBox button.blue{background:linear-gradient(180deg,#7a3ae0,#3a1280)!important;border:2px solid #f0c25a!important;color:#fff!important;font-weight:800;border-radius:12px!important;box-shadow:0 0 10px rgba(170,90,255,.5)!important}
 .qcBox #qcX{background:linear-gradient(180deg,#6a2ad0,#2e0e6a)!important;border:2px solid #f0c25a!important;color:#fff!important;font-weight:800;border-radius:22px!important;box-shadow:0 0 12px rgba(170,90,255,.55)!important}
+/* ================= ANA MENÜ v3 (fotoğraftaki düzen) ================= */
+#menu #mBg{visibility:hidden!important}
+#mBg3{position:absolute;inset:0;width:100%;height:100%;display:block}
+#menu .nmHero{top:calc(var(--p)*128)!important;height:calc(var(--p)*562)!important}
+#menu .nmRed,#menu .nmBlue{top:calc(var(--p)*128)!important;height:calc(var(--p)*272)!important}
+#menu .nmGreen,#menu .nmGold{top:calc(var(--p)*418)!important;height:calc(var(--p)*272)!important}
+#menu .nmSide{top:calc(var(--p)*128)!important;height:calc(var(--p)*562)!important}
+#menu .nmDock{left:calc(var(--p)*200)!important;top:calc(var(--p)*712)!important;width:calc(var(--p)*1436)!important;height:calc(var(--p)*128)!important;padding:calc(var(--p)*8) calc(var(--p)*14)!important}
+#menu .nmD .pmi{width:calc(var(--p)*74)!important;height:calc(var(--p)*74)!important}
+#menu .nmD span{font-size:calc(var(--p)*19)!important;letter-spacing:0}
+#menu .nmHero small{color:#fff!important;font-size:calc(var(--p)*24)!important;letter-spacing:calc(var(--p)*2)!important}
+#menu .nmHero span{font-weight:800!important;color:#fff!important;font-size:calc(var(--p)*25)!important;line-height:1.25}
+#menu .nmHero .nmTx{bottom:auto!important;top:calc(var(--p)*50)!important}
+#menu .nmHero b.nmFit{font-size:calc(var(--p)*128)!important}
+#menu .nmPlay{margin-top:calc(var(--p)*44)!important;padding:calc(var(--p)*18) calc(var(--p)*58)!important;font-size:calc(var(--p)*42)!important}
+#menu .nmHero #stats{position:absolute;left:0;top:calc(var(--p)*470);font-size:calc(var(--p)*18)!important}
+#menu #pname::after{content:none!important}
+#menu #pname::before{content:'';display:inline-block;width:calc(var(--p)*34);height:calc(var(--p)*23);margin-right:calc(var(--p)*10);vertical-align:calc(var(--p)*1);background:var(--flag) center/100% 100% no-repeat;border-radius:calc(var(--p)*3);box-shadow:0 0 0 calc(var(--p)*1) rgba(0,0,0,.45)}
+/* sandık yuvaları açılır pencerede */
+#slotPop{position:fixed;inset:0;z-index:6;display:none;align-items:center;justify-content:center;background:rgba(6,2,12,.72)}
+#slotPop.show{display:flex}
+#slotPop .spBox{width:min(94vw,820px);box-sizing:border-box;padding:12px 16px 14px;border-radius:20px;border:2.5px solid #f0c25a;
+ background:radial-gradient(ellipse 60% 35% at 50% 0%,rgba(170,80,255,.38),transparent 70%),linear-gradient(180deg,#2c1050,#140724 65%,#0a0414);
+ box-shadow:0 0 0 2px #4a2a04,0 0 28px rgba(255,190,60,.45),inset 0 0 0 5px #0b0414,inset 0 0 0 6.5px rgba(240,200,110,.5),0 12px 34px rgba(0,0,0,.75)}
+#slotPop .spH{display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:10px}
+#slotPop .spH b{font:900 22px Roboto,Arial,sans-serif;color:#fff;text-shadow:0 2px 3px #000,0 0 12px rgba(190,110,255,.6)}
+#slotPop #spX{position:absolute;right:0;top:50%;transform:translateY(-50%);width:36px;height:36px;min-width:0!important;padding:0!important;border-radius:50%!important;font:900 20px Arial!important;color:#fff!important;background:radial-gradient(circle at 50% 30%,#5a2a90,#1a0830 72%)!important;border:2px solid #f0c25a!important}
+#menu #slotPop #slots{position:static!important;left:auto!important;top:auto!important;width:100%!important;height:min(36vh,170px)!important;display:flex!important;gap:12px!important}
+#slotPop .spT{margin-top:10px;font-size:13px;color:#cbbbe6;text-align:center}
+/* ================= OYUNCU PROFİLİ v3: sağdan açılan panel (fotoğraftaki gibi) ================= */
+#dlg .box.prBox{position:fixed;right:0;top:0;bottom:0;height:100vh;max-height:100vh!important;width:min(64vh,56vw)!important;max-width:none!important;border-radius:22px 0 0 22px!important;padding:8px 12px 12px!important;overflow-y:auto;overflow-x:hidden;
+ background:radial-gradient(ellipse 80% 30% at 50% 22%,rgba(170,70,255,.45),transparent 70%),radial-gradient(ellipse 70% 30% at 50% 100%,rgba(120,40,220,.35),transparent 70%),linear-gradient(180deg,#2a0c4c,#170828 55%,#0c0416)!important;animation:prIn .28s cubic-bezier(.2,.9,.3,1)}
+@keyframes prIn{from{transform:translateX(100%)}to{transform:none}}
+#dlg:has(.prBox){justify-content:flex-end!important;padding:0!important}
+.prBox .prH{background:linear-gradient(180deg,rgba(40,14,70,.9),rgba(14,6,26,.9));border:1.5px solid rgba(240,194,90,.8);border-radius:14px;padding:4px 6px;margin-bottom:4px!important}
+.prBox .prH b{font-size:18px!important;text-align:center}
+.prBox .prG{display:block!important}
+.prBox .prL{background:none!important;border:none!important;padding:0 2px!important;gap:4px!important}
+.prBox .prAv{width:min(18vh,96px)!important;height:min(18vh,96px)!important;margin:min(7vh,34px) 0 6px!important}
+.prBox .prAv .av{font-size:min(9vh,48px)!important;border:4px solid #f0c25a!important;box-shadow:0 0 0 3px #4a1a80,0 0 22px rgba(200,120,255,.9)!important}
+.prBox .prPW{position:absolute;left:-90%;top:-62%;width:280%;height:238%;pointer-events:none;line-height:0;z-index:-1}.prBox .prPW svg{width:100%;height:100%}
+.prBox .prAv{isolation:isolate}
+.prBox .prWing{left:-30%!important;top:-38%!important;width:160%!important;height:160%!important}
+.prBox .prNm{font-size:20px!important}
+.prBox .prRk{width:86%;justify-content:center;padding:4px 16px!important;margin:4px 0!important;background:linear-gradient(180deg,#3a1460,#1c0830)!important;border:none;clip-path:none!important;border-radius:6px;position:relative;
+ box-shadow:0 0 0 2px #f0c25a,0 0 14px rgba(255,190,60,.5)!important}
+.prBox .prRk::before,.prBox .prRk::after{content:'';position:absolute;top:50%;width:26px;height:26px;margin-top:-13px;background:linear-gradient(135deg,#fff0a8,#e8a420);clip-path:polygon(0 50%,60% 0,100% 50%,60% 100%)}
+.prBox .prRk::before{left:-20px}.prBox .prRk::after{right:-20px;transform:scaleX(-1)}
+.prBox .prRk span{color:#ffd76a!important;font-size:18px!important}
+.prBox .prSt{display:flex!important;flex-direction:column!important;gap:2px!important;margin-top:4px}
+.prBox .prSt>div{flex-direction:row!important;text-align:left!important;background:none!important;padding:4px 6px!important;gap:12px!important;border-bottom:1px solid rgba(240,200,110,.15);border-radius:0!important}
+.prBox .prSt span{align-items:flex-start!important}
+.prBox .prSt i{width:30px!important;height:30px!important}.prBox .prSt small{font-size:11.5px!important;color:#e8ddff!important}.prBox .prSt b{font-size:17px!important}
+.prBox .prEd{margin-top:8px!important;padding:7px 26px!important}
+.prBox .prR{margin-top:14px;padding-top:10px;border-top:1.5px solid rgba(240,200,110,.35)}
+.prBox .prMini{grid-template-columns:repeat(2,1fr)!important}
+.prBox .prBd{max-height:none!important;overflow:visible!important}
+/* istaka seç v3: başlık plakası, mor kristal süsler */
+.qcBox .qcPl{padding:4px 34px!important;border-radius:10px;background:linear-gradient(180deg,#1c0a30,#0c0416);border:1.5px solid #f0c25a;box-shadow:0 0 12px rgba(255,190,60,.35),inset 0 0 10px rgba(160,70,255,.3)}
+.qcBox .qcO{width:64px!important;height:26px!important;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 26'><defs><linearGradient id='q' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23f4d8ff'/><stop offset='.5' stop-color='%23a050ff'/><stop offset='1' stop-color='%234a10a0'/></linearGradient></defs><path d='M4 13 L26 3 L20 13 L26 23Z' fill='url(%23q)' stroke='%23f0c25a' stroke-width='1.2'/><path d='M22 13 L46 5 L40 13 L46 21Z' fill='url(%23q)' stroke='%23f0c25a' stroke-width='1.2'/><path d='M44 13 H62' stroke='%23f0c25a' stroke-width='2'/></svg>") center/100% 100% no-repeat!important}
+.qcBox button.blue{color:#ffd76a!important;font-size:17px!important}
+.qcBox button.qcSel{background:linear-gradient(180deg,#3a1460,#1c0830)!important;border:2px solid #f0c25a!important;color:#ffd76a!important;border-radius:12px!important}
+.qcBox .cr{margin:0}.qcBox .qcL{gap:8px!important}
+.prBox .prNm b{color:#fff!important}
+.prBox .prPW{left:-125%!important;top:-75%!important;width:350%!important;height:260%!important}
+@media (max-height:470px){.prBox .prH{padding:2px 6px}.prBox .prBk,.prBox .prX{width:30px!important;height:30px!important}
+ .prBox .prAv{width:76px!important;height:76px!important;margin:22px 0 4px!important}.prBox .prAv .av{font-size:38px!important}
+ .prBox .prNm{font-size:17px!important}.prBox .prId{font-size:12px}.prBox .prRk{padding:2px 14px!important;margin:2px 0!important}.prBox .prRk span{font-size:15px!important}
+ .prBox .prSt>div{padding:1px 6px!important}.prBox .prSt i{width:24px!important;height:24px!important}.prBox .prSt small{font-size:10px!important}.prBox .prSt b{font-size:14px!important;line-height:1.1}
+ .prBox .prEd{margin-top:4px!important;padding:4px 22px!important}}
+.prBox .prNm,.prBox .prId,.prBox .prRk,.prBox .prSt,.prBox .prEd,.prBox .prR{position:relative;z-index:1}
 /* ---- 8 Blackball Arena giriş efekti (3B görünümlü logo animasyonu) ---- */
 #intro{position:fixed;inset:0;z-index:99999;background:#000;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 #intro.out{opacity:0;transition:opacity .45s ease}
@@ -900,14 +971,14 @@ button:disabled{opacity:.55;filter:saturate(.6)}
    <div class="prof nmGlass"><div class="nmAvR" id="nmAvR"><div class="av" id="av"></div></div><i class="nmWing"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><defs><linearGradient id="awG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3b0"/><stop offset=".5" stop-color="#f0b830"/><stop offset="1" stop-color="#9a5a08"/></linearGradient></defs><g filter="url(#pgSh)"><path d="M65.3 135.1 L50.6 130.9 L37.4 122.9 L26.8 111.4 L19.7 97.4 L16.5 81.9 L17.7 66.0 L23.2 50.8 L32.6 37.6" fill="none" stroke="url(#awG)" stroke-width="3" stroke-linecap="round"/><ellipse cx="53.3" cy="126.1" rx="7.9" ry="3.0" transform="rotate(-60.6 53.3 126.1)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="56.0" cy="131.8" rx="7.9" ry="3.0" transform="rotate(9.4 56.0 131.8)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="38.8" cy="117.2" rx="8.2" ry="3.1" transform="rotate(-76.2 38.8 117.2)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="43.2" cy="122.2" rx="8.2" ry="3.1" transform="rotate(-6.2 43.2 122.2)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="26.6" cy="105.4" rx="8.6" ry="3.3" transform="rotate(-91.9 26.6 105.4)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="32.4" cy="109.2" rx="8.6" ry="3.3" transform="rotate(-21.9 32.4 109.2)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="17.8" cy="91.4" rx="9.0" ry="3.4" transform="rotate(-107.5 17.8 91.4)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="24.7" cy="93.6" rx="9.0" ry="3.4" transform="rotate(-37.5 24.7 93.6)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="12.9" cy="76.4" rx="9.4" ry="3.6" transform="rotate(-123.1 12.9 76.4)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="20.5" cy="76.7" rx="9.4" ry="3.6" transform="rotate(-53.1 20.5 76.7)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="12.6" cy="61.5" rx="9.8" ry="3.7" transform="rotate(-138.8 12.6 61.5)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="20.2" cy="59.6" rx="9.8" ry="3.7" transform="rotate(-68.8 20.2 59.6)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="16.8" cy="47.7" rx="10.1" ry="3.8" transform="rotate(-154.4 16.8 47.7)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="23.8" cy="43.8" rx="10.1" ry="3.8" transform="rotate(-84.4 23.8 43.8)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="25.3" cy="36.3" rx="10.5" ry="4.0" transform="rotate(-170.0 25.3 36.3)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="31.3" cy="30.3" rx="10.5" ry="4.0" transform="rotate(-100.0 31.3 30.3)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><path d="M84.7 135.1 L99.4 130.9 L112.6 122.9 L123.2 111.4 L130.3 97.4 L133.5 81.9 L132.3 66.0 L126.8 50.8 L117.4 37.6" fill="none" stroke="url(#awG)" stroke-width="3" stroke-linecap="round"/><ellipse cx="96.7" cy="126.1" rx="7.9" ry="3.0" transform="rotate(240.6 96.7 126.1)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="94.0" cy="131.8" rx="7.9" ry="3.0" transform="rotate(170.6 94.0 131.8)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="111.2" cy="117.2" rx="8.2" ry="3.1" transform="rotate(256.2 111.2 117.2)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="106.8" cy="122.2" rx="8.2" ry="3.1" transform="rotate(186.2 106.8 122.2)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="123.4" cy="105.4" rx="8.6" ry="3.3" transform="rotate(271.9 123.4 105.4)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="117.6" cy="109.2" rx="8.6" ry="3.3" transform="rotate(201.9 117.6 109.2)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="132.2" cy="91.4" rx="9.0" ry="3.4" transform="rotate(287.5 132.2 91.4)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="125.3" cy="93.6" rx="9.0" ry="3.4" transform="rotate(217.5 125.3 93.6)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="137.1" cy="76.4" rx="9.4" ry="3.6" transform="rotate(303.1 137.1 76.4)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="129.5" cy="76.7" rx="9.4" ry="3.6" transform="rotate(233.1 129.5 76.7)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="137.4" cy="61.5" rx="9.8" ry="3.7" transform="rotate(318.8 137.4 61.5)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="129.8" cy="59.6" rx="9.8" ry="3.7" transform="rotate(248.8 129.8 59.6)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="133.2" cy="47.7" rx="10.1" ry="3.8" transform="rotate(334.4 133.2 47.7)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="126.2" cy="43.8" rx="10.1" ry="3.8" transform="rotate(264.4 126.2 43.8)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="124.7" cy="36.3" rx="10.5" ry="4.0" transform="rotate(350.0 124.7 36.3)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><ellipse cx="118.7" cy="30.3" rx="10.5" ry="4.0" transform="rotate(280.0 118.7 30.3)" fill="url(#awG)" stroke="#5a3404" stroke-width=".8"/><g transform="translate(75 22) scale(.82)"><path d="M-24 22 L-27 2 L-14 12 L0 -6 L14 12 L27 2 L24 22Z" fill="url(#awG)" stroke="#5a3404" stroke-width="1.6" stroke-linejoin="round"/><rect x="-25" y="20" width="50" height="7" rx="2" fill="url(#awG)" stroke="#5a3404" stroke-width="1.4"/><circle cx="0" cy="-7" r="3.6" fill="#ff4a8a" stroke="#5a3404"/><circle cx="-27" cy="1" r="3" fill="#4ad0ff" stroke="#5a3404"/><circle cx="27" cy="1" r="3" fill="#4ad0ff" stroke="#5a3404"/><circle cx="0" cy="13" r="3.6" fill="#ff3a3a" stroke="#5a3404"/></g></g></svg></i>
      <div class="pmPI"><b id="pname"></b><div id="pTitle"></div><div class="sm">ID: <span id="pid"></span> · 🏅<span id="pbd">0</span></div></div>
      <div class="lvl"><span id="plvC"></span><span id="plv" style="display:none"></span><div class="xpb"><i id="pxp"></i></div></div></div>
-   <div class="nmBrand"><i class="pmi"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 132"><defs><radialGradient id="b2Gl" cx=".5" cy=".55" r=".5"><stop offset="0" stop-color="#c060ff" stop-opacity=".9"/><stop offset=".5" stop-color="#8a2ae0" stop-opacity=".35"/><stop offset="1" stop-color="#5010a0" stop-opacity="0"/></radialGradient><linearGradient id="b2Bo" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="560" y2="0"><stop offset="0" stop-color="#d080ff" stop-opacity="0"/><stop offset=".5" stop-color="#f4d8ff"/><stop offset="1" stop-color="#d080ff" stop-opacity="0"/></linearGradient></defs><ellipse cx="280" cy="76" rx="290" ry="62" fill="url(#b2Gl)"/><g fill="none" stroke="url(#b2Bo)" stroke-width="2" opacity=".85"><path d="M30 64 l40 -10 l-8 14 l50 -16"/><path d="M530 64 l-40 -10 l8 14 l-50 -16"/><path d="M60 100 l44 -6 l-10 10 l48 -10"/><path d="M500 100 l-44 -6 l10 10 l-48 -10"/></g><g filter="url(#pgSh)" transform="translate(280 2)"><path d="M-30 32 L-35 6 L-18 18 L0 -2 L18 18 L35 6 L30 32Z" fill="url(#pgG)" stroke="#5a3404" stroke-width="2" stroke-linejoin="round"/><rect x="-32" y="29" width="64" height="9" rx="2" fill="url(#pgG)" stroke="#5a3404" stroke-width="1.6"/><circle cx="0" cy="-3" r="4.5" fill="#ff4a8a" stroke="#5a3404" stroke-width="1.2"/><circle cx="-35" cy="5" r="3.6" fill="#7ad8ff" stroke="#5a3404"/><circle cx="35" cy="5" r="3.6" fill="#7ad8ff" stroke="#5a3404"/><circle cx="0" cy="20" r="4.2" fill="#ff3030" stroke="#5a3404"/></g><text x="280" y="98" text-anchor="middle" font-family="'Arial Black','Roboto',Arial,sans-serif" font-weight="900" font-size="62" textLength="500" lengthAdjust="spacingAndGlyphs" fill="url(#pgGt)" stroke="#2a1002" stroke-width="2.5" paint-order="stroke" filter="url(#pgSh)">BLACKBALL</text><path d="M58 118 H200 M360 118 H502" stroke="url(#pgG)" stroke-width="3"/><path d="M200 118 l7 -6 l7 6 l-7 6z M360 118 l-7 -6 l-7 6 l7 6z" fill="#ffd966"/><text x="280" y="129" text-anchor="middle" font-family="'Arial Black','Roboto',Arial,sans-serif" font-weight="900" font-size="30" textLength="128" lengthAdjust="spacing" fill="#fff6d8" stroke="#2a1002" stroke-width="1.2" paint-order="stroke" filter="url(#pgSh)">ARENA</text></svg></i></div>
+   <div class="nmBrand"><i class="pmi"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 132"><defs><radialGradient id="b2Gl" cx=".5" cy=".55" r=".5"><stop offset="0" stop-color="#c060ff" stop-opacity=".9"/><stop offset=".5" stop-color="#8a2ae0" stop-opacity=".35"/><stop offset="1" stop-color="#5010a0" stop-opacity="0"/></radialGradient><linearGradient id="b2Sv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#c8ccd6"/><stop offset=".6" stop-color="#8a909c"/><stop offset="1" stop-color="#eef0f4"/></linearGradient><linearGradient id="b2Bo" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="560" y2="0"><stop offset="0" stop-color="#d080ff" stop-opacity="0"/><stop offset=".5" stop-color="#f4d8ff"/><stop offset="1" stop-color="#d080ff" stop-opacity="0"/></linearGradient></defs><ellipse cx="280" cy="76" rx="290" ry="62" fill="url(#b2Gl)"/><g fill="none" stroke="url(#b2Bo)" stroke-width="2" opacity=".85"><path d="M30 64 l40 -10 l-8 14 l50 -16"/><path d="M530 64 l-40 -10 l8 14 l-50 -16"/><path d="M60 100 l44 -6 l-10 10 l48 -10"/><path d="M500 100 l-44 -6 l10 10 l-48 -10"/></g><g filter="url(#pgSh)" transform="translate(280 2)"><path d="M-30 32 L-35 6 L-18 18 L0 -2 L18 18 L35 6 L30 32Z" fill="url(#pgG)" stroke="#5a3404" stroke-width="2" stroke-linejoin="round"/><rect x="-32" y="29" width="64" height="9" rx="2" fill="url(#pgG)" stroke="#5a3404" stroke-width="1.6"/><circle cx="0" cy="-3" r="4.5" fill="#ff4a8a" stroke="#5a3404" stroke-width="1.2"/><circle cx="-35" cy="5" r="3.6" fill="#7ad8ff" stroke="#5a3404"/><circle cx="35" cy="5" r="3.6" fill="#7ad8ff" stroke="#5a3404"/><circle cx="0" cy="20" r="4.2" fill="#ff3030" stroke="#5a3404"/></g><text x="280" y="98" text-anchor="middle" font-family="'Arial Black','Roboto',Arial,sans-serif" font-weight="900" font-size="62" textLength="500" lengthAdjust="spacingAndGlyphs" fill="url(#pgGt)" stroke="#2a1002" stroke-width="2.5" paint-order="stroke" filter="url(#pgSh)">BLACKBALL</text><path d="M58 118 H200 M360 118 H502" stroke="url(#pgG)" stroke-width="3"/><path d="M200 118 l7 -6 l7 6 l-7 6z M360 118 l-7 -6 l-7 6 l7 6z" fill="#ffd966"/><text x="280" y="129" text-anchor="middle" font-family="'Arial Black','Roboto',Arial,sans-serif" font-weight="900" font-size="30" textLength="128" lengthAdjust="spacing" fill="url(#b2Sv)" stroke="#2a1002" stroke-width="1.2" paint-order="stroke" filter="url(#pgSh)">ARENA</text></svg></i></div>
    <div class="cur gem nmGlass"><i class="pmi" data-i="gem"></i><span class="gv">0</span><b class="pmPlus">+</b></div>
    <div class="cur cash nmGlass"><i class="pmi" data-i="cash"></i><span id="cash">0</span><b class="pmPlus">+</b></div>
    <div class="cur coins nmGlass" id="mcoins">🪙<span class="cv">0</span><b class="pmPlus">+</b></div>
    <button class="nmGear" id="xSetTop" aria-label="Ayarlar"><i class="pmi" data-i="gear"></i></button>
   </div>
   <button class="tile nmHero" id="m1v1"><canvas class="nmArt" data-art="hero"></canvas>
-   <div class="nmTx"><small>ONLINE MAÇ</small><b class="nmFit">1'e 1</b><span>Rakibini yen, potun tamamını kazan</span><i class="nmPlay">OYNA<b class="nmPl">▶</b></i><div class="stats" id="stats"></div></div></button>
+   <div class="nmTx"><small>ONLINE MAÇ</small><b class="nmFit">1'e 1</b><span>Rakibini yen,<br>potun tamamını kazan!</span><i class="nmPlay">OYNA<b class="nmPl">▶</b></i><div class="stats" id="stats"></div></div></button>
   <button class="tile nmC nmRed" id="mEv"><canvas class="nmArt" data-art="rack"></canvas><div class="nmTx"><b class="nmFit">Etkinlikler</b><span>Turnuva</span></div></button>
   <button class="tile nmC nmBlue" id="mPriv"><canvas class="nmArt" data-art="nine"></canvas><div class="nmTx"><b class="nmFit">Özel</b><span>Oyna</span></div></button>
   <button class="tile nmC nmGreen" id="mMini"><canvas class="nmArt" data-art="pocket"></canvas><div class="nmTx"><b class="nmFit">Mini Oyun</b><span>Şanslı Atış</span></div></button>
@@ -919,17 +990,19 @@ button:disabled{opacity:.55;filter:saturate(.6)}
    <button class="nmRow" id="xWheel"><i class="pmi" data-i="wheel"></i><span><b>Şans Çarkı</b><small id="nsWheel"></small></span><em id="dWheel"></em></button>
    <button class="nmRow" id="xScr"><i class="pmi" data-i="ticket"></i><span><b>Kazı Kazan</b><small id="nsScr"></small></span><em id="dScr"></em></button>
   </div>
-  <div id="slots"></div>
   <div class="nmDock nmGlass">
-   <button class="nmD" id="tCues"><i class="pmi" data-i="cueIc"></i><span>İstekalar</span></button>
-   <button class="nmD" id="tFree"><i class="pmi" data-i="crownR"></i><span>Hediyeler</span><em id="fDot">!</em></button>
-   <button class="nmD" id="tLead"><i class="pmi" data-i="star"></i><span>Liderlik</span></button>
+   <button class="nmD" id="xLig"><i class="pmi" data-i="crownR"></i><span>Ligler</span></button>
+   <button class="nmD" id="tLead"><i class="pmi"><svg viewBox="0 0 100 100"><g filter="url(#pgSh)" stroke="#5a3404" stroke-width="2.5"><rect x="14" y="52" width="20" height="36" rx="3" fill="url(#pgG)"/><rect x="40" y="22" width="20" height="66" rx="3" fill="url(#pgG)"/><rect x="66" y="38" width="20" height="50" rx="3" fill="url(#pgG)"/></g><rect x="8" y="86" width="84" height="6" rx="2" fill="url(#pgG)"/></svg></i><span>Sıralama</span></button>
+   <button class="nmD" id="xAch"><i class="pmi" data-i="star"></i><span>Başarılar</span><em id="dAch"></em></button>
    <button class="nmD nmShop" id="tShop"><i class="pmi" data-i="cart"></i><span>Mağaza</span></button>
-   <button class="nmD" id="xAch"><i class="pmi" data-i="medal"></i><span>Başarımlar</span><em id="dAch"></em></button>
+   <button class="nmD" id="tFree"><i class="pmi" data-i="gift"></i><span>Hediye Kutusu</span><em id="fDot">!</em></button>
+   <button class="nmD" id="tCues"><i class="pmi" data-i="cueIc"></i><span>İstekalar</span></button>
+   <button class="nmD" id="xChest"><i class="pmi" data-i="tChest"></i><span>Sandıklar</span><em id="dChest"></em></button>
    <button class="nmD" id="xInbox"><i class="pmi" data-i="mail"></i><span>Gelen Kutusu</span><em id="dInbox"></em></button>
    <button class="nmD" id="xSet"><i class="pmi" data-i="gear"></i><span>Ayarlar</span></button>
   </div>
  </div>
+ <div id="slotPop"><div class="spBox"><div class="spH"><b>Sandıklar</b><button id="spX" aria-label="Kapat">✕</button></div><div id="slots"></div><div class="spT">Maç kazandıkça sandık gelir. Kilidini aç, süre dolunca aç ve ödülü al.</div></div></div>
 </div>
 
 <!-- 1'E 1 MASALAR -->
@@ -1475,7 +1548,8 @@ function flyChips(n){ // çipler ekranın ortasından para göstergesine uçar
   const tr=tgt.getBoundingClientRect(),sx=innerWidth/2,sy=innerHeight/2;
   for(let k=0;k<n;k++)setTimeout(()=>{const c=document.createElement('i');c.className='chip cfly';c.style.left=(sx-15+(Math.random()-.5)*80)+'px';c.style.top=(sy-15+(Math.random()-.5)*60)+'px';document.body.append(c);
     const dx=tr.left+18-parseFloat(c.style.left),dy=tr.top+tr.height/2-15-parseFloat(c.style.top);
-    c.animate([{transform:'translate(0,0) scale(1.3)',opacity:0},{transform:'translate(0,0) scale(1.3)',opacity:1,offset:.15},{transform:`translate(${dx}px,${dy}px) scale(.7)`,opacity:1}],{duration:650,easing:'cubic-bezier(.5,0,.6,1)'}).onfinish=()=>{c.remove();chipSnd('chip',.4,1+Math.random()*.15);tgt.animate([{transform:'scale(1)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:180});};},k*70);
+    let done=0;const fin=()=>{if(done)return;done=1;c.remove();};setTimeout(fin,1100); // güvenlik: ne olursa olsun kaldır
+    c.animate([{transform:'translate(0,0) scale(1.3)',opacity:0},{transform:'translate(0,0) scale(1.3)',opacity:1,offset:.15},{transform:`translate(${dx*.5}px,${dy*.5-60}px) scale(1)`,opacity:1,offset:.55},{transform:`translate(${dx}px,${dy}px) scale(.7)`,opacity:.9}],{duration:650,easing:'cubic-bezier(.5,0,.6,1)',fill:'forwards'}).onfinish=()=>{fin();chipSnd('chip',.4,1+Math.random()*.15);tgt.animate([{transform:'scale(1)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:180});};},k*70);
 }
 function animCoins(){
   const target=save.coins;if(coinShown===null)coinShown=0;
@@ -1568,7 +1642,7 @@ function openProfile(){ // Oyuncu Profili (2. görseldeki düzen; rozetler ve t�
   const ic8='<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="url(#pgBall)"/><circle cx="22" cy="21" r="9" fill="#fff"/><text x="22" y="22.5" font-size="12" font-weight="900" text-anchor="middle" dominant-baseline="middle" font-family="Arial,sans-serif" fill="#111">8</text></svg>';
   let h=`<div class="prH"><button class="prBk" id="prBack" aria-label="Geri">‹</button><b>Oyuncu Profili</b><button class="prX" id="prClose" aria-label="Kapat">✕</button></div>
   <div class="prG"><div class="prL">
-    <div class="prAv"><div class="av" style="background:${myAvC()}">${myAvT()}</div><i class="prWing">${wing}</i></div>
+    <div class="prAv"><i class="prPW"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 170"><defs><linearGradient id="pwG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a10a0" stop-opacity=".2"/><stop offset=".5" stop-color="#b060ff"/><stop offset="1" stop-color="#f0d0ff"/></linearGradient><radialGradient id="pwGl" cx=".5" cy=".55" r=".5"><stop offset="0" stop-color="#c070ff" stop-opacity=".9"/><stop offset="1" stop-color="#6010c0" stop-opacity="0"/></radialGradient></defs><ellipse cx="100" cy="92" rx="100" ry="75" fill="url(#pwGl)"/><ellipse cx="63.8" cy="82.8" rx="38.5" ry="7.5" transform="rotate(200.0 63.8 82.8)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="69.2" cy="76.0" rx="36.7" ry="7.2" transform="rotate(213.0 69.2 76.0)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="75.7" cy="70.8" rx="35.0" ry="6.9" transform="rotate(226.0 75.7 70.8)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="82.9" cy="67.5" rx="33.2" ry="6.6" transform="rotate(239.0 82.9 67.5)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="90.3" cy="66.1" rx="31.5" ry="6.3" transform="rotate(252.0 90.3 66.1)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="97.4" cy="66.4" rx="29.7" ry="6.0" transform="rotate(265.0 97.4 66.4)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="103.9" cy="68.3" rx="27.9" ry="5.7" transform="rotate(278.0 103.9 68.3)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="109.4" cy="71.6" rx="26.2" ry="5.4" transform="rotate(291.0 109.4 71.6)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="136.2" cy="82.8" rx="38.5" ry="7.5" transform="rotate(-20.0 136.2 82.8)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="130.8" cy="76.0" rx="36.7" ry="7.2" transform="rotate(-33.0 130.8 76.0)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="124.3" cy="70.8" rx="35.0" ry="6.9" transform="rotate(-46.0 124.3 70.8)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="117.1" cy="67.5" rx="33.2" ry="6.6" transform="rotate(-59.0 117.1 67.5)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="109.7" cy="66.1" rx="31.5" ry="6.3" transform="rotate(-72.0 109.7 66.1)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="102.6" cy="66.4" rx="29.7" ry="6.0" transform="rotate(-85.0 102.6 66.4)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="96.1" cy="68.3" rx="27.9" ry="5.7" transform="rotate(-98.0 96.1 68.3)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/><ellipse cx="90.6" cy="71.6" rx="26.2" ry="5.4" transform="rotate(-111.0 90.6 71.6)" fill="url(#pwG)" stroke="#e8b8ff" stroke-opacity=".5" stroke-width=".8"/></svg></i><div class="av" style="background:${myAvC()}">${myAvT()}</div><i class="prWing">${wing}</i></div>
     <div class="prNm"><b>${save.name}</b><i class="prFlag"></i></div>
     <div class="prId">ID: ${save.pid} <button class="prCp" id="prCopy" aria-label="ID kopyala">⧉</button></div>
     <div class="prRk">${crownHTML(save.level,34)}<span>${titleOf(save.level)}</span></div>
@@ -3467,9 +3541,9 @@ function drawCueIcon(){const el=$('cueIc'),dpr=window.devicePixelRatio||1,w=el.w
   const C=cueById(save.cue);drawCue(c,w*.82,w*.12,w*.12,w*.82,C,4.5);drawCue(c,w*.9,w*.3,w*.3,w*.9,CUES[0],3.5);}
 $('cueBtn').onclick=()=>{
   if(moving)return;
-  let h='<div class="qcH"><i class="qcO"></i><h3>İstaka Seç</h3><i class="qcO r"></i></div><div class="qcL" style="display:flex;flex-direction:column;gap:6px;max-height:60vh;overflow:auto">';
+  let h='<div class="qcH"><i class="qcO"></i><h3 class="qcPl">İstaka Seç</h3><i class="qcO r"></i></div><div class="qcL" style="display:flex;flex-direction:column;gap:6px;max-height:60vh;overflow:auto">';
   ALL_CUES.filter(c=>save.cues.includes(c.id)).forEach(c=>{const s=cueSt(c);
-    h+=`<div class="cr ${save.cue===c.id?'eq':''}" style="padding:6px 8px"><div class="cl"><div class="cn">${c.name}</div><canvas data-qc="${c.id}"></canvas></div><div class="cst"><span>Güç</span>${bars(s[0])}<span>Odak</span>${bars(s[1])}<span>Falso</span>${bars(s[2])}<span>Süre</span>${bars(s[3])}</div><button class="${save.cue===c.id?'':'blue'}" data-qs="${c.id}" style="width:100px">${save.cue===c.id?'✓ Seçili':'Kullan'}</button></div>`;});
+    h+=`<div class="cr ${save.cue===c.id?'eq':''}" style="padding:6px 8px"><div class="cl"><div class="cn">${c.name}</div><canvas data-qc="${c.id}"></canvas></div><div class="cst"><span>Güç</span>${bars(s[0])}<span>Falso</span>${bars(s[2])}<span>Süre</span>${bars(s[3])}</div><button class="${save.cue===c.id?'qcSel':'blue'}" data-qs="${c.id}" style="width:100px">${save.cue===c.id?'✓ Seçili':'Kullan'}</button></div>`;});
   dlg(h+'</div><button id="qcX" style="margin-top:10px;min-width:140px">Kapat</button>','qcBox');
   document.querySelectorAll('[data-qc]').forEach(el=>{const c=cueById(el.dataset.qc),dpr=window.devicePixelRatio||1,w=Math.min(innerWidth-420,300),hh=24;el.style.width=w+'px';el.style.height=hh+'px';el.width=w*dpr;el.height=hh*dpr;const q=el.getContext('2d');q.setTransform(dpr,0,0,dpr,0,0);drawCue(q,4,hh/2,w-4,hh/2,c,8);});
   document.querySelectorAll('[data-qs]').forEach(b=>b.onclick=()=>{save.cue=b.dataset.qs;persist();closeDlg();drawCueIcon();drawPbar();if(!moving&&!isAI(turn)&&tMax)tMax=Math.max(tMax,cueOf(turn).time);});
@@ -4297,6 +4371,49 @@ lgBgDraw();
   };
   if($('menu').classList.contains('show'))try{drawArts(0);}catch(_){}
   const g2=$('xSetTop');if(g2)g2.onclick=()=>$('xSet').click();
+})();
+/* ---- ana menü v3: mor enerji arka planı, altın kanat süsleri, sandık penceresi, Ligler düğmesi ---- */
+(function menuV3(){
+  try{$('menu').style.setProperty('--flag',`url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 20'><rect width='30' height='20' rx='2' fill='%23e30a17'/><circle cx='11' cy='10' r='5' fill='%23fff'/><circle cx='12.3' cy='10' r='4' fill='%23e30a17'/><polygon points='14.90,10.00 16.59,9.41 16.63,7.62 17.71,9.05 19.42,8.53 18.40,10.00 19.42,11.47 17.71,10.95 16.63,12.38 16.59,10.59' fill='%23fff'/></svg>")`);}catch(_){}
+  const cv=document.createElement('canvas');cv.id='mBg3';const mb=$('mBg');if(mb)mb.after(cv);
+  function draw(){
+    if(!$('menu').classList.contains('show'))return;
+    const dpr=Math.min(1.5,window.devicePixelRatio||1),W=cv.width=Math.max(2,Math.round(innerWidth*dpr)),H=cv.height=Math.max(2,Math.round(innerHeight*dpr)),c=cv.getContext('2d');
+    const RG=(x,y,r,st)=>{const g=c.createRadialGradient(x,y,0,x,y,r);st.forEach(([o,k])=>g.addColorStop(o,k));return g;};
+    let g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,'#1c0634');g.addColorStop(.5,'#12041f');g.addColorStop(1,'#08020f');c.fillStyle=g;c.fillRect(0,0,W,H);
+    c.fillStyle=RG(W/2,H*.06,W*.55,[[0,'rgba(170,70,255,.55)'],[.45,'rgba(120,40,220,.18)'],[1,'rgba(90,20,180,0)']]);c.fillRect(0,0,W,H);
+    c.fillStyle=RG(W*.5,H*1.1,W*.6,[[0,'rgba(150,60,240,.35)'],[1,'rgba(150,60,240,0)']]);c.fillRect(0,0,W,H);
+    // enerji dalgaları
+    c.save();c.globalCompositeOperation='lighter';
+    for(let i=0;i<7;i++){const y0=H*(.25+i*.1),a=.07+.03*(i%2);c.strokeStyle=`rgba(${170+i*8},${70+i*6},255,${a})`;c.lineWidth=H*(.02+.012*(i%3));c.beginPath();c.moveTo(-W*.05,y0+H*.3);c.bezierCurveTo(W*.25,y0-H*.25,W*.6,y0+H*.35,W*1.05,y0-H*.2);c.stroke();}
+    // şimşekler (marka çevresi)
+    let sd=11;const R=()=>{sd=(sd*16807)%2147483647;return sd/2147483647;};
+    const bolt=(x,y,dx,dy,n,w)=>{c.beginPath();c.moveTo(x,y);let px=x,py=y;for(let k=1;k<=n;k++){px=x+dx*k/n+(R()-.5)*H*.035;py=y+dy*k/n+(R()-.5)*H*.035;c.lineTo(px,py);}
+      c.strokeStyle='rgba(200,120,255,.55)';c.lineWidth=w*3;c.shadowColor='#b060ff';c.shadowBlur=w*8;c.stroke();c.shadowBlur=0;c.strokeStyle='rgba(250,235,255,.9)';c.lineWidth=w;c.stroke();};
+    for(const sg of [-1,1])for(let i=0;i<4;i++){const x=W/2+sg*W*(.15+.02*i),y=H*(.07+.035*i);bolt(x,y,sg*W*(.13+.04*R()),H*(-.04+.1*R()),9,Math.max(1,H*.0022));}
+    c.restore();
+    // altın kanat süsleri (alt köşeler)
+    const wing=(sg)=>{const ox=sg<0?0:W,oy=H;c.save();c.translate(ox,oy);c.scale(sg<0?1:-1,1);
+      for(let i=0;i<9;i++){const L=H*(.22+.05*i),a=-Math.PI*(.06+i*.045);const gx=c.createLinearGradient(0,0,Math.cos(a)*L,Math.sin(a)*L);gx.addColorStop(0,'#fff0a8');gx.addColorStop(.5,'#e8a420');gx.addColorStop(1,'rgba(160,90,10,0)');
+        c.fillStyle=gx;c.beginPath();c.moveTo(0,0);c.quadraticCurveTo(Math.cos(a-.12)*L*.6,Math.sin(a-.12)*L*.6,Math.cos(a)*L,Math.sin(a)*L);c.quadraticCurveTo(Math.cos(a+.1)*L*.55,Math.sin(a+.1)*L*.55,H*.02,-H*.01);c.fill();}
+      c.restore();};
+    c.save();c.globalAlpha=.85;wing(-1);wing(1);c.restore();
+    // altın alt şerit
+    g=c.createLinearGradient(0,0,W,0);g.addColorStop(0,'rgba(255,200,80,0)');g.addColorStop(.2,'rgba(255,210,100,.7)');g.addColorStop(.5,'rgba(255,240,190,.9)');g.addColorStop(.8,'rgba(255,210,100,.7)');g.addColorStop(1,'rgba(255,200,80,0)');
+    c.strokeStyle=g;c.lineWidth=Math.max(1,H*.004);c.beginPath();c.moveTo(0,H*.985);c.quadraticCurveTo(W/2,H*.93,W,H*.985);c.stroke();
+    for(let i=0;i<60;i++){const x=W*R(),y=H*R(),r=H*(.002+.004*R());c.fillStyle=RG(x,y,r*3,[[0,'rgba(255,240,200,.9)'],[.4,'rgba(255,200,100,.4)'],[1,'rgba(255,190,80,0)']]);c.fillRect(x-r*3,y-r*3,r*6,r*6);}
+    c.fillStyle=RG(W/2,H/2,Math.max(W,H)*.75,[[.55,'rgba(4,1,8,0)'],[1,'rgba(4,1,8,.6)']]);c.fillRect(0,0,W,H);
+  }
+  {const _s=show;show=function(id){_s.apply(this,arguments);if(id==='menu')requestAnimationFrame(draw);};}
+  addEventListener('resize',()=>{setTimeout(draw,80);});draw();
+  // Ligler → 1'e 1 lig/masa seçimi
+  const lg=$('xLig');if(lg)lg.onclick=()=>$('m1v1').click();
+  // Sandıklar penceresi
+  const sp=$('slotPop'),ch=$('xChest');
+  if(ch)ch.onclick=()=>{try{renderSlots();}catch(_){}sp.classList.add('show');};
+  if(sp){$('spX').onclick=()=>sp.classList.remove('show');sp.addEventListener('click',e=>{if(e.target===sp)sp.classList.remove('show');});}
+  const upd=()=>{const e=$('dChest');if(!e)return;const n=document.querySelectorAll('#slots .slot.ready').length;e.style.display=n?'block':'none';e.textContent=n;};
+  setInterval(upd,1000);upd();
 })();
 </script>
 </body>
