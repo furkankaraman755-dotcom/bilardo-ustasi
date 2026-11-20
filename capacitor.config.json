@@ -1,7 +1,7 @@
 {
   "appId": "com.bilardoustasi.oyun",
-  "appName": "Bilardo Ustası",
+  "appName": "Blackball Arena",
   "webDir": "www",
-  "android": { "backgroundColor": "#0c1411", "adjustMarginsForEdgeToEdge": "disable" },
+  "android": { "backgroundColor": "#0b0414", "adjustMarginsForEdgeToEdge": "disable" },
   "plugins": { "SystemBars": { "insetsHandling": "disable", "hidden": true } }
 }
