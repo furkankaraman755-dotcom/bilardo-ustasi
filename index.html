@@ -454,6 +454,9 @@ button:disabled{opacity:.55;filter:saturate(.6)}
 .cqCard .ic{font-size:34px}.cqCard b{font-size:18px;color:#fff}.cqCard small{font-size:13px;color:#d8ccf0}.cqCard .xpb{width:80%!important;height:8px!important;border-radius:4px}.cqCard .xpb i{background:linear-gradient(90deg,#c88a1a,#ffd966)!important}
 @media (max-height:420px){.cqTop{height:50px}#cues .cqRb{width:42px;height:42px}.cqTitle h2{font-size:26px!important}.cqTabs button{height:34px!important;font-size:14px!important}.cqFilt{margin-top:6px}#cues select,#cues .cqS input,#cues #cqDir{height:32px}}
 @media (max-width:860px){.cqPw span{font-size:11px}.cqPw .xpb{width:118px!important}.cqW{display:none}#cues .ca{width:120px}#cues .cst span{font-size:11px}}
+#game .fineW{position:absolute;right:calc(var(--u)*138);top:calc(var(--u)*330);width:calc(var(--u)*80);height:calc(var(--u)*520);z-index:6;transition:opacity .16s ease,transform .16s ease}
+#game .fineW canvas{width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
+#game .fineW.pbOff{opacity:0;transform:translateX(26px) scale(.96);pointer-events:none}
 /* ================= ANA MENÜ: özgün tasarım ================= */
 #menu{--p:calc(min(1vh,.4663vw)/8.56);padding:0!important;gap:0!important;overflow:hidden!important;background:#07030d!important;font-family:Roboto,'Segoe UI',system-ui,Arial,sans-serif!important}
 #menu *{font-family:inherit}
@@ -758,7 +761,7 @@ button:disabled{opacity:.55;filter:saturate(.6)}
   <div id="mid">
     <div class="side lft"><div class="lbl">Güç<br><b id="pv">0%</b></div><canvas id="pbar"></canvas></div>
     <div class="tblwrap"><canvas id="c"></canvas><div id="toast"></div><canvas id="tube"></canvas><canvas id="tray" style="display:none"></canvas></div>
-    <div class="side rgt"><button id="cueBtn" class="cueb" aria-label="İstaka seç"><canvas id="cueIc"></canvas></button></div>
+    <div class="fineW" id="fineW"><canvas id="fine" aria-label="İnce nişan ayarı"></canvas></div><div class="side rgt"><button id="cueBtn" class="cueb" aria-label="İstaka seç"><canvas id="cueIc"></canvas></button></div>
     <div id="spinBig"><div class="sbx"><div id="sbName" style="text-align:center;min-height:44px"></div><canvas id="spinL"></canvas><div class="sbt" style="font-size:13px">Falso gücü <span id="sbBars"></span></div><div class="lbl">Orta: durdurma · üst: takip · alt: geri çekme · yanlar: sol/sağ falso · boş yere dokun: kapat</div></div></div>
   </div>
 </div>
@@ -782,7 +785,7 @@ button:disabled{opacity:.55;filter:saturate(.6)}
    SMOOTHING      : Ekrandaki istakanın hedef açıya yumuşak yaklaşması (0 = anında, 0.9 = çok yumuşak).
    MIN_AIM_RADIUS : Parmak beyaz topa bu mesafeden (masa birimi) yakınsa açı hesabında bu yarıçap kullanılır → merkezde titreme/ters dönme olmaz.
    ================================================================= */
-const SENSITIVITY=0.28, FAST_GAIN=1.0, SPEED_SLOW=0.12, SPEED_FAST=1.1, SMOOTHING=0.45, MIN_AIM_RADIUS=60;
+const SENSITIVITY=0.28, FAST_GAIN=1.0, SPEED_SLOW=0.12, SPEED_FAST=1.1, SMOOTHING=0, MIN_AIM_RADIUS=60;
 /* ================= VERİLER ================= */
 const CUES=[ // Standart istekalar (altınla alınır). st = [Güç, Hedef Alma, Falso, Süre] (0-10)
  {id:'basic',    name:'Başlangıç', cat:'std',price:0,     st:[0,0,2,2],shaft:'#d9b77d',butt:'#5a3215',ring:'#2a1a0c'},
@@ -1602,7 +1605,7 @@ $('mMini').onclick=()=>{
 $('sback').onclick=()=>show('menu');
 
 /* ================= OYUN SABİTLERİ ================= */
-const TW=760,TH=380,RAIL=42,CW=15.6,R=11.75,W=TW+2*RAIL,H=TH+2*RAIL,MAXV=20;
+const TW=760,TH=380,RAIL=42,CW=15.6,R=11.75,W=TW+2*RAIL,H=TH+2*RAIL,MAXV=23;
 const cv=$('c');let ctx=cv.getContext('2d');
 let scale=1,dprK=1;
 /* ---- cep geometrisi: köşe ağzı ≈2,3 top, orta ağzı ≈1,7 top; ağızdan içeri daralan çene, arkasında yuvarlak çukur ---- */
@@ -2829,7 +2832,7 @@ let pbShown=null;
 function syncPbar(forceHide){
   const sl=document.querySelector('.side.lft');if(!sl)return;
   const want=!forceHide&&$('game').classList.contains('show')&&humanTurn();
-  if(want===pbShown)return;pbShown=want;sl.classList.toggle('pbOff',!want);
+  if(want===pbShown)return;pbShown=want;sl.classList.toggle('pbOff',!want);const fw=$('fineW');if(fw){fw.classList.toggle('pbOff',!want);if(want)requestAnimationFrame(drawFine);}
   if(!want){pDrag=false;if(power){power=0;}drawPbar();}else{power=0;drawPbar();}
 }
 /* ================= GİRİŞ ================= */
@@ -2840,7 +2843,7 @@ cv.addEventListener('pointerdown',e=>{
   const p=pt(e);
   if(ballInHand&&Math.hypot(p.x-cue.x,p.y-cue.y)<R*4){dragCue=true;return;}
   if(callRule()&&shots>0){const k=POCKETS.findIndex(q=>Math.hypot(q.x-p.x,q.y-p.y)<q.r+16);if(k>=0){callPk=k;callManual=true;try{play('click',.4,1.5);}catch(_){}return;}}
-  aiming=true;aimStart={x:p.x,y:p.y,px:p.x,py:p.y,t:performance.now(),sx:e.clientX,sy:e.clientY,moved:false};
+  aiming=true;aimStart={x:p.x,y:p.y,px:p.x,py:p.y,t:performance.now(),sx:e.clientX,sy:e.clientY,moved:false,h:[]};
 });
 cv.addEventListener('pointermove',e=>{
   if(!humanTurn())return;const p=pt(e);
@@ -2855,18 +2858,22 @@ cv.addEventListener('pointermove',e=>{
       const rx=A.px-cue.x,ry=A.py-cue.y,mx=p.x-A.px,my=p.y-A.py,r2=Math.max(rx*rx+ry*ry,MIN_AIM_RADIUS*MIN_AIM_RADIUS);
       const da=(rx*my-ry*mx)/r2;
       // ekran hızına göre kazanç: yavaş = mikro ayar, hızlı = geniş açı
-      const v=Math.hypot(e.clientX-A.sx,e.clientY-A.sy)/Math.max(1,now-A.t),k=Math.min(1,Math.max(0,(v-SPEED_SLOW)/(SPEED_FAST-SPEED_SLOW)));
+      const v0=Math.hypot(e.clientX-A.sx,e.clientY-A.sy)/Math.max(1,now-A.t);A.v=A.v==null?v0:A.v+(v0-A.v)*.3;const v=A.v,k=Math.min(1,Math.max(0,(v-SPEED_SLOW)/(SPEED_FAST-SPEED_SLOW)));
       const SEN=SENSITIVITY*((save.set&&save.set.sens)||1);aim=Math.atan2(Math.sin(aim+da*(SEN+(FAST_GAIN-SEN)*k)),Math.cos(aim+da*(SEN+(FAST_GAIN-SEN)*k)));
     }
-    A.px=p.x;A.py=p.y;A.sx=e.clientX;A.sy=e.clientY;A.t=now;
+    A.px=p.x;A.py=p.y;A.sx=e.clientX;A.sy=e.clientY;A.t=now;A.h.push([now,aim]);if(A.h.length>12)A.h.shift();
   }
 });
 let aimStart=null;
-const endP=e=>{if(aiming&&aimStart&&!aimStart.moved)setAim(aimStart);dragCue=false;aiming=false;};
+const endP=e=>{
+  if(aiming&&aimStart){const A=aimStart;
+    if(!A.moved)setAim(A);
+    else{ // parmak kalkarken oluşan küçük kayma geri alınır: son ~70 ms içindeki mikro hareket yok sayılır
+      const now=performance.now(),old=A.h.filter(h=>now-h[0]>=70).pop();if(old&&Math.abs(angDiff(aim,old[1]))<.012)aim=old[1];}}
+  dragCue=false;aiming=false;};
 cv.addEventListener('pointerup',endP);cv.addEventListener('pointercancel',endP);
-function setAim(p){ // bir topa dokununca istaka o topa döner; sonra parmakla ince ayar yapılır
-  let t=p;for(const b of balls){if(b===cue||b.pot)continue;if(Math.hypot(b.x-p.x,b.y-p.y)<R*1.6){t=b;break;}}
-  const dx=t.x-cue.x,dy=t.y-cue.y;if(dx*dx+dy*dy>(R*1.5)**2)aim=Math.atan2(dy,dx);} // topun çok yakınına dokunmak açıyı bozmaz
+function setAim(p){ // dokunulan noktaya istaka döner (topa otomatik yapışma YOK — tamamen oyuncunun seçtiği nokta)
+  const dx=p.x-cue.x,dy=p.y-cue.y;if(dx*dx+dy*dy>(R*2.5)**2)aim=Math.atan2(dy,dx);} // topun çok yakınına dokunmak açıyı bozmaz
 function hold(id,d){
   const el=$(id);let t=null,t2=null;
   const stop=()=>{clearTimeout(t);clearInterval(t2);};
@@ -2894,9 +2901,27 @@ function drawPbar(){ // RGB güç çubuğu: içinde istaka çekildikçe aşağı
   $('pv').textContent=Math.round(p*100)+'%';
 }
 pb.addEventListener('pointerdown',e=>{if(!humanTurn())return;ensureAudio();pb.setPointerCapture(e.pointerId);pDrag=true;pStart=e.clientY;power=0;drawPbar();});
-pb.addEventListener('pointermove',e=>{if(!pDrag)return;const h=pb.getBoundingClientRect().height;power=Math.max(0,Math.min(100,(e.clientY-pStart)/(h*.8)*100));drawPbar();});
+pb.addEventListener('pointermove',e=>{if(!pDrag)return;const h=pb.getBoundingClientRect().height,old=power;power=Math.max(0,Math.min(100,(e.clientY-pStart)/(h*.8)*100));if(Math.floor(old/25)!==Math.floor(power/25)){try{navigator.vibrate&&navigator.vibrate(power>=99?18:7);}catch(_){}}drawPbar();});
 const pEnd=e=>{if(!pDrag)return;pDrag=false;if(power>=3&&humanTurn())shoot();else{power=0;drawPbar();}};
 pb.addEventListener('pointerup',pEnd);pb.addEventListener('pointercancel',()=>{pDrag=false;power=0;drawPbar();});
+
+/* ---- ince nişan tekerleği: milimetrik yön ayarı (sağ kenar) ---- */
+const FINE_K=0.00075; // ekran pikseli başına dönüş (radyan) ≈ 0.043°
+let fineOff=0,fDrag=false,fY=0;const fineEl=$('fine');
+function drawFine(){const c=fineEl.getContext('2d'),dpr=window.devicePixelRatio||1,r=fineEl.getBoundingClientRect();if(!r.width)return;
+  const w=Math.round(r.width*dpr),h=Math.round(r.height*dpr);if(fineEl.width!==w||fineEl.height!==h){fineEl.width=w;fineEl.height=h;}
+  c.setTransform(dpr,0,0,dpr,0,0);const W2=r.width,H2=r.height,rad=W2*.45;c.clearRect(0,0,W2,H2);
+  c.fillStyle='#120722';rrp(c,1,1,W2-2,H2-2,rad);c.fill();c.strokeStyle='#f0c860';c.lineWidth=1.5;c.stroke();
+  c.save();rrp(c,5,5,W2-10,H2-10,rad-4);c.clip();
+  const g=c.createLinearGradient(0,0,0,H2);g.addColorStop(0,'#05020a');g.addColorStop(.22,'#3a1a5e');g.addColorStop(.5,'#6a3aa8');g.addColorStop(.78,'#3a1a5e');g.addColorStop(1,'#05020a');c.fillStyle=g;c.fillRect(0,0,W2,H2);
+  const sp=9;for(let y=((fineOff%sp)+sp)%sp-sp;y<H2+sp;y+=sp){const t=Math.abs(y/H2-.5)*2,a=Math.max(0,1-t*t);c.fillStyle=`rgba(255,230,160,${.55*a})`;c.fillRect(7,y,W2-14,1.4*a+.4);c.fillStyle=`rgba(0,0,0,${.6*a})`;c.fillRect(7,y+1.6,W2-14,1.2);}
+  c.restore();
+  c.fillStyle='#f0c860';for(const [y,d] of [[11,-1],[H2-11,1]]){c.beginPath();c.moveTo(W2/2-6,y-3*d);c.lineTo(W2/2+6,y-3*d);c.lineTo(W2/2,y+3*d);c.closePath();c.fill();}}
+fineEl.addEventListener('pointerdown',e=>{if(!humanTurn())return;e.preventDefault();ensureAudio();fineEl.setPointerCapture(e.pointerId);fDrag=true;fY=e.clientY;});
+fineEl.addEventListener('pointermove',e=>{if(!fDrag||!humanTurn())return;const ev=e.getCoalescedEvents?e.getCoalescedEvents():[e];
+  for(const q of (ev.length?ev:[e])){const dy=q.clientY-fY;fY=q.clientY;if(!dy)continue;aim=Math.atan2(Math.sin(aim+dy*FINE_K),Math.cos(aim+dy*FINE_K));aimDraw=aim;fineOff+=dy;}
+  drawFine();});
+const fEnd=()=>{fDrag=false;};fineEl.addEventListener('pointerup',fEnd);fineEl.addEventListener('pointercancel',fEnd);window.addEventListener('resize',()=>setTimeout(drawFine,80));
 /* ---- falso topu ---- */
 /* ---- cebe süzülme animasyonu ---- */
 let sinks=[],tube=[];const SINK_MS=460;
