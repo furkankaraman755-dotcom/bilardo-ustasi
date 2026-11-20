@@ -38,6 +38,21 @@ jobs:
           npx cap add android
           npx cap sync android
 
+      - name: Uygulama simgesi ve siyah açılış ekranı
+        run: |
+          R=android/app/src/main/res
+          cp -r native/res/* $R/
+          for f in $(find $R -name 'splash.png'); do cp native/splash_black.png "$f"; done
+          python3 - <<'PY'
+          import re
+          p='android/app/src/main/res/values/styles.xml';s=open(p).read()
+          if 'windowSplashScreenBackground' not in s:
+              s2=re.sub(r'(<style name="AppTheme\.NoActionBarLaunch" parent="Theme\.SplashScreen"[^>]*>)',r'\1\n        <item name="windowSplashScreenBackground">#000000</item>',s)
+              open(p,'w').write(s2);print('splash arka plan siyah' if s2!=s else 'stil eslesmedi')
+          PY
+          cat $R/values/styles.xml
+          ls $R/mipmap-anydpi-v26
+
       - name: Yatay ekran kilidi
         run: |
           sed -i 's/MainActivity"/MainActivity" android:screenOrientation="sensorLandscape"/' android/app/src/main/AndroidManifest.xml
