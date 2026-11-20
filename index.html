@@ -1624,7 +1624,9 @@ function segHit(b,sg){
   if(d2>=R*R||d2<1e-9)return;
   const d=Math.sqrt(d2),nx=dx/d,ny=dy/d;b.x=px+nx*R;b.y=py+ny*R;
   const vn=b.vx*nx+b.vy*ny;if(vn>=0)return;
-  side(b);const e=cushE(vn);b.vx-=(1+e)*vn*nx;b.vy-=(1+e)*vn*ny;sideKick(b);snd(-vn,600,.05);
+  side(b);const e=cushE(vn);b.vx-=(1+e)*vn*nx;b.vy-=(1+e)*vn*ny;
+  {const tx=-ny,ty=nx,vt=b.vx*tx+b.vy*ty,lo=Math.min(Math.abs(vt),-vn*.06)*Math.sign(vt);b.vx-=lo*tx;b.vy-=lo*ty;} // bant boyunca kayma sürtünmesi
+  sideKick(b);snd(-vn,600,.05);
 }
 // çukurun ağzına iyice yaklaşan top kenarda asılı kalmaz, içeri süzülür
 function pocketPull(b){if(Math.hypot(b.vx,b.vy)>1.2)return null;for(const p of POCKETS){const dx=p.x-b.x,dy=p.y-b.y,d=Math.hypot(dx,dy);if(d<p.r+5&&d>.01)return {x:dx/d,y:dy/d};}return null;} // sadece dudağa yavaşça gelen topu içeri alır
@@ -1796,7 +1798,7 @@ const GEXP=1.15,pw2v=p=>MAXV*Math.pow(Math.max(0,p)/100,GEXP),v2pw=v=>100*Math.p
 const ROLL_RES=0.0065,LIN_DAMP=0.0045,STOP_V=0.05;
 const decel=v=>Math.max(0,v-(ROLL_RES+v*LIN_DAMP));
 // bant sekmesi: sert gelen top daha güçlü seker
-const cushE=v=>Math.min(.9,.76+Math.abs(v)*.008); // bant: yavaş topta da canlı geri dönüş
+const cushE=v=>Math.max(.74,Math.min(.9,.91-Math.abs(v)*.0075)); // gerçek bant: yavaş topta canlı, sert vuruşta daha çok enerji kaybı
 let potOrder=[];
 // falso: yan falso bant dönüşünü, üst/alt falso ilk çarpışmadan sonrasını etkiler
 let inDir=null;
@@ -1844,16 +1846,21 @@ function physStep(f){
     const pl=pocketPull(b);if(pl){b.vx+=pl.x*.02*f;b.vy+=pl.y*.02*f;}
     if(b.x<-3*R||b.x>TW+3*R||b.y<-3*R||b.y>TH+3*R)pot(b);
   }
+  // top-top çarpışması: kümelerde (açış, yapışık toplar) iç içe geçme kalmasın diye 3 geçişe kadar çözülür
+  for(let pass=0;pass<3;pass++){let hit=false;
   for(let i=0;i<balls.length;i++){const a=balls[i];if(a.pot)continue;
     for(let j=i+1;j<balls.length;j++){const b=balls[j];if(b.pot)continue;
       const dx=b.x-a.x,dy=b.y-a.y,d2=dx*dx+dy*dy;
-      if(d2<4*R*R&&d2>1e-6){
+      if(d2<4*R*R-1e-6&&d2>1e-6){hit=true;
         const d=Math.sqrt(d2),nx=dx/d,ny=dy/d,ov=(2*R-d)/2;
         a.x-=nx*ov;a.y-=ny*ov;b.x+=nx*ov;b.y+=ny*ov;
         const rel=(a.vx-b.vx)*nx+(a.vy-b.vy)*ny;
         if(rel>0){
           const cb=a===cue?a:b===cue?b:null,sp0=cb?Math.hypot(cb.vx,cb.vy):0;
           const j2=rel*.982;a.vx-=j2*nx;a.vy-=j2*ny;b.vx+=j2*nx;b.vy+=j2*ny;
+          // kesme atışında temas sürtünmesi: hedef top hafifçe kesme yönüne "fırlar" (gerçek bilardodaki throw, ~1-3°)
+          const tx=-ny,ty=nx,vt=(a.vx-b.vx)*tx+(a.vy-b.vy)*ty,jt=Math.sign(vt)*Math.min(.055*j2,Math.abs(vt)/7);
+          if(jt){a.vx-=jt*tx;a.vy-=jt*ty;b.vx+=jt*tx;b.vy+=jt*ty;}
           if(cb&&shotSpin&&!shotSpin.used){shotSpin.used=1;spinContact(cb,sp0);}
           if(firstHit===null){if(a.id===0)firstHit=b.id;else if(b.id===0)firstHit=a.id;}
           snd(rel,1900,.05);
@@ -1861,6 +1868,7 @@ function physStep(f){
       }
     }
   }
+  if(!hit)break;}
 }
 function friction(){
   let any=false;
