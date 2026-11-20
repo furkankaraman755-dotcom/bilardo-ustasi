@@ -454,7 +454,7 @@ button:disabled{opacity:.55;filter:saturate(.6)}
 .cqCard .ic{font-size:34px}.cqCard b{font-size:18px;color:#fff}.cqCard small{font-size:13px;color:#d8ccf0}.cqCard .xpb{width:80%!important;height:8px!important;border-radius:4px}.cqCard .xpb i{background:linear-gradient(90deg,#c88a1a,#ffd966)!important}
 @media (max-height:420px){.cqTop{height:50px}#cues .cqRb{width:42px;height:42px}.cqTitle h2{font-size:26px!important}.cqTabs button{height:34px!important;font-size:14px!important}.cqFilt{margin-top:6px}#cues select,#cues .cqS input,#cues #cqDir{height:32px}}
 @media (max-width:860px){.cqPw span{font-size:11px}.cqPw .xpb{width:118px!important}.cqW{display:none}#cues .ca{width:120px}#cues .cst span{font-size:11px}}
-#game .fineW{position:absolute;right:calc(var(--u)*138);top:calc(var(--u)*330);width:calc(var(--u)*80);height:calc(var(--u)*520);z-index:6;transition:opacity .16s ease,transform .16s ease}
+#game .fineW{position:absolute;right:calc(var(--u)*138);top:calc(var(--u)*378);width:calc(var(--u)*80);height:calc(var(--u)*470);z-index:6;transition:opacity .16s ease,transform .16s ease}
 #game .fineW canvas{width:100%;height:100%;display:block;touch-action:none;cursor:ns-resize}
 #game .fineW.pbOff{opacity:0;transform:translateX(26px) scale(.96);pointer-events:none}
 #cues .cqArt.img{height:auto;min-height:46px}#cues .cqArt.img img{width:100%;height:auto;max-height:none;max-width:none}
@@ -501,6 +501,12 @@ button:disabled{opacity:.55;filter:saturate(.6)}
 @media (max-width:860px){#cues .cr{grid-template-columns:130px minmax(0,1fr) auto 112px!important}#cues .cn{font-size:16px!important}.cqSub{font-size:11px}#cues .ca{width:112px!important}#cues .ca button{font-size:18px!important}}
 #cues .cqArt{position:relative}#cues .cqArt .cqLv{position:absolute;right:0;top:-13px;transform:scale(.85);transform-origin:right top;z-index:2;background:rgba(4,10,20,.75);padding:1px 6px;border-radius:8px}
 #cues .cr{min-height:70px}
+#game .fineW .aimDeg{position:absolute;left:50%;top:calc(var(--u)*-112);transform:translateX(-50%);white-space:nowrap;font:800 calc(var(--u)*26) Roboto,Arial,sans-serif;color:#ffe9a0;text-shadow:0 1px 3px #000;letter-spacing:.3px}
+#game .fineW .precBtn{position:absolute;left:50%;top:calc(var(--u)*-76);transform:translateX(-50%);width:calc(var(--u)*118);height:calc(var(--u)*62);padding:0!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;
+ border-radius:calc(var(--u)*16)!important;font-size:calc(var(--u)*26);line-height:1;color:#d8ccf0!important;background:linear-gradient(180deg,#2a1048,#120722)!important;border:1.5px solid rgba(240,200,110,.55)!important;box-shadow:0 2px 6px rgba(0,0,0,.6)!important}
+#game .fineW .precBtn span{font:900 calc(var(--u)*16) Roboto,Arial,sans-serif;letter-spacing:1px}
+#game .fineW .precBtn.on{color:#2a1402!important;background:linear-gradient(180deg,#fff3b8,#ffd23f 50%,#e09a10)!important;border-color:#fff2b0!important;box-shadow:0 0 12px rgba(255,200,60,.7)!important}
+#game .fineW.prec canvas{filter:drop-shadow(0 0 6px rgba(255,200,60,.65))}
 /* ================= ANA MENÜ: özgün tasarım ================= */
 #menu{--p:calc(min(1vh,.4663vw)/8.56);padding:0!important;gap:0!important;overflow:hidden!important;background:#07030d!important;font-family:Roboto,'Segoe UI',system-ui,Arial,sans-serif!important}
 #menu *{font-family:inherit}
@@ -805,7 +811,7 @@ button:disabled{opacity:.55;filter:saturate(.6)}
   <div id="mid">
     <div class="side lft"><div class="lbl">Güç<br><b id="pv">0%</b></div><canvas id="pbar"></canvas></div>
     <div class="tblwrap"><canvas id="c"></canvas><div id="toast"></div><canvas id="tube"></canvas><canvas id="tray" style="display:none"></canvas></div>
-    <div class="fineW" id="fineW"><canvas id="fine" aria-label="İnce nişan ayarı"></canvas></div><div class="side rgt"><button id="cueBtn" class="cueb" aria-label="İstaka seç"><canvas id="cueIc"></canvas></button></div>
+    <div class="fineW" id="fineW"><b class="aimDeg" id="aimDeg">0.00°</b><button class="precBtn" id="precBtn" aria-label="Hassas nişan modu">🎯<span>HASSAS</span></button><canvas id="fine" aria-label="İnce nişan ayarı"></canvas></div><div class="side rgt"><button id="cueBtn" class="cueb" aria-label="İstaka seç"><canvas id="cueIc"></canvas></button></div>
     <div id="spinBig"><div class="sbx"><div id="sbName" style="text-align:center;min-height:44px"></div><canvas id="spinL"></canvas><div class="sbt" style="font-size:13px">Falso gücü <span id="sbBars"></span></div><div class="lbl">Orta: durdurma · üst: takip · alt: geri çekme · yanlar: sol/sağ falso · boş yere dokun: kapat</div></div></div>
   </div>
 </div>
@@ -829,7 +835,7 @@ button:disabled{opacity:.55;filter:saturate(.6)}
    SMOOTHING      : Ekrandaki istakanın hedef açıya yumuşak yaklaşması (0 = anında, 0.9 = çok yumuşak).
    MIN_AIM_RADIUS : Parmak beyaz topa bu mesafeden (masa birimi) yakınsa açı hesabında bu yarıçap kullanılır → merkezde titreme/ters dönme olmaz.
    ================================================================= */
-const SENSITIVITY=0.28, FAST_GAIN=1.0, SPEED_SLOW=0.12, SPEED_FAST=1.1, SMOOTHING=0, MIN_AIM_RADIUS=60;
+const SENSITIVITY=0.28, FAST_GAIN=1.0, SPEED_SLOW=0.12, SPEED_FAST=1.1, SMOOTHING=0, MIN_AIM_RADIUS=60, PREC_GAIN=0.3; // PREC_GAIN: hassas modda masa sürüklemesinin kazancı
 /* ================= VERİLER ================= */
 const CUES=[ // Standart istekalar (altınla alınır). st = [Güç, Hedef Alma, Falso, Süre] (0-10)
  {id:'basic',    name:'Başlangıç', cat:'std',price:0,     st:[0,0,2,2],shaft:'#d9b77d',butt:'#5a3215',ring:'#2a1a0c'},
@@ -2791,9 +2797,29 @@ function predict(a){
   if(dy>1e-6)tw=Math.min(tw,(TH-R-cue.y)/dy);if(dy<-1e-6)tw=Math.min(tw,(R-cue.y)/dy);
   return tb&&best<tw?{t:best,b:tb}:{t:tw,b:null};
 }
+/* ---- İSTAKA MAX nişan izi: beyaz topun yolu bantlardan sekerek ilk topa kadar izlenir; sekme sayısı ve çizgi boyu istakanın Hedef Alma değerine bağlı ---- */
+function rayBall(x,y,dx,dy,skip){let best=Infinity,tb=null;for(const b of balls){if(b.pot||b===skip||b===cue)continue;const ox=b.x-x,oy=b.y-y,t=ox*dx+oy*dy;if(t<=0)continue;const p2=ox*ox+oy*oy-t*t,rr=4*R*R;if(p2>rr)continue;const tt=t-Math.sqrt(rr-p2);if(tt<best){best=tt;tb=b;}}return {t:best,b:tb};}
+function rayWall(x,y,dx,dy){let t=Infinity,ax=0;if(dx>1e-9){const q=(TW-R-x)/dx;if(q<t){t=q;ax=1;}}if(dx<-1e-9){const q=(R-x)/dx;if(q<t){t=q;ax=1;}}if(dy>1e-9){const q=(TH-R-y)/dy;if(q<t){t=q;ax=2;}}if(dy<-1e-9){const q=(R-y)/dy;if(q<t){t=q;ax=2;}}return {t:Math.max(0,t),ax};}
+const nearPocket=(x,y)=>POCKETS.find(p=>Math.hypot(p.x-x,p.y-y)<p.r+R*.85)||null;
+function tracePath(x,y,dx,dy,bounces,extra,skip,firstFull){ // döner {pts,b,gx,gy,pk,bn}
+  const pts=[[x,y]];let left=firstFull?Infinity:extra,bn=0;
+  for(let k=0;;k++){
+    const hb=rayBall(x,y,dx,dy,skip),hw=rayWall(x,y,dx,dy);
+    if(hb.b&&hb.t<=hw.t&&hb.t<=left){x+=dx*hb.t;y+=dy*hb.t;pts.push([x,y]);return {pts,b:hb.b,gx:x,gy:y,bn};}
+    const t=Math.min(hw.t,left);x+=dx*t;y+=dy*t;pts.push([x,y]);
+    left-=t;
+    if(t<hw.t-1e-6)return {pts,b:null,gx:x,gy:y,bn}; // çizgi boyu bitti
+    const pk=nearPocket(x,y);if(pk)return {pts,b:null,gx:x,gy:y,pk,bn};
+    if(k>=bounces)return {pts,b:null,gx:x,gy:y,bn};
+    if(hw.ax===1)dx=-dx;else dy=-dy;bn++;if(k===0&&firstFull)left=extra;
+  }
+}
+function aimMax(C){const s=cueSt(C)[1];return {s,bounce:s>=SMAX-2?2:s>=6?1:0,extra:90+s*26,tgtB:s>=SMAX-2?1:0};}
+function polyline(pts,fn){ctx.beginPath();ctx.moveTo(pts[0][0]+RAIL,pts[0][1]+RAIL);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0]+RAIL,pts[i][1]+RAIL);fn();}
 function drawAim(){
-  const C=cueOf(turn),dx=Math.cos(aimDraw),dy=Math.sin(aimDraw),cx=cue.x+RAIL,cy=cue.y+RAIL,pr=predict(aimDraw);
-  const gx=cx+dx*pr.t,gy=cy+dy*pr.t;
+  const C=cueOf(turn),dx=Math.cos(aimDraw),dy=Math.sin(aimDraw),cx=cue.x+RAIL,cy=cue.y+RAIL,AM=aimMax(cueById(save.cue));
+  const tp=tracePath(cue.x,cue.y,dx,dy,AM.bounce,AM.extra,null,true),pr={b:tp.b};
+  const gx=tp.gx+RAIL,gy=tp.gy+RAIL,adx=tp.pts.length>2?(tp.gx-tp.pts[tp.pts.length-2][0]):dx,ady=tp.pts.length>2?(tp.gy-tp.pts[tp.pts.length-2][1]):dy,al=Math.hypot(adx,ady)||1,ldx=adx/al,ldy=ady/al;
   if(!isAI(turn)){ // beyaz topun çevresinde neon hedef halkaları + hedef belirteci
     const tm=performance.now()/1000,a0=aimDraw;
     ctx.save();ctx.shadowBlur=0;ctx.lineCap='round';
@@ -2811,24 +2837,29 @@ function drawAim(){
     // gökkuşağı neon nişan çizgisi: kırmızı→turuncu→sarı→yeşil→mavi→mor, ileri doğru hafifçe saydamlaşır
     // nişan çizgisi istakanın RGB ışığıyla aynı renkte ve aynı anda akar
     // klasik nişan çizgisi: ince beyaz, ileriye doğru saydamlaşır, hafif koyu kenar
-    const x0=cx+dx*R,y0=cy+dy*R,HUE=45;
-    const rb=(a,k)=>{const g=ctx.createLinearGradient(x0,y0,gx,gy);g.addColorStop(0,`rgba(255,250,235,${a})`);g.addColorStop(1,`rgba(255,250,235,${a*(1-k)})`);return g;};
-    ctx.strokeStyle='rgba(0,10,30,.35)';ctx.lineWidth=3.4;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(gx,gy);ctx.stroke();
-    ctx.shadowColor='rgba(0,0,0,0)';ctx.shadowBlur=0;
-    ctx.strokeStyle=rb(.12,.6);ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(gx,gy);ctx.stroke();   // neon parıltı
-    ctx.strokeStyle=rb(.95,.65);ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(gx,gy);ctx.stroke();    // renkli çekirdek
+    ctx.lineJoin='round';
+    // her parça ayrı: ilk parça en parlak, bant sonrası parçalar biraz daha soluk
+    for(let i=1;i<tp.pts.length;i++){const a=i===1?[cue.x+dx*R,cue.y+dy*R]:tp.pts[i-1],b=tp.pts[i],k=i===1?1:i===2?.72:.5,x0=a[0]+RAIL,y0=a[1]+RAIL,x1=b[0]+RAIL,y1=b[1]+RAIL;
+      const g=ctx.createLinearGradient(x0,y0,x1,y1);g.addColorStop(0,`rgba(255,250,235,${.95*k})`);g.addColorStop(1,`rgba(255,250,235,${.62*k})`);
+      ctx.strokeStyle='rgba(0,10,30,.35)';ctx.lineWidth=3.4;ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x1,y1);ctx.stroke();
+      ctx.strokeStyle=`rgba(255,250,235,${.1*k})`;ctx.lineWidth=4;ctx.stroke();
+      ctx.strokeStyle=g;ctx.lineWidth=1.6;ctx.stroke();
+      if(i<tp.pts.length-1){ctx.fillStyle='rgba(255,233,160,.95)';ctx.beginPath();ctx.arc(x1,y1,2.4,0,7);ctx.fill();}} // bant temas noktası
+    if(tp.pk){ctx.strokeStyle='rgba(255,233,160,.8)';ctx.lineWidth=1.6;ctx.setLineDash([4,3]);ctx.beginPath();ctx.arc(tp.pk.x+RAIL,tp.pk.y+RAIL,tp.pk.r*.8,0,7);ctx.stroke();ctx.setLineDash([]);}
     ctx.shadowBlur=0;
     ctx.strokeStyle='rgba(0,10,30,.4)';ctx.lineWidth=2.6;ctx.beginPath();ctx.arc(gx,gy,R,0,7);ctx.stroke();
     ctx.shadowBlur=0;ctx.strokeStyle='rgba(255,246,220,.9)';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(gx,gy,R,0,7);ctx.stroke();ctx.shadowBlur=0;
     if(pr.b){
-      const bx=pr.b.x+RAIL,by=pr.b.y+RAIL,nx=(bx-gx)/(2*R),ny=(by-gy)/(2*R);
+      const bx=pr.b.x+RAIL,by=pr.b.y+RAIL,nx=(bx-gx)/(2*R),ny=(by-gy)/(2*R),dx=ldx,dy=ldy;
       if(callRule()&&shots>0&&!callManual){let bk=null,bc=.8;POCKETS.forEach((q,k)=>{const qx=q.x-pr.b.x,qy=q.y-pr.b.y,ql=Math.hypot(qx,qy),c2=(qx*nx+qy*ny)/ql;if(c2>bc){bc=c2;bk=k;}});callPk=bk;}
       const g=groups[turn],lt=legalTargets(turn),ok=G()==='9'||G()==='practice'||G()==='lucky'?(G()!=='9'||lt[0]===pr.b):(!g||groupOf(pr.b.id)===(remaining(g)?g:'eight'))&&(g||pr.b.id!==8);
       ctx.strokeStyle=ok?'rgba(255,246,220,.85)':'rgba(255,80,80,.85)';ctx.lineWidth=1.2;if(!ok){ctx.save();ctx.strokeStyle='#ff4040';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(gx-6,gy-6);ctx.lineTo(gx+6,gy+6);ctx.moveTo(gx+6,gy-6);ctx.lineTo(gx-6,gy+6);ctx.stroke();ctx.restore();ctx.strokeStyle='rgba(255,80,80,.95)';}
-      ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(bx+nx*60*C.aim,by+ny*60*C.aim);ctx.stroke();
+      {const tt=tracePath(pr.b.x,pr.b.y,nx,ny,AM.tgtB,60*C.aim,pr.b,false);polyline(tt.pts,()=>ctx.stroke()); // hedef topun yolu (MAX istakada banttan bir sekme)
+       if(tt.b){ctx.save();ctx.setLineDash([3,3]);ctx.beginPath();ctx.arc(tt.gx+RAIL,tt.gy+RAIL,R,0,7);ctx.stroke();ctx.restore();}}
       const dot=dx*nx+dy*ny,sk2=C.spinK||1,fw=-spinY*sk2*.62,sd2=spinX*sk2*.16;let tx=dx-dot*nx+dx*fw-dy*sd2,ty=dy-dot*ny+dy*fw+dx*sd2;
       const tl=Math.hypot(tx,ty);if(tl>1)tx/=tl,ty/=tl;
-      ctx.strokeStyle=Math.hypot(spinX,spinY)>.15?'rgba(240,215,140,.9)':'rgba(255,255,255,.45)';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(gx+tx*44*C.aim,gy+ty*44*C.aim);ctx.stroke();
+      ctx.strokeStyle=Math.hypot(spinX,spinY)>.15?'rgba(240,215,140,.9)':'rgba(255,255,255,.45)';ctx.lineWidth=1.2;
+      {const tl2=Math.hypot(tx,ty);if(tl2>.02){const tc=tracePath(tp.gx,tp.gy,tx/tl2,ty/tl2,0,44*C.aim*Math.min(1,tl2*1.4),pr.b,false);polyline(tc.pts,()=>ctx.stroke());}}
     }
     ctx.restore();
   }
@@ -2896,7 +2927,7 @@ function drawCall(){ // seçilen cep: parlayan halka + ok; diğer cepler dokunul
     ctx.restore();});
 }
 /* ================= DÖNGÜ ================= */
-let lastTs=0,acc=0,tUi=0,aimDraw=0,strikeAt=0,cueIntroT=0;
+let lastDeg='',lastTs=0,acc=0,tUi=0,aimDraw=0,strikeAt=0,cueIntroT=0;
 const angDiff=(a,b)=>Math.atan2(Math.sin(a-b),Math.cos(a-b)); // -π..π, 0/360 geçişinde güvenli
 const STEP=1000/60;
 function loop(ts){
@@ -2916,6 +2947,7 @@ function loop(ts){
       aimDraw=Math.atan2(Math.sin(aimDraw),Math.cos(aimDraw));
     }
     draw();drawTube(ts);drawCueLayer();syncPbar();
+    if(humanTurn()){const dg=((aimDraw*180/Math.PI)%360+360)%360,t=dg.toFixed(2)+'°';if(t!==lastDeg){lastDeg=t;const el=$('aimDeg');if(el)el.textContent=t;}}
   }
   requestAnimationFrame(loop);
 }
@@ -2925,40 +2957,46 @@ let pbShown=null;
 function syncPbar(forceHide){
   const sl=document.querySelector('.side.lft');if(!sl)return;
   const want=!forceHide&&$('game').classList.contains('show')&&humanTurn();
-  if(want===pbShown)return;pbShown=want;if(want)cueIntroT=performance.now();sl.classList.toggle('pbOff',!want);const fw=$('fineW');if(fw){fw.classList.toggle('pbOff',!want);if(want)requestAnimationFrame(drawFine);}
+  if(want===pbShown)return;pbShown=want;if(want){cueIntroT=performance.now();syncPrec();}sl.classList.toggle('pbOff',!want);const fw=$('fineW');if(fw){fw.classList.toggle('pbOff',!want);if(want)requestAnimationFrame(drawFine);}
   if(!want){pDrag=false;if(power){power=0;}drawPbar();}else{power=0;drawPbar();}
 }
 /* ================= GİRİŞ ================= */
 const humanTurn=()=>!moving&&!over&&!isAI(turn)&&!aiBusy&&!(G()==='lucky'&&shots>0);
 function pt(e){const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)/scale-RAIL,y:(e.clientY-r.top)/scale-RAIL};}
 cv.addEventListener('pointerdown',e=>{
-  if(!humanTurn())return;ensureAudio();cv.setPointerCapture(e.pointerId);
+  if(!humanTurn())return;if(aiming&&e.pointerId!==aimPid)return; // ikinci parmak nişanı bozmaz
+  ensureAudio();try{cv.setPointerCapture(e.pointerId);}catch(_){}
   const p=pt(e);
   if(ballInHand&&Math.hypot(p.x-cue.x,p.y-cue.y)<R*4){dragCue=true;return;}
   if(callRule()&&shots>0){const k=POCKETS.findIndex(q=>Math.hypot(q.x-p.x,q.y-p.y)<q.r+16);if(k>=0){callPk=k;callManual=true;try{play('click',.4,1.5);}catch(_){}return;}}
-  aiming=true;aimStart={x:p.x,y:p.y,px:p.x,py:p.y,t:performance.now(),sx:e.clientX,sy:e.clientY,moved:false,h:[]};
+  if(aiming)return; // ikinci parmak nişanı bozmaz
+  aiming=true;aimPid=e.pointerId;aimStart={x:p.x,y:p.y,px:p.x,py:p.y,t:e.timeStamp||performance.now(),sx:e.clientX,sy:e.clientY,moved:false,h:[]};
 });
 cv.addEventListener('pointermove',e=>{
   if(!humanTurn())return;const p=pt(e);
   if(dragCue){
     const x=Math.min(shots===0?TW*.25:TW-R,Math.max(R,p.x)),y=Math.min(TH-R,Math.max(R,p.y));
     if(balls.every(o=>o===cue||o.pot||Math.hypot(o.x-x,o.y-y)>2*R+.5)){cue.x=x;cue.y=y;}
-  }else if(aiming){
-    const A=aimStart,now=performance.now();
+  }else if(aiming&&e.pointerId===aimPid){
+   const evs=e.getCoalescedEvents?e.getCoalescedEvents():[];
+   for(const q of (evs.length?evs:[e])){ // telefonun ara dokunma örnekleri de işlenir → daha akıcı ve kesintisiz dönüş
+    const p=pt(q),A=aimStart,now=q.timeStamp||performance.now(),e2=q;
     if(!A.moved&&Math.hypot(p.x-A.x,p.y-A.y)>3)A.moved=true;
     if(A.moved){
       // parmağın beyaz topa göre açısal hareketi: dönme = (r × hareket) / |r|² — merkezde yarıçap sınırlanır, titreme yok
       const rx=A.px-cue.x,ry=A.py-cue.y,mx=p.x-A.px,my=p.y-A.py,r2=Math.max(rx*rx+ry*ry,MIN_AIM_RADIUS*MIN_AIM_RADIUS);
       const da=(rx*my-ry*mx)/r2;
       // ekran hızına göre kazanç: yavaş = mikro ayar, hızlı = geniş açı
-      const v0=Math.hypot(e.clientX-A.sx,e.clientY-A.sy)/Math.max(1,now-A.t);A.v=A.v==null?v0:A.v+(v0-A.v)*.3;const v=A.v,k=Math.min(1,Math.max(0,(v-SPEED_SLOW)/(SPEED_FAST-SPEED_SLOW)));
-      const SEN=SENSITIVITY*((save.set&&save.set.sens)||1);aim=Math.atan2(Math.sin(aim+da*(SEN+(FAST_GAIN-SEN)*k)),Math.cos(aim+da*(SEN+(FAST_GAIN-SEN)*k)));
+      const v0=Math.hypot(e2.clientX-A.sx,e2.clientY-A.sy)/Math.max(4,now-A.t);A.v=A.v==null?v0:A.v+(v0-A.v)*.3;const v=A.v,k=Math.min(1,Math.max(0,(v-SPEED_SLOW)/(SPEED_FAST-SPEED_SLOW)));
+      const SEN=SENSITIVITY*((save.set&&save.set.sens)||1),PM=precOn()?PREC_GAIN:1,g=(SEN+(FAST_GAIN-SEN)*k*(precOn()?.35:1))*PM;aim=Math.atan2(Math.sin(aim+da*g),Math.cos(aim+da*g));
     }
-    A.px=p.x;A.py=p.y;A.sx=e.clientX;A.sy=e.clientY;A.t=now;A.h.push([now,aim]);if(A.h.length>12)A.h.shift();
+    A.px=p.x;A.py=p.y;A.sx=e2.clientX;A.sy=e2.clientY;A.t=now;A.h.push([performance.now(),aim]);if(A.h.length>12)A.h.shift();
+   }
   }
 });
-let aimStart=null;
+let aimStart=null,aimPid=null;
 const endP=e=>{
+  if(aiming&&e&&aimPid!=null&&e.pointerId!==aimPid&&!dragCue)return;
   if(aiming&&aimStart){const A=aimStart;
     if(!A.moved)setAim(A);
     else{ // parmak kalkarken oluşan küçük kayma geri alınır: son ~70 ms içindeki mikro hareket yok sayılır
@@ -3010,11 +3048,22 @@ function drawFine(){const c=fineEl.getContext('2d'),dpr=window.devicePixelRatio|
   const sp=9;for(let y=((fineOff%sp)+sp)%sp-sp;y<H2+sp;y+=sp){const t=Math.abs(y/H2-.5)*2,a=Math.max(0,1-t*t);c.fillStyle=`rgba(255,230,160,${.55*a})`;c.fillRect(7,y,W2-14,1.4*a+.4);c.fillStyle=`rgba(0,0,0,${.6*a})`;c.fillRect(7,y+1.6,W2-14,1.2);}
   c.restore();
   c.fillStyle='#f0c860';for(const [y,d] of [[11,-1],[H2-11,1]]){c.beginPath();c.moveTo(W2/2-6,y-3*d);c.lineTo(W2/2+6,y-3*d);c.lineTo(W2/2,y+3*d);c.closePath();c.fill();}}
-fineEl.addEventListener('pointerdown',e=>{if(!humanTurn())return;e.preventDefault();ensureAudio();fineEl.setPointerCapture(e.pointerId);fDrag=true;fY=e.clientY;});
-fineEl.addEventListener('pointermove',e=>{if(!fDrag||!humanTurn())return;const ev=e.getCoalescedEvents?e.getCoalescedEvents():[e];
-  for(const q of (ev.length?ev:[e])){const dy=q.clientY-fY;fY=q.clientY;if(!dy)continue;aim=Math.atan2(Math.sin(aim+dy*FINE_K),Math.cos(aim+dy*FINE_K));aimDraw=aim;fineOff+=dy;}
+/* hassas mod: masa sürüklemesi ×0.3, tekerlek ×0.35, uç okları 0.01° adım */
+const precOn=()=>!!(save.set&&save.set.prec);
+function syncPrec(){const b=$('precBtn');if(b)b.classList.toggle('on',precOn());$('fineW').classList.toggle('prec',precOn());}
+$('precBtn').addEventListener('click',e=>{e.stopPropagation();save.set.prec=!precOn();persist();syncPrec();try{play('click',.35,precOn()?1.6:1.2);}catch(_){}try{navigator.vibrate&&navigator.vibrate(10);}catch(_){}});
+const turnAim=d=>{aim=Math.atan2(Math.sin(aim+d),Math.cos(aim+d));aimDraw=aim;};
+let fNudge=null;
+fineEl.addEventListener('pointerdown',e=>{if(!humanTurn())return;e.preventDefault();ensureAudio();fineEl.setPointerCapture(e.pointerId);
+  const r=fineEl.getBoundingClientRect(),y=e.clientY-r.top,end=Math.min(26,r.height*.1);
+  if(y<end||y>r.height-end){ // uç oklar: dokun = tek adım, basılı tut = sürekli adım
+    const st=(y<end?-1:1)*(precOn()?.01:.05)*Math.PI/180;turnAim(st);let n=0;
+    fNudge=setTimeout(function rep(){if(!humanTurn())return;turnAim(st*(n++>20?3:1));fineOff+=st>0?2:-2;drawFine();fNudge=setTimeout(rep,55);},380);drawFine();return;}
+  fDrag=true;fY=e.clientY;});
+fineEl.addEventListener('pointermove',e=>{if(!fDrag||!humanTurn())return;const ev=e.getCoalescedEvents?e.getCoalescedEvents():[e],K=FINE_K*(precOn()?.35:1);
+  for(const q of (ev.length?ev:[e])){const dy=q.clientY-fY;fY=q.clientY;if(!dy)continue;turnAim(dy*K);fineOff+=dy;}
   drawFine();});
-const fEnd=()=>{fDrag=false;};fineEl.addEventListener('pointerup',fEnd);fineEl.addEventListener('pointercancel',fEnd);window.addEventListener('resize',()=>setTimeout(drawFine,80));
+const fEnd=()=>{fDrag=false;clearTimeout(fNudge);fNudge=null;};fineEl.addEventListener('pointerup',fEnd);fineEl.addEventListener('pointercancel',fEnd);window.addEventListener('resize',()=>setTimeout(drawFine,80));
 /* ---- falso topu ---- */
 /* ---- cebe süzülme animasyonu ---- */
 let sinks=[],tube=[];const SINK_MS=460;
