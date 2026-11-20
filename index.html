@@ -374,6 +374,127 @@ h2,h3,.mtitle,.tile b,.hdr h2,.top h2,#over h2{font-family:var(--rc-font)!import
 .bars i{background:#2a1c10!important;border:1px solid rgba(201,162,78,.25)}.bars i.on{background:linear-gradient(180deg,#f6e3a8,#c9a24e)!important}
 .blue{background:linear-gradient(180deg,#5a3a20,#2e1a0c)!important;color:var(--rc-gold2)!important;border:1px solid var(--rc-gold)!important}
 .cr.eq,.item.eq{box-shadow:inset 0 0 0 1px rgba(0,0,0,.75),0 0 0 2px var(--rc-gold2)!important}
+
+/* ================= MOR-ALTIN KRALİYET ANA MENÜ ================= */
+#menu{--p:calc(min(1vh,.4663vw)/8.56);justify-content:center!important;gap:0!important;overflow:hidden!important;
+ padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)!important;
+ background:
+  radial-gradient(ellipse 34% 30% at 50% 30%,rgba(170,70,255,.38),transparent 70%),
+  radial-gradient(ellipse 22% 60% at 0% 55%,rgba(140,40,230,.4),transparent 70%),
+  radial-gradient(ellipse 22% 60% at 100% 55%,rgba(140,40,230,.4),transparent 70%),
+  radial-gradient(ellipse 70% 26% at 50% 104%,rgba(190,90,255,.75),transparent 72%),
+  linear-gradient(180deg,transparent 84%,rgba(255,200,90,.35) 84.3%,transparent 85%),
+  repeating-linear-gradient(90deg,rgba(255,210,120,.05) 0 2px,transparent 2px 9%),
+  linear-gradient(180deg,#07030d 0%,#140726 30%,#24093f 62%,#3a0e66 86%,#4a147e 100%)!important}
+#menu>*:not(.pmDeco){position:relative;z-index:1;flex:none}
+.pmDeco{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.pmDeco>i{position:absolute;display:block}
+i.pmi{display:inline-block;font-style:normal;flex:none;line-height:0}
+i.pmi svg,.pmDeco svg,.pmC svg,.pmStC svg,#menu .slot .ic svg{width:100%;height:100%;display:block;overflow:visible}
+.pmLion{width:calc(var(--p)*112);height:calc(var(--p)*224);top:calc(50% - var(--p)*160)}
+.pmLion.l{left:max(calc(var(--p)*-14),calc(50% - var(--p)*935))}.pmLion.r{right:max(calc(var(--p)*-14),calc(50% - var(--p)*935));transform:scaleX(-1)}
+.pmBall{width:calc(var(--p)*190);height:calc(var(--p)*190);bottom:calc(50% - var(--p)*470)}
+.pmBall.l{left:calc(50% - var(--p)*950)}.pmBall.r{right:calc(50% - var(--p)*950);width:calc(var(--p)*150);height:calc(var(--p)*150);bottom:calc(50% - var(--p)*440)}
+.pmCue{width:calc(var(--p)*600);height:calc(var(--p)*34);bottom:calc(50% - var(--p)*418)}
+.pmCue.l{left:calc(50% - var(--p)*800);transform:rotate(-5deg)}.pmCue.r{right:calc(50% - var(--p)*800);transform:scaleX(-1) rotate(-5deg)}
+.pmBolt{width:calc(var(--p)*90);height:calc(var(--p)*330);top:calc(50% - var(--p)*240);opacity:.75;filter:drop-shadow(0 0 calc(var(--p)*8) #b050ff)}
+.pmBolt.l{left:calc(50% - var(--p)*880)}.pmBolt.r{right:calc(50% - var(--p)*880);transform:scaleX(-1)}
+/* üst çubuk */
+#menu .tbar{width:calc(var(--p)*1796);max-width:100%;height:calc(var(--p)*112);gap:calc(var(--p)*20);align-items:stretch}
+#menu .prof{flex:none;min-width:0;width:calc(var(--p)*560);margin-left:calc(var(--p)*66);padding:0 calc(var(--p)*16) 0 calc(var(--p)*178);gap:calc(var(--p)*12);
+ background:linear-gradient(90deg,#2a0f48,#120620 60%,#0a0412)!important;border:calc(var(--p)*2.5) solid #e8b84a!important;border-radius:calc(var(--p)*18) calc(var(--p)*50) calc(var(--p)*50) calc(var(--p)*18)!important;
+ box-shadow:inset 0 0 0 calc(var(--p)*2) #2a1402,inset 0 0 0 calc(var(--p)*4) rgba(232,184,74,.4),0 0 calc(var(--p)*14) rgba(150,60,255,.45),0 calc(var(--p)*5) calc(var(--p)*10) rgba(0,0,0,.6)!important}
+#menu .prof::before{content:none}
+.pmAvW{position:absolute;left:calc(var(--p)*-72);top:calc(var(--p)*-20);width:calc(var(--p)*250);height:calc(var(--p)*150);pointer-events:none}
+.pmWings{position:absolute;inset:0;width:100%;height:100%}
+.pmAvCr{position:absolute;left:calc(var(--p)*93);top:calc(var(--p)*-6);width:calc(var(--p)*64);height:calc(var(--p)*44);z-index:3}
+#menu #av{position:absolute;left:calc(var(--p)*72);top:calc(var(--p)*24);width:calc(var(--p)*106);height:calc(var(--p)*106);font-size:calc(var(--p)*56);font-weight:900;color:#ffd86a;
+ border:calc(var(--p)*4) solid #f5cf60!important;text-shadow:0 calc(var(--p)*3) calc(var(--p)*3) rgba(0,0,0,.8);background-image:radial-gradient(circle at 38% 30%,rgba(255,255,255,.35),transparent 55%),radial-gradient(circle at 50% 120%,rgba(0,0,0,.5),transparent 60%)!important;
+ box-shadow:0 0 0 calc(var(--p)*3) #4a2a04,0 0 calc(var(--p)*18) rgba(170,80,255,.9),inset 0 calc(var(--p)*-8) calc(var(--p)*14) rgba(0,0,0,.45)!important;z-index:2}
+.pmPI{min-width:0;flex:1;display:flex;flex-direction:column;justify-content:center;gap:calc(var(--p)*2)}
+#menu .prof b#pname{font-size:calc(var(--p)*32);color:#fff;max-width:none;text-shadow:0 calc(var(--p)*2) calc(var(--p)*3) #000}
+#menu .prof .sm{font-size:calc(var(--p)*23);color:#efe2ff!important}
+#menu #pTitle{font-size:calc(var(--p)*25);color:#ffd45a!important;text-shadow:0 calc(var(--p)*2) calc(var(--p)*3) #000}
+#menu .lvl{justify-content:center;gap:calc(var(--p)*6)}
+#menu .xpb{width:calc(var(--p)*120);height:calc(var(--p)*14);background:#14061f;border:calc(var(--p)*1.5) solid #c9a24e;border-radius:calc(var(--p)*8);box-sizing:border-box}
+#menu .xpb i{background:linear-gradient(90deg,#5a12c0,#a050ff,#d8a8ff)!important;box-shadow:0 0 calc(var(--p)*6) #a050ff}
+#menu .tb,#menu .ib,#menu .cur{background:linear-gradient(180deg,#26103e,#0c0516)!important;border:calc(var(--p)*2.5) solid #e8b84a!important;border-radius:calc(var(--p)*16)!important;filter:none!important;color:#fff!important;
+ box-shadow:inset 0 0 0 calc(var(--p)*2) #2a1402,inset 0 0 0 calc(var(--p)*4) rgba(232,184,74,.35),0 0 calc(var(--p)*12) rgba(150,60,255,.4),0 calc(var(--p)*5) calc(var(--p)*9) rgba(0,0,0,.65)!important}
+#menu .tb{min-width:calc(var(--p)*116);padding:calc(var(--p)*6) calc(var(--p)*10);gap:calc(var(--p)*4);margin:calc(var(--p)*6) 0}
+#menu #tFree{width:calc(var(--p)*150)}
+#menu .tb .pmi,#menu .ib .pmi{width:calc(var(--p)*58);height:calc(var(--p)*50)}
+#menu .tb span,#menu .ib span{font-size:calc(var(--p)*23);font-weight:700;color:#fff;line-height:1.05;white-space:normal;text-align:center;text-shadow:0 calc(var(--p)*2) calc(var(--p)*3) #000}
+#menu .tb em,#menu .ib em,#menu .dbtn em{top:calc(var(--p)*-14);right:calc(var(--p)*-14);min-width:calc(var(--p)*38);height:calc(var(--p)*38);line-height:calc(var(--p)*32);padding:0 calc(var(--p)*4);box-sizing:border-box;border-radius:calc(var(--p)*20);
+ background:radial-gradient(circle at 35% 30%,#ff8a8a,#e01010 55%,#8a0000)!important;border:calc(var(--p)*3) solid #fff;font-size:calc(var(--p)*24);font-weight:900;font-family:Arial,sans-serif;text-align:center;box-shadow:0 calc(var(--p)*3) calc(var(--p)*6) rgba(0,0,0,.6);z-index:3}
+#menu .cur{min-width:calc(var(--p)*168);padding:0 calc(var(--p)*8) 0 calc(var(--p)*12);gap:calc(var(--p)*10);font-size:calc(var(--p)*32);margin:calc(var(--p)*8) 0;color:#fff!important}
+#menu .cur span{color:#fff;text-shadow:0 calc(var(--p)*2) calc(var(--p)*3) #000}
+#menu .cur .pmi{width:calc(var(--p)*52);height:calc(var(--p)*48)}
+#menu .cur .chip{width:calc(var(--p)*50);height:calc(var(--p)*50);vertical-align:middle}
+.pmPlus{margin-left:auto;width:calc(var(--p)*38);height:calc(var(--p)*38);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;
+ background:linear-gradient(180deg,#fff2b0,#f0c040 50%,#b07810);color:#3a1a02;font-family:Arial,sans-serif;font-size:calc(var(--p)*36);font-weight:900;border-radius:calc(var(--p)*7);border:calc(var(--p)*1.5) solid #5a3404;box-shadow:0 calc(var(--p)*2) calc(var(--p)*4) rgba(0,0,0,.6)}
+/* ikinci sıra + logo */
+#menu .mrow2{width:calc(var(--p)*1700);max-width:100%;height:calc(var(--p)*100);margin-top:calc(var(--p)*26);gap:calc(var(--p)*26)}
+#menu .ib{width:calc(var(--p)*120);height:100%;gap:calc(var(--p)*4)}
+#menu .mtitle{position:relative;height:100%;background:none!important;filter:none!important;color:inherit!important}
+#menu .mtitle::before,#menu .mtitle::after{content:none}
+.pmLogo{position:absolute;left:50%;top:50%;width:calc(var(--p)*820);height:calc(var(--p)*210);transform:translate(-50%,-46%);pointer-events:none}
+/* büyük kartlar */
+#menu .tiles{width:calc(var(--p)*1680);max-width:100%;height:calc(var(--p)*285);max-height:none;min-height:0;margin-top:calc(var(--p)*44);gap:calc(var(--p)*32)}
+#menu .tile{--c1:#6a2ad0;--c2:#24065a;--gl:rgba(170,80,255,.75);position:relative;height:100%;justify-content:flex-end;gap:0;padding:0 0 calc(var(--p)*26);overflow:visible;color:#fff;
+ border:none!important;border-radius:calc(var(--p)*14)!important;
+ background:
+  linear-gradient(118deg,rgba(255,255,255,.16) 0 16%,transparent 16% 38%,rgba(0,0,0,.2) 38% 52%,transparent 52% 74%,rgba(255,255,255,.08) 74% 86%,transparent 86%),
+  linear-gradient(62deg,transparent 0 28%,rgba(255,255,255,.1) 28% 42%,transparent 42% 64%,rgba(0,0,0,.22) 64% 80%,transparent 80%),
+  radial-gradient(ellipse 70% 50% at 50% 34%,rgba(255,255,255,.35),transparent 70%),
+  linear-gradient(180deg,var(--c1),var(--c2))!important;
+ box-shadow:0 0 0 calc(var(--p)*2) #2a1402,0 0 0 calc(var(--p)*6) #f2c860,0 0 0 calc(var(--p)*8) #7a4806,0 0 calc(var(--p)*26) var(--gl),0 calc(var(--p)*10) calc(var(--p)*18) rgba(0,0,0,.7),
+  inset 0 0 0 calc(var(--p)*2) #ffe9a0,inset 0 0 0 calc(var(--p)*5) #5a3404,inset 0 0 calc(var(--p)*34) rgba(0,0,0,.6)!important}
+#menu .t2{--c1:#d02020;--c2:#4a0303;--gl:rgba(255,60,60,.7)}#menu .t3{--c1:#2264e8;--c2:#051a5c;--gl:rgba(60,140,255,.75)}
+#menu .t4{--c1:#28b828;--c2:#043604;--gl:rgba(80,255,80,.6)}#menu .t5{--c1:#f0b030;--c2:#5a3404;--gl:rgba(255,200,60,.7)}
+#menu .tile::before{content:'';position:absolute;top:auto;left:50%;bottom:calc(var(--p)*-16);width:calc(var(--p)*24);height:calc(var(--p)*24);transform:translateX(-50%) rotate(45deg);opacity:1;border:calc(var(--p)*3.5) solid #f2c860;
+ background:radial-gradient(circle at 35% 30%,#f3d0ff,#9a2ae0 55%,#3a0460);box-shadow:0 0 0 calc(var(--p)*1.5) #4a2a04,0 0 calc(var(--p)*10) #b050ff;border-radius:calc(var(--p)*3);z-index:2}
+#menu .tile::after{content:none}
+#menu .tile .ic{position:absolute;left:50%;top:calc(var(--p)*6);transform:translateX(-50%);width:calc(var(--p)*230);height:calc(var(--p)*178);background:none!important;border:none!important;box-shadow:none!important;border-radius:0;filter:none!important}
+#menu .tile .ic .pmi{width:100%;height:100%}
+#menu .tile b{font-size:calc(var(--p)*60);font-weight:900;line-height:1;white-space:nowrap;letter-spacing:calc(var(--p)*-.5);
+ background:linear-gradient(180deg,#fffbe6 0%,#ffe07a 42%,#e2a42a 58%,#9a5c08 100%);-webkit-background-clip:text;background-clip:text;color:transparent!important;
+ -webkit-text-stroke:calc(var(--p)*1.6) #3a1a02;paint-order:stroke fill;filter:drop-shadow(0 calc(var(--p)*4) calc(var(--p)*3) rgba(0,0,0,.85))}
+#menu .tile>span:not(.ic){font-size:calc(var(--p)*32);font-weight:700;color:#fff!important;margin-top:calc(var(--p)*4);text-shadow:0 calc(var(--p)*2) calc(var(--p)*4) #000,0 0 calc(var(--p)*8) rgba(0,0,0,.6)}
+.pmC{position:absolute;width:calc(var(--p)*46);height:calc(var(--p)*46);pointer-events:none;z-index:2;line-height:0}
+.pmC.tl{top:calc(var(--p)*-9);left:calc(var(--p)*-9)}.pmC.tr{top:calc(var(--p)*-9);right:calc(var(--p)*-9);transform:scaleX(-1)}
+.pmC.bl{bottom:calc(var(--p)*-9);left:calc(var(--p)*-9);transform:scaleY(-1)}.pmC.br{bottom:calc(var(--p)*-9);right:calc(var(--p)*-9);transform:scale(-1,-1)}
+/* alt sıra */
+#menu .mrow{width:calc(var(--p)*1680);max-width:100%;height:calc(var(--p)*138);margin-top:calc(var(--p)*32);gap:calc(var(--p)*28)}
+#menu #slots{gap:calc(var(--p)*28)}
+#menu .dbtn{width:calc(var(--p)*222);height:100%;gap:calc(var(--p)*2);filter:none!important;overflow:visible;
+ background:radial-gradient(ellipse at 50% 30%,rgba(255,255,255,.18),transparent 65%),linear-gradient(180deg,#6a22c8,#2a0860)!important;border:calc(var(--p)*2.5) solid #e8b84a!important;border-radius:calc(var(--p)*14)!important;
+ box-shadow:inset 0 0 0 calc(var(--p)*2) #2a1402,inset 0 0 0 calc(var(--p)*4) rgba(232,184,74,.4),0 0 calc(var(--p)*16) rgba(170,80,255,.6),0 calc(var(--p)*5) calc(var(--p)*9) rgba(0,0,0,.65)!important}
+#menu .dbtn .pmi{width:calc(var(--p)*84);height:calc(var(--p)*80)}
+#menu .dbtn span{font-size:calc(var(--p)*27);font-weight:800;color:#ffd45a!important;text-shadow:0 calc(var(--p)*2) calc(var(--p)*3) #000}
+#menu .slot{position:relative;overflow:visible;opacity:1!important;filter:none!important;font-size:calc(var(--p)*27);color:#fff!important;gap:calc(var(--p)*4);padding:calc(var(--p)*6);
+ background:radial-gradient(ellipse at 50% 0%,rgba(150,70,255,.22),transparent 70%),linear-gradient(180deg,#160822,#07030c)!important;border:calc(var(--p)*2.5) solid #e8b84a!important;border-radius:calc(var(--p)*12)!important;
+ box-shadow:inset 0 0 0 calc(var(--p)*2) #2a1402,inset 0 0 0 calc(var(--p)*4) rgba(232,184,74,.3),0 calc(var(--p)*5) calc(var(--p)*9) rgba(0,0,0,.65)!important;text-shadow:0 calc(var(--p)*2) calc(var(--p)*3) #000}
+#menu .slot .ic{width:calc(var(--p)*80);height:calc(var(--p)*58);filter:none!important;line-height:0}
+#menu .slot b{font-size:calc(var(--p)*24)}
+#menu .slot.ready{background:radial-gradient(ellipse at 50% 30%,rgba(255,255,255,.25),transparent 70%),linear-gradient(180deg,#2a9a2a,#0a400a)!important}
+#menu .slot .pmC{width:calc(var(--p)*34);height:calc(var(--p)*34)}
+/* istatistik şeridi */
+.pmStC{display:block;width:calc(var(--p)*74);height:calc(var(--p)*50);margin:calc(var(--p)*6) 0 calc(var(--p)*-22);z-index:2!important}
+#menu #stats{height:calc(var(--p)*50);min-width:calc(var(--p)*480);padding:0 calc(var(--p)*50);display:flex;align-items:center;justify-content:center;box-sizing:border-box;white-space:pre;
+ font-size:calc(var(--p)*27);font-weight:700;color:#fff!important;text-shadow:0 calc(var(--p)*2) calc(var(--p)*3) #000;
+ background:linear-gradient(180deg,#1e0a32,#08040f);border-top:calc(var(--p)*2.5) solid #e8b84a;border-bottom:calc(var(--p)*2.5) solid #e8b84a;
+ clip-path:polygon(calc(var(--p)*30) 0,calc(100% - var(--p)*30) 0,100% 50%,calc(100% - var(--p)*30) 100%,calc(var(--p)*30) 100%,0 50%);box-shadow:inset 0 0 calc(var(--p)*12) rgba(150,60,255,.4)}
+#menu .tbar{z-index:2!important}
+#menu .tile .ic{top:calc(var(--p)*4);height:calc(var(--p)*150);width:calc(var(--p)*200)}
+#menu .tile{padding-bottom:calc(var(--p)*18)}
+#menu .tile b,#menu .tile>span:not(.ic){position:relative;z-index:1}
+#menu .tile b{-webkit-text-stroke:calc(var(--p)*2) #2a1002}
+#menu .ib{width:calc(var(--p)*126)}#menu .ib span{font-size:calc(var(--p)*21)}
+.pmAvW{left:calc(var(--p)*-90);width:calc(var(--p)*286);top:calc(var(--p)*-22);height:calc(var(--p)*156)}
+#menu #av{left:calc(var(--p)*90)}.pmAvCr{left:calc(var(--p)*111)}
+#menu .prof{padding-left:calc(var(--p)*204)}
+.pmStC{width:calc(var(--p)*62)!important;height:calc(var(--p)*42)!important;margin-bottom:calc(var(--p)*-24)!important}
+#menu #stats{padding-top:calc(var(--p)*6)}
 </style>
 </head>
 <body>
@@ -399,37 +520,38 @@ h2,h3,.mtitle,.tile b,.hdr h2,.top h2,#over h2{font-family:var(--rc-font)!import
 
 <!-- ANA MENÜ -->
 <div id="menu" class="screen">
+  <div class="pmDeco" id="pmDeco"></div>
   <div class="tbar">
-    <div class="prof"><div class="av" id="av"></div><div><b id="pname"></b><div class="sm">ID: <span id="pid"></span> · 🏅<span id="pbd">0</span></div><div id="pTitle"></div></div>
+    <div class="prof"><div class="pmAvW"><i class="pmi pmWings" data-i="wings"></i><i class="pmi pmAvCr" data-i="crown"></i><div class="av" id="av"></div></div><div class="pmPI"><b id="pname"></b><div class="sm">ID: <span id="pid"></span> · 🏅<span id="pbd">0</span></div><div id="pTitle"></div></div>
       <div class="lvl"><span id="plvC"></span><span id="plv" style="display:none"></span><div class="xpb"><i id="pxp"></i></div></div></div>
-    <button class="tb" id="tCues">🎱<span>İstekalar</span></button>
-    <button class="tb" id="tFree">🪙<span>Ücretsiz Ödüller</span><em id="fDot">!</em></button>
-    <button class="tb" id="tLead">⭐<span>Liderlik</span></button>
-    <button class="tb" id="tShop">🛒<span>Mağaza</span></button>
+    <button class="tb" id="tCues"><i class="pmi" data-i="ball8"></i><span>İstekalar</span></button>
+    <button class="tb" id="tFree"><i class="pmi" data-i="crownR"></i><span>Ücretsiz Ödüller</span><em id="fDot">!</em></button>
+    <button class="tb" id="tLead"><i class="pmi" data-i="star"></i><span>Liderlik</span></button>
+    <button class="tb" id="tShop"><i class="pmi" data-i="cart"></i><span>Mağaza</span></button>
     <div class="sp1"></div>
-    <div class="cur gem">💎 <span class="gv">0</span></div>
-    <div class="cur cash">💵 <span id="cash">0</span></div>
-    <div class="cur coins" id="mcoins">🪙 <span class="cv">0</span></div>
+    <div class="cur gem"><i class="pmi" data-i="gem"></i><span class="gv">0</span><b class="pmPlus">+</b></div>
+    <div class="cur cash"><i class="pmi" data-i="cash"></i><span id="cash">0</span><b class="pmPlus">+</b></div>
+    <div class="cur coins" id="mcoins">🪙 <span class="cv">0</span><b class="pmPlus">+</b></div>
   </div>
   <div class="mrow2">
-    <button class="ib" id="xMis">📋<span>Görevler</span><em id="dMis"></em></button>
-    <button class="ib" id="xWheel">🎡<span>Çark</span><em id="dWheel"></em></button>
-    <button class="ib" id="xScr">🎫<span>Kazı Kazan</span><em id="dScr"></em></button>
-    <div class="mtitle">🎱 Bilardo Ustası</div>
-    <button class="ib" id="xAch">🎖️<span>Başarımlar</span><em id="dAch"></em></button>
-    <button class="ib" id="xInbox">✉️<span>Gelen Kutusu</span><em id="dInbox"></em></button>
-    <button class="ib" id="xSet">⚙️<span>Ayarlar</span></button>
+    <button class="ib" id="xMis"><i class="pmi" data-i="clip"></i><span>Görevler</span><em id="dMis"></em></button>
+    <button class="ib" id="xWheel"><i class="pmi" data-i="wheel"></i><span>Çark</span><em id="dWheel"></em></button>
+    <button class="ib" id="xScr"><i class="pmi" data-i="ticket"></i><span>Kazı Kazan</span><em id="dScr"></em></button>
+    <div class="mtitle"><i class="pmi pmLogo" data-i="logo"></i></div>
+    <button class="ib" id="xAch"><i class="pmi" data-i="medal"></i><span>Başarımlar</span><em id="dAch"></em></button>
+    <button class="ib" id="xInbox"><i class="pmi" data-i="mail"></i><span>Gelen Kutusu</span><em id="dInbox"></em></button>
+    <button class="ib" id="xSet"><i class="pmi" data-i="gear"></i><span>Ayarlar</span></button>
   </div>
   <div class="tiles">
-    <button class="tile t1" id="m1v1"><span class="ic">🎱</span><b>1'e 1</b><span>Oyna</span></button>
-    <button class="tile t2" id="mEv"><span class="ic">🏆</span><b>Etkinlikler</b><span>Turnuva</span></button>
-    <button class="tile t3" id="mPriv"><span class="ic">⭐</span><b>Özel</b><span>Oyna</span></button>
-    <button class="tile t4" id="mMini"><span class="ic">🎯</span><b>Mini Oyun</b><span>Şanslı Atış</span></button>
-    <button class="tile t5" id="mSolo"><span class="ic">📴</span><b>Egzersiz</b><span>Çevrim Dışı</span></button>
+    <button class="tile t1" id="m1v1"><span class="ic"><i class="pmi" data-i="tOne"></i></span><b>1'e 1</b><span>Oyna</span></button>
+    <button class="tile t2" id="mEv"><span class="ic"><i class="pmi" data-i="tCup"></i></span><b>Etkinlikler</b><span>Turnuva</span></button>
+    <button class="tile t3" id="mPriv"><span class="ic"><i class="pmi" data-i="tCues"></i></span><b>Özel</b><span>Oyna</span></button>
+    <button class="tile t4" id="mMini"><span class="ic"><i class="pmi" data-i="tDart"></i></span><b>Mini Oyun</b><span>Şanslı Atış</span></button>
+    <button class="tile t5" id="mSolo"><span class="ic"><i class="pmi" data-i="tChest"></i></span><b>Egzersiz</b><span>Çevrim Dışı</span></button>
   </div>
   <div class="mrow">
-    <button class="dbtn" id="tDaily">🎁<span>Günlük Ödül</span><em id="dDot">!</em></button>
-    <div id="slots" style="display:flex;gap:8px;flex:1"></div>
+    <button class="dbtn" id="tDaily"><i class="pmi" data-i="gift"></i><span>Günlük Ödül</span><em id="dDot">!</em></button>
+    <div id="slots" style="display:flex;flex:1"></div>
   </div>
   <div class="stats" id="stats"></div>
 </div>
@@ -863,10 +985,10 @@ function animCoins(){
 }
 function refreshCoins(){
   animCoins();
-  $('stats').textContent=`Galibiyet: ${save.wins} · Mağlubiyet: ${save.losses}`;
+  $('stats').textContent=`Galibiyet: ${save.wins}  •  Mağlubiyet: ${save.losses}`;
   $('cash').textContent=bigN(save.cash);$('pname').textContent=save.name||'Oyuncu';$('pid').textContent=save.pid||'-';
   $('av').textContent=myAvT();$('av').style.background=myAvC();extrasDots();
-  $('plv').textContent=save.level;$('pTitle').textContent=titleOf(save.level)+' · Seviye '+save.level;$('plvC').innerHTML=crownHTML(save.level,24);$('pbd').textContent=ROOMS.filter(r=>(save.rw[r.id]||0)>=BADGE_WINS).length;$('pxp').style.width=Math.min(100,save.xp/xpNeed(save.level)*100)+'%';
+  $('plv').textContent=save.level;$('pTitle').textContent=titleOf(save.level)+' · Seviye '+save.level;$('plvC').innerHTML=crownHTML(save.level,Math.max(24,Math.round(Math.min(innerHeight/856,innerWidth/1836)*70)));$('pbd').textContent=ROOMS.filter(r=>(save.rw[r.id]||0)>=BADGE_WINS).length;$('pxp').style.width=Math.min(100,save.xp/xpNeed(save.level)*100)+'%';
   $('dDot').style.display=dailyReady()?'block':'none';
   document.querySelectorAll('.gv').forEach(e=>e.textContent=bigN(save.gems));
   ['cash2','cash3'].forEach(i=>{const e=$(i);if(e)e.textContent=fmt(save.cash);});
@@ -890,13 +1012,13 @@ function renderSlots(){
   const unlocking=save.slots.some(s=>s&&s.start&&chestLeft(s)>0);
   save.slots.forEach((s,i)=>{
     const b=document.createElement('button');b.className='slot'+(s?' full':'');
-    if(!s){b.innerHTML='<span class="ic" style="opacity:.3">📦</span>Boş yuva';b.disabled=true;}
+    if(!s){b.innerHTML=`<span class="ic">${window.PM_IC?PM_IC.crown:'📦'}</span>Boş yuva`;b.disabled=true;}
     else{const left=chestLeft(s);
-      if(left===null){b.innerHTML=`<span class="ic">📦</span><b style="color:${TIERC[s.tier]}">${TIERN[s.tier]}</b>${unlocking?'Sırada':'Kilidi Aç · '+hm(CHEST_MIN[s.tier]*60e3)}`;b.onclick=()=>{if(save.slots.some(x=>x&&x.start&&chestLeft(x)>0))return;s.start=Date.now();persist();renderSlots();};}
-      else if(left>0){b.innerHTML=`<span class="ic">⏳</span><b style="color:${TIERC[s.tier]}">${TIERN[s.tier]}</b>${hm(left)}`;b.onclick=()=>skipChest(i);}
-      else{b.className+=' ready';b.innerHTML=`<span class="ic">🎁</span><b>${TIERN[s.tier]}</b>AÇ!`;b.onclick=()=>openSlot(i);}
+      if(left===null){b.innerHTML=`<span class="ic">${window.pmChest?pmChest(TIERC[s.tier]):'📦'}</span><b style="color:${TIERC[s.tier]}">${TIERN[s.tier]}</b>${unlocking?'Sırada':'Kilidi Aç · '+hm(CHEST_MIN[s.tier]*60e3)}`;b.onclick=()=>{if(save.slots.some(x=>x&&x.start&&chestLeft(x)>0))return;s.start=Date.now();persist();renderSlots();};}
+      else if(left>0){b.innerHTML=`<span class="ic">${window.pmChest?pmChest(TIERC[s.tier]):'⏳'}</span><b style="color:${TIERC[s.tier]}">${TIERN[s.tier]}</b>${hm(left)}`;b.onclick=()=>skipChest(i);}
+      else{b.className+=' ready';b.innerHTML=`<span class="ic">${window.pmChest?pmChest(TIERC[s.tier]):'🎁'}</span><b>${TIERN[s.tier]}</b>AÇ!`;b.onclick=()=>openSlot(i);}
     }
-    box.append(b);
+    box.append(b);if(window.pmCorners)pmCorners(b);
   });
 }
 function skipChest(i){const s=save.slots[i],cost=Math.max(1,Math.ceil(chestLeft(s)/600e3));
@@ -2896,6 +3018,105 @@ $('xMis').onclick=openMissions;$('xWheel').onclick=openWheel;$('xScr').onclick=o
 if(TEST_UNLOCK&&!save.unlockAll){save.unlockAll=1;for(const c of ALL_CUES)if(!save.cues.includes(c.id)){save.cues.push(c.id);save.cl[c.id]=save.cl[c.id]||{lv:1,pc:0};}for(const t of TABLES)if(!save.tables.includes(t.id))save.tables.push(t.id);persist();}
 window.EXTRAS_READY=1;inboxCheck();refreshCoins();setInterval(()=>{if($('menu').classList.contains('show'))extrasDots();},30000);
 
+/* ================= MOR-ALTIN KRALİYET ANA MENÜ: SVG çizimleri ================= */
+(function(){
+const NS='xmlns="http://www.w3.org/2000/svg"';
+const sv=(vb,body)=>`<svg ${NS} viewBox="${vb}" preserveAspectRatio="xMidYMid meet">${body}</svg>`;
+const G='url(#pgG)',GD='url(#pgGd)',DK='#4a2a04';
+// ortak degradeler (sayfadaki gizli <defs> içine eklenir)
+const defs=document.querySelector('svg defs');
+if(defs&&!document.getElementById('pgG'))defs.insertAdjacentHTML('beforeend',`
+ <linearGradient id="pgG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff8d0"/><stop offset=".3" stop-color="#ffd966"/><stop offset=".62" stop-color="#d89a22"/><stop offset="1" stop-color="#7a4806"/></linearGradient>
+ <linearGradient id="pgGd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a0"/><stop offset=".45" stop-color="#c88a1a"/><stop offset="1" stop-color="#5a3404"/></linearGradient>
+ <linearGradient id="pgGt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffbe6"/><stop offset=".42" stop-color="#ffe07a"/><stop offset=".55" stop-color="#e2a42a"/><stop offset="1" stop-color="#8a5208"/></linearGradient>
+ <radialGradient id="pgBall" cx=".36" cy=".32" r=".75"><stop offset="0" stop-color="#5a5a66"/><stop offset=".35" stop-color="#16161c"/><stop offset="1" stop-color="#000"/></radialGradient>
+ <radialGradient id="pgWht" cx=".36" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#e8e6e0"/><stop offset="1" stop-color="#8f8a80"/></radialGradient>
+ <radialGradient id="pgRed" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffb0b0"/><stop offset=".5" stop-color="#e01818"/><stop offset="1" stop-color="#5a0000"/></radialGradient>
+ <radialGradient id="pgPur" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#f3d0ff"/><stop offset=".5" stop-color="#9a2ae0"/><stop offset="1" stop-color="#3a0460"/></radialGradient>
+ <radialGradient id="pgBlu" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#e0f6ff"/><stop offset=".5" stop-color="#2a9af0"/><stop offset="1" stop-color="#062a6a"/></radialGradient>
+ <linearGradient id="pgWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2d9a6"/><stop offset=".5" stop-color="#c8945a"/><stop offset="1" stop-color="#7a4c22"/></linearGradient>
+ <linearGradient id="pgChest" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a5a2a"/><stop offset="1" stop-color="#4a2410"/></linearGradient>
+ <radialGradient id="pgGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#c060ff" stop-opacity=".85"/><stop offset=".55" stop-color="#7a20d0" stop-opacity=".35"/><stop offset="1" stop-color="#5010a0" stop-opacity="0"/></radialGradient>
+ <filter id="pgSh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-color="#000" flood-opacity=".65"/></filter>
+`);
+// ---- yardımcı şekiller ----
+const ball8=(cx,cy,r)=>`<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#pgBall)"/><circle cx="${cx-r*.1}" cy="${cy-r*.12}" r="${r*.42}" fill="#fff"/><text x="${cx-r*.1}" y="${cy+r*.06}" font-size="${r*.6}" font-weight="900" text-anchor="middle" dominant-baseline="middle" fill="#111" font-family="Arial,sans-serif">8</text><ellipse cx="${cx-r*.38}" cy="${cy-r*.5}" rx="${r*.32}" ry="${r*.15}" fill="#fff" opacity=".38" transform="rotate(-30 ${cx-r*.38} ${cy-r*.5})"/>`;
+const crown=(x,y,w,h,gem)=>{const p=(a,b)=>`${x+a*w},${y+b*h}`;
+  return `<path d="M${p(.06,.92)} L${p(0,.22)} L${p(.28,.5)} L${p(.5,0)} L${p(.72,.5)} L${p(1,.22)} L${p(.94,.92)} Z" fill="${G}" stroke="${DK}" stroke-width="${w*.025}" stroke-linejoin="round"/>
+  <rect x="${x+w*.05}" y="${y+h*.78}" width="${w*.9}" height="${h*.22}" rx="${h*.05}" fill="${GD}" stroke="${DK}" stroke-width="${w*.02}"/>
+  <circle cx="${x}" cy="${y+h*.2}" r="${w*.06}" fill="${G}" stroke="${DK}" stroke-width="${w*.015}"/><circle cx="${x+w}" cy="${y+h*.2}" r="${w*.06}" fill="${G}" stroke="${DK}" stroke-width="${w*.015}"/><circle cx="${x+w*.5}" cy="${y}" r="${w*.07}" fill="${G}" stroke="${DK}" stroke-width="${w*.015}"/>
+  ${gem!==false?`<ellipse cx="${x+w*.5}" cy="${y+h*.6}" rx="${w*.08}" ry="${h*.13}" fill="url(#pgRed)" stroke="${DK}" stroke-width="${w*.012}"/><circle cx="${x+w*.24}" cy="${y+h*.66}" r="${w*.05}" fill="url(#pgBlu)"/><circle cx="${x+w*.76}" cy="${y+h*.66}" r="${w*.05}" fill="url(#pgBlu)"/>`:''}
+  <rect x="${x+w*.08}" y="${y+h*.8}" width="${w*.84}" height="${h*.05}" fill="#fff6c8" opacity=".55"/>`;};
+const laurelSide=(cx,cy,r,n,a0,a1)=>{let o=`<path d="M${cx+r*Math.cos(a0)} ${cy+r*Math.sin(a0)} A${r} ${r} 0 0 1 ${cx+r*Math.cos(a1)} ${cy+r*Math.sin(a1)}" fill="none" stroke="${DK}" stroke-width="${r*.03}"/>`;
+  for(let i=0;i<n;i++){const t=a0+(a1-a0)*i/(n-1),x=cx+r*Math.cos(t),y=cy+r*Math.sin(t),deg=t*180/Math.PI+90,ls=r*(.15-.04*i/n);
+    for(const s of[1,-1]){const ox=x+Math.cos(t)*ls*.55*s,oy=y+Math.sin(t)*ls*.55*s;o+=`<ellipse cx="${ox}" cy="${oy}" rx="${ls}" ry="${ls*.42}" transform="rotate(${deg+s*38} ${ox} ${oy})" fill="${G}" stroke="${DK}" stroke-width="${r*.012}"/>`;}}
+  return o;};
+const laurel=(cx,cy,r,n)=>`<g>${laurelSide(cx,cy,r,n,Math.PI*.58,Math.PI*1.32)}</g><g transform="translate(${2*cx} 0) scale(-1 1)">${laurelSide(cx,cy,r,n,Math.PI*.58,Math.PI*1.32)}</g>`;
+const gearPath=(cx,cy,ro,ri,n)=>{let d='';for(let i=0;i<n*4;i++){const a=i/(n*4)*Math.PI*2-Math.PI/2,r=(i%4<2)?ro:ri,x=cx+r*Math.cos(a),y=cy+r*Math.sin(a);d+=(i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);}return d+'Z';};
+const diamond=(cx,cy,w,fill)=>`<path d="M${cx} ${cy-w*.75} L${cx+w*.55} ${cy} L${cx} ${cy+w*.75} L${cx-w*.55} ${cy} Z" fill="${fill||'url(#pgPur)'}" stroke="${G}" stroke-width="${w*.16}"/><path d="M${cx} ${cy-w*.75} L${cx+w*.18} ${cy} L${cx} ${cy+w*.75}" fill="#fff" opacity=".25"/>`;
+const corner=sv('0 0 60 60',`<path d="M4 56 L4 14 Q4 4 14 4 L56 4" fill="none" stroke="url(#pgG)" stroke-width="5"/><path d="M11 50 L11 18 Q11 11 18 11 L50 11" fill="none" stroke="#7a4806" stroke-width="2"/><path d="M4 4 m6 6 q10 -2 14 8 q-8 -4 -14 2 q4 -10 -6 -14 q10 -4 6 4z" fill="url(#pgG)" stroke="#4a2a04" stroke-width="1"/><circle cx="8" cy="8" r="4.5" fill="url(#pgG)" stroke="#4a2a04" stroke-width="1"/>`);
+// ---- simgeler ----
+const IC={
+ ball8:sv('0 0 100 100',`<g filter="url(#pgSh)">${ball8(50,50,42)}</g>`),
+ crown:sv('0 0 100 70',crown(8,8,84,56)),
+ crownR:sv('0 0 100 80',`<g filter="url(#pgSh)">${crown(8,10,84,62)}</g>`),
+ star:sv('0 0 100 100',`<g filter="url(#pgSh)"><path d="M50 5 L62 37 L96 38 L69 59 L79 92 L50 72 L21 92 L31 59 L4 38 L38 37Z" fill="${G}" stroke="${DK}" stroke-width="3" stroke-linejoin="round"/><path d="M50 14 L58 39 L50 64 L42 39Z" fill="#fff8d0" opacity=".45"/></g>`),
+ cart:sv('0 0 100 90',`<g filter="url(#pgSh)" stroke="${DK}" stroke-width="2.5" stroke-linejoin="round"><path d="M4 10 H20 L32 58 H82 L94 22 H24" fill="none" stroke="${G}" stroke-width="8" stroke-linecap="round"/><path d="M26 24 H92 L82 56 H33Z" fill="${GD}"/><path d="M40 24 L44 56 M56 24 L58 56 M72 24 L70 56 M28 40 H88" stroke="#5a3404" stroke-width="2.5"/><circle cx="38" cy="74" r="9" fill="${G}"/><circle cx="76" cy="74" r="9" fill="${G}"/></g>`),
+ clip:sv('0 0 90 100',`<g filter="url(#pgSh)"><rect x="12" y="12" width="66" height="84" rx="6" fill="${GD}" stroke="${DK}" stroke-width="2.5"/><rect x="19" y="20" width="52" height="70" rx="3" fill="#fbf0cf"/><path d="M27 38 H63 M27 50 H63 M27 62 H63 M27 74 H52" stroke="#a07a3a" stroke-width="4" stroke-linecap="round"/><rect x="30" y="4" width="30" height="16" rx="5" fill="${G}" stroke="${DK}" stroke-width="2.5"/></g>`),
+ wheel:sv('0 0 100 100',`<g filter="url(#pgSh)"><path d="M50 52 L30 96 H70Z" fill="${GD}" stroke="${DK}" stroke-width="2.5"/>${[0,1,2,3,4,5,6,7].map(i=>{const a=i*Math.PI/4,b=a+Math.PI/4;return `<path d="M50 46 L${50+36*Math.cos(a)} ${46+36*Math.sin(a)} A36 36 0 0 1 ${50+36*Math.cos(b)} ${46+36*Math.sin(b)}Z" fill="${i%2?'#7a1ac0':'#c01a3a'}"/>`;}).join('')}<circle cx="50" cy="46" r="38" fill="none" stroke="${G}" stroke-width="7"/>${[0,1,2,3,4,5,6,7].map(i=>{const a=i*Math.PI/4+Math.PI/8;return `<line x1="50" y1="46" x2="${50+35*Math.cos(a-Math.PI/8)}" y2="${46+35*Math.sin(a-Math.PI/8)}" stroke="${G}" stroke-width="3"/><circle cx="${50+38*Math.cos(a)}" cy="${46+38*Math.sin(a)}" r="3.2" fill="#fff6c8"/>`;}).join('')}<circle cx="50" cy="46" r="8" fill="${G}" stroke="${DK}" stroke-width="2"/></g>`),
+ ticket:sv('0 0 110 80',`<g filter="url(#pgSh)"><path d="M6 12 H104 V30 A8 8 0 0 0 104 48 V68 H6 V48 A8 8 0 0 0 6 30Z" fill="${GD}" stroke="${DK}" stroke-width="2.5"/><rect x="14" y="18" width="82" height="44" rx="3" fill="none" stroke="#fff3c0" stroke-width="1.6" stroke-dasharray="3 2"/><text x="40" y="34" font-size="13" font-weight="900" text-anchor="middle" fill="#3a2004" font-family="Georgia,serif">TICKET</text><path d="M22 44 h36 M22 52 h28" stroke="#3a2004" stroke-width="3"/>${[0,1,2,3,4,5,6,7,8].map(i=>`<rect x="${70+i*2.8}" y="38" width="${i%3?1.4:2.2}" height="18" fill="#3a2004"/>`).join('')}</g>`),
+ medal:sv('0 0 90 100',`<g filter="url(#pgSh)"><path d="M28 2 H44 L52 40 H36Z" fill="#d42a2a" stroke="${DK}" stroke-width="2"/><path d="M46 2 H62 L54 40 H38Z" fill="#f4f0e6" stroke="${DK}" stroke-width="2"/><path d="M50 2 H58 L52 30" fill="#d42a2a"/><circle cx="45" cy="66" r="27" fill="${G}" stroke="${DK}" stroke-width="2.5"/><circle cx="45" cy="66" r="20" fill="none" stroke="#fff3c0" stroke-width="1.5" opacity=".7"/><path d="M45 50 L50 61 L62 62 L53 70 L56 82 L45 76 L34 82 L37 70 L28 62 L40 61Z" fill="#fff4c8" stroke="${DK}" stroke-width="1.5"/></g>`),
+ mail:sv('0 0 110 80',`<g filter="url(#pgSh)"><rect x="6" y="10" width="98" height="62" rx="5" fill="#fbf0cf" stroke="${G}" stroke-width="5"/><path d="M8 13 L55 46 L102 13" fill="none" stroke="#c8902a" stroke-width="4"/><path d="M8 70 L42 38 M102 70 L68 38" stroke="#d8b06a" stroke-width="3"/></g>`),
+ gear:sv('0 0 100 100',`<g filter="url(#pgSh)"><path d="${gearPath(50,50,44,34,10)}" fill="${G}" stroke="${DK}" stroke-width="2.5" stroke-linejoin="round"/><circle cx="50" cy="50" r="22" fill="${GD}" stroke="${DK}" stroke-width="2.5"/><circle cx="50" cy="50" r="10" fill="#2a1240" stroke="${DK}" stroke-width="2.5"/></g>`),
+ gem:sv('0 0 100 90',`<g filter="url(#pgSh)"><path d="M22 8 H78 L96 32 L50 86 L4 32Z" fill="#2a8af0" stroke="#0a2a6a" stroke-width="2.5" stroke-linejoin="round"/><path d="M4 32 H96 M22 8 L36 32 L50 8 L64 32 L78 8 M36 32 L50 86 L64 32" fill="none" stroke="#bfe8ff" stroke-width="2"/><path d="M22 8 H50 L36 32 H4Z" fill="#bfeaff" opacity=".7"/><path d="M50 8 H78 L64 32Z" fill="#7cc8ff" opacity=".8"/><path d="M36 32 H64 L50 86Z" fill="#1a6ad0" opacity=".6"/></g>`),
+ cash:sv('0 0 110 80',`<g filter="url(#pgSh)"><rect x="14" y="8" width="88" height="48" rx="4" fill="#2f8a3a" stroke="#0a3a12" stroke-width="2.5" transform="rotate(-8 58 32)"/><rect x="6" y="22" width="92" height="50" rx="4" fill="#4ac05a" stroke="#0a3a12" stroke-width="2.5"/><rect x="13" y="28" width="78" height="38" rx="3" fill="none" stroke="#c8f0b0" stroke-width="1.6"/><circle cx="52" cy="47" r="14" fill="#2f8a3a" stroke="#c8f0b0" stroke-width="1.6"/><text x="52" y="48" font-size="20" font-weight="900" text-anchor="middle" dominant-baseline="middle" fill="#e8ffd8" font-family="Georgia,serif">$</text></g>`),
+ gift:sv('0 0 100 100',`<g filter="url(#pgSh)" stroke="${DK}" stroke-width="2.5" stroke-linejoin="round"><path d="M50 30 C30 4 12 18 30 30 Z" fill="${G}"/><path d="M50 30 C70 4 88 18 70 30 Z" fill="${G}"/><rect x="12" y="44" width="76" height="50" rx="3" fill="${GD}"/><rect x="6" y="28" width="88" height="20" rx="3" fill="${G}"/><rect x="43" y="28" width="14" height="66" fill="#fff0b0"/><path d="M14 52 H86" stroke="#7a4806" opacity=".4"/></g>`),
+ wings:sv('0 0 300 150',(()=>{let o='';const A=[-30,-17,-4,9,20];A.forEach((ang,k)=>{const L=150-k*10;o+=`<g transform="translate(150 80) rotate(${ang})"><path d="M0 -14 Q${-L*.45} -30 ${-L} -6 Q${-L*.8} 4 ${-L*.62} 6 Q${-L*.4} 22 0 16Z" fill="${k%2?GD:G}" stroke="${DK}" stroke-width="2.2"/><path d="M-12 0 Q${-L*.45} -10 ${-L*.9} -5" fill="none" stroke="#7a4806" stroke-width="1.6" opacity=".8"/></g>`;});
+   return `<g filter="url(#pgSh)">${o}<g transform="translate(300 0) scale(-1 1)">${o}</g></g>`;})()),
+ logo:sv('0 0 820 210',(()=>{
+   const pen=x=>`<g filter="url(#pgSh)"><path d="M${x-26} 0 H${x+26} V150 L${x} 128 L${x-26} 150Z" fill="#3a0a6a" stroke="${G}" stroke-width="4"/><path d="M${x-18} 0 V138 M${x+18} 0 V138" stroke="#7a2ad0" stroke-width="2" opacity=".7"/>${crown(x-17,96,34,22,false)}</g>`;
+   const feather=(k,dir)=>{const len=250-k*28,y=112-k*4;return `<path d="M410 ${y} Q${410-dir*len*.5} ${y-62+k*8} ${410-dir*len} ${y-30+k*14} Q${410-dir*len*.7} ${y+4+k*5} 410 ${y+26}Z" fill="${k%2?GD:G}" stroke="${DK}" stroke-width="2.4"/>`;};
+   let w='';for(let k=0;k<6;k++)w+=feather(k,1)+feather(k,-1);
+   return `<ellipse cx="410" cy="112" rx="330" ry="95" fill="url(#pgGlow)"/>${pen(40)}${pen(780)}<g filter="url(#pgSh)">${w}</g>
+   <g filter="url(#pgSh)">${crown(330,26,160,70)}${ball8(410,46,32)}</g>
+   <g filter="url(#pgSh)"><path d="M140 112 L172 82 H648 L680 112 L648 168 H172Z" fill="#14061f" stroke="${G}" stroke-width="5"/><path d="M152 112 L178 89 H642 L668 112 L642 161 H178Z" fill="none" stroke="#a06a1a" stroke-width="2"/></g>
+   <text x="410" y="128" text-anchor="middle" dominant-baseline="middle" font-family="'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif" font-weight="900" font-size="74" textLength="460" lengthAdjust="spacingAndGlyphs" fill="url(#pgGt)" stroke="#3a1a02" stroke-width="2.4" paint-order="stroke" filter="url(#pgSh)"><tspan font-size="96">8</tspan>BLACKBALL</text>
+   ${diamond(410,178,20)}`;})()),
+ // büyük kart çizimleri
+ tOne:sv('0 0 200 170',`${laurel(100,100,70,7)}<g filter="url(#pgSh)">${ball8(100,104,52)}${crown(60,8,80,48)}</g>`),
+ tCup:sv('0 0 200 170',`${laurel(100,96,72,7)}<g filter="url(#pgSh)" stroke="${DK}" stroke-width="2.5" stroke-linejoin="round"><path d="M56 34 C28 34 30 80 70 84" fill="none" stroke="${G}" stroke-width="9"/><path d="M144 34 C172 34 170 80 130 84" fill="none" stroke="${G}" stroke-width="9"/><path d="M54 16 H146 C146 70 128 96 100 100 C72 96 54 70 54 16Z" fill="${G}"/><path d="M68 24 C68 60 80 84 96 92" fill="none" stroke="#fff8d0" stroke-width="5" opacity=".6"/><rect x="92" y="98" width="16" height="20" fill="${GD}"/><path d="M70 118 H130 L136 140 H64Z" fill="${G}"/><rect x="56" y="140" width="88" height="16" rx="3" fill="#3a2410"/><rect x="80" y="144" width="40" height="8" fill="${G}" stroke-width="1"/><path d="M100 36 l6 12 13 1 -10 9 3 13 -12 -7 -12 7 3 -13 -10 -9 13 -1z" fill="#fff4c8" stroke-width="1.5"/></g>`),
+ tCues:sv('0 0 200 170',`${laurel(100,104,70,7)}<g filter="url(#pgSh)">${[-1,1].map(s=>`<g transform="rotate(${s*42} 100 100)"><rect x="96" y="-6" width="8" height="200" rx="4" fill="url(#pgWood)" stroke="#3a2008" stroke-width="1.5"/><rect x="95" y="128" width="10" height="66" rx="4" fill="#1a0c04"/><rect x="95" y="124" width="10" height="5" fill="${G}"/><rect x="95" y="160" width="10" height="4" fill="${G}"/><rect x="97" y="-8" width="6" height="6" fill="#4a7ac0"/></g>`).join('')}${ball8(100,102,40)}${crown(68,22,64,40)}</g>`),
+ tDart:sv('0 0 200 170',`${laurel(100,100,72,7)}<g filter="url(#pgSh)"><circle cx="100" cy="98" r="56" fill="#f2efe6" stroke="${DK}" stroke-width="3"/><circle cx="100" cy="98" r="50" fill="#d01818"/><circle cx="100" cy="98" r="38" fill="#f2efe6"/><circle cx="100" cy="98" r="27" fill="#d01818"/><circle cx="100" cy="98" r="16" fill="#f2efe6"/><circle cx="100" cy="98" r="7" fill="#d01818"/><ellipse cx="80" cy="70" rx="22" ry="9" fill="#fff" opacity=".35" transform="rotate(-35 80 70)"/></g><g filter="url(#pgSh)"><path d="M102 96 L156 42" stroke="#555" stroke-width="5" stroke-linecap="round"/><path d="M102 96 L114 84" stroke="#ccc" stroke-width="3"/><path d="M150 48 L178 30 L166 58Z M150 48 L172 20 L180 36Z" fill="#2a8af0" stroke="#0a2a6a" stroke-width="2"/></g>`),
+ tChest:sv('0 0 200 170',`<g filter="url(#pgSh)" stroke="#2a1404" stroke-width="2.5" stroke-linejoin="round"><path d="M40 70 Q100 18 160 70Z" fill="url(#pgChest)" transform="rotate(-14 40 70) translate(6 -10)"/><path d="M36 70 H164 V146 H36Z" fill="url(#pgChest)"/>
+   ${[[60,62],[78,56],[96,54],[114,56],[132,60],[70,48],[100,44],[124,48],[86,40],[112,38]].map(([x,y])=>`<ellipse cx="${x}" cy="${y+10}" rx="12" ry="7" fill="${G}" stroke="#7a4806" stroke-width="1.5"/>`).join('')}
+   <path d="M36 70 H164 V86 H36Z" fill="${GD}"/><path d="M36 128 H164 V146 H36Z" fill="${GD}"/><rect x="52" y="70" width="12" height="76" fill="${G}"/><rect x="136" y="70" width="12" height="76" fill="${G}"/><rect x="86" y="92" width="28" height="30" rx="4" fill="${G}"/><circle cx="100" cy="104" r="5" fill="#2a1404"/><path d="M100 104 v10" stroke="#2a1404" stroke-width="4"/>
+   <ellipse cx="22" cy="150" rx="14" ry="8" fill="${G}"/><ellipse cx="178" cy="148" rx="14" ry="8" fill="${G}"/><ellipse cx="190" cy="136" rx="10" ry="6" fill="${G}"/></g>
+   ${diamond(28,132,16)}${diamond(176,118,14)}${diamond(160,152,10,'url(#pgBlu)')}`),
+ lion:sv('0 0 120 240',`<g filter="url(#pgSh)"><rect x="18" y="104" width="84" height="18" rx="3" fill="${GD}" stroke="${DK}" stroke-width="2"/><rect x="26" y="120" width="68" height="120" fill="#2a1a10" stroke="${G}" stroke-width="3"/>${[0,1,2,3,4].map(i=>`<rect x="${34+i*12}" y="128" width="5" height="112" fill="#6a4818" opacity=".7"/>`).join('')}<rect x="14" y="96" width="92" height="10" rx="2" fill="${G}" stroke="${DK}" stroke-width="2"/>
+   ${Array.from({length:16},(_,i)=>{const a=i/16*Math.PI*2;return `<ellipse cx="${60+33*Math.cos(a)}" cy="${52+33*Math.sin(a)}" rx="16" ry="10" transform="rotate(${a*180/Math.PI} ${60+33*Math.cos(a)} ${52+33*Math.sin(a)})" fill="#b07a1a" stroke="${DK}" stroke-width="1.6"/>`;}).join('')}
+   <circle cx="42" cy="28" r="7" fill="${GD}" stroke="${DK}" stroke-width="1.5"/><circle cx="78" cy="28" r="7" fill="${GD}" stroke="${DK}" stroke-width="1.5"/><path d="M36 44 Q36 22 60 22 Q84 22 84 44 Q86 74 60 82 Q34 74 36 44Z" fill="${G}" stroke="${DK}" stroke-width="2"/><path d="M42 44 q8 -6 14 0 M64 44 q6 -6 14 0" stroke="${DK}" stroke-width="2.5" fill="none"/><ellipse cx="49" cy="48" rx="4" ry="2.5" fill="#2a1404"/><ellipse cx="71" cy="48" rx="4" ry="2.5" fill="#2a1404"/><path d="M54 58 H66 L60 65Z" fill="#3a1a04"/><path d="M60 65 q-6 8 -12 4 M60 65 q6 8 12 4" stroke="${DK}" stroke-width="2" fill="none"/><ellipse cx="60" cy="70" rx="10" ry="6" fill="#ffe8a0" opacity=".5"/></g>`),
+ cueL:sv('0 0 700 40',`<g filter="url(#pgSh)"><path d="M0 14 L690 19 Q698 20 690 21 L0 30Z" fill="url(#pgWood)" stroke="#2a1404" stroke-width="1.5"/><path d="M0 14 L260 16 L260 28 L0 30Z" fill="#1a0c04"/><rect x="256" y="15" width="8" height="14" fill="${G}"/><rect x="120" y="14.8" width="5" height="15" fill="${G}"/><rect x="684" y="18.6" width="10" height="3" fill="#3a6ac0"/></g>`),
+ bigBall8:sv('0 0 200 200',`<g filter="url(#pgSh)">${ball8(100,100,92)}</g>`),
+ bigCue:sv('0 0 200 200',`<g filter="url(#pgSh)"><circle cx="100" cy="100" r="92" fill="url(#pgWht)"/><ellipse cx="66" cy="52" rx="34" ry="16" fill="#fff" opacity=".7" transform="rotate(-30 66 52)"/></g>`),
+ bolt:sv('0 0 120 400',`<path d="M70 0 L40 90 L72 120 L30 220 L66 250 L20 400" fill="none" stroke="#c070ff" stroke-width="5" opacity=".9"/><path d="M70 0 L40 90 L72 120 L30 220 L66 250 L20 400" fill="none" stroke="#fff" stroke-width="1.6"/><path d="M72 120 L100 160 M30 220 L8 260" stroke="#c070ff" stroke-width="3" fill="none"/>`),
+};
+window.PM_IC=IC;window.PM_CORNER=corner;
+window.pmChest=(col)=>sv('0 0 120 90',`<g filter="url(#pgSh)" stroke="#2a1404" stroke-width="2.5" stroke-linejoin="round"><path d="M14 36 Q60 0 106 36Z" fill="url(#pgChest)"/><rect x="12" y="36" width="96" height="48" fill="url(#pgChest)"/><rect x="12" y="36" width="96" height="10" fill="${col}"/><rect x="12" y="74" width="96" height="10" fill="${col}"/><rect x="26" y="18" width="10" height="66" fill="${col}"/><rect x="84" y="18" width="10" height="66" fill="${col}"/><rect x="50" y="46" width="20" height="20" rx="3" fill="${col}"/><circle cx="60" cy="55" r="3.5" fill="#2a1404"/></g>`);
+const fill=root=>root.querySelectorAll('i.pmi[data-i]').forEach(e=>{if(!e.firstChild&&IC[e.dataset.i])e.innerHTML=IC[e.dataset.i];});
+fill(document);
+// köşe süsleri: kartlar, günlük ödül
+const addCorners=el=>{if(el.querySelector(':scope>.pmC'))return;['tl','tr','bl','br'].forEach(c=>{const i=document.createElement('i');i.className='pmC '+c;i.innerHTML=corner;el.append(i);});};
+document.querySelectorAll('#menu .tile,#menu .dbtn').forEach(addCorners);
+window.pmCorners=addCorners;
+// arka plan süsleri
+const d=$('pmDeco');
+if(d)d.innerHTML=`<i class="pmBolt l">${IC.bolt}</i><i class="pmBolt r">${IC.bolt}</i><i class="pmLion l">${IC.lion}</i><i class="pmLion r">${IC.lion}</i><i class="pmCue l">${IC.cueL}</i><i class="pmCue r">${IC.cueL}</i><i class="pmBall l">${IC.bigBall8}</i><i class="pmBall r">${IC.bigCue}</i>`;
+const st=$('stats');if(st&&!document.querySelector('.pmStC')){const c=document.createElement('i');c.className='pmStC';c.innerHTML=IC.crown;st.before(c);}
+// + düğmeleri mağazayı açar
+document.querySelectorAll('#menu .pmPlus').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();$('tShop').click();}));
+})();
+
+renderSlots();
 </script>
 </body>
 </html>
