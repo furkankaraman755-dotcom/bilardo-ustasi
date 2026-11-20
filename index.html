@@ -297,40 +297,40 @@ button:disabled{opacity:.45}
 #mmScr .mmFlash{animation:mmfl .5s}@keyframes mmfl{0%{filter:brightness(5)}100%{filter:brightness(1)}}
 #mmScr .mmBlack{position:absolute;inset:0;z-index:9;background:#000;opacity:0;pointer-events:none;transition:opacity .35s}
 /* ================= ROYAL CLASSIC TASARIM DİLİ ================= */
-:root{--rc-gold:#c9a24e;--rc-gold2:#f0d78c;--rc-gold3:#8a6a2a;--rc-wood:#2c1c11;--rc-wood2:#140d08;--rc-text:#efe6d2;--rc-font:'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif}
-html,body{background:#0b0806!important;color:var(--rc-text)!important;font-family:var(--rc-font)!important}
+:root{--rc-gold:#c9a24e;--rc-gold2:#f0d78c;--rc-gold3:#8a6a2a;--rc-wood:#24103e;--rc-wood2:#0b0414;--rc-text:#f2ecff;--rc-font:Roboto,'Segoe UI',system-ui,Arial,sans-serif}
+html,body{background:#0b0414!important;color:var(--rc-text)!important;font-family:var(--rc-font)!important}
 button{font-family:var(--rc-font)}
 #menu,.lscr,#shop,#login,#game{background:
-  radial-gradient(ellipse 28% 24% at 22% 0%,rgba(255,206,130,.2),transparent 70%),
-  radial-gradient(ellipse 28% 24% at 78% 0%,rgba(255,206,130,.2),transparent 70%),
-  radial-gradient(ellipse 70% 40% at 50% 112%,rgba(40,95,60,.35),transparent 70%),
+  radial-gradient(ellipse 28% 24% at 22% 0%,rgba(170,90,255,.22),transparent 70%),
+  radial-gradient(ellipse 28% 24% at 78% 0%,rgba(170,90,255,.22),transparent 70%),
+  radial-gradient(ellipse 70% 40% at 50% 112%,rgba(120,50,220,.38),transparent 70%),
   linear-gradient(180deg,transparent 63%,rgba(201,162,78,.28) 63.2%,transparent 63.8%),
   repeating-linear-gradient(90deg,rgba(0,0,0,.3) 0 2px,rgba(255,255,255,.018) 2px 3px,transparent 3px 160px),
-  linear-gradient(180deg,#24170e 0%,#150d08 58%,#0b0705 100%)!important}
+  linear-gradient(180deg,#1a0a2e 0%,#12061f 58%,#07030d 100%)!important}
 /* çerçeve: deri + ince altın işleme */
 .prof,.tb,.cur,.ib,.slot,.room,.item,.pk,.lrow,.day,.mis,.coins,.htabs button,.top .back,.hdr .back,#sback,.cr,.fr,.dlist .mis,
 #game .pname,#game .brow,#game .stake,#emoBtn,#likeBtn,.cueb,#toast,#emoBar,#giftBar,.vspot,#mmScr .mmPot{
-  background:linear-gradient(180deg,#2e1d12,#170e08)!important;border:1px solid var(--rc-gold)!important;
+  background:linear-gradient(180deg,#2a1048,#0e0619)!important;border:1px solid var(--rc-gold)!important;
   box-shadow:inset 0 0 0 1px rgba(0,0,0,.75),inset 0 0 0 3px rgba(201,162,78,.22),0 3px 8px rgba(0,0,0,.55)!important;color:var(--rc-text)}
-button:not(.gold):not(.tile):not(.hm):not(.dbtn){background:linear-gradient(180deg,#3a2616,#1c110a);border:1px solid rgba(201,162,78,.7);color:var(--rc-text)}
+button:not(.gold):not(.tile):not(.hm):not(.dbtn){background:linear-gradient(180deg,#3a1a5e,#1a0a30);border:1px solid rgba(201,162,78,.7);color:var(--rc-text)}
 .gold,button.gold{background:linear-gradient(180deg,#f6e3a8,#c9a24e 55%,#8a6a2a)!important;color:#2a1a08!important;border:1px solid #f6e3a8!important;text-shadow:0 1px 0 rgba(255,255,255,.35);font-weight:800}
 .htabs button.on{background:linear-gradient(180deg,#f6e3a8,#c9a24e)!important;color:#2a1a08!important}
 h2,h3,.mtitle,.tile b,.hdr h2,.top h2,#over h2{font-family:var(--rc-font)!important;color:var(--rc-gold2)}
-.stats,.sm{color:#c9b89a!important}
+.stats,.sm{color:#b9a9d6!important}
 /* ana ekran */
 .mtitle{background:linear-gradient(#fff3c8,#c9a24e 60%,#8a6a2a);-webkit-background-clip:text;background-clip:text;color:transparent!important;letter-spacing:2px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.8))}
 .mtitle::before{content:'♛ ';}.mtitle::after{content:' ♛'}
-.tile{background:linear-gradient(180deg,#3a2414,#1a0f08)!important;border:1.5px solid var(--rc-gold)!important;border-radius:14px!important;
-  box-shadow:inset 0 0 0 4px #1a0f08,inset 0 0 0 5px rgba(201,162,78,.45),0 6px 16px rgba(0,0,0,.6)!important;position:relative}
+.tile{background:linear-gradient(180deg,#341656,#120722)!important;border:1.5px solid var(--rc-gold)!important;border-radius:14px!important;
+  box-shadow:inset 0 0 0 4px #120722,inset 0 0 0 5px rgba(201,162,78,.45),0 6px 16px rgba(0,0,0,.6)!important;position:relative}
 .tile::before,.tile::after{content:'';position:absolute;width:22px;height:22px;border:2px solid var(--rc-gold2);opacity:.75}
 .tile::before{top:7px;left:7px;border-right:0;border-bottom:0}.tile::after{bottom:7px;right:7px;border-left:0;border-top:0}
-.tile .ic{display:flex;align-items:center;justify-content:center;width:62px;height:62px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#4a2e18,#1a0f08);border:2px solid var(--rc-gold);box-shadow:0 0 0 3px #1a0f08,0 0 0 4px rgba(201,162,78,.5)}
+.tile .ic{display:flex;align-items:center;justify-content:center;width:62px;height:62px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#3a1a60,#120722);border:2px solid var(--rc-gold);box-shadow:0 0 0 3px #120722,0 0 0 4px rgba(201,162,78,.5)}
 .tile .ic,.tb,.ib,.dbtn,.slot .ic{filter:sepia(.85) saturate(1.6) hue-rotate(-6deg) brightness(1.02)}
-.tile span:not(.ic){color:#e6d6b0;font-family:var(--rc-font)}
-.dbtn{background:linear-gradient(180deg,#3a2414,#1a0f08)!important;border:1.5px solid var(--rc-gold)!important;color:var(--rc-gold2)!important}
+.tile span:not(.ic){color:#d8ccf0;font-family:var(--rc-font)}
+.dbtn{background:linear-gradient(180deg,#341656,#120722)!important;border:1.5px solid var(--rc-gold)!important;color:var(--rc-gold2)!important}
 .prof{border-radius:12px 12px 22px 22px!important;position:relative}
 .prof::before{content:'♛';position:absolute;left:26px;top:-11px;color:var(--rc-gold2);font-size:17px;text-shadow:0 1px 2px #000;z-index:2}
-.prof .av,#av{box-shadow:0 0 0 2px #1a0f08,0 0 0 4px var(--rc-gold),0 0 0 5px #000!important;border-color:var(--rc-gold2)!important}
+.prof .av,#av{box-shadow:0 0 0 2px #120722,0 0 0 4px var(--rc-gold),0 0 0 5px #000!important;border-color:var(--rc-gold2)!important}
 .cur{color:var(--rc-gold2)!important}.cur.cash{color:#cfe8b0!important}
 .slot{border-style:solid!important;opacity:.85}
 #pTitle,.ttl,.oxti{color:var(--rc-gold2)!important}
@@ -340,7 +340,7 @@ h2,h3,.mtitle,.tile b,.hdr h2,.top h2,#over h2{font-family:var(--rc-font)!import
 .room .wm{position:absolute;right:-8px;bottom:36px;font-size:84px;opacity:.13;pointer-events:none;filter:grayscale(.2)}
 .room .lg{color:#2a1a08!important;background:linear-gradient(180deg,#f6e3a8,#c9a24e);padding:1px 12px;border-radius:2px;font-size:10px!important;letter-spacing:2px!important;box-shadow:0 1px 3px rgba(0,0,0,.6);clip-path:polygon(0 0,100% 0,94% 50%,100% 100%,0 100%,6% 50%)}
 .room h3{color:var(--rc-gold2)!important;font-size:18px!important;text-shadow:0 2px 3px #000}
-.room .sub{font-size:11px;color:#e6d6b0;font-style:italic}
+.room .sub{font-size:11px;color:#d8ccf0;font-style:italic}
 .room .rl{color:var(--rc-gold2)!important;border-color:var(--rc-gold)!important;background:rgba(0,0,0,.35)}
 .room .pz{color:var(--rc-gold2)!important;font-family:var(--rc-font)}
 .room.sel{transform:translateY(-4px);box-shadow:inset 0 0 0 1px rgba(0,0,0,.75),inset 0 0 0 3px rgba(240,215,140,.6),0 0 0 2px var(--rc-gold2),0 8px 18px rgba(0,0,0,.7)!important}
@@ -348,21 +348,21 @@ h2,h3,.mtitle,.tile b,.hdr h2,.top h2,#over h2{font-family:var(--rc-font)!import
 .ccat{font-size:10px;font-weight:800;border:1px solid;border-radius:3px;padding:0 6px;margin-left:4px;letter-spacing:1px;text-transform:uppercase}
 /* oyun ekranı */
 #game .pside.on .pname{box-shadow:inset 0 0 0 1px rgba(0,0,0,.75),0 0 0 1.5px var(--rc-gold2),0 0 8px rgba(240,215,140,.45)!important}
-#game .pav{background:conic-gradient(var(--rc-gold2) calc(var(--t,1)*360deg),#2a1a10 0)!important;box-shadow:0 2px 6px rgba(0,0,0,.6)!important}
-#game .pside:not(.on) .pav{background:linear-gradient(135deg,#8a6a2a,#3a2414)!important}
+#game .pav{background:conic-gradient(var(--rc-gold2) calc(var(--t,1)*360deg),#2a1048 0)!important;box-shadow:0 2px 6px rgba(0,0,0,.6)!important}
+#game .pside:not(.on) .pav{background:linear-gradient(135deg,#8a6a2a,#341656)!important}
 #game .stake{color:var(--rc-gold2)!important}
-.hm,#gmenu{background:linear-gradient(180deg,#3a2414,#1a0f08)!important;border:1.5px solid var(--rc-gold)!important;color:var(--rc-gold2)!important}
+.hm,#gmenu{background:linear-gradient(180deg,#341656,#120722)!important;border:1.5px solid var(--rc-gold)!important;color:var(--rc-gold2)!important}
 #emoBtn,#likeBtn{color:var(--rc-gold2)!important;filter:sepia(.7) saturate(1.5)}
-#spin{box-shadow:0 0 0 2px #1a0f08,0 0 0 3.5px var(--rc-gold),0 3px 10px rgba(0,0,0,.6)!important}
+#spin{box-shadow:0 0 0 2px #120722,0 0 0 3.5px var(--rc-gold),0 3px 10px rgba(0,0,0,.6)!important}
 .cueb{box-shadow:inset 0 0 0 1px rgba(0,0,0,.75),0 3px 8px rgba(0,0,0,.55)!important}
 #game .side.lft .lbl{color:var(--rc-gold2)!important;font-family:var(--rc-font)}
-#dlg .box,#over .box,.pbox{background:linear-gradient(180deg,#2e1d12,#140d08)!important;border:1.5px solid var(--rc-gold)!important;box-shadow:inset 0 0 0 4px #140d08,inset 0 0 0 5px rgba(201,162,78,.35),0 10px 30px rgba(0,0,0,.7)!important}
+#dlg .box,#over .box,.pbox{background:linear-gradient(180deg,#2a1048,#0b0414)!important;border:1.5px solid var(--rc-gold)!important;box-shadow:inset 0 0 0 4px #0b0414,inset 0 0 0 5px rgba(201,162,78,.35),0 10px 30px rgba(0,0,0,.7)!important}
 .vsbox .em,.mmEm{filter:drop-shadow(0 2px 4px rgba(0,0,0,.7))}
 #mmScr .mmTitle{background:linear-gradient(#fff3c8,#c9a24e 60%,#8a6a2a)!important;-webkit-background-clip:text!important;background-clip:text!important;filter:drop-shadow(0 3px 2px rgba(0,0,0,.9))!important}
-#mmScr .mmTitle small{color:#e6d6b0!important;-webkit-text-fill-color:#e6d6b0!important;font-family:var(--rc-font)!important}
+#mmScr .mmTitle small{color:#d8ccf0!important;-webkit-text-fill-color:#d8ccf0!important;font-family:var(--rc-font)!important}
 #mmScr .mmVS{color:var(--rc-gold2)!important;text-shadow:0 4px 0 #6a4a14,0 0 14px rgba(0,0,0,.6)!important}
-#mmScr .mmA{border:5px solid var(--rc-gold)!important;box-shadow:0 0 0 3px #1a0f08,0 8px 20px rgba(0,0,0,.7)!important}
-#mmScr .mmTop span{background:linear-gradient(180deg,#2e1d12,#170e08)!important;border:1px solid var(--rc-gold);color:var(--rc-gold2)}
+#mmScr .mmA{border:5px solid var(--rc-gold)!important;box-shadow:0 0 0 3px #120722,0 8px 20px rgba(0,0,0,.7)!important}
+#mmScr .mmTop span{background:linear-gradient(180deg,#2a1048,#0e0619)!important;border:1px solid var(--rc-gold);color:var(--rc-gold2)}
 /* 3B canlı çipler */
 .chip{position:relative;filter:saturate(1.25) brightness(1.18) contrast(1.15)!important;box-shadow:0 1px 0 #8a8a8a,0 2px 0 #5a5a5a,0 3px 0 #3a3a3a,0 4px 4px rgba(0,0,0,.65)!important}
 .chip::after{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 34% 24%,rgba(255,255,255,.7),rgba(255,255,255,0) 42%),radial-gradient(circle at 70% 85%,rgba(255,215,140,.25),transparent 50%);pointer-events:none}
@@ -370,11 +370,23 @@ h2,h3,.mtitle,.tile b,.hdr h2,.top h2,#over h2{font-family:var(--rc-font)!import
 #mmScr .mmPot .chip,.vspot .chip,.chip.big{animation:chip3d 2.4s linear infinite;box-shadow:0 2px 0 #9a9a9a,0 4px 0 #6a6a6a,0 6px 0 #3a3a3a,0 9px 10px rgba(0,0,0,.7)!important}
 .cfly{animation:chip3d .5s linear infinite}
 
-.cpow{background:linear-gradient(180deg,#2e1d12,#170e08)!important;border:1px solid var(--rc-gold)!important;color:var(--rc-text)}
-.bars i{background:#2a1c10!important;border:1px solid rgba(201,162,78,.25)}.bars i.on{background:linear-gradient(180deg,#f6e3a8,#c9a24e)!important}
-.blue{background:linear-gradient(180deg,#5a3a20,#2e1a0c)!important;color:var(--rc-gold2)!important;border:1px solid var(--rc-gold)!important}
+.cpow{background:linear-gradient(180deg,#2a1048,#0e0619)!important;border:1px solid var(--rc-gold)!important;color:var(--rc-text)}
+.bars i{background:#1e0c36!important;border:1px solid rgba(201,162,78,.25)}.bars i.on{background:linear-gradient(180deg,#f6e3a8,#c9a24e)!important}
+.blue{background:linear-gradient(180deg,#4a2080,#26103f)!important;color:var(--rc-gold2)!important;border:1px solid var(--rc-gold)!important}
 .cr.eq,.item.eq{box-shadow:inset 0 0 0 1px rgba(0,0,0,.75),0 0 0 2px var(--rc-gold2)!important}
 
+/* ================= MOR-ALTIN TEMA: ek ayarlar ================= */
+#dlg{background:rgba(8,3,16,.8)!important}
+h2,h3,.hdr h2,.top h2,#over h2,#dlg h2,#dlg h3{color:#fff!important;font-weight:800}
+.room h3,.mqHead b{color:var(--rc-gold2)}
+button:disabled{opacity:.55;filter:saturate(.6)}
+.htabs button.on{box-shadow:0 0 14px rgba(240,200,110,.45)!important}
+.cr.eq,.item.eq{box-shadow:inset 0 0 0 1px rgba(0,0,0,.75),0 0 0 2px var(--rc-gold2),0 0 16px rgba(170,90,255,.55)!important}
+.lbox{background:linear-gradient(180deg,rgba(40,17,68,.92),rgba(14,6,26,.95))!important;border:1px solid rgba(240,200,110,.6)!important;border-radius:20px!important}
+#lname{background:#120722!important;border-color:rgba(240,200,110,.5)!important}
+.lbox{padding:20px!important;box-sizing:border-box}
+#dlg input:not([type=range]),.lscr input:not([type=range]){background:#120722!important;border:1px solid rgba(240,200,110,.5)!important;color:#fff!important;border-radius:10px}
+.mis .bar,.xpb,.oxbar,.pcb .xpb{background:#1a0a2e!important}
 /* ================= ANA MENÜ: özgün tasarım ================= */
 #menu{--p:calc(min(1vh,.4663vw)/8.56);padding:0!important;gap:0!important;overflow:hidden!important;background:#07030d!important;font-family:Roboto,'Segoe UI',system-ui,Arial,sans-serif!important}
 #menu *{font-family:inherit}
@@ -751,7 +763,7 @@ const CHEST_MIN=[15,60,180,480]; // sandık açılma süreleri (dakika)
 const LEAGUES=[{n:'Bronz Ligi',ic:'🥉',min:0,rw:0},{n:'Gümüş Ligi',ic:'🥈',min:100e3,rw:10e3},{n:'Altın Ligi',ic:'🥇',min:1e6,rw:100e3},{n:'Elmas Ligi',ic:'💎',min:10e6,rw:1e6},{n:'Usta Ligi',ic:'👑',min:100e6,rw:10e6}];
 const FREE=[{t:'c',v:1000},{t:'c',v:2500},{t:'c',v:5000},{t:'chest',v:0}];
 const TABLES=[ // f=çuha, c=yastık, w=bant, a=süs/altın, d=nişan noktası, pt=desen (0 çizgi, 1 kafes, 2 halka)
- {id:'rclassic',name:'Royal Classic',price:0,f1:'#1d6b44',f2:'#0b3a22',c:'#1d6b44',w1:'#2e1a0d',w2:'#140b05',a:'#c9a24e',d:'#c9a24e',pt:0,style:'royal'},
+ {id:'rclassic',name:'Royal Turnuva',price:0,f1:'#1d5fb0',f2:'#0b2a5a',c:'#1d5fb0',w1:'#2e1a0d',w2:'#140b05',a:'#c9a24e',d:'#c9a24e',pt:0,style:'royal'},
  {id:'neon',  name:'Neon Gece',   price:0,      f1:'#2f8bff',f2:'#0a2a8a',c:'#1446c8',w1:'#14133f',w2:'#06061c',a:'#9b5dff',d:'#5ff6ff',pt:0,style:'neon'},
  {id:'green', name:'Klasik Yeşil',price:3000,      f1:'#2fa063',f2:'#17603a',c:'#124f30',w1:'#7a4520',w2:'#3e220d',a:'#d9b45a',d:'#f3e3b5',pt:0},
  {id:'blue',  name:'Okyanus',     price:0,   f1:'#2f8cef',f2:'#1552b0',c:'#11458e',w1:'#1d3566',w2:'#0e1d3d',a:'#e2b64a',d:'#ffffff',pt:3,p1:'#2a63b8',p2:'#e9f1ff'},
@@ -798,7 +810,7 @@ const LANDM={'Portekiz':'⚽','İtalya':'🏛️','Fransa':'🗼','Hollanda':'�
 const SUBT={'Portekiz':'Futbol Ruhu'};
 const lighten=(h,k)=>{const n=parseInt(h.slice(1),16),f=v=>Math.round(v+(255-v)*k);return `rgb(${f(n>>16)},${f(n>>8&255)},${f(n&255)})`;};
 const hexA=(h,a)=>{const n=parseInt(h.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`;};
-function roomTable(r){return r._T||(r._T={id:'room_'+r.id,name:r.name,style:'royal',f1:r.theme.f,f2:r.theme.d,c:r.theme.f,w1:'#15171f',w2:'#07080d',a:r.theme.n,d:r.theme.n,neon:r.theme.n,pt:0});}
+function roomTable(r){return r._T||(r._T={id:'room_'+r.id,name:r.name,style:'royal',f1:'#1d5fb0',f2:'#0b2a5a',c:'#1d5fb0',w1:'#15171f',w2:'#07080d',a:r.theme.n,d:r.theme.n,neon:r.theme.n,pt:0});}
 function curTable(){const r=typeof gopt!=='undefined'&&gopt&&gopt.room;return r&&r.theme&&$('game').classList.contains('show')?roomTable(r):tableById(save.table);}
 const fmt=n=>n>=1e9?(+(n/1e9).toFixed(1)).toString().replace('.',',')+'B':n>=1e6?(+(n/1e6).toFixed(1)).toString().replace('.',',')+'M':n>=1e3?(+(n/1e3).toFixed(1)).toString().replace('.',',')+'K':''+n;
 const BADGE_WINS=20;
@@ -1001,7 +1013,7 @@ function chipURL(t,side){const k=t+(side?'s':'t');if(_chipC[k])return _chipC[k];
   return _chipC[k]='url("data:image/svg+xml;utf8,'+encodeURIComponent(s)+'")';}
 const ORG_FLAG={tr:'🇹🇷',ar:'🇸🇦',en:'🇬🇧',es:'🇪🇸',ru:'🇷🇺',de:'🇩🇪',fr:'🇫🇷',it:'🇮🇹',in:'🇮🇳',jp:'🇯🇵',kr:'🇰🇷',cn:'🇨🇳',fa:'🇮🇷',br:'🇧🇷',af:'🇳🇬',gr:'🇬🇷',pl:'🇵🇱'};
 function stageSVG(room){ // mor-altın sahne: arka duvar, spot ışıkları, perspektif masa
-  const f=room&&room.theme?room.theme.f:'#1d4fa0';let strips='';
+  const f='#1a4a9a';let strips='';
   for(let x=60;x<1600;x+=160)strips+=`<rect x="${x}" y="0" width="2" height="430" fill="url(#sgS)"/>`;
   const cone=(x,w,o)=>`<polygon points="${x-30},0 ${x+30},0 ${x+w},560 ${x-w},560" fill="url(#sgC)" opacity="${o}"/>`;
   return `<svg viewBox="0 0 1600 720" preserveAspectRatio="xMidYMid slice" width="100%" height="100%"><defs>
@@ -1093,7 +1105,8 @@ function animCoins(){
   const target=save.coins;if(coinShown===null)coinShown=0;
   if(coinShown===target){setCv(target);return;}
   const from=coinShown,t0=performance.now(),D=Math.min(1700,600+Math.log10(Math.abs(target-from)+1)*110);
-  if(target>from)flyChips(Math.min(9,3+Math.round(Math.log10(target-from+1))));
+  if(target>from&&target>(window._coinFlown||0)){const base=Math.max(from,window._coinFlown||0);window._coinFlown=target;flyChips(Math.min(9,3+Math.round(Math.log10(target-base+1))));}
+  if(target<(window._coinFlown||0))window._coinFlown=target;
   cancelAnimationFrame(coinRaf);
   const step=now=>{const k=Math.min(1,(now-t0)/D),e=1-Math.pow(1-k,3);coinShown=Math.round(from+(target-from)*e);setCv(coinShown);if(k<1)coinRaf=requestAnimationFrame(step);else{coinShown=target;setCv(target);}};
   coinRaf=requestAnimationFrame(step);
@@ -1386,8 +1399,8 @@ function renderRooms(){
   for(const r of ROOMS){
     const lock=!TEST_UNLOCK&&save.level<r.lvl,d=document.createElement('div');d.className='room '+r.cls+(lock?' lock':'');
     const w=save.rw[r.id]||0;
-    const fc=FLAGC[r.name]||['#3a2414','#1a0f08'],fl=fc.map((col,k)=>`${hexA(col,.55)} ${k*100/fc.length}% ${(k+1)*100/fc.length}%`).join(',');
-    d.style.setProperty('background',`linear-gradient(180deg,rgba(20,12,7,.05),rgba(14,9,5,.5) 42%,rgba(14,9,5,.9) 72%),linear-gradient(115deg,${fl}),linear-gradient(180deg,#2c1c11,#140d08)`,'important');d.dataset.i=r.idx;
+    const fc=FLAGC[r.name]||['#341656','#120722'],fl=fc.map((col,k)=>`${hexA(col,.55)} ${k*100/fc.length}% ${(k+1)*100/fc.length}%`).join(',');
+    d.style.setProperty('background',`linear-gradient(180deg,rgba(14,6,26,.05),rgba(11,4,20,.55) 42%,rgba(11,4,20,.92) 72%),linear-gradient(115deg,${fl}),linear-gradient(180deg,#24103e,#0b0414)`,'important');d.dataset.i=r.idx;
     d.innerHTML=`<div class="wm">${LANDM[r.name]||'🎱'}</div><div class="lg">${(r.league||'').toLocaleUpperCase('tr-TR')} LİGİ</div><h3>${r.flag||''} ${r.name}</h3>${SUBT[r.name]?`<div class="sub">${SUBT[r.name]}</div>`:''}<div class="rl">${r.label||'Klasik'}</div><div class="rw">Giriş: 🪙 ${fmt(r.fee)}</div><div class="pz"><span class="cup">🏆</span> ${fmt(r.prize)}</div><div class="rw">${w>=BADGE_WINS?'🏅 Rozet kazanıldı':'🏅 '+w+'/'+BADGE_WINS}</div>`;
     const b=document.createElement('button');b.className='gold';b.textContent=lock?`🔒 Seviye ${r.lvl}`:'Oyna';b.disabled=lock;
     b.onclick=()=>startRoom(r);d.append(b);box.append(d);
@@ -2293,6 +2306,19 @@ function neonLine(c,draw,w,cols,blur){ // parlayan çok renkli çizgi
   c.globalAlpha=.9;c.lineWidth=w;c.shadowBlur=blur;draw();c.stroke();
   c.globalAlpha=.9;c.strokeStyle='rgba(255,255,255,.7)';c.shadowBlur=0;c.lineWidth=w*.35;draw();c.stroke();c.restore();
 }
+function feltLogo(c,hu){ // gerçek turnuva masası gibi çuhaya basılı marka: baş tarafta, yana yatık, çuha renginin bir ton açığı
+  c.save();c.translate(RAIL+TW*.118,RAIL+TH/2);c.rotate(-Math.PI/2);
+  const col=`hsla(${hu},55%,80%,.26)`,col2=`hsla(${hu},55%,88%,.3)`;c.strokeStyle=col;c.fillStyle=col;c.lineCap='round';
+  c.lineWidth=1.6;c.beginPath();c.arc(0,-20,15,0,7);c.stroke();c.setLineDash([3.2,2.6]);c.lineWidth=1.3;c.beginPath();c.arc(0,-20,11,0,7);c.stroke();c.setLineDash([]);
+  c.fillStyle=col2;c.font='900 13px Georgia,serif';c.textAlign='center';c.textBaseline='middle';c.fillText('B',0,-19.5);
+  c.fillStyle=col;c.font='900 15px "Arial Black",Roboto,Arial,sans-serif';
+  const t='BLACKBALL';let w=0;const sp=3.2,ws=[...t].map(ch=>c.measureText(ch).width);w=ws.reduce((a,b)=>a+b,0)+sp*(t.length-1);let x=-w/2;
+  [...t].forEach((ch,i)=>{c.textAlign='left';c.fillText(ch,x,6);x+=ws[i]+sp;});
+  c.lineWidth=1;c.beginPath();c.moveTo(-w/2-24,6);c.lineTo(-w/2-8,6);c.moveTo(w/2+8,6);c.lineTo(w/2+24,6);c.stroke();
+  c.beginPath();c.moveTo(-w/2,18);c.lineTo(w/2,18);c.stroke();
+  c.font='700 6.5px Roboto,Arial,sans-serif';c.textAlign='center';[...'PROFESSIONAL CLOTH'].length;c.fillText('P R O F E S S I O N A L   C L O T H',0,26);
+  c.restore();
+}
 function crownLogo(c,x,y,s,col){ // ortadaki saydam 8 numaralı taç logosu
   c.save();c.translate(x,y);c.scale(s,s);c.strokeStyle=col;c.fillStyle=col;c.lineWidth=3;c.lineJoin='round';
   c.beginPath();c.moveTo(-46,-6);c.lineTo(-40,-46);c.lineTo(-20,-24);c.lineTo(0,-58);c.lineTo(20,-24);c.lineTo(40,-46);c.lineTo(46,-6);c.closePath();c.stroke();
@@ -2324,7 +2350,7 @@ function drawNeon(T){ // lacivert-parlak mavi çuha, mor-mavi-turkuaz neon kenar
   c.save();c.beginPath();c.rect(RAIL,RAIL,TW,TH);c.clip();c.strokeStyle='rgba(140,200,255,.05)';for(let x=RAIL;x<RAIL+TW;x+=38){c.beginPath();c.moveTo(x,RAIL);c.lineTo(x,RAIL+TH);c.stroke();}for(let y=RAIL;y<RAIL+TH;y+=38){c.beginPath();c.moveTo(RAIL,y);c.lineTo(RAIL+TW,y);c.stroke();}c.restore();
   // başlangıç çizgisi ve logo
   c.strokeStyle='rgba(160,220,255,.22)';c.lineWidth=1.2;c.beginPath();c.moveTo(RAIL+TW*.25,RAIL);c.lineTo(RAIL+TW*.25,RAIL+TH);c.stroke();
-  c.save();c.globalAlpha=NE?.2:.16;c.shadowColor=NE||'#9fe8ff';c.shadowBlur=10;crownLogo(c,W/2,H/2+4,1.15,NE?lighten(NE,.3):'#dff4ff');c.restore();
+  feltLogo(c,225);
   // cepler, bantlar, neon bant burnu, cep parıltısı
   cornerPlates(c,T);for(const p of POCKETS)realPocket(c,p,T);
   drawCushions(c,T,NE?lighten(T.f1,.28):'#6fc3ff');
@@ -2352,7 +2378,7 @@ function drawRoyal(T){ // klasik lüks masa: koyu ceviz ahşap, altın köşeler
   const hu=hueOf(T.f1);g=c.createRadialGradient(W/2,H/2,20,W/2,H/2,W*.62);g.addColorStop(0,`hsl(${hu},52%,34%)`);g.addColorStop(.55,`hsl(${hu},55%,25%)`);g.addColorStop(1,`hsl(${hu},58%,13%)`);
   FELT=g;c.fillStyle=g;c.fillRect(RAIL-CW,RAIL-CW,TW+2*CW,TH+2*CW);c.fillStyle=feltTex(T);c.fillRect(RAIL-CW,RAIL-CW,TW+2*CW,TH+2*CW);
   c.strokeStyle='rgba(255,255,255,.16)';c.lineWidth=1.1;c.beginPath();c.moveTo(RAIL+TW*.25,RAIL);c.lineTo(RAIL+TW*.25,RAIL+TH);c.stroke();
-  c.save();c.globalAlpha=.1;crownLogo(c,W/2,H/2+4,1.1,'#f0d78c');c.restore();
+  feltLogo(c,hu);
   cornerPlates(c,Object.assign({},T,{goldPlate:1}));for(const p of POCKETS)realPocket(c,p,T);
   drawCushions(c,Object.assign({},T,{c:`hsl(${hu},55%,22%)`}),`hsl(${hu},48%,40%)`);
 }
