@@ -31,6 +31,8 @@ jobs:
         run: |
           mkdir -p www
           cp index.html www/index.html
+          cp -r a www/a
+          ls www/a | wc -l
 
       - name: Capacitor kur
         run: |
