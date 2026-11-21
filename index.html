@@ -4720,6 +4720,18 @@ function openAvatar(cb){
 }
 function closeAvatar(){const p=$('avs4');if(p)p.remove();}
 document.body.classList.toggle('noBadges',save.set&&save.set.badges===false);
+/* ---- görsel ekranları tam ekrana yay: önce alt/üst boşluktan kırp (güvenli bölge korunur), kalanını yatay hafif esnet ---- */
+(function fullFit(){
+  const S=[['#menu .m4',0,862],['#login .l4',10,906],['#lead .ld4',0,924],['#avs4 .av4',0,915]];
+  function fit(){const vw=innerWidth,vh=innerHeight,k=Math.min(vh/941,vw/1672),sx=vw/1672;
+    for(const [q,t,b] of S){const el=document.querySelector(q);if(!el)continue;
+      const sy=Math.min(Math.max(sx,vh/941),vh/(b-t)),vis=vh/sy,yc=Math.min(Math.max((t+b)/2,vis/2),941-vis/2),T=-(yc-470.5)*sy;
+      el.style.transform=`translate(-50%,-50%) translateY(${T.toFixed(1)}px) scale(${(sx/k).toFixed(4)},${(sy/k).toFixed(4)})`;}}
+  window.fullFit=fit;addEventListener('resize',()=>setTimeout(fit,50));
+  {const _s=show;show=function(){_s.apply(this,arguments);requestAnimationFrame(fit);};}
+  new MutationObserver(()=>{if(document.getElementById('avs4'))fit();}).observe(document.body,{childList:true});
+  fit();
+})();
 </script>
 </body>
 </html>
