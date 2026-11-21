@@ -1255,6 +1255,9 @@ addEventListener('error',e=>bbaLog(e));addEventListener('unhandledrejection',e=>
 #shop.isBox .bxFx.on{display:block;animation:bxIn .25s ease-out}
 @keyframes bxIn{from{opacity:0}to{opacity:1}}
 </style>
+<style id="tblNameFix">
+.item .info .nm{position:static!important;left:auto!important;top:auto!important;width:auto!important;height:auto!important;transform:none!important;font-weight:800;font-size:16px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
 </head>
 <body>
 <div id="intro"><div class="inSt"><div id="inW"><img id="inImg" alt="" decoding="async" src="a/26cf350d4386.webp"><canvas id="inSw"></canvas></div></div><canvas id="inC"></canvas><div class="inSkip">GEÇMEK İÇİN DOKUN</div></div>
@@ -1504,14 +1507,9 @@ const LEAGUES=[{n:'Novice',ic:'⚔️',c:'#9aa0a8',min:0,rw:0},{n:'Pioneer',ic:'
  {n:'Astra',ic:'✨',c:'#3aa8ff',min:1e6,rw:100e3},{n:'Zenith',ic:'🔮',c:'#c060ff',min:3e6,rw:300e3},{n:'Dominion',ic:'🩸',c:'#ff3a3a',min:10e6,rw:1e6},{n:'Eclipse',ic:'🌙',c:'#cfe8ff',min:30e6,rw:3e6},{n:'Paragon',ic:'👑',c:'#ffd23f',min:100e6,rw:10e6}];
 const FREE=[{t:'c',v:1000},{t:'c',v:2500},{t:'c',v:5000},{t:'chest',v:0}];
 const TABLES=[ // f=çuha, c=yastık, w=bant, a=süs/altın, d=nişan noktası, pt=desen (0 çizgi, 1 kafes, 2 halka)
- {id:'rclassic',name:'Royal Turnuva',price:0,f1:'#1d5fb0',f2:'#0b2a5a',c:'#1d5fb0',w1:'#2e1a0d',w2:'#140b05',a:'#c9a24e',d:'#c9a24e',pt:0,style:'royal'},
- {id:'neon',  name:'Neon Gece',   price:0,      f1:'#2f8bff',f2:'#0a2a8a',c:'#1446c8',w1:'#14133f',w2:'#06061c',a:'#9b5dff',d:'#5ff6ff',pt:0,style:'neon'},
- {id:'green', name:'Klasik Yeşil',price:3000,      f1:'#2fa063',f2:'#17603a',c:'#124f30',w1:'#7a4520',w2:'#3e220d',a:'#d9b45a',d:'#f3e3b5',pt:0},
- {id:'blue',  name:'Okyanus',     price:0,   f1:'#2f8cef',f2:'#1552b0',c:'#11458e',w1:'#1d3566',w2:'#0e1d3d',a:'#e2b64a',d:'#ffffff',pt:3,p1:'#2a63b8',p2:'#e9f1ff'},
- {id:'red',   name:'Bordo',       price:10000,  f1:'#9e2a30',f2:'#5a1016',c:'#4a0c12',w1:'#3a1a12',w2:'#1a0a07',a:'#d9b45a',d:'#7fe0e0',pt:2},
- {id:'black', name:'Gece',        price:50000,  f1:'#3a4048',f2:'#16191d',c:'#111417',w1:'#2a2d33',w2:'#0c0d10',a:'#9fe8ff',d:'#9fe8ff',pt:1},
- {id:'purple',name:'Mor Lüks',    price:250000, f1:'#8150c4',f2:'#3e1f6e',c:'#331a5c',w1:'#e8e8ee',w2:'#8a8a98',a:'#f0cf6a',d:'#4f2a80',pt:2},
- {id:'royal', name:'Kraliyet',    price:1000000,f1:'#1f7564',f2:'#0b3a31',c:'#09302a',w1:'#f0cf6a',w2:'#8a6416',a:'#ffffff',d:'#0f4238',pt:1},
+ {id:'pro',   name:'Turnuva',     price:0,      f1:'#5cc0e6',f2:'#2a8cc4',c:'#4aaee0',w1:'#c8392b',w2:'#7c1a10',a:'#d9dde4',d:'#ffffff',pt:0,style:'classic'},
+ {id:'osm',   name:'Saray Halısı',price:0,      f1:'#7cc0e6',f2:'#3f8cc6',c:'#5aa8dc',w1:'#8a2c1a',w2:'#3e1209',a:'#e2b64a',d:'#f3e3b5',pt:0,style:'classic',orn:1,real:1},
+ {id:'mor',   name:'Mor Saray',   price:0,      f1:'#8a4ff0',f2:'#4a1d9e',c:'#7a42e0',w1:'#f3ead6',w2:'#c9b48a',a:'#c9962e',d:'#7a1c22',pt:0,style:'palace'}
 ];
 const DIFF={
  easy:{name:'Kolay',err:.05, pErr:.18,reward:100,think:1000,pick:3},
@@ -1595,7 +1593,7 @@ function crownHTML(lv,h){ // ad korunuyor; artık altıgen kristal seviye amblem
 const frameOf=lv=>lv>=60?'fr4':lv>=35?'fr3':lv>=15?'fr2':lv>=5?'fr1':'fr0';
 /* ================= KAYIT ================= */
 const KEY='bilardo_ustasi_v1';
-let save={coins:1000,cues:['basic'],tables:['green','blue'],cue:'basic',table:'rclassic',wins:0,losses:0,name:'',pid:0,level:1,xp:0,cash:5,lastDaily:0,streak:0,rw:{},chestCnt:0,chestNext:2,eco:2,gems:10,cl:{},slots:[null,null,null,null],free:{day:0,n:0,next:0},offer:-1,lucky:0,week:{id:0,earn:0}};
+let save={coins:1000,cues:['basic'],tables:['pro','osm','mor'],cue:'basic',table:'pro',wins:0,losses:0,name:'',pid:0,level:1,xp:0,cash:5,lastDaily:0,streak:0,rw:{},chestCnt:0,chestNext:2,eco:2,gems:10,cl:{},slots:[null,null,null,null],free:{day:0,n:0,next:0},offer:-1,lucky:0,week:{id:0,earn:0}};
 
 try{const s=JSON.parse(localStorage.getItem(KEY));if(s)save=Object.assign(save,s);}catch(e){}
 // TEST: yayından önce kaldırılacak — bir kerelik 5 milyar altın, sonra 10'ar milyar çip/elmas/dolar
@@ -1608,11 +1606,10 @@ if(!save.rw)save.rw={};
 for(const [k,v] of Object.entries({gems:10,cl:{},slots:[null,null,null,null],free:{day:0,n:0,next:0},offer:-1,lucky:0,week:{id:0,earn:0}}))if(save[k]===undefined)save[k]=v;
 for(const id of save.cues)if(!save.cl[id])save.cl[id]={lv:1,pc:0};
 if(!save.v19){save.v19=1;}
-// "8 USTA" yazılı eski klasik masalar kaldırıldı: seçili olan varsa Royal Turnuva'ya geç
-save.tables=save.tables.filter(id=>!['mor','osm','pro'].includes(id));if(['mor','osm','pro'].includes(save.table))save.table='rclassic';
-if(!save.v29){save.v29=1;save.table='neon';if(!save.tables.includes('neon'))save.tables.push('neon');}
-if(!save.v39){save.v39=1;save.table='rclassic';if(!save.tables.includes('rclassic'))save.tables.push('rclassic');}
-if(!save.tables.includes('blue')){save.tables.push('blue');if(save.table==='green')save.table='blue';}
+save.v29=save.v39=1;
+// demo (kodla çizilmiş) masalar kaldırıldı; klasik 3 masa (kendi baskımızla) geri geldi
+{const DEMO=['rclassic','neon','green','blue','red','black','purple','royal'];save.tables=(save.tables||[]).filter(id=>!DEMO.includes(id));
+ for(const id of ['pro','osm','mor'])if(!save.tables.includes(id))save.tables.push(id);if(!save.table||DEMO.includes(save.table))save.table='pro';}
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(save));}catch(e){}}
 const cueById=id=>ALL_CUES.find(c=>c.id===id)||CUES[0];
 const MAXLV=5;
@@ -3211,7 +3208,7 @@ function drawClassic(T){ // kırmızı ahşap bantlı, gümüş köşeli, açık
   // ortada silik kendi logomuz
   c.save();c.globalAlpha=T.orn?.18:.13;c.translate(W/2,H/2);c.strokeStyle='#0a3f66';c.fillStyle='#0a3f66';c.lineWidth=6;
   c.beginPath();c.arc(-120,0,42,0,7);c.stroke();c.font='900 46px Arial Black,Arial,sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('8',-120,2);
-  c.font='900 54px Arial Black,Arial,sans-serif';c.textAlign='left';c.fillText('USTA',-66,4);
+  c.font='900 38px Arial Black,Arial,sans-serif';c.textAlign='left';c.fillText('BLACKBALL',-66,3);c.font='900 15px Arial Black,Arial,sans-serif';c.fillText('A  R  E  N  A',-60,30);
   c.lineWidth=3;c.beginPath();c.moveTo(-66,36);c.bezierCurveTo(0,52,80,20,150,40);c.stroke();c.beginPath();c.moveTo(-60,-34);c.bezierCurveTo(10,-56,90,-20,150,-44);c.stroke();
   c.restore();
   // cepler: koyu kırmızı-siyah, köşeye oturan
