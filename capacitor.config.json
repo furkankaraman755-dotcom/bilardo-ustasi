@@ -1,7 +1,15 @@
 {
   "appId": "com.bilardoustasi.oyun",
-  "appName": "8 Blackball Arena",
+  "appName": "Blackball Arena",
   "webDir": "www",
-  "android": { "backgroundColor": "#000000", "adjustMarginsForEdgeToEdge": "disable" },
-  "plugins": { "SystemBars": { "insetsHandling": "disable", "hidden": true } }
+  "android": {
+    "backgroundColor": "#000000",
+    "adjustMarginsForEdgeToEdge": "disable"
+  },
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "disable",
+      "hidden": true
+    }
+  }
 }
