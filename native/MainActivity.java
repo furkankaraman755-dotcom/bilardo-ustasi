@@ -6,6 +6,7 @@ import android.view.WindowManager;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.activity.OnBackPressedCallback;
 import com.getcapacitor.BridgeActivity;
 
 public class MainActivity extends BridgeActivity {
@@ -13,6 +14,20 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tamEkran();
+        // Android geri tuşu: oyunun kendi geri mantığına sorulur (pencereyi kapat / önceki sayfa);
+        // ana menüdeyse uygulama kapanmaz, arka plana alınır
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                try {
+                    getBridge().getWebView().evaluateJavascript(
+                        "(window.bbaBack?window.bbaBack():'exit')",
+                        v -> { if (v == null || v.contains("exit")) moveTaskToBack(true); });
+                } catch (Exception e) {
+                    moveTaskToBack(true);
+                }
+            }
+        });
     }
 
     @Override

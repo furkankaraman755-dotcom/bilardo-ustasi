@@ -1231,6 +1231,30 @@ addEventListener('error',e=>bbaLog(e));addEventListener('unhandledrejection',e=>
 #items .of5 .of5B em{font-style:normal;opacity:.9}
 #items .of5 .of5B b{font:900 calc(var(--k)*50) Roboto,Arial,sans-serif;color:#ffd21f;letter-spacing:calc(var(--k)*1);text-shadow:0 2px 0 #8a5a00,0 0 calc(var(--k)*10) rgba(255,200,60,.45)}
 </style>
+<style id="lgCss">
+/* Lig ilerlemesi: mevcut lig, sonraki lig, dönem süresi */
+#lead #ldMe{overflow:hidden;background:linear-gradient(90deg,rgba(150,105,15,.95) 0 var(--p,0%),rgba(10,6,20,.93) var(--p,0%))!important;border:calc(var(--k)*2) solid #ffd76a!important;box-shadow:0 0 calc(var(--k)*16) rgba(255,205,90,.55)!important}
+#lead #ldMe .mt b{font-size:calc(var(--k)*20)!important;letter-spacing:calc(var(--k)*1)}
+#lead #ldMe .mt small{font-size:calc(var(--k)*21)!important;text-shadow:0 1px 2px #000}
+#lead #ldNext{position:absolute;display:none;z-index:4;align-items:center;gap:calc(var(--k)*10);padding:0 calc(var(--k)*16);border-radius:calc(var(--k)*14);
+  background:rgba(8,5,18,.92);border:calc(var(--k)*2) dashed rgba(120,230,255,.85);color:#fff;box-shadow:0 0 calc(var(--k)*14) rgba(90,210,255,.45);font-family:Roboto,Arial,sans-serif;animation:ldNx 1.6s ease-in-out infinite}
+#lead #ldNext b{font-size:calc(var(--k)*19);color:#7fe6ff;letter-spacing:calc(var(--k)*1);white-space:nowrap}
+#lead #ldNext small{font-size:calc(var(--k)*21);font-weight:700;white-space:nowrap}
+@keyframes ldNx{50%{box-shadow:0 0 calc(var(--k)*24) rgba(90,210,255,.8)}}
+#lead #ldSeason{position:absolute;display:flex;z-index:4;align-items:center;justify-content:center;gap:calc(var(--k)*8);border-radius:calc(var(--k)*26);background:rgba(8,5,18,.8);
+  border:calc(var(--k)*2) solid rgba(255,215,106,.8);color:#ffe9a8;font:800 calc(var(--k)*22) Roboto,Arial,sans-serif;white-space:nowrap;box-shadow:0 0 calc(var(--k)*12) rgba(255,200,80,.35)}
+#lead.alt #ldNext,#lead.alt #ldSeason{display:none!important}
+#lead .ldR.me{filter:brightness(1.12) drop-shadow(0 0 calc(var(--k)*9) rgba(255,215,106,.95))}
+#lead .ldR.nx{filter:drop-shadow(0 0 calc(var(--k)*7) rgba(127,230,255,.9))}
+</style>
+<style id="bxFxCss">
+/* Sürpriz Kutuları: kullanıcının videosundan kutu açılış efekti */
+#shop .bxFx{position:absolute;display:none;pointer-events:none;object-fit:fill;z-index:1;background:transparent;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,transparent 23%,#000 37%,#000 84%,transparent 100%),linear-gradient(to right,transparent 0,#000 16%,#000 84%,transparent 100%);
+  -webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0,transparent 23%,#000 37%,#000 84%,transparent 100%),linear-gradient(to right,transparent 0,#000 16%,#000 84%,transparent 100%);mask-composite:intersect}
+#shop.isBox .bxFx.on{display:block;animation:bxIn .25s ease-out}
+@keyframes bxIn{from{opacity:0}to{opacity:1}}
+</style>
 </head>
 <body>
 <div id="intro"><div class="inSt"><div id="inW"><img id="inImg" alt="" decoding="async" src="a/26cf350d4386.webp"><canvas id="inSw"></canvas></div></div><canvas id="inC"></canvas><div class="inSkip">GEÇMEK İÇİN DOKUN</div></div>
@@ -1331,7 +1355,7 @@ addEventListener('error',e=>bbaLog(e));addEventListener('unhandledrejection',e=>
  <div class="ld4">
   <div class="ldBg"></div><canvas id="ldFx"></canvas><i class="ldFlash"></i>
   <div class="ldRows"><div class="ldR" data-r="0" style="--y:198;--h:95;--d:0ms;background-image:url('a/ffb919f5c8c9.webp')"><i class="ldSh"></i></div><div class="ldR" data-r="1" style="--y:293;--h:71;--d:70ms;background-image:url('a/50cb6dcb2657.webp')"><i class="ldSh"></i></div><div class="ldR" data-r="2" style="--y:364;--h:72;--d:140ms;background-image:url('a/2d99b190cfae.webp')"><i class="ldSh"></i></div><div class="ldR" data-r="3" style="--y:436;--h:71;--d:210ms;background-image:url('a/e3d1489a6d7b.webp')"><i class="ldSh"></i></div><div class="ldR" data-r="4" style="--y:507;--h:72;--d:280ms;background-image:url('a/4cc028b86a14.webp')"><i class="ldSh"></i></div><div class="ldR" data-r="5" style="--y:579;--h:69;--d:350ms;background-image:url('a/858c45499123.webp')"><i class="ldSh"></i></div><div class="ldR" data-r="6" style="--y:648;--h:68;--d:420ms;background-image:url('a/4c7152433bd1.webp')"><i class="ldSh"></i></div><div class="ldR" data-r="7" style="--y:716;--h:66;--d:490ms;background-image:url('a/b6f9231e2a68.webp')"><i class="ldSh"></i></div><div class="ldR" data-r="8" style="--y:782;--h:65;--d:560ms;background-image:url('a/c6f8bdee6df5.webp')"><i class="ldSh"></i></div><div class="ldR" data-r="9" style="--y:847;--h:71;--d:630ms;background-image:url('a/447817c0209a.webp')"><i class="ldSh"></i></div></div>
-  <div id="ldMe" class="ldA"></div>
+  <div id="ldMe" class="ldA"></div><div id="ldNext" class="ldA"></div><div id="ldSeason" class="ldA"></div>
   <div id="ldTabsX"></div>
   <button class="ldA ldHs" id="leadBack" style="--x:86;--y:18;--w:132;--h:90;--r:20" aria-label="Geri"></button>
   <div class="htabs" id="leadTabs"><button data-l="lig" class="on ldA ldHs" style="--x:128;--y:120;--w:354;--h:74;--r:14"><b>⭐ Ligim</b></button><button data-l="fr" class="ldA ldHs" style="--x:500;--y:122;--w:346;--h:71;--r:14"><b>👥 Arkadaşlar</b></button><button data-l="tr" class="ldA ldHs" style="--x:866;--y:122;--w:373;--h:71;--r:14"><b>🇹🇷 Ülke</b></button><button data-l="w" class="ldA ldHs" style="--x:1265;--y:122;--w:331;--h:71;--r:14"><b>🌍 Dünya</b></button></div>
@@ -2191,7 +2215,7 @@ let tapN=0,tapT=0;
 $('mcoins').onclick=()=>{const t=Date.now();if(t-tapT>3000)tapN=0;tapT=t;if(++tapN>=5){tapN=0;save.coins+=10000;persist();refreshCoins();}};
 function openShop(tab){shopTab=tab||shopTab;$('smsg').textContent='';renderShop();show('shop');}
 $('m4Prof').onclick=openProfile;
-$('tShop').onclick=()=>openShop('box');$('tCues').onclick=()=>openCues();$('tDaily').onclick=openDaily;$('tFree').onclick=()=>openShop('free');$('tLead').onclick=()=>{const m=weekCheck();renderLead(m);show('lead');};
+$('tShop').onclick=()=>openShop('box');$('tCues').onclick=()=>openCues();$('tDaily').onclick=openDaily;$('tFree').onclick=()=>openShop('free');$('tLead').onclick=()=>{openLead();};
 document.querySelectorAll('.back').forEach(b=>b.onclick=()=>show('menu'));
 /* ---- giriş ---- */
 $('lgG').onclick=$('lgF').onclick=()=>{$('lmsg').textContent='Google ve Facebook girişi Play Store sürümünde açılacak. Şimdilik misafir olarak başla, hesabın sonra bağlanır.';};
@@ -2697,13 +2721,13 @@ function gameOver(w,why){XA=null;
         save.rw[r.id]=(save.rw[r.id]||0)+1;
         if(save.rw[r.id]===BADGE_WINS){addPiece('u_'+r.idx,1);up=(up?up+' · ':'')+`🏅 ${r.name} rozeti ve ${r.name} İstakası kazandın!`;}
         save.chestCnt=(save.chestCnt||0)+1;
-        weekCheck();save.week.earn+=r.prize;
+        try{lgCredit(r.prize-r.fee,'room');}catch(e){bbaLog(e,'lig');}
         if(save.chestCnt>=(save.chestNext||2)){save.chestCnt=0;save.chestNext=2+(Math.random()<.5?1:0);const tier=Math.min(3,Math.floor(r.idx/4));
           up=(up?up+' · ':'')+(addChestToSlot(tier)?`📦 ${TIERN[tier]} kazandın! Ana menüdeki yuvadan aç.`:`📦 Sandık yuvaların dolu — sandık kaçtı!`);}
       }
       again='Tekrar ('+fmt(r.fee)+' 🪙)';}
     else if(w===0&&gopt.round<2){title=`✅ Tur ${gopt.round+1} kazanıldı!`;again='Sonraki tur →';}
-    else if(w===0){weekCheck();save.week.earn+=TOUR.prize;save.coins+=TOUR.prize;save.cash+=TOUR.cash;addPiece('dr_firtina',1);earn=`+${fmt(TOUR.prize)} 🪙 +${TOUR.cash} 💵 · ⚡ Fırtına Ejderhası parçası`;title='🏆 Turnuva şampiyonu!';again='Yeni turnuva';}
+    else if(w===0){try{lgCredit(TOUR.prize-TOUR.fee,'tour');}catch(e){bbaLog(e,'lig');}save.coins+=TOUR.prize;save.cash+=TOUR.cash;addPiece('dr_firtina',1);earn=`+${fmt(TOUR.prize)} 🪙 +${TOUR.cash} 💵 · ⚡ Fırtına Ejderhası parçası`;title='🏆 Turnuva şampiyonu!';again='Yeni turnuva';}
     else{title='😞 Turnuvadan elendin';again='Yeni turnuva';}
     persist();refreshCoins();
   }
@@ -4727,7 +4751,7 @@ function ldShow(h,c,ms,row){const b=$('ldInfo'),B=[198,293,364,436,507,579,648,7
 document.querySelectorAll('#lead .ldR').forEach(r=>r.onclick=()=>{const L=LEAGUES[LEAGUE_ROW[+r.dataset.r]],cur=leagueOf(save.week.earn)===L;
   try{ensureAudio();play('click',.35,1.4);}catch(_){}
   ldShow(`<h4>${L.n}${cur?' · Buradasın':''}</h4><div class="r">Gereken haftalık kazanç: <b>${L.min?fmt(L.min)+' 🪙':'—'}</b></div><div class="g">Hafta sonu ödülü: ${L.rw?'+'+fmt(L.rw)+' 🪙 +1 💎':'yok'}</div>`,L.c,3600,+r.dataset.r);});
-$('leadBack').onclick=()=>show('menu');
+$('leadBack').onclick=()=>leadGoBack();
 /* efektler: yükselen kor parçacıkları ve ara sıra şimşek */
 (function ldFx(){
   const cv=$('ldFx'),x=cv.getContext('2d');let P=[],raf=0,lt=0,nextFlash=0;
@@ -5020,7 +5044,7 @@ window.bbaErrText=function(){try{const L=JSON.parse(localStorage.getItem('bba_er
     if(best){ // sayının solundaki çip simgesi varsa ona uç
       const ic=best.e.parentElement&&best.e.parentElement.querySelector('.chip');const ri=ic&&vis(ic);
       const r=ri||best.r;return {e:best.e,x:ri?r.left+r.width/2:r.left-6,y:r.top+r.height/2};}
-    return {e:null,x:innerWidth-70,y:28};}
+    return null;}
   function source(){ // açık pencere varsa: ödül satırındaki çip / pencerenin ortası; yoksa ekranın ortası
     const ci=document.querySelector('#chRes .chip, #dlg .box .chip');const rc=ci&&vis(ci);if(rc)return {x:rc.left+rc.width/2,y:rc.top+rc.height/2};
     const bx=document.querySelector('#dlg .box');const rb=bx&&vis(bx);if(rb)return {x:rb.left+rb.width/2,y:rb.top+rb.height*.45};
@@ -5029,7 +5053,7 @@ window.bbaErrText=function(){try{const L=JSON.parse(localStorage.getItem('bba_er
   window.flyChipsRelease=function(){window._flyHold=0;while(Q.length){const f=Q.shift();f();}};
   flyChips=function(n,onFirst){let first=false;const hit=()=>{if(!first){first=true;try{onFirst&&onFirst();}catch(_){}}};
     setTimeout(hit,4500); // güvenlik
-    const run=()=>{const S=source(),T=target(),lay=L(),sz=Math.max(26,Math.min(40,innerHeight*.075));
+    const run=()=>{const S=source(),T=target();if(!T){hit();return;}const lay=L(),sz=Math.max(26,Math.min(40,innerHeight*.075));
       for(let k=0;k<n;k++)setTimeout(()=>{
         const c=document.createElement('i');c.className='chip cfly2';c.style.width=c.style.height=sz+'px';c.style.left=(S.x-sz/2)+'px';c.style.top=(S.y-sz/2)+'px';lay.append(c);
         const a=Math.random()*Math.PI*2,rad=40+Math.random()*60,bx=Math.cos(a)*rad,by=Math.sin(a)*rad*.7-20;
@@ -5117,6 +5141,136 @@ function ofFit(){const b=$('items'),c=b&&b.querySelector('.of5');if(!c)return;co
   const avH=Math.max(120,innerHeight-r.top-16),avW=Math.max(200,b.clientWidth*.7),W=Math.min(avW,avH*1115/630);
   c.style.width=W+'px';c.style.height=(W*630/1115)+'px';c.style.setProperty('--k',(W/1115)+'px');}
 addEventListener('resize',()=>setTimeout(ofFit,60));
+</script>
+<script>
+/* ===== LİG SİSTEMİ (21 günlük dönem) =====
+   • Puan = dönem içindeki doğrulanmış NET kazanç (ödül − giriş ücreti); bahis kazanç sayılmaz.
+   • Her maç sonucu benzersiz maç kimliğiyle yalnızca BİR kez eklenir (lgCredit).
+   • Lig = dönem puanının ulaştığı en yüksek eşik. Dönem bitince sonuç kaydedilir, ödül bir kez verilir,
+     dönem puanı sıfırlanır (mevcut kural: lig dönem puanından hesaplanır, yeni dönemde Novice'ten başlanır). */
+const LG_DAY=864e5,LG_LEN=21*LG_DAY,LG_EPOCH=Date.UTC(2026,10,16,21,0,0); // 17 Kasım 2026 00:00 (TR) Pazartesi
+const LG_MIN=[0,30e3,150e3,300e3,1e6,3e6,10e6,30e6,100e6,300e6];      // eşikler (21 günlük net kazanç)
+LEAGUES.forEach((L,i)=>{L.min=LG_MIN[i];L.rw=Math.round(LG_MIN[i]/10);});  // dönem sonu ödülü: eşiğin %10'u çip (+1 💎)
+const lgSid=t=>Math.floor(((t||Date.now())-LG_EPOCH)/LG_LEN);
+const lgEnd=sid=>LG_EPOCH+(sid+1)*LG_LEN;
+function lgState(){
+  if(!save.lg||typeof save.lg!=='object'){ // ilk kurulum: eski haftalık kazanç kaybolmasın
+    save.lg={sid:lgSid(),pts:Math.max(0,Math.round((save.week&&save.week.earn)||0)),done:[],paid:[],hist:[],best:0};persist();}
+  const g=save.lg;g.done=g.done||[];g.paid=g.paid||[];g.hist=g.hist||[];g.best=g.best||0;return g;}
+function lgIdx(pts){let i=0;for(let k=0;k<LEAGUES.length;k++)if(pts>=LEAGUES[k].min)i=k;return i;}
+function lgTick(){ // dönem bittiyse sonucu kaydet ve ödülü bir kez ver
+  const g=lgState(),cur=lgSid();if(g.sid===cur)return '';if(cur<g.sid)return ''; // saat geri alındıysa dokunma
+  let msg='';
+  if(!g.paid.includes(g.sid)){const i=lgIdx(g.pts),L=LEAGUES[i];
+    g.hist.unshift({sid:g.sid,pts:g.pts,lg:L.n,rw:L.rw,end:lgEnd(g.sid)});g.hist=g.hist.slice(0,24);
+    g.paid.push(g.sid);g.paid=g.paid.slice(-40);
+    if(L.rw){save.coins+=L.rw;save.gems=(save.gems||0)+1;}
+    msg=`Dönem bitti: ${L.n} ligi · ${lgN(g.pts)} net kazanç${L.rw?` · Ödül +${fmt(L.rw)} 🪙 +1 💎`:''}`;
+    try{save.inbox.unshift({id:Date.now(),ic:'🏆',t:'Lig dönemi bitti',txt:msg});}catch(_){}}
+  g.sid=cur;g.pts=0;g.done=[];persist();try{refreshCoins();}catch(_){}
+  return msg;}
+const lgN=n=>Math.max(0,Math.round(n)).toLocaleString('tr-TR');
+window.lgCredit=function(net,kind){ // maç sonucu kesinleşince çağrılır
+  const id=window._lgMatch;if(!id)return false;            // maç kimliği yoksa (antrenman vb.) sayılmaz
+  window._lgMatch=null;
+  lgTick();const g=lgState();
+  if(g.done.includes(id))return false;                     // aynı sonuç iki kez eklenmez
+  g.done.push(id);g.done=g.done.slice(-80);
+  const add=Math.max(0,Math.round(+net||0));if(!add){persist();return false;}
+  const before=lgIdx(g.pts);g.pts+=add;const after=lgIdx(g.pts);g.best=Math.max(g.best,after);
+  persist();
+  try{if(window.LeagueBackend)LeagueBackend.report({id,kind,net:add,sid:g.sid});}catch(_){}
+  if(after>before)setTimeout(()=>{try{toastLg(`⬆️ Lig atladın: ${LEAGUES[after].n}!`);}catch(_){}},900);
+  try{if($('lead').classList.contains('show'))renderLead();}catch(_){}
+  return true;};
+function toastLg(t){const d=document.createElement('div');d.textContent=t;d.style.cssText='position:fixed;left:50%;top:14%;transform:translateX(-50%);z-index:100001;background:rgba(10,6,20,.92);border:2px solid #ffd76a;color:#ffe9a8;font:800 16px Roboto,Arial,sans-serif;padding:10px 18px;border-radius:14px;box-shadow:0 0 18px rgba(255,200,80,.5);pointer-events:none;transition:opacity .4s';document.body.append(d);setTimeout(()=>d.style.opacity=0,2600);setTimeout(()=>d.remove(),3100);}
+// maç kimliği: ücretli maç/turnuva başladığında oluşturulur
+(function(){const _sg=startGame;startGame=function(m,d,o){const r=_sg.apply(this,arguments);
+  try{if(o&&(o.kind==='match'||(o.kind==='event'&&(o.round||0)===0)))window._lgMatch=(o.kind==='match'?'m':'t')+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+      else if(o&&o.kind==='event')window._lgMatch=window._lgMatch||('t'+Date.now().toString(36));}catch(_){}return r;};})();
+// eski haftalık sistem devre dışı (yerine 21 günlük dönem)
+weekCheck=function(){return lgTick();};
+const leagueOf_=e=>LEAGUES[lgIdx(e)];
+function lgDur(ms){ms=Math.max(0,ms);const d=Math.floor(ms/LG_DAY),h=Math.floor(ms%LG_DAY/36e5),m=Math.floor(ms%36e5/6e4);return d?`${d}g ${h}sa`:h?`${h}sa ${m}dk`:`${m}dk`;}
+function lgFit(el){if(!el)return;el.querySelectorAll('b,small').forEach(x=>{x.style.fontSize='';const w=el.clientWidth-(el.querySelector('.av')?el.querySelector('.av').offsetWidth+30:30);if(w>0&&x.scrollWidth>w){const fs=parseFloat(getComputedStyle(x).fontSize);x.style.fontSize=(fs*w/x.scrollWidth*.96)+'px';}});}
+renderLead=function(msg){
+  document.querySelectorAll('#leadTabs button').forEach(x=>x.classList.toggle('on',x.dataset.l===leadTab));
+  $('lead').classList.toggle('alt',leadTab!=='lig');$('ldInfo').classList.remove('on');
+  const body=$('leadBody'),me=$('ldMe'),nx=$('ldNext'),se=$('ldSeason');
+  if(leadTab!=='lig'){body.innerHTML='<div class="ic">🌐</div><b>Bu sıralama çevrim içi sürümde açılacak.</b><div class="stats">Google/Facebook girişi ve sunucu kurulduğunda gerçek oyuncularla sıralama burada görünecek.</div>';me.style.display='none';nx.style.display='none';se.style.display='none';return;}
+  body.innerHTML='';const g=lgState(),i=lgIdx(g.pts),L=LEAGUES[i],N=LEAGUES[i+1],row=LEAGUE_ROW.indexOf(i);
+  document.querySelectorAll('#lead .ldR').forEach(r=>{r.classList.toggle('me',+r.dataset.r===row);r.classList.toggle('nx',N&&+r.dataset.r===row-1);});
+  const B=[198,293,364,436,507,579,648,716,782,847,918];
+  const pct=N?Math.min(100,(g.pts-L.min)/(N.min-L.min)*100):100;
+  me.style.cssText=`--x:930;--y:${B[row]+6};--w:620;--h:${B[row+1]-B[row]-12};display:flex;--p:${pct.toFixed(1)}%`;
+  me.innerHTML=`<div class="av" style="background:${myAvC()}">${myAvT()}</div><div class="mt"><b>MEVCUT LİGİM · ${L.n.toUpperCase()}</b><small>${N?`${lgN(g.pts)} / ${lgN(N.min)} — ${lgN(N.min-g.pts)} daha kazan`:`${lgN(g.pts)} · En üst lig 👑`}</small></div>`;
+  if(N){nx.style.cssText=`--x:930;--y:${B[row-1]+8};--w:620;--h:${B[row]-B[row-1]-16};display:flex`;
+    nx.innerHTML=`<b>▲ SONRAKİ LİG · ${N.n.toUpperCase()}</b><small>Hedef: ${lgN(N.min)}</small>`;}else nx.style.display='none';
+  se.style.cssText=`--x:1238;--y:38;--w:350;--h:56;display:flex`;
+  const tick=()=>{se.innerHTML=`⏱ Dönem sonu: ${lgDur(lgEnd(g.sid)-Date.now())}`;};tick();clearInterval(window._lgT);
+  window._lgT=setInterval(()=>{if(!$('lead').classList.contains('show')){clearInterval(window._lgT);return;}if(lgSid()!==lgState().sid){const m=lgTick();renderLead(m);return;}tick();},1000);
+  requestAnimationFrame(()=>{lgFit(me);lgFit(nx);});
+  if(msg)ldShow(`<h4>Lig Dönemi Sonucu</h4><div class="g">${msg}</div>`,'#ffd76a',5200,row);};
+// satıra dokununca: o ligin eşiği ve ödülü
+document.querySelectorAll('#lead .ldR').forEach(r=>r.onclick=()=>{const k=LEAGUE_ROW[+r.dataset.r],L=LEAGUES[k],g=lgState(),ci=lgIdx(g.pts);
+  try{ensureAudio();play('click',.35,1.4);}catch(_){}
+  ldShow(`<h4>${L.n}${k===ci?' · Mevcut Ligim':k===ci+1?' · Sonraki Lig':''}</h4><div class="r">Gereken dönem net kazancı: <b>${L.min?lgN(L.min)+' 🪙':'—'}</b></div><div class="g">Dönem sonu ödülü: ${L.rw?'+'+fmt(L.rw)+' 🪙 +1 💎':'yok'}</div>`,L.c,3600,+r.dataset.r);});
+// aç / geri: lig ekranını açan önceki sayfaya dön
+let lgPrev='menu';
+function openLead(){const c=document.querySelector('.screen.show');lgPrev=c&&c.id&&c.id!=='lead'?c.id:'menu';const m=lgTick();renderLead(m);show('lead');}
+function leadGoBack(){clearInterval(window._lgT);show(lgPrev&&lgPrev!=='lead'&&lgPrev!=='game'?lgPrev:'menu');}
+lgState();setTimeout(()=>{try{const m=lgTick();if(m&&typeof toastLg==='function')toastLg('🏆 '+m.split(' · ')[0]);}catch(_){}},1500);
+setInterval(()=>{try{lgTick();}catch(_){}},60000);
+</script>
+<script>
+/* ---- ANDROID GERİ TUŞU: önce açık pencereyi kapatır, sonra önceki sayfaya döner; ana menüde uygulamayı arka plana alır ---- */
+window.bbaBack=function(){
+  try{
+    if(document.getElementById('intro'))return 'ok';
+    const shown=id=>{const e=document.getElementById(id);return e&&e.style.display==='flex';};
+    if(shown('mmScr')){const x=document.getElementById('mqX');if(x)x.click();return 'ok';}
+    if(shown('dlg')){const b=[...document.querySelectorAll('#dlg button')].find(x=>/^(İptal|Kapat|Vazgeç)$/i.test(x.textContent.trim()));if(b)b.click();else closeDlg();return 'ok';}
+    if(shown('pvm')){document.getElementById('pvm').style.display='none';try{pvOpen=false;}catch(_){}return 'ok';}
+    if(document.getElementById('avs4')){try{closeAvatar();}catch(_){document.getElementById('avs4').remove();}return 'ok';}
+    if(document.getElementById('gf4')){closeGifts();return 'ok';}
+    if(document.getElementById('pf4')){const x=document.getElementById('pfX');if(x)x.click();else document.getElementById('pf4').remove();return 'ok';}
+    if(shown('spinBig')){document.getElementById('spinBig').style.display='none';return 'ok';}
+    const cur=document.querySelector('.screen.show'),id=cur&&cur.id;
+    if(id==='game'){if(shown('over')){document.getElementById('omenu').click();return 'ok';}document.getElementById('gmenu').click();return 'ok';}
+    if(id==='lead'){leadGoBack();return 'ok';}
+    if(id==='shop'){document.getElementById('sback').click();return 'ok';}
+    if(id==='cues'){const b=cur.querySelector('.back,[aria-label="Geri"]');if(b)b.click();else show('menu');return 'ok';}
+    if(id&&id!=='menu'&&id!=='login'){const b=cur.querySelector('.back');if(b)b.click();else show('menu');return 'ok';}
+    return 'exit';
+  }catch(e){try{bbaLog(e,'geri');}catch(_){}try{show('menu');}catch(_){}return 'ok';}};
+</script>
+<script>
+/* ---- Sürpriz Kutuları açılış efekti (kullanıcının videosu, kutu kutu parçalandı) ----
+   • Sekme açılınca: kutular videodaki gibi sırayla açılır, açık ve parlak kalır.
+   • Kutu satın alınca: o kutunun açılışı oynar, ödül penceresi açılış bitince gelir (ödül anında hesaba yazılır). */
+(function boxFx(){
+  const S=document.querySelector('#shop .sh5S');if(!S)return;
+  const D=[['nadir',108.4,0],['destansi',720,1.45],['efsanevi',1331.5,2.05]];
+  const V=D.map(([n,x])=>{const v=document.createElement('video');v.className='bxFx';v.muted=true;v.defaultMuted=true;v.playsInline=true;v.preload='none';
+    v.setAttribute('muted','');v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');v.dataset.src='a/box_'+n+'.mp4';
+    v.style.cssText='left:'+x+'px;top:362px;width:453px;height:266px';S.append(v);return v;});
+  const load=v=>{if(!v.src.endsWith(v.dataset.src)){v.src=v.dataset.src;v.preload='auto';}};
+  function play(v,t){try{load(v);v.classList.add('on');const go=()=>{try{v.currentTime=t||0;}catch(_){}const p=v.play();if(p&&p.catch)p.catch(()=>{});};
+    if(v.readyState>=1)go();else v.addEventListener('loadedmetadata',go,{once:true});}catch(_){}}
+  function stopAll(free){V.forEach(v=>{try{v.pause();v.classList.remove('on');if(free&&v.src){v.removeAttribute('src');v.load();}}catch(_){}});}
+  window.boxShowcase=function(){if(!$('shop').classList.contains('isBox'))return;V.forEach(v=>play(v,0));};
+  const _rs=renderShop;renderShop=function(){const r=_rs.apply(this,arguments);try{if(shopTab==='box')boxShowcase();else stopAll(false);}catch(_){}return r;};
+  const _sh=show;show=function(id){const r=_sh.apply(this,arguments);if(id!=='shop')stopAll(true);return r;};
+  // satın alma: o kutunun açılışı, ödül penceresi açılıştan sonra
+  window._boxHold=0;
+  const _bb=buyBox;buyBox=function(rar,n){const c0=save.cash,box=$('shop').classList.contains('isBox')&&$('shop').classList.contains('show');
+    if(box)window._boxHold=Date.now()+1350;
+    const r=_bb.apply(this,arguments);
+    if(box&&save.cash<c0){const v=V[rar-1],d=D[rar-1];if(v)play(v,d[2]);try{chipSnd('chips',.6,1.1);}catch(_){}}else window._boxHold=0;
+    return r;};
+  const _sl=showLoot;showLoot=function(){const w=window._boxHold-Date.now();if(w>0){const a=arguments,t=this;window._boxHold=0;setTimeout(()=>_sl.apply(t,a),w);return;}return _sl.apply(this,arguments);};
+  document.querySelectorAll('#shop .sh5Buy').forEach(b=>b.onclick=()=>buyBox(+b.dataset.b,+b.dataset.n));
+})();
 </script>
 </body>
 </html>
