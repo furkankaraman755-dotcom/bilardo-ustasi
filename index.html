@@ -2961,7 +2961,7 @@ function cueStdPaint(cv){ // cv._W, cv._H, cv._cue hazır
   else drawCue(q,W-pad,H/2,pad,H/2,c,L*CUE_STD_W);
   q.restore();}
 function cueStdDraw(cv,c,W,H){ // canvas'ı W×H (css px) yap ve standart çiz
-  const dpr=Math.min(2,window.devicePixelRatio||1);W=Math.round(W);H=Math.round(H);
+  const dpr=Math.min(cv.closest&&cv.closest('#cueList')?1.5:2,window.devicePixelRatio||1);W=Math.round(W);H=Math.round(H);
   cv.style.setProperty('width',W+'px','important');cv.style.setProperty('height',H+'px','important');cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
   cv._W=W;cv._H=H;cv._dpr=dpr;cv._cue=c;cueStdPaint(cv);}
 function cueStdList(){ // istaka listesi: tüm satırlarda tek ölçü (ilk satırın sanat alanı genişliği)
@@ -3927,7 +3927,7 @@ addEventListener('resize',resize);
     g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(.32,'rgba(255,255,255,'+(.3*a)+')');g.addColorStop(.5,'rgba(255,255,255,'+a+')');g.addColorStop(.68,'rgba(255,255,255,'+(.3*a)+')');g.addColorStop(1,'rgba(255,255,255,0)');
     sx.fillStyle=g;sx.fillRect(0,0,w,h);sx.globalCompositeOperation='source-in';sx.drawImage(img,0,0,w,h);
     sx.globalCompositeOperation='lighter';sx.drawImage(S,0,0);sx.globalAlpha=1;}
-  function finish(fast){if(dead)return;dead=true;cancelAnimationFrame(raf);el.classList.add('out');if(fast)el.classList.add('fast');setTimeout(()=>{el.remove();try{window.ensureScreen&&ensureScreen();}catch(_){}removeEventListener('resize',rs);removeEventListener('resize',swSize);},fast?260:500);}
+  function finish(fast){if(dead)return;dead=true;cancelAnimationFrame(raf);el.classList.add('out');if(fast)el.classList.add('fast');setTimeout(()=>{try{C.width=C.height=0;img.removeAttribute('src');}catch(_){}el.remove();try{window.ensureScreen&&ensureScreen();}catch(_){}removeEventListener('resize',rs);removeEventListener('resize',swSize);},fast?260:500);}
   el.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();finish(true);});
   function fr(){if(dead)return;raf=requestAnimationFrame(fr);const now=performance.now();
     const t=(now-t0)/1000,K=T.K,u=cl((t-T.f0)/(T.f1-T.f0)),e=eo(u),h=t-T.f1;
@@ -4976,8 +4976,6 @@ window.ensureScreen=function(){
   try{let s=document.querySelector('.screen.show');
     if(!s){const id=(typeof save!=='undefined'&&save&&save.pid)?'menu':'login';try{show(id);}catch(e){bbaLog(e,'ensure');}s=document.querySelector('.screen.show');if(!s){const el=document.getElementById(id);if(el)el.classList.add('show');}bbaLog('ekran yoktu, '+id+' açıldı','ensure');}
     try{fullFit();}catch(_){}
-    // Android WebView bazen katmanı çizmez: küçük bir dokunuşla yeniden çizdir
-    const b=document.body;b.style.transform='translateZ(0)';requestAnimationFrame(()=>requestAnimationFrame(()=>{b.style.transform='';}));
   }catch(e){try{bbaLog(e,'ensure');}catch(_){}}};
 [600,1500,3000,5200,6500,9500].forEach(t=>setTimeout(()=>{if(!document.getElementById('intro'))ensureScreen();},t));
 addEventListener('pageshow',()=>setTimeout(ensureScreen,300));
@@ -5040,12 +5038,15 @@ window.DBOX_SRC='data:image/webp;base64,UklGRhA0AABXRUJQVlA4WAoAAAAQAAAATgEA7wAA
 #flyLayer .cfly2{position:absolute;display:block;margin:0!important;animation:none!important;will-change:transform,opacity;filter:drop-shadow(0 3px 5px rgba(0,0,0,.55)) drop-shadow(0 0 7px rgba(255,205,90,.55))!important}
 #flyLayer .cflySpark{position:absolute;width:36px;height:36px;border-radius:50%;background:radial-gradient(circle,rgba(255,248,210,.95),rgba(255,200,80,.55) 40%,rgba(255,170,40,0) 70%);animation:cfSp .42s ease-out forwards}
 @keyframes cfSp{0%{transform:scale(.3);opacity:1}100%{transform:scale(1.6);opacity:0}}
-html,body{overflow-x:hidden}
 .bx2 .ofBox{position:relative;display:flex;justify-content:center;align-items:center;height:150px;margin:2px 0}
 .bx2 .ofBox::before{content:'';position:absolute;width:190px;height:120px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,226,140,.55),rgba(255,190,70,.18) 50%,rgba(255,170,40,0) 72%);animation:dbxG 3s ease-in-out infinite}
 .bx2 .dbx{position:relative;width:190px;height:auto;filter:drop-shadow(0 10px 12px rgba(0,0,0,.55)) drop-shadow(0 0 10px rgba(255,210,110,.35));animation:dbxF 3s ease-in-out infinite}
 @keyframes dbxF{0%,100%{transform:translateY(2px)}50%{transform:translateY(-6px)}}
 @keyframes dbxG{0%,100%{opacity:.75;transform:scale(.95)}50%{opacity:1;transform:scale(1.05)}}
 </style>
+<script>
+/* bellek: ıstaka ekranından çıkınca liste canvas'larını boşalt (telefon grafik belleği dolmasın) */
+(function freeCueList(){const _s=show;show=function(id){if(id!=='cues'){const L=document.getElementById('cueList');if(L&&L.firstChild){L.querySelectorAll('canvas').forEach(c=>{c.width=c.height=0;});L.innerHTML='';}}return _s.apply(this,arguments);};})();
+</script>
 </body>
 </html>
