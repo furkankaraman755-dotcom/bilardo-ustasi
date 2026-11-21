@@ -1219,6 +1219,18 @@ addEventListener('error',e=>bbaLog(e));addEventListener('unhandledrejection',e=>
 #cues .cr.gold{padding-top:15px!important}
 @media (max-width:860px){#cues .cr,#cues .cr.rbw{grid-template-columns:100px minmax(0,1fr) auto 112px!important}#cues .cr .cqHd .cqGoldTag,#cues .cr.rbw .cqHd .cqGoldTag{right:136px}}
 </style>
+<style id="of5Css">
+/* Özel Teklif: kullanıcının FIRSAT kartı (görsel parçalı, yazılar canlı) */
+#items .of5{position:relative;margin:2px auto 0;flex:none;--k:1px;filter:drop-shadow(0 0 calc(var(--k)*22) rgba(255,190,60,.35))}
+#items .of5 .of5Bg{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;user-select:none}
+#items .of5 .of5B{position:absolute;left:calc(var(--k)*132);top:calc(var(--k)*var(--y));width:calc(var(--k)*856);height:calc(var(--k)*76);
+  margin:0;padding:0;border:0;border-radius:calc(var(--k)*38);background:transparent!important;box-shadow:none!important;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#items .of5 .of5B:active{background:rgba(255,220,120,.12)!important}
+#items .of5 .of5B span{position:absolute;left:calc(var(--k)*338);top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:calc(var(--k)*16);
+  font:500 calc(var(--k)*34) Roboto,'Segoe UI',Arial,sans-serif;color:#fff;white-space:nowrap;text-shadow:0 2px 4px rgba(0,0,0,.6)}
+#items .of5 .of5B em{font-style:normal;opacity:.9}
+#items .of5 .of5B b{font:900 calc(var(--k)*50) Roboto,Arial,sans-serif;color:#ffd21f;letter-spacing:calc(var(--k)*1);text-shadow:0 2px 0 #8a5a00,0 0 calc(var(--k)*10) rgba(255,200,60,.45)}
+</style>
 </head>
 <body>
 <div id="intro"><div class="inSt"><div id="inW"><img id="inImg" alt="" decoding="async" src="a/26cf350d4386.webp"><canvas id="inSw"></canvas></div></div><canvas id="inC"></canvas><div class="inSkip">GEÇMEK İÇİN DOKUN</div></div>
@@ -1475,9 +1487,6 @@ const TABLES=[ // f=çuha, c=yastık, w=bant, a=süs/altın, d=nişan noktası, 
  {id:'red',   name:'Bordo',       price:10000,  f1:'#9e2a30',f2:'#5a1016',c:'#4a0c12',w1:'#3a1a12',w2:'#1a0a07',a:'#d9b45a',d:'#7fe0e0',pt:2},
  {id:'black', name:'Gece',        price:50000,  f1:'#3a4048',f2:'#16191d',c:'#111417',w1:'#2a2d33',w2:'#0c0d10',a:'#9fe8ff',d:'#9fe8ff',pt:1},
  {id:'purple',name:'Mor Lüks',    price:250000, f1:'#8150c4',f2:'#3e1f6e',c:'#331a5c',w1:'#e8e8ee',w2:'#8a8a98',a:'#f0cf6a',d:'#4f2a80',pt:2},
- {id:'mor',   name:'Mor Saray',   price:0,      f1:'#8a4ff0',f2:'#4a1d9e',c:'#7a42e0',w1:'#f3ead6',w2:'#c9b48a',a:'#c9962e',d:'#7a1c22',pt:0,style:'palace'},
- {id:'osm',   name:'Saray Halısı',price:0,      f1:'#7cc0e6',f2:'#3f8cc6',c:'#5aa8dc',w1:'#8a2c1a',w2:'#3e1209',a:'#e2b64a',d:'#f3e3b5',pt:0,style:'classic',orn:1,real:1},
- {id:'pro',   name:'Turnuva',     price:0,      f1:'#5cc0e6',f2:'#2a8cc4',c:'#4aaee0',w1:'#c8392b',w2:'#7c1a10',a:'#d9dde4',d:'#ffffff',pt:0,style:'classic'},
  {id:'royal', name:'Kraliyet',    price:1000000,f1:'#1f7564',f2:'#0b3a31',c:'#09302a',w1:'#f0cf6a',w2:'#8a6416',a:'#ffffff',d:'#0f4238',pt:1},
 ];
 const DIFF={
@@ -1562,7 +1571,7 @@ function crownHTML(lv,h){ // ad korunuyor; artık altıgen kristal seviye amblem
 const frameOf=lv=>lv>=60?'fr4':lv>=35?'fr3':lv>=15?'fr2':lv>=5?'fr1':'fr0';
 /* ================= KAYIT ================= */
 const KEY='bilardo_ustasi_v1';
-let save={coins:1000,cues:['basic'],tables:['green','blue','pro','osm','mor'],cue:'basic',table:'osm',wins:0,losses:0,name:'',pid:0,level:1,xp:0,cash:5,lastDaily:0,streak:0,rw:{},chestCnt:0,chestNext:2,eco:2,gems:10,cl:{},slots:[null,null,null,null],free:{day:0,n:0,next:0},offer:-1,lucky:0,week:{id:0,earn:0}};
+let save={coins:1000,cues:['basic'],tables:['green','blue'],cue:'basic',table:'rclassic',wins:0,losses:0,name:'',pid:0,level:1,xp:0,cash:5,lastDaily:0,streak:0,rw:{},chestCnt:0,chestNext:2,eco:2,gems:10,cl:{},slots:[null,null,null,null],free:{day:0,n:0,next:0},offer:-1,lucky:0,week:{id:0,earn:0}};
 
 try{const s=JSON.parse(localStorage.getItem(KEY));if(s)save=Object.assign(save,s);}catch(e){}
 // TEST: yayından önce kaldırılacak — bir kerelik 5 milyar altın, sonra 10'ar milyar çip/elmas/dolar
@@ -1574,10 +1583,9 @@ if(!save.eco||save.eco<2){save.eco=2;save.coins=Math.max(save.coins,1000);}
 if(!save.rw)save.rw={};
 for(const [k,v] of Object.entries({gems:10,cl:{},slots:[null,null,null,null],free:{day:0,n:0,next:0},offer:-1,lucky:0,week:{id:0,earn:0}}))if(save[k]===undefined)save[k]=v;
 for(const id of save.cues)if(!save.cl[id])save.cl[id]={lv:1,pc:0};
-if(!save.tables.includes('pro')){save.tables.push('pro');save.table='pro';}
-if(!save.tables.includes('osm')){save.tables.push('osm');}
-if(!save.tables.includes('mor')){save.tables.push('mor');}
-if(!save.v19){save.v19=1;save.table='osm';}
+if(!save.v19){save.v19=1;}
+// "8 USTA" yazılı eski klasik masalar kaldırıldı: seçili olan varsa Royal Turnuva'ya geç
+save.tables=save.tables.filter(id=>!['mor','osm','pro'].includes(id));if(['mor','osm','pro'].includes(save.table))save.table='rclassic';
 if(!save.v29){save.v29=1;save.table='neon';if(!save.tables.includes('neon'))save.tables.push('neon');}
 if(!save.v39){save.v39=1;save.table='rclassic';if(!save.tables.includes('rclassic'))save.tables.push('rclassic');}
 if(!save.tables.includes('blue')){save.tables.push('blue');if(save.table==='green')save.table='blue';}
@@ -1985,11 +1993,13 @@ function renderShop(){
     box.innerHTML=h+'</div>';
     box.querySelectorAll('[data-b]').forEach(el=>el.onclick=()=>buyBox(+el.dataset.b,+el.dataset.n));
   }
-  if(shopTab==='offer'){
-    const done=save.offer===dayIdx();
-    box.innerHTML=`<div class="boxes" style="justify-content:center"><div class="bx bx2" style="max-width:320px"><h3>🔥 Günün Teklifi</h3><div class="rw">Destansı Kutu yarı fiyatına!<br>Her gün yenilenir.</div><div class="big ofBox"><img class="dbx" src="${window.DBOX_SRC||''}" alt="Destansı Kutu"></div>
-      <div class="rw"><s>💵 16</s> → <b style="font-size:18px">💵 8</b></div><button class="gold" id="ofB" ${done?'disabled':''}>${done?'Bugün alındı':'Satın al'}</button></div></div>`;
-    if(!done)$('ofB').onclick=()=>{if(save.cash<8){$('smsg').textContent='Yeterli 💵 yok.';return;}save.cash-=8;save.offer=dayIdx();persist();openBoxes(2,1);renderShop();};
+  if(shopTab==='offer'){ // kullanıcının tasarımı (FIRSAT kartı); fiyatlar canlı yazı — fiyat kararı sonra verilecek
+    const B=BOXES[1];
+    box.innerHTML=`<div class="of5"><img class="of5Bg" src="a/f28024fa2f35.webp" alt="Destansı Kutu — Fırsat">
+      <button class="of5B" data-n="3" style="--y:430" aria-label="3 tane"><span>3 tane<em>·</em><b>${B.c3}</b></span></button>
+      <button class="of5B" data-n="1" style="--y:520" aria-label="1 tane"><span>1 tane<em>·</em><b>${B.c1}</b></span></button></div>`;
+    box.querySelectorAll('.of5B').forEach(el=>el.onclick=()=>buyBox(2,+el.dataset.n));
+    ofFit();requestAnimationFrame(ofFit);setTimeout(ofFit,120);
   }
   if(shopTab==='pack'){
     const P=[['🪙','50.000','₺29,99'],['🪙','150.000','₺79,99'],['🪙','500.000','₺199,99'],['🪙','1.500.000','₺399,99'],['💵','25','₺29,99'],['💵','75','₺79,99'],['💵','250','₺199,99'],['💎','100','₺49,99']];
@@ -4952,20 +4962,28 @@ function cueShortName(c){if(CUE_SHORT[c.id])return CUE_SHORT[c.id];let n=String(
    Görseller çuha kenarı (bant burnu) oyunun oyun alanına, cepler fizik ceplerine oturacak şekilde önceden hizalandı. ---- */
 window.TBL_SRC={
 t_pembe:'a/57323b7ba4b0.webp',
-t_zehir:'a/a91c19bf578d.webp',
-t_buz:'a/ea44d19da0a4.webp',
-t_ates:'a/09b09691f1d9.webp',
-t_zumrut:'a/6bbbcb683f80.webp',
-t_gece:'a/9e18a6b4f4e8.webp'
+t_zehir:'a/c4d65b0fa69f.webp',
+t_buz:'a/9d04e3012055.webp',
+t_ates:'a/66131d35b3e1.webp',
+t_zumrut:'a/b0209a832ae2.webp',
+t_gece:'a/08eab408ca9d.webp',
+t_elektrik:'a/a116f3b5c9d7.webp',
+t_karaltin:'a/bfdb14e72cfe.webp',
+t_gumus:'a/b8d51f9e9ae7.webp',
+t_lav:'a/eff97bc84f28.webp'
 };
 const TBL_IM={};for(const k in TBL_SRC){const im=new Image();im.decoding='async';im.src=TBL_SRC[k];TBL_IM[k]=im;im.onload=()=>{try{tblKey='';}catch(_){}try{if(typeof renderShopTables==='function')renderShopTables();}catch(_){}};}
 TABLES.push(
  {id:'t_pembe',name:'Pembe Saray',price:0,img:'t_pembe',f1:'#f925cb',f2:'#ed1592',c:'#ed1592',w1:'#2a0f2e',w2:'#120614',a:'#e9b04a',d:'#ff7ad9',pt:0},
- {id:'t_zehir',name:'Zehir Neon',price:0,img:'t_zehir',f1:'#e7d624',f2:'#87bc07',c:'#87bc07',w1:'#0f2a14',w2:'#06140a',a:'#b8ff3a',d:'#e8ff6a',pt:0},
- {id:'t_buz',name:'Buz Kristal',price:0,img:'t_buz',f1:'#52dcee',f2:'#029bbb',c:'#029bbb',w1:'#8a96a6',w2:'#3a4250',a:'#cfe9ff',d:'#7ef3ff',pt:0},
- {id:'t_ates',name:'Kızıl Ateş',price:0,img:'t_ates',f1:'#bb2e25',f2:'#6f091a',c:'#6f091a',w1:'#1c1514',w2:'#0a0707',a:'#ff8a2a',d:'#ffb36b',pt:0},
- {id:'t_zumrut',name:'Zümrüt Saray',price:0,img:'t_zumrut',f1:'#818744',f2:'#0a552f',c:'#0a552f',w1:'#0f1a12',w2:'#050a06',a:'#e2b64a',d:'#f3d77a',pt:0},
- {id:'t_gece',name:'Gece Moru',price:0,img:'t_gece',f1:'#424558',f2:'#17161e',c:'#17161e',w1:'#14121c',w2:'#07060c',a:'#b47bff',d:'#e6d6ff',pt:0}
+ {id:'t_zehir',name:'Zehir Neon',price:0,img:'t_zehir',f1:'#e6d624',f2:'#86bb05',c:'#86bb05',w1:'#0f2a14',w2:'#06140a',a:'#b8ff3a',d:'#e8ff6a',pt:0},
+ {id:'t_buz',name:'Buz Kristal',price:0,img:'t_buz',f1:'#51daec',f2:'#0199b9',c:'#0199b9',w1:'#8a96a6',w2:'#3a4250',a:'#cfe9ff',d:'#7ef3ff',pt:0},
+ {id:'t_ates',name:'Kızıl Ateş',price:0,img:'t_ates',f1:'#b82e24',f2:'#6c0819',c:'#6c0819',w1:'#1c1514',w2:'#0a0707',a:'#ff8a2a',d:'#ffb36b',pt:0},
+ {id:'t_zumrut',name:'Zümrüt Saray',price:0,img:'t_zumrut',f1:'#808643',f2:'#09542f',c:'#09542f',w1:'#0f1a12',w2:'#050a06',a:'#e2b64a',d:'#f3d77a',pt:0},
+ {id:'t_gece',name:'Gece Moru',price:0,img:'t_gece',f1:'#3f4555',f2:'#16151d',c:'#16151d',w1:'#14121c',w2:'#07060c',a:'#b47bff',d:'#e6d6ff',pt:0},
+ {id:'t_elektrik',name:'Elektrik Mavi',price:0,img:'t_elektrik',f1:'#11c7fb',f2:'#058df3',c:'#058df3',w1:'#1a1030',w2:'#0a0618',a:'#b47bff',d:'#7ef3ff',pt:0},
+ {id:'t_karaltin',name:'Kara Altın',price:0,img:'t_karaltin',f1:'#2b333d',f2:'#11161a',c:'#11161a',w1:'#1a1712',w2:'#0a0907',a:'#e2b64a',d:'#ffb84a',pt:0},
+ {id:'t_gumus',name:'Gümüş Saray',price:0,img:'t_gumus',f1:'#6219a1',f2:'#2e095b',c:'#2e095b',w1:'#a8b0bc',w2:'#4a5260',a:'#dfe8ff',d:'#9fe8ff',pt:0},
+ {id:'t_lav',name:'Lav Alevi',price:0,img:'t_lav',f1:'#df4f0d',f2:'#912207',c:'#912207',w1:'#1c1210',w2:'#0a0605',a:'#ff8a2a',d:'#ffb36b',pt:0}
 );
 (function imgTables(){
   try{let ch=0;for(const t of TABLES)if(t.img&&!save.tables.includes(t.id)){save.tables.push(t.id);ch=1;}if(ch)persist();}catch(_){}
@@ -5093,6 +5111,12 @@ window.DBOX_SRC='a/b57366756228.webp';
   const _s=show;show=function(id){const r=_s.apply(this,arguments);if(id==='game'){again();setTimeout(again,300);setTimeout(again,1200);}return r;};
   addEventListener('orientationchange',()=>setTimeout(again,250));
 })();
+</script>
+<script>
+function ofFit(){const b=$('items'),c=b&&b.querySelector('.of5');if(!c)return;const r=b.getBoundingClientRect();
+  const avH=Math.max(120,innerHeight-r.top-16),avW=Math.max(200,b.clientWidth*.7),W=Math.min(avW,avH*1115/630);
+  c.style.width=W+'px';c.style.height=(W*630/1115)+'px';c.style.setProperty('--k',(W/1115)+'px');}
+addEventListener('resize',()=>setTimeout(ofFit,60));
 </script>
 </body>
 </html>
