@@ -3,6 +3,7 @@
 Bu proje Blackball Arena mobil bilardo oyunudur. İşe başlamadan önce **docs/PROJE_NOTLARI.md** dosyasını oku:
 proje özeti, kullanıcının kuralları, kod yapısı, sürüm geçmişi ve yaşanan hatalar oradadır.
 Sıradaki işler ve durum takibi için **docs/YOL_HARITASI.md** defterini oku; hangi fazda olduğumuz orada yazar.
+Oturum oturum yapılacak somut görevler **docs/GOREV_HARITASI.md** içindedir; "Sıradaki görev" bölümünden devam et, biten görevi ✅ işaretle.
 
 Kısa kurallar:
 - Kullanıcıyla Türkçe konuş. Kullanıcı sadece telefondan çalışıyor.

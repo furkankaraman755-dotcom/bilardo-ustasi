@@ -2,6 +2,7 @@
 
 Bu defter adım adım ne yapacağımızı tutar. Her adım bitince durumu güncellenir.
 Proje geçmişi ve teknik bilgiler: `docs/PROJE_NOTLARI.md`
+Görev görev ayrıntılı liste (Claude'un önerdiği sıra): `docs/GOREV_HARITASI.md`
 
 Oluşturulma: 25 Kasım 2026 · Başlangıç noktası: **surum-72**
 
@@ -273,4 +274,5 @@ Kozmetik dondurma burada kalkar.
 ---
 
 ## Değişiklik günlüğü (bu defterin)
+- 25.11.2026 — `GOREV_HARITASI.md` eklendi. Claude'un önerisi: önce hatalar ve temel, görsel entegrasyonu sonda. Furkan'ın "önce görseller" seçimiyle farklı; son karar Furkan'ın.
 - 25.11.2026 — Defter oluşturuldu. surum-72 kararları işlendi: paket adı, 1'e 1 ülke masası, Özel Teklif 11/31. Sıradaki iş: **Faz G (görseller)**, ardından Faz 1.1.

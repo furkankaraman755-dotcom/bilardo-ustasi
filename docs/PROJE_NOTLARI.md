@@ -197,6 +197,7 @@ Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-72**
 
 ## BÖLÜM 4 — Bundan sonra ne yapacağız
 Ayrıntılı, adım adım plan ve durum takibi **`docs/YOL_HARITASI.md`** defterindedir. Tek kaynak orasıdır; plan değişince orası güncellenir.
+Oturum oturum somut görevler (bilinen hatalar dahil): **`docs/GOREV_HARITASI.md`**.
 
 **Sıradaki iş (Furkan seçti, 25 Kasım): Faz G — yeni görseller.** Ülke masası fotoğrafları ve yeni ejderha ıstakaları. Firebase bundan sonra.
 
