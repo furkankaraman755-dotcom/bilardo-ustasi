@@ -195,83 +195,27 @@ Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-72**
 
 ---
 
-## BÖLÜM 4 — Bundan sonra ne yapacağız (adım adım)
+## BÖLÜM 4 — Bundan sonra ne yapacağız
+Ayrıntılı, adım adım plan ve durum takibi **`docs/YOL_HARITASI.md`** defterindedir. Tek kaynak orasıdır; plan değişince orası güncellenir.
 
-### Hemen bekleyen küçük işler
-**Sıradaki iş (Furkan seçti, 25 Kasım): yeni görseller.** Firebase bundan sonra.
-1. **Ülke masaları:** Furkan fotoğraf gönderecek. Karar verildi: 1'e 1'de ülke masası kalır.
-2. **Yeni ejderha ıstakaları:** Furkan görselleri üretecek, Claude yerleştirecek. Standarda otomatik oturuyorlar.
-3. **Özel Teklif:** Fiyat kararı verildi (11/31, surum-72). Günde bir kez sınırı istenirse eklenecek.
+**Sıradaki iş (Furkan seçti, 25 Kasım): Faz G — yeni görseller.** Ülke masası fotoğrafları ve yeni ejderha ıstakaları. Firebase bundan sonra.
 
-### ADIM 1 — Firebase kurulumu (Furkan + Claude)
-**Furkan yapar:**
-1. console.firebase.google.com → yeni proje "Blackball Arena".
-2. Android uygulaması ekle, paket adı: `com.blackballarena.game` (onaylandı, oyunda uygulandı) → `google-services.json` dosyasını indirip Claude'a gönder.
-3. Authentication → Google, Facebook ve Anonim girişi aç. Facebook için Meta geliştirici uygulaması gerekir, Claude adım adım anlatır.
-4. Firestore Database'i oluştur (bölge: europe-west).
-5. Blaze planına geç ve harcama limiti koy (ör. aylık 5–10 $).
-6. Proje ayarları → Hizmet hesapları → yeni özel anahtar oluştur → GitHub deposunda Settings → Secrets'a `FIREBASE_SERVICE_ACCOUNT` olarak ekle. Claude adım adım anlatır.
-
-**Claude yapar:** Firebase eklentilerinin projeye eklenmesi, CI'nin sunucu kodunu otomatik yüklemesi.
-
-### ADIM 2 — Giriş ve bulut kayıt
-- Google / Facebook / misafir girişi. Misafir hesap sonradan Google'a bağlanabilir.
-- Her oyuncuya kalıcı **6 haneli ID**.
-- Bakiye, ıstakalar, masalar, seviye ve lig Firestore'a kaydedilir; telefon değişse de kaybolmaz.
-- Eski telefondaki kayıt ilk girişte buluta taşınır.
-- **Test:** Oyunu sil, yeniden kur, aynı hesapla gir → her şey geri gelmeli.
-
-### ADIM 3 — Sunucuda ekonomi (hile koruması)
-- Bakiye alanlarına telefon yazamaz, sadece sunucu fonksiyonları yazar.
-- Sunucu fonksiyonları:
-  - `startMatch`: ücreti düşer, maç kaydı açar
-  - `finishMatch`: ödülü bir kez yazar, lig puanını ekler
-  - `openBox`: kutu ödülünü sunucu belirler
-  - `claimDaily`: günlük ödül
-  - `seasonClose`: zamanlanmış dönem kapanışı ve ödüller
-- Zaman sunucu saatinden alınır; telefon saatini değiştirmek işe yaramaz.
-- Plan ayrıntısı: `docs/lig-sunucu.md`
-- **Test:** Kayıt dosyasıyla oynamak ve saat değiştirmek bakiyeyi etkilememeli.
-
-### ADIM 4 — Online 1'e 1 (asıl büyük iş)
-1. **Eşleşme sırası:** Aynı masa/ücret için bekleyen oyuncular eşleşir. 10–15 sn içinde rakip bulunamazsa bot rakip gelir.
-2. **Vuruş senkronu:** Her vuruşta sadece açı, güç, falso ve top yerleşimi gönderilir (Realtime Database). İki telefon aynı fizikle aynı sonucu hesaplar.
-3. **Fizik deterministik yapılacak:** Sabit zaman adımı, rastgelelik yok; her telefonda aynı sonuç çıkmalı.
-4. **Sunucu doğrulaması:** Aynı fizik kodu sunucuda çalışır ve şüpheli vuruşu reddeder.
-5. **Bağlantı kopması:** 30 sn içinde dönülebilir; dönülmezse maç kaybedilir.
-6. **Sohbet ve emojiler:** Gerçek rakibe gider.
-- **Test:** İki telefonla aynı masada oyna; sonuç ikisinde de aynı olmalı, kazanan ödülü bir kez almalı.
-
-### ADIM 5 — Gelir
-- Google Play Billing ile nakit paketleri ve kutular. Her satın alma sunucuda Google'a sorularak doğrulanır.
-- AdMob ödüllü reklam ("izle, çip kazan"). Kullanıcı onayı (KVKK/GDPR, UMP).
-- Kutu olasılıkları oyunda gösterilir (Google kuralı).
-
-### ADIM 6 — Play Store hazırlığı
-1. APK yerine AAB formatı, kalıcı imza anahtarı (yedeği güvenli yerde saklanacak).
-2. Test parası, test kilitleri ve test kısayolları kaldırılacak.
-3. Gizlilik politikası ve kullanım şartları sayfası (KVKK uyumlu).
-4. Play Console: Veri Güvenliği formu, yaş derecelendirmesi, mağaza görselleri ve tanıtım metni.
-5. İsim kontrolü: TÜRKPATENT ve WIPO.
-6. Google Play geliştirici hesabı (tek seferlik 25 $).
-7. **Kapalı test:** En az 12 kişi, 14 gün kesintisiz. Hatalar toplanıp düzeltilir.
-8. Üretim yayını kademeli: %5 → %20 → %100. Çökme oranı izlenir.
-
-### ADIM 7 — Takip ve yönetim
-- Crashlytics (çökme raporları), Analytics (oyuncu nerede bırakıyor), Remote Config (APK çıkarmadan fiyat/etkinlik değiştirme), bildirimler (FCM).
-- **Yönetim paneli:** Oyuncu arama, bakiye görme/düzeltme, banlama, etkinlik ve fiyat ayarı. Panelix deneyimi işe yarar.
-- Destek e-postası, isim ve sohbet filtresi.
-
-### ADIM 8 — Oyunu büyütmek
-- Yeni oyuncu için eğitim maçı.
-- Arkadaş listesi, kodla özel oda, kulüpler, arkadaş davet ödülü.
-- Daha kaliteli sesler ve menü müziği (boyut bütçesi: 60–100 MB'a kadar yer var).
-- Diller: İngilizce önce, sonra Arapça ve Hintçe.
-- Yeni modlar ve sezonluk etkinlikler; yeni masa ve ıstaka paketleri (Furkan'ın görselleriyle).
+Kısaca sıra:
+- **0.** Kararlar (çoğu verildi)
+- **G.** Görsel paketi
+- **1.** Temeli sağlamlaştırma (testler depoya, modüller, deterministik fizik)
+- **2.** Firebase giriş ve bulut kayıt
+- **3.** Sunucuda ekonomi
+- **4.** Online 1'e 1
+- **5.** Gelir
+- **6.** Play Store hazırlığı
+- **7.** Kapalı test (12 kişi, 14 gün)
+- **8.** Türkiye'de yumuşak çıkış
+- **9.** Büyüme
 
 ### Her sürümde izlenen yol
 1. İstenen iş yapılır (başka ayar bozulmaz).
 2. Testler: tüm eski testler ve yeni testler (ekran görüntüsüyle kontrol).
 3. Commit → push → CI → `surum-N`.
 4. Furkan'a: indirme bağlantısı, ekran görüntüsü, kısa değişiklik listesi.
-5. Bu not defteri güncellenir.
+5. `PROJE_NOTLARI.md` ve `YOL_HARITASI.md` güncellenir.
