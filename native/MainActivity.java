@@ -1,4 +1,4 @@
-package com.bilardoustasi.oyun;
+package com.blackballarena.game;
 
 import android.os.Build;
 import android.os.Bundle;

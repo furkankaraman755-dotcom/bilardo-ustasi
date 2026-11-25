@@ -5269,5 +5269,16 @@ window.bbaBack=function(){
   document.querySelectorAll('#shop .sh5Buy').forEach(b=>b.onclick=()=>buyBox(+b.dataset.b,+b.dataset.n));
 })();
 </script>
+<script>
+/* Özel Teklif fiyatı (surum-72): Destansı Kutu %30 indirimli — 1 tane 11, 3 tane 31 nakit.
+   Normal Sürpriz Kutuları fiyatı (16/44) değişmez; satın alma eski buyBox zinciriyle yapılır. */
+const OFFER_PRICE={c1:11,c3:31};
+function buyOffer(n){const B=BOXES[1],o1=B.c1,o3=B.c3;B.c1=OFFER_PRICE.c1;B.c3=OFFER_PRICE.c3;
+  try{return buyBox(2,n);}finally{B.c1=o1;B.c3=o3;}}
+(function(){const _rs=renderShop;renderShop=function(){const r=_rs.apply(this,arguments);
+  try{if(shopTab==='offer')$('items').querySelectorAll('.of5B').forEach(el=>{const n=+el.dataset.n,b=el.querySelector('b');
+    if(b)b.textContent=n===3?OFFER_PRICE.c3:OFFER_PRICE.c1;el.onclick=()=>buyOffer(n);});}catch(e){try{bbaLog(e,'offer');}catch(_){}}
+  return r;};})();
+</script>
 </body>
 </html>

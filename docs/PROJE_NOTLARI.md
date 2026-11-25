@@ -3,7 +3,7 @@
 Yeni bir sohbette her şeyi baştan anlatmamak için tutulur.
 Yeni sohbette ilk mesaj: **"docs/PROJE_NOTLARI.md dosyasını oku, oradan devam et."**
 
-Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-71**
+Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-72**
 
 ---
 
@@ -18,7 +18,7 @@ Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-71**
 | Sahibi | Furkan. Sadece telefondan çalışıyor, bilgisayar yok |
 | Depo | github.com/furkankaraman755-dotcom/bilardo-ustasi |
 | APK indirme | `…/releases/download/surum-N/BilardoUstasi.apk` |
-| Paket adı | `com.bilardoustasi.oyun` (Play Store'dan önce kalıcı ad seçilecek; öneri `com.blackballarena.game`) |
+| Paket adı | **`com.blackballarena.game`** (kalıcı ad, surum-72'den itibaren; eskisi `com.bilardoustasi.oyun`) |
 | Tasarım dili | Siyah + altın; mor vurgular; turnuva mavisi varsayılan masa |
 | Para birimleri | **Çip** (siyah-altın taçlı "B" çip görseli), **Nakit** (yeşil banknot destesi), **Elmas** |
 
@@ -158,6 +158,11 @@ Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-71**
   - Turnuva, Saray Halısı ve Mor Saray, "8 BLACKBALL ARENA" baskısıyla geri geldi.
   - Mağazadaki masa adı hatası düzeldi.
 
+### 25 Kasım — surum-72
+- **Kararlar:** 1'e 1'de ülke masası kalır (seçilen masa 1'e 1'e uygulanmaz). Özel Teklif %30 indirimli. Kalıcı paket adı `com.blackballarena.game`.
+- **Özel Teklif fiyatı:** Destansı Kutu 1 tane **11**, 3 tane **31** nakit (`OFFER_PRICE`, `buyOffer`). Sürpriz Kutuları'ndaki normal fiyat 16/44 aynı kaldı. Şimdilik günlük sınır yok.
+- **Paket adı değişti:** `capacitor.config.json`, `native/MainActivity.java`, `build.yml`. Yeni APK eski uygulamanın yanına ayrı uygulama olarak kurulur; eski "Blackball Arena" silinmeli.
+
 ### Bugünkü içerik (özet)
 - **Ülke masaları (1'e 1):** 17 oda. Ödül = 2 × giriş, net kazanç = giriş.
   - Portekiz 250 · İtalya 1K · Fransa 4K · Hollanda 5K · Brezilya 10K · Japonya 50K · Mısır 100K
@@ -169,7 +174,7 @@ Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-71**
   - Klasik 3: Turnuva (varsayılan), Saray Halısı, Mor Saray
   - Resimli 10: Pembe Saray, Zehir Neon, Buz Kristal, Kızıl Ateş, Zümrüt Saray, Gece Moru, Elektrik Mavi, Kara Altın, Gümüş Saray, Lav Alevi
 - **İstakalar:** 84.
-- **Kutular (1 tane / 3 tane, nakit):** Nadir 5/14 · Destansı 16/44 · Efsanevi 33/89.
+- **Kutular (1 tane / 3 tane, nakit):** Nadir 5/14 · Destansı 16/44 · Efsanevi 33/89. Özel Teklif (Destansı): 11/31.
 - **Lig eşikleri (21 günlük net kazanç):** Novice 0 · Pioneer 30K · Nova 150K · Rogue 300K · Valor 1M · Astra 3M · Zenith 10M · Dominion 30M · Eclipse 100M · Paragon 300M.
   - Dönem sonu ödülü: eşiğin %10'u çip + 1 elmas.
   - İlk dönem 17 Kasım 2026'da başladı.
@@ -193,23 +198,21 @@ Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-71**
 ## BÖLÜM 4 — Bundan sonra ne yapacağız (adım adım)
 
 ### Hemen bekleyen küçük işler
-1. **Ülke masaları:** Furkan fotoğraf gönderebilir. Ayrıca seçilen masanın 1'e 1'de de kullanılıp kullanılmayacağına karar verilecek. Seçenekler:
-   - a) Seçilen masa her maçta
-   - b) Ülke masası kalsın
-   - c) Ayarlardan seçilsin
-2. **Özel Teklif fiyatları:** Karar verilecek. Şu an normal Destansı fiyatı, günlük indirim kapalı.
-3. **Yeni ejderha ıstakaları:** Furkan görselleri üretecek, Claude yerleştirecek. Standarda otomatik oturuyorlar.
+**Sıradaki iş (Furkan seçti, 25 Kasım): yeni görseller.** Firebase bundan sonra.
+1. **Ülke masaları:** Furkan fotoğraf gönderecek. Karar verildi: 1'e 1'de ülke masası kalır.
+2. **Yeni ejderha ıstakaları:** Furkan görselleri üretecek, Claude yerleştirecek. Standarda otomatik oturuyorlar.
+3. **Özel Teklif:** Fiyat kararı verildi (11/31, surum-72). Günde bir kez sınırı istenirse eklenecek.
 
 ### ADIM 1 — Firebase kurulumu (Furkan + Claude)
 **Furkan yapar:**
 1. console.firebase.google.com → yeni proje "Blackball Arena".
-2. Kalıcı paket adını onayla (öneri `com.blackballarena.game`) → Android uygulaması ekle → `google-services.json` dosyasını indirip Claude'a gönder.
+2. Android uygulaması ekle, paket adı: `com.blackballarena.game` (onaylandı, oyunda uygulandı) → `google-services.json` dosyasını indirip Claude'a gönder.
 3. Authentication → Google, Facebook ve Anonim girişi aç. Facebook için Meta geliştirici uygulaması gerekir, Claude adım adım anlatır.
 4. Firestore Database'i oluştur (bölge: europe-west).
 5. Blaze planına geç ve harcama limiti koy (ör. aylık 5–10 $).
 6. Proje ayarları → Hizmet hesapları → yeni özel anahtar oluştur → GitHub deposunda Settings → Secrets'a `FIREBASE_SERVICE_ACCOUNT` olarak ekle. Claude adım adım anlatır.
 
-**Claude yapar:** Paket adı değişikliği, Firebase eklentilerinin projeye eklenmesi, CI'nin sunucu kodunu otomatik yüklemesi.
+**Claude yapar:** Firebase eklentilerinin projeye eklenmesi, CI'nin sunucu kodunu otomatik yüklemesi.
 
 ### ADIM 2 — Giriş ve bulut kayıt
 - Google / Facebook / misafir girişi. Misafir hesap sonradan Google'a bağlanabilir.

@@ -61,7 +61,7 @@ jobs:
 
       - name: Tam ekran
         run: |
-          cp native/MainActivity.java android/app/src/main/java/com/bilardoustasi/oyun/MainActivity.java
+          cp native/MainActivity.java android/app/src/main/java/com/blackballarena/game/MainActivity.java
           sed -i 's#</style>#<item name="android:windowFullscreen">true</item></style>#' android/app/src/main/res/values/styles.xml
           cat android/app/src/main/res/values/styles.xml
 
