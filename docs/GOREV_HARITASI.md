@@ -28,9 +28,9 @@ Sebebi: görsel eklemek kolay ve her zaman yapılabilir. Ama temel sağlam olmad
 
 | Aşama | Konu | Görev sayısı | Durum |
 |---|---|---|---|
-| H | Bilinen hatalar | 9 | 🟡 (H-09 ✅) |
-| 0 | Güvenlik ağı (kayıt, hata raporu) | 4 | ⬜ |
-| 1 | Kod ve test temeli | 10 | ⬜ |
+| H | Bilinen hatalar | 9 | 🟡 (H-01–04, 08, 09 ✅; 05 ve 07 bekliyor, 06 sunucuyla) |
+| 0 | Güvenlik ağı (kayıt, hata raporu) | 4 | ✅ |
+| 1 | Kod ve test temeli | 10 | 🟡 (1-01 ✅) |
 | 2 | Oyun kuralları ve fizik doğruluğu | 4 | ⬜ |
 | 3 | Firebase: hesap ve bulut kayıt | 6 | ⬜ |
 | 4 | Sunucuda ekonomi | 8 | ⬜ |
@@ -47,25 +47,29 @@ Kabaca toplam: **60–75 oturum.** Düzenli çalışmayla çıkışa 3–4 ay.
 
 ## AŞAMA H — Bilinen hatalar ve riskler (kod incelemesinden)
 
-**H-01 · Kayıt bozulursa her şey silinir** · K · ⬜
+**H-01 · Kayıt bozulursa her şey silinir** · K · ✅
 - Sorun: Kayıt okunamazsa oyun sessizce sıfırdan başlıyor ve eski kaydın üstüne yazıyor.
 - Yapılacak: Kayıt iki ayrı yuvada tutulur. Doğrulanır, bozuksa yedekten dönülür.
 - Bitti: Bozuk kayıt testi → oyun yedekten açılıyor, hiçbir şey kaybolmuyor.
+- ✅ surum-74: iki yuva (ana + bir adım geride yedek), doğrulama, bozuk ham veri `_bozuk` altında saklanır, "Kayıt kurtarıldı" notu.
 
-**H-02 · Telefon hafızası dolarsa kayıt sessizce başarısız oluyor** · K · ⬜
+**H-02 · Telefon hafızası dolarsa kayıt sessizce başarısız oluyor** · K · ✅
 - Sorun: Kaydetme hatası yutuluyor.
 - Yapılacak: Kaydetme hatası yakalanır, eski/gereksiz veri temizlenir, gerekirse oyuncuya uyarı gösterilir.
+- ✅ surum-74: kota hatasında gereksizler silinir, listeler kısaltılır, tekrar denenir; olmazsa oyuncuya bir kez uyarı. NaN gibi bozuk değerler onarılıp kayda devam edilir.
 
-**H-03 · Listelerin üst sınırı tutarsız** · K · ⬜
+**H-03 · Listelerin üst sınırı tutarsız** · K · ✅
 - Sorun: Gelen kutusu, lig geçmişi ve maç kimlikleri bazı yerlerde sınırsız büyüyor.
 - Yapılacak: Hepsine tek bir üst sınır kuralı.
+- ✅ surum-74: `BBA_LIM` tek yerde; `bbaTrim()` her kayıttan önce uygulanır (gelen kutusu 20 + alınmamış ödüller ≤100, lig geçmişi 24, maç kimlikleri 80, ödenen dönemler 40, hata kaydı 50, iz 60).
 
-**H-04 · Siyah ekran / dev ekranın kesin sebebi bilinmiyor** · O · ⬜
+**H-04 · Siyah ekran / dev ekranın kesin sebebi bilinmiyor** · O · ✅
 - Yapılacak:
   - Açılış adımlarının süresini ve sırasını kaydeden bir "açılış izi" eklenir.
   - Cihaz bilgisi (model, Android, WebView sürümü, bellek) kaydedilir.
   - Bir sonraki olayda sebep kesin görülür.
 - Bağımlı: 0-02
+- ✅ surum-74: açılış izi (bu ve önceki açılış), 3. ve 10. saniyede ekran durumu, cihaz bilgisi raporda. Sebep bir sonraki olayda rapordan görülecek.
 
 **H-05 · Test modu açık** · K · ⬜
 - Sorun: `TEST_UNLOCK=true` ve 10B test parası açık.
@@ -79,9 +83,10 @@ Kabaca toplam: **60–75 oturum.** Düzenli çalışmayla çıkışa 3–4 ay.
 - Konu: Android geri tuşu, kutu açılış videoları (otomatik oynatma), yeni paket adıyla kurulum.
 - Yapılacak: Furkan'ın telefonunda kontrol listesiyle denenir (P-1). Sorun çıkarsa düzeltilir.
 
-**H-08 · Liderlik ekranı bellek tutuyor** · K · ⬜
+**H-08 · Liderlik ekranı bellek tutuyor** · K · ✅
 - Sorun: Liderlik ekranından çıkınca yaklaşık 4 MB çizim alanı boşaltılmıyor.
 - Yapılacak: Ekrandan çıkınca bu alanlar boşaltılır.
+- ✅ surum-74: liderlikten çıkınca efekt çizim alanı 1 px'e iniyor.
 
 **H-09 · Hata avı (surum-73)** · O · ✅
 - Furkan'ın isteğiyle kod baştan tarandı, 22 hata düzeltildi (liste: `PROJE_NOTLARI.md` → surum-73). Bir denetçi alt ajan her düzeltmeyi ayrıca test edip onayladı.
@@ -93,32 +98,37 @@ Kabaca toplam: **60–75 oturum.** Düzenli çalışmayla çıkışa 3–4 ay.
 ## AŞAMA 0 — Güvenlik ağı
 Amaç: Oyuncu verisini korumak; hataları uzaktan görebilmek.
 
-**0-01 · Çift yuvalı, doğrulamalı kayıt** · K · ⬜
+**0-01 · Çift yuvalı, doğrulamalı kayıt** · K · ✅
 - = H-01 + H-02.
 - Bitti: Bozuk kayıt, dolu hafıza ve yarım yazma testleri geçiyor.
+- ✅ = H-01 + H-02. Testler `tests/test_kayit.py`.
 
-**0-02 · Hata raporu ekranı** · K · ⬜
+**0-02 · Hata raporu ekranı** · K · ✅
 - Ayarlar → Hakkında → "Hata raporunu kopyala/paylaş".
 - Rapor: son 50 hata, açılış izi, cihaz bilgisi, sürüm.
 - Furkan bundan sonra fotoğraf yerine tek dokunuşla metin gönderir.
+- ✅ surum-74: Ayarlar → Hakkında → 📋 kopyala / 📤 paylaş. Sürüm numarasını CI yazar (`BBA_SURUM`).
 
-**0-03 · Kayıt yedeği** · K · ⬜
+**0-03 · Kayıt yedeği** · K · ✅
 - Mevcut yedek kodu özelliği kontrol edilir; tek dokunuşla dosyaya yedekleme ve geri yükleme eklenir.
 - Bulut kayda kadar geçici güvence.
+- ✅ surum-74: Ayarlar → Güvenlik → 💾 Kaydet (İndirilenler/BlackballArena), 📂 Dosyadan yükle, 📤 Paylaş. Telefon köprüsü `BbaNative` (MainActivity). Cihazda denenmesi gerekiyor (H-07).
 
-**0-04 · Cihaz test kontrol listesi** · K · ⬜
+**0-04 · Cihaz test kontrol listesi** · K · ✅
 - `docs/CIHAZ_TEST_LISTESI.md`: her sürümde telefonda 5 dakikada denenecek 15 madde.
 - Örnek maddeler: açılış, menü, maç, geri tuşu, mağaza, kutu, lig, ayarlar.
+- ✅ `docs/CIHAZ_TEST_LISTESI.md` hazır.
 
 ---
 
 ## AŞAMA 1 — Kod ve test temeli
 Amaç: Online sistemi taşıyacak, kırılmayan ve test edilebilir bir kod. **Görünüş değişmez.**
 
-**1-01 · Testleri depoya taşı** · O · ⬜
+**1-01 · Testleri depoya taşı** · O · ✅
 - Bendeki ~25 Playwright testi depoya `tests/` klasörüne girer.
 - GitHub'da her derlemede çalışır. Test kırmızıysa APK yayınlanmaz.
 - Bitti: GitHub'da test raporu yeşil.
+- ✅ surum-74: `tests/` altında 32 test; GitHub'da `test` işi, kırmızıysa `build` çalışmaz.
 
 **1-02 · Duman testi** · K · ⬜
 - Bütün ekranlar tek tek açılır, konsolda hata olmaması kontrol edilir.
@@ -418,8 +428,10 @@ Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama bek
 ---
 
 ## Sıradaki görev
-**H-01 / 0-01 — Çift yuvalı, doğrulamalı kayıt.** Küçük, hızlı ve oyuncu verisini koruyor. Ardından 0-02, 0-04, sonra 1-01.
+**1-02 — Duman testi + ekran görüntüsü karşılaştırma.** Ardından 1-03 (DEV_MODE; H-05 onunla kapanır), 1-10 (bütçe kontrolleri), sonra 1-04.
+**Furkan'dan beklenen (H-07 / P-1):** surum-74'ü telefona kurup `CIHAZ_TEST_LISTESI.md`'deki 15 maddeyi denemek. Özellikle 4 (geri tuşu), 9 (kutu videosu), 15 (dosyaya yedek).
 
 ## Değişiklik günlüğü
+- 26.11.2026 — surum-74: H-01, H-02, H-03, H-04, H-08, 0-01, 0-02, 0-03, 0-04, 1-01 ✅ (denetçi alt ajan her birini ayrıca test edip onayladı).
 - 25.11.2026 — H-09 eklendi ve bitti: surum-73 hata avı (22 düzeltme).
 - 25.11.2026 — Görev haritası oluşturuldu (Claude'un görüşü). Kod incelemesinden 8 bilinen hata eklendi.

@@ -76,7 +76,7 @@ Furkan, Firebase'den önce yeni görsellerin yapılmasını seçti.
 ## FAZ 1 — Temeli sağlamlaştırma ⬜
 Amaç: Online sistemi taşıyacak sağlam ve test edilebilir bir kod. **Oyunun görünüşü hiç değişmez.**
 
-- [ ] **1.1 Testleri projeye taşı.**
+- [x] **1.1 Testleri projeye taşı.** ✅ surum-74 (32 test, `tests/`)
   - Şu an bendeki ~25 Playwright testi depoya `tests/` klasörüne girer.
   - GitHub'da her derlemede otomatik çalışır.
   - Test kırılırsa APK yayınlanmaz.
@@ -274,6 +274,7 @@ Kozmetik dondurma burada kalkar.
 ---
 
 ## Değişiklik günlüğü (bu defterin)
+- 26.11.2026 — **surum-74**: Görev haritasındaki güvenlik ağı tamamlandı: çift yuvalı kayıt, hafıza dolu koruması, liste sınırları, hata raporu + açılış izi, dosyaya yedek, cihaz test listesi, liderlik belleği. Testler depoya taşındı ve CI'da APK'dan önce çalışıyor (1.1 ✅).
 - 25.11.2026 — **surum-73: hata avı, 22 düzeltme** (Furkan'ın isteği; denetçi alt ajan her düzeltmeyi ayrıca test edip onayladı). En önemlileri: pes edince çift maç sonucu, resimli avatarla açılışta betiğin yarıda kalması (fullFit/hile koruması çalışmıyordu), sıfırla/yedekten yükle çalışmıyordu, çift kutu alımı, kayıp çark/kart ödülleri, iade sonrası bedava maç, isimde HTML kodu. Liste: `PROJE_NOTLARI.md` → surum-73. Plan sırası değişmedi.
 - 25.11.2026 — `GOREV_HARITASI.md` eklendi. Claude'un önerisi: önce hatalar ve temel, görsel entegrasyonu sonda. Furkan'ın "önce görseller" seçimiyle farklı; son karar Furkan'ın.
 - 25.11.2026 — Defter oluşturuldu. surum-72 kararları işlendi: paket adı, 1'e 1 ülke masası, Özel Teklif 11/31. Sıradaki iş: **Faz G (görseller)**, ardından Faz 1.1.

@@ -3,7 +3,7 @@
 Yeni bir sohbette her şeyi baştan anlatmamak için tutulur.
 Yeni sohbette ilk mesaj: **"docs/PROJE_NOTLARI.md dosyasını oku, oradan devam et."**
 
-Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-73**
+Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-74**
 
 ---
 
@@ -46,6 +46,11 @@ Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-73**
   - Maven 429 hatası olursa iş yeniden çalıştırılır (`gh api -X POST …/actions/runs/<id>/rerun`).
 - **Boyut:** APK 9,2 MB. Tavan 60–100 MB.
 - **Kayıt:** Şu an her şey telefonda (`localStorage` → `save` nesnesi). Sunucu yok.
+  - İki yuva: `KEY` (ana) ve `KEY_B` (bir adım geride yedek); bozuk ana kayıt `KEY_X`'te saklanır. `validSave`, `saveRepair`, `bbaTrim` (sınırlar `BBA_LIM`).
+  - Sıfırla/yedekten yükle `window._bbaNoSave=1` ile sayfa kapanırken eski kaydın geri yazılmasını engeller.
+- **Teşhis:** `bbaLog` (son 50 hata), `bbaIz` (açılış izi; önceki açılış `bba_iz_onceki`), `bbaReport()` → Ayarlar → Hakkında'dan kopyala/paylaş. `BBA_SURUM` CI'da yazılır.
+- **Telefon köprüsü:** `native/MainActivity.java` içinde `BbaNative` Capacitor eklentisi (`saveText`, `shareText`); JS'te `bbaNat()`, `bbaSaveFile()`, `bbaShare()`.
+- **Testler:** `tests/` (pytest + Playwright, 32 test). CI'da `test` işi geçmezse APK derlenmez. Yeni düzeltilen her hataya bir test eklenir.
 - **Yöntem:** Yeni özellikler, eski fonksiyonları sarmalayan ve dosyanın sonuna eklenen betiklerle yapılır. Böylece eski kod bozulmaz.
 - **Görsel ekranlar:** Tasarım koordinatlarıyla kurulur (`--x/--y/--w/--h`), `--k` ile ölçeklenir, `fullFit` ile tam ekrana gerilir.
 - **Önemli kod parçaları:**
@@ -193,6 +198,16 @@ Kod baştan tarandı. Bir denetçi alt ajan bağımsız tarama yaptı ve her dü
   - Lig puanı sadece kazançla artıyor (kayıp düşmüyor), tasarım kararı.
   - Yedek kodu ile bakiye değiştirilebiliyor; sunucu ekonomisi (ADIM 3) gelince çözülecek.
 
+### 26 Kasım — surum-74 (görev haritası: güvenlik ağı)
+- **H-01/H-02 (0-01):** Çift yuvalı, doğrulamalı kayıt; bozuk kayıtta yedekten açılış + "Kayıt kurtarıldı" notu; hafıza dolu olunca temizleyip tekrar deneme, olmazsa uyarı; NaN gibi bozuk değerler onarılır. Yedek kodu da `validSave`'den geçer.
+- **H-03:** Bütün listeler için tek üst sınır kuralı (`BBA_LIM`, `bbaTrim`).
+- **H-08:** Liderlik efekti çizim alanı ekrandan çıkınca boşaltılıyor (~4 MB).
+- **0-02 + H-04:** Ayarlar → Hakkında → 📋 Hata raporunu kopyala / 📤 Paylaş. Rapor: sürüm, cihaz (Android, model, WebView, bellek), bu ve önceki açılışın adım adım izi, 3./10. saniyede ekran durumu, son 50 hata. Oyuncu adı ve bakiye raporda yok.
+- **0-03:** Ayarlar → Güvenlik → 💾 Kaydet (İndirilenler/BlackballArena/…txt), 📂 Dosyadan yükle (aynı doğrulama ve çift onay), 📤 Paylaş (Drive/WhatsApp).
+- **0-04:** `docs/CIHAZ_TEST_LISTESI.md` (15 madde, 5 dakika).
+- **1-01:** `tests/` klasörü, 32 otomatik test; GitHub'da APK'dan önce çalışır.
+- Denetçi alt ajan her görevi ayrıca test etti; bulduğu 5 uyarı (NaN'da kaydın durması, geçersiz yedek kodu, iz gürültüsü, telefonda sahte "kaydedildi" mesajı, Capacitor eklenti erişimi) düzeltildi.
+
 ### Bugünkü içerik (özet)
 - **Ülke masaları (1'e 1):** 17 oda. Ödül = 2 × giriş, net kazanç = giriş.
   - Portekiz 250 · İtalya 1K · Fransa 4K · Hollanda 5K · Brezilya 10K · Japonya 50K · Mısır 100K
@@ -223,6 +238,7 @@ Kod baştan tarandı. Bir denetçi alt ajan bağımsız tarama yaptı ve her dü
 | Resimli avatarla açılışta betik yarıda kalıyordu | `const` değişkene tanımlanmadan erişim (TDZ) | `window.` üzerinden erişim, açılış çağrıları try/catch |
 | Sıfırla / yedekten yükle işe yaramıyordu | Sayfa kapanırken eski kayıt geri yazılıyordu | `_bbaNoSave` bayrağı |
 | Satır içine `//` yorum eklemek kodun devamını yuttu (surum-73 sırasında yakalandı) | Tek satırlık kodda `//` | Satır ortasında sadece `/* */` kullan |
+| Testte zamanlayıcıları 20 kat hızlandırınca maç bazen açılmadı | feeGuard'ın 16 sn bekçisi de hızlandı | Testlerde en fazla 4 kat hızlandır |
 
 > Siyah ekran ya da bozuk ekran tekrar olursa: **oyunu silmeden önce Ayarlar → Hakkında'daki "Hata kaydı"nın fotoğrafı çekilip gönderilsin.**
 

@@ -1202,7 +1202,15 @@ img.ci{display:inline-block;height:1.15em;width:auto;vertical-align:-.22em;margi
 </style>
 <script>
 /* hata kaydı: telefonda olan hatalar saklanır (Ayarlar > Hakkında'da görünür) */
-window.bbaLog=function(e,src){try{const L=JSON.parse(localStorage.getItem('bba_err')||'[]');L.unshift({t:new Date().toLocaleString('tr-TR'),m:String((e&&(e.message||e.reason&&e.reason.message))||e).slice(0,160),s:String(src||(e&&e.filename)||'').slice(-40)+(e&&e.lineno?':'+e.lineno:'')});localStorage.setItem('bba_err',JSON.stringify(L.slice(0,12)));}catch(_){}};
+/* H-03: bütün listelerin üst sınırı tek yerde */
+window.BBA_LIM={inbox:20,inboxMax:100,lgHist:24,lgDone:80,lgPaid:40,err:50,iz:60};
+/* H-04: açılış izi — her açılışın adımları ve süreleri saklanır; bir önceki açılışın izi de tutulur (siyah ekran olduysa sebebi orada görünür) */
+window.BBA_SURUM='__SURUM__'; /* CI derlemede sürüm numarasını yazar */
+(function(){window.BBA_IZ=[];try{const o=localStorage.getItem('bba_iz');if(o)localStorage.setItem('bba_iz_onceki',o);}catch(_){}
+  let w=0;window.bbaIz=function(n){try{BBA_IZ.push([Math.round(performance.now()),String(n).slice(0,80)]);if(BBA_IZ.length>BBA_LIM.iz)BBA_IZ.splice(12,1); /* ilk 12 satır (açılışın kendisi) hep korunur */
+    clearTimeout(w);w=setTimeout(()=>{try{localStorage.setItem('bba_iz',JSON.stringify({t:new Date().toLocaleString('tr-TR'),s:BBA_SURUM,iz:BBA_IZ}));}catch(_){}},50);}catch(_){}};
+  bbaIz('betik başladı · '+innerWidth+'x'+innerHeight);})();
+window.bbaLog=function(e,src){try{bbaIz('HATA: '+String((e&&(e.message||e.reason&&e.reason.message))||e).slice(0,60));}catch(_){}try{const L=JSON.parse(localStorage.getItem('bba_err')||'[]');L.unshift({t:new Date().toLocaleString('tr-TR'),m:String((e&&(e.message||e.reason&&e.reason.message))||e).slice(0,160),s:String(src||(e&&e.filename)||'').slice(-40)+(e&&e.lineno?':'+e.lineno:'')});localStorage.setItem('bba_err',JSON.stringify(L.slice(0,BBA_LIM.err)));}catch(_){}};
 addEventListener('error',e=>bbaLog(e));addEventListener('unhandledrejection',e=>bbaLog(e.reason||e,'promise'));
 </script>
 <style id="cueStdCss">
@@ -1595,7 +1603,21 @@ const frameOf=lv=>lv>=60?'fr4':lv>=35?'fr3':lv>=15?'fr2':lv>=5?'fr1':'fr0';
 const KEY='bilardo_ustasi_v1';
 let save={coins:1000,cues:['basic'],tables:['pro','osm','mor'],cue:'basic',table:'pro',wins:0,losses:0,name:'',pid:0,level:1,xp:0,cash:5,lastDaily:0,streak:0,rw:{},chestCnt:0,chestNext:2,eco:2,gems:10,cl:{},slots:[null,null,null,null],free:{day:0,n:0,next:0},offer:-1,lucky:0,week:{id:0,earn:0}};
 
-try{const s=JSON.parse(localStorage.getItem(KEY));if(s)save=Object.assign(save,s);}catch(e){}
+/* H-01: çift yuvalı, doğrulamalı kayıt. Ana yuva (KEY) bozuksa yedek yuvadan (KEY_B = bir önceki sağlam kayıt) açılır.
+   Bozuk ham veri silinmez, KEY+'_bozuk' altında saklanır (elle kurtarma için). Yeni kayıt da bozuk kaydın üstüne körce yazılmaz. */
+const KEY_B=KEY+'_b',KEY_X=KEY+'_bozuk';
+const validSave=o=>!!o&&typeof o==='object'&&!Array.isArray(o)&&Number.isFinite(+o.coins)&&(o.cues===undefined||Array.isArray(o.cues))&&(o.slots===undefined||Array.isArray(o.slots));
+window._saveInfo={src:'yeni',bozuk:false};
+(function loadSave(){
+  const rd=k=>{let r=null;try{r=localStorage.getItem(k);}catch(_){return {};}if(r==null)return {};try{const o=JSON.parse(r);return validSave(o)?{o}:{bad:r};}catch(_){return {bad:r};}};
+  const A=rd(KEY);let use=A.o,src='ana';
+  if(!use){const B=rd(KEY_B);if(B.o){use=B.o;src='yedek';}}
+  if(A.bad!=null){try{localStorage.setItem(KEY_X,A.bad);}catch(_){}try{bbaLog('ana kayıt bozuk'+(use?', yedekten açıldı':', yedek de yok'),'kayıt');}catch(_){}}
+  else if(!A.o&&use){try{bbaLog('ana kayıt yoktu, yedekten açıldı','kayıt');}catch(_){}}
+  if(use)save=Object.assign(save,use);
+  window._saveInfo={src:use?src:'yeni',bozuk:A.bad!=null};
+  try{bbaIz('kayıt yüklendi · '+window._saveInfo.src+(A.bad!=null?' (ana bozuktu)':''));}catch(_){}
+})();
 // TEST: yayından önce kaldırılacak — bir kerelik 5 milyar altın, sonra 10'ar milyar çip/elmas/dolar
 if(!save.test5b){save.test5b=1;save.coins+=5e9;}
 if(!save.test10b){save.test10b=1;save.coins+=10e9;save.gems+=10e9;save.cash+=10e9;}
@@ -1617,7 +1639,33 @@ save.v29=save.v39=1;
 // demo (kodla çizilmiş) masalar kaldırıldı; klasik 3 masa (kendi baskımızla) geri geldi
 {const DEMO=['rclassic','neon','green','blue','red','black','purple','royal'];save.tables=(save.tables||[]).filter(id=>!DEMO.includes(id));
  for(const id of ['pro','osm','mor'])if(!save.tables.includes(id))save.tables.push(id);if(!save.table||DEMO.includes(save.table))save.table='pro';}
-function persist(){if(window._bbaNoSave)return; /* sıfırla / yedekten yükle sırasında sayfa kapanırken eski kayıt geri yazılmasın */ try{localStorage.setItem(KEY,JSON.stringify(save));}catch(e){}}
+/* H-01/H-02: kaydetme. Önce bir önceki kayıt yedek yuvaya alınır, sonra yeni kayıt yazılır.
+   Hafıza doluysa: gereksiz veriler temizlenir, listeler kısaltılır, tekrar denenir; yine olmazsa oyuncu bir kez uyarılır. */
+let _saveWarned=0;
+/* para alanları sayı değilse ya da listeler bozulduysa son kaydedilen sağlam değere (yoksa varsayılana) döndürülür */
+function saveRepair(){let last={};try{const o=JSON.parse(localStorage.getItem(KEY)||'null');if(validSave(o))last=o;}catch(_){}
+  const fixed=[];for(const k of ['coins','cash','gems']){if(save[k]!==undefined&&!Number.isFinite(+save[k])){save[k]=Number.isFinite(+last[k])?+last[k]:0;fixed.push(k);}else if(save[k]!==undefined&&typeof save[k]!=='number'){save[k]=+save[k];fixed.push(k);}}
+  for(const k of ['cues','slots']){if(save[k]!==undefined&&!Array.isArray(save[k])){save[k]=Array.isArray(last[k])?last[k]:(k==='cues'?['basic']:[null,null,null,null]);fixed.push(k);}}
+  if(fixed.length)try{bbaLog('kayıt onarıldı: '+fixed.join(', '),'kayıt');}catch(_){}}
+function saveWarn(t){if(_saveWarned)return;_saveWarned=1;try{const d=document.createElement('div');d.textContent=t;d.style.cssText='position:fixed;left:50%;top:10%;transform:translateX(-50%);z-index:100002;background:rgba(40,6,6,.95);border:2px solid #ff6a5a;color:#ffd9d4;font:800 15px Roboto,Arial,sans-serif;padding:10px 16px;border-radius:12px;max-width:80vw;text-align:center;pointer-events:none';document.body.append(d);setTimeout(()=>d.remove(),6000);}catch(_){}}
+/* H-03: tek üst sınır kuralı — her kayıttan önce uygulanır */
+window.bbaTrim=function(){const L=BBA_LIM;
+  if(Array.isArray(save.inbox)&&save.inbox.length>L.inbox)save.inbox=save.inbox.filter((m,i)=>i<L.inbox||(m&&m.rw&&!m.c)).slice(0,L.inboxMax);
+  const g=save.lg;if(g&&typeof g==='object'){if(Array.isArray(g.hist)&&g.hist.length>L.lgHist)g.hist=g.hist.slice(0,L.lgHist);if(Array.isArray(g.done)&&g.done.length>L.lgDone)g.done=g.done.slice(-L.lgDone);if(Array.isArray(g.paid)&&g.paid.length>L.lgPaid)g.paid=g.paid.slice(-L.lgPaid);}};
+function persist(){if(window._bbaNoSave)return false; /* sıfırla / yedekten yükle sırasında sayfa kapanırken eski kayıt geri yazılmasın */
+  try{bbaTrim();}catch(_){}
+  if(!validSave(save))saveRepair(); /* tek bir NaN bütün oturumu kaydedilmez yapmasın: onar, sonra kaydet */
+  if(!validSave(save)){if(!persist._bad){persist._bad=1;try{bbaLog('geçersiz kayıt yazılmadı','kayıt');}catch(_){}saveWarn('⚠️ Kayıtta sorun var, ilerleme kaydedilemiyor. Ayarlar → Hakkında → hata raporunu gönder.');}return false;}
+  persist._bad=0;
+  let s;try{s=JSON.stringify(save);}catch(e){try{bbaLog(e,'kayıt');}catch(_){}return false;}
+  const write=()=>{let prev=null;try{prev=localStorage.getItem(KEY);}catch(_){}
+    if(prev&&prev!==s){try{if(validSave(JSON.parse(prev)))localStorage.setItem(KEY_B,prev);}catch(_){}}
+    localStorage.setItem(KEY,s);};
+  try{write();_saveWarned=0;return true;}catch(e){
+    try{localStorage.removeItem('bba_iz_onceki');localStorage.removeItem(KEY_X);localStorage.removeItem(KEY_B);const L=JSON.parse(localStorage.getItem('bba_err')||'[]');localStorage.setItem('bba_err',JSON.stringify(L.slice(0,5)));}catch(_){}
+    try{if(typeof window.bbaTrim==='function'){window.bbaTrim();s=JSON.stringify(save);}}catch(_){}
+    try{localStorage.setItem(KEY,s);try{localStorage.setItem(KEY_B,s);}catch(_){}try{bbaLog('hafıza doluydu, temizlenip kaydedildi','kayıt');}catch(_){}return true;}
+    catch(e2){try{bbaLog(e2,'kayıt: hafıza dolu');}catch(_){}saveWarn('⚠️ Telefon hafızası dolu: ilerlemen kaydedilemiyor. Biraz yer açıp oyunu yeniden başlat.');return false;}}}
 const cueById=id=>ALL_CUES.find(c=>c.id===id)||CUES[0];
 const MAXLV=5;
 const cueLv=id=>(save.cl[id]&&save.cl[id].lv)||1;
@@ -4175,7 +4223,7 @@ function inboxCheck(){
     save.inbox.unshift({id:Date.now()+2,ic:'📰',t:'Yeni özellikler',txt:'Günlük görevler, şans çarkı, kazı kazan, başarımlar, avatarlar ve maç içi emojiler eklendi.'});}
   if(save.inDay!==today()){save.inDay=today();const v=150+Math.min(save.level,20)*50;
     save.inbox.unshift({id:Date.now(),ic:'🎁',t:'Günlük hediye',txt:'Bugünkü hediyen geldi.',rw:{coins:v}});}
-  save.inbox=save.inbox.filter((m,i)=>i<20||(m.rw&&!m.c)).slice(0,100);persist(); // son 20 mesaj + alınmamış ödüllü mesajlar korunur
+  persist(); // sınırlar persist içindeki bbaTrim'de uygulanır (son 20 mesaj + alınmamış ödüllüler, en fazla 100)
 }
 function openInbox(){
   inboxCheck();let h='<h2 style="margin:0 0 6px">✉️ Gelen Kutusu</h2><div class="dlist">';
@@ -4780,7 +4828,7 @@ $('leadBack').onclick=()=>leadGoBack();
     if(t>nextFlash){nextFlash=t+5000+Math.random()*6000;if(lt>0){const f=document.querySelector('#lead .ldFlash');f.classList.remove('on');f.offsetWidth;f.classList.add('on');try{if(ac&&sfxOut){const n=ac.currentTime;noise(n,180,.6,.9,.12,'lowpass');}}catch(_){}}}
   }
   const go=()=>{if(on()){size();lt=0;nextFlash=performance.now()+2500;if(!raf)raf=requestAnimationFrame(step);}};
-  {const _s=show;show=function(id){_s.apply(this,arguments);if(id==='lead')requestAnimationFrame(go);};}
+  {const _s=show;show=function(id){_s.apply(this,arguments);if(id==='lead')requestAnimationFrame(go);else if(cv.width>2){P=[];cv.width=cv.height=1;}};} /* H-08: ekrandan çıkınca çizim alanı boşaltılır, girince size() yeniden kurar */
   addEventListener('resize',()=>{if(on())size();});document.addEventListener('visibilitychange',go);
 })();
 /* ================= AYARLAR v4 (kullanıcının görseli) + AVATAR SEÇ v4 ================= */
@@ -4828,18 +4876,29 @@ function stRender(){
   else if(stTab==='ses')h=ses+`<div class="stR">${stIco('rSes','rIc')}<span class="stL">Ses testi</span><button class="st4Sm" id="stTest">🔊 Dinle</button></div><div class="stNote">Sesi kapatırsan oyun içi bütün efektler susar. Ses düzeyi istaka, top, cep ve çip seslerinin hepsini etkiler.</div>`;
   else if(stTab==='bil')h=stRow('mBil','Menü uyarı rozetleri',stTog('stBadge',D.badges))+`<div class="stNote">Açıkken ana menüde ödül, görev, çark ve gelen kutusu için kırmızı uyarı işaretleri görünür. Telefon bildirimleri Play Store sürümünde eklenecek.</div>`;
   else if(stTab==='hes')h=ad+avr+stRow('rBilgi','Oyuncu ID',`<div class="stMid"><b class="stId">${save.pid}</b></div><button class="st4Sm" id="stCopy">⧉ Kopyala</button>`)+stRow('mHes','Hesap bağla',`<div class="stMid"></div><button class="st4Sm" id="stLink">G / f Bağla</button>`)+info;
-  else if(stTab==='guv')h=stRow('mGuv','Yedek kodu',`<div class="stMid"></div><button class="st4Sm" id="stBak">⧉ Kopyala</button>`)+stRow('sYenile','Yedekten geri yükle',`<input class="stIn" id="stImp" placeholder="Yedek kodunu yapıştır"><button class="st4Sm" id="stImpB">Yükle</button>`)+`<div class="stNote">Yedek kodu tüm ilerlemeni (para, istaka, seviye) içerir. Kimseyle paylaşma.</div>`+rst;
+  else if(stTab==='guv')h=stRow('mGuv','Yedek kodu',`<div class="stMid"></div><button class="st4Sm" id="stBak">⧉ Kopyala</button>`)+stRow('sYenile','Yedekten geri yükle',`<input class="stIn" id="stImp" placeholder="Yedek kodunu yapıştır"><button class="st4Sm" id="stImpB">Yükle</button>`)+stRow('mGuv','Dosyaya yedek',`<div class="stMid"></div><button class="st4Sm" id="stFile">💾 Kaydet</button>${(window.bbaCanShare&&bbaCanShare())?'<button class="st4Sm" id="stFileS">📤 Paylaş</button>':''}<button class="st4Sm" id="stFileR">📂 Dosyadan yükle</button><input type="file" id="stFileIn" accept=".txt,text/plain" style="display:none">`)+`<div class="stNote">Yedek kodu ve yedek dosyası tüm ilerlemeni (para, istaka, seviye) içerir. Kimseyle paylaşma. Dosya telefonda İndirilenler/BlackballArena klasörüne kaydedilir. İstersen Paylaş ile Drive'a da kaydet.</div>`+rst;
   else if(stTab==='gor')h=stRow('sHedef','Hassas nişan modu',stTog('stPrec',D.prec))+stRow('mGor','Giriş animasyonu',stTog('stIntro',D.intro))+`<div class="stNote">Hassas nişan modunda istaka çok daha yavaş döner, ince atışlar için idealdir (oyun içindeki 🎯 düğmesiyle aynı).</div>`;
-  else h=`<div class="stAbout"><img src="${ST_IC.gearBig}" alt=""><b>Blackball Arena</b><span>Sürüm 1.0 · Türkçe</span>${(window.bbaErrText&&bbaErrText())?`<small style="white-space:pre-wrap;text-align:left;font-size:10px;opacity:.75;max-height:90px;overflow:auto;user-select:text">Hata kaydı:\n${bbaErrText().replace(/</g,'&lt;')}</small>`:''}<small>Gerçekçi fizik motoru, 8 top ve 9 top, ülke masaları, istaka koleksiyonu ve lig sistemi.</small><small>© 2026 Blackball Arena</small></div>`;
+  else h=`<div class="stAbout"><img src="${ST_IC.gearBig}" alt=""><b>Blackball Arena</b><span>Sürüm 1.0 (surum-${String(window.BBA_SURUM).replace(/\D/g,'')||'test'}) · Türkçe</span><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0"><button class="st4Sm" id="stRap">📋 Hata raporunu kopyala</button>${(window.bbaCanShare&&bbaCanShare())?'<button class="st4Sm" id="stRapP">📤 Paylaş</button>':''}</div><small style="opacity:.75">${(()=>{let n=0;try{n=JSON.parse(localStorage.getItem('bba_err')||'[]').length;}catch(_){}return n?n+' hata kaydı var. Sorun yaşarsan raporu kopyalayıp gönder.':'Hata kaydı yok.';})()}</small>${(window.bbaErrText&&bbaErrText())?`<small style="white-space:pre-wrap;text-align:left;font-size:10px;opacity:.75;max-height:90px;overflow:auto;user-select:text">Hata kaydı:\n${bbaErrText().replace(/</g,'&lt;')}</small>`:''}<small>Gerçekçi fizik motoru, 8 top ve 9 top, ülke masaları, istaka koleksiyonu ve lig sistemi.</small><small>© 2026 Blackball Arena</small></div>`;
   C.innerHTML=h;C.scrollTop=0;
   const on=(id,f)=>{const e=$(id);if(e)f(e);};
+  on('stRap',e=>e.onclick=()=>bbaCopy(bbaReport(),()=>stMsg('Hata raporu kopyalandı. WhatsApp vb. ile gönderebilirsin.'),()=>stMsg('Kopyalanamadı.',1)));
+  on('stRapP',e=>e.onclick=()=>bbaShare('Blackball Arena hata raporu',bbaReport()).then(()=>{},()=>stMsg('Paylaşılamadı; kopyala düğmesini kullan.',1)));
+  /* 0-03: dosyaya yedek / dosyadan geri yükleme (yükleme, yedek kodu ile aynı doğrulama ve çift onaydan geçer) */
+  on('stFile',e=>e.onclick=()=>{let code='';try{persist();code=btoa(unescape(encodeURIComponent(JSON.stringify(save))));}catch(_){stMsg('Yedek hazırlanamadı.',1);return;}
+    const d=new Date(),z=n=>String(n).padStart(2,'0'),nm=`blackball-yedek-${d.getFullYear()}${z(d.getMonth()+1)}${z(d.getDate())}-${z(d.getHours())}${z(d.getMinutes())}.txt`;
+    bbaSaveFile(nm,'BLACKBALL ARENA YEDEK · '+d.toLocaleString('tr-TR')+' · ID '+(save.pid||'-')+'\n'+code+'\n').then(y=>stMsg('Yedek kaydedildi: '+y),er=>stMsg('Kaydedilemedi: '+er,1));});
+  on('stFileS',e=>e.onclick=()=>{let code='';try{persist();code=btoa(unescape(encodeURIComponent(JSON.stringify(save))));}catch(_){return;}bbaShare('Blackball Arena yedeği','BLACKBALL ARENA YEDEK · ID '+(save.pid||'-')+'\n'+code).then(()=>{},()=>stMsg('Paylaşılamadı; kopyala düğmesini kullan.',1));}); /* Drive/WhatsApp'a kaydetmek için (Android 9 ve altında dosya uygulamayla silinir) */
+  on('stFileR',e=>e.onclick=()=>{const f=$('stFileIn');if(f){f.value='';f.click();}});
+  on('stFileIn',e=>e.onchange=()=>{const f=e.files&&e.files[0];if(!f)return;if(f.size>2e6){stMsg('Dosya çok büyük, yedek dosyası değil.',1);return;}
+    const r=new FileReader();r.onload=()=>{const t=String(r.result||'').split(/\s+/).filter(x=>x.length>20).sort((a,b)=>b.length-a.length)[0]||'';$('stImp').value=t;$('stImpB').click();};
+    r.onerror=()=>stMsg('Dosya okunamadı.',1);r.readAsText(f);});
   on('stName',e=>{e.value=D.name;e.oninput=()=>{D.name=e.value;};});
   on('stNm',e=>e.onclick=()=>{const n=$('stName').value.trim();if(n.length<2){stMsg('Adın en az 2 harf olmalı.',1);return;}D.name=n;stMsg('Ad hazır, kaydetmek için Kaydet\'e bas.');});
   on('stMute',e=>e.onclick=()=>{D.mute=!D.mute;e.classList.toggle('on',!D.mute);stPreview();if(!D.mute)try{ensureAudio();play('click',.5,1.4);}catch(_){}});
   on('stVol',e=>{e.oninput=()=>{D.vol=e.value/100;$('stVolV').textContent='%'+e.value;stFill(e);stPreview();};e.onchange=()=>{try{ensureAudio();play('click',.6,1);}catch(_){}};stFill(e);});
   on('stSens',e=>{e.oninput=()=>{D.sens=+e.value;$('stSensV').textContent='%'+Math.round(D.sens*100);stFill(e);};stFill(e);});
   on('stAv',e=>e.onclick=()=>openAvatar(()=>{const a=document.querySelector('.stAv');if(a){a.innerHTML=myAvT();a.style.background=myAvC();}}));
-  on('stRst',e=>{let arm=0;e.onclick=()=>{if(!arm){arm=1;e.classList.add('arm');stMsg('Emin misin? Tüm para, istaka ve seviyeler silinir. Onaylamak için tekrar bas.',1);return;}window._bbaNoSave=1;localStorage.removeItem(KEY);location.reload();};});
+  on('stRst',e=>{let arm=0;e.onclick=()=>{if(!arm){arm=1;e.classList.add('arm');stMsg('Emin misin? Tüm para, istaka ve seviyeler silinir. Onaylamak için tekrar bas.',1);return;}window._bbaNoSave=1;localStorage.removeItem(KEY);localStorage.removeItem(KEY_B);localStorage.removeItem(KEY_X);location.reload();};});
   on('stTest',e=>e.onclick=()=>{stPreview();try{ensureAudio();play('cue',.7,1);setTimeout(()=>play('click',.7,1),180);setTimeout(()=>play('drop',.7,1),420);}catch(_){}});
   on('stBadge',e=>e.onclick=()=>{D.badges=!D.badges;e.classList.toggle('on',D.badges);});
   on('stPrec',e=>e.onclick=()=>{D.prec=!D.prec;e.classList.toggle('on',D.prec);});
@@ -4849,8 +4908,8 @@ function stRender(){
   on('stBak',e=>e.onclick=()=>{let code='';try{code=btoa(unescape(encodeURIComponent(JSON.stringify(save))));}catch(_){stMsg('Kopyalanamadı.',1);return;}
     bbaCopy(code,()=>stMsg('Yedek kodu kopyalandı. Güvenli bir yere yapıştır.'),()=>stMsg('Kopyalanamadı.',1));});
   on('stImpB',e=>{let arm=0;e.onclick=()=>{const v=($('stImp').value||'').trim();let o=null;try{o=JSON.parse(decodeURIComponent(escape(atob(v))));}catch(_){}
-    if(!o||typeof o!=='object'||o.coins==null){stMsg('Geçersiz yedek kodu.',1);return;}
-    if(!arm){arm=1;stMsg('Mevcut ilerlemenin yerine geçecek. Onaylamak için tekrar bas.',1);return;}window._bbaNoSave=1;localStorage.setItem(KEY,JSON.stringify(o));location.reload();};});
+    if(!o||typeof o!=='object'||o.coins==null||!validSave(o)){stMsg('Geçersiz yedek kodu.',1);return;}
+    if(!arm){arm=1;stMsg('Mevcut ilerlemenin yerine geçecek. Onaylamak için tekrar bas.',1);return;}window._bbaNoSave=1;try{const cur=localStorage.getItem(KEY);if(cur)localStorage.setItem(KEY_B,cur);}catch(_){} /* içe aktarmadan önceki hâl yedek yuvada kalsın */ localStorage.setItem(KEY,JSON.stringify(o));location.reload();};});
 }
 function stFill(e){const p=(e.value-e.min)/(e.max-e.min)*100;e.style.setProperty('--p',p+'%');}
 /* ---- Avatar Seç ---- */
@@ -5177,8 +5236,8 @@ function lgTick(){ // dönem bittiyse sonucu kaydet ve ödülü bir kez ver
   const g=lgState(),cur=lgSid();if(g.sid===cur)return '';if(cur<g.sid)return ''; // saat geri alındıysa dokunma
   let msg='';
   if(!g.paid.includes(g.sid)){const i=lgIdx(g.pts),L=LEAGUES[i];
-    g.hist.unshift({sid:g.sid,pts:g.pts,lg:L.n,rw:L.rw,end:lgEnd(g.sid)});g.hist=g.hist.slice(0,24);
-    g.paid.push(g.sid);g.paid=g.paid.slice(-40);
+    g.hist.unshift({sid:g.sid,pts:g.pts,lg:L.n,rw:L.rw,end:lgEnd(g.sid)});g.hist=g.hist.slice(0,BBA_LIM.lgHist);
+    g.paid.push(g.sid);g.paid=g.paid.slice(-BBA_LIM.lgPaid);
     if(L.rw){save.coins+=L.rw;save.gems=(save.gems||0)+1;}
     msg=`Dönem bitti: ${L.n} ligi · ${lgN(g.pts)} net kazanç${L.rw?` · Ödül +${fmt(L.rw)} 🪙 +1 💎`:''}`;
     try{save.inbox.unshift({id:Date.now(),ic:'🏆',t:'Lig dönemi bitti',txt:msg});}catch(_){}}
@@ -5190,7 +5249,7 @@ window.lgCredit=function(net,kind){ // maç sonucu kesinleşince çağrılır
   window._lgMatch=null;
   lgTick();const g=lgState();
   if(g.done.includes(id))return false;                     // aynı sonuç iki kez eklenmez
-  g.done.push(id);g.done=g.done.slice(-80);
+  g.done.push(id);g.done=g.done.slice(-BBA_LIM.lgDone);
   const add=Math.max(0,Math.round(+net||0));if(!add){persist();return false;}
   const before=lgIdx(g.pts);g.pts+=add;const after=lgIdx(g.pts);g.best=Math.max(g.best,after);
   persist();
@@ -5308,6 +5367,37 @@ window.bbaCopy=function(text,ok,fail){ok=ok||(()=>{});fail=fail||(()=>{});
   try{if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(ok,old);else old();}catch(_){old();}};
 /* kayıtta artık var olmayan ıstaka/masa seçiliyse varsayılana dön (listelerde "Kullanılıyor" görünsün); tüm masa/ıstaka listeleri bu noktada yüklü */
 try{if(!ALL_CUES.some(c=>c.id===save.cue))save.cue='basic';if(!TABLES.some(t=>t.id===save.table))save.table='pro';}catch(_){}
+/* 0-03 / 0-02: telefon köprüsü (MainActivity içindeki BbaNative eklentisi). Tarayıcıda dosya indirme / Web Share yedeği. */
+window.bbaIsNative=()=>{try{return !!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform());}catch(_){return false;}};
+window.bbaNat=()=>{try{const C=window.Capacitor;if(!C)return null;if(C.Plugins&&C.Plugins.BbaNative)return C.Plugins.BbaNative;
+  if(bbaIsNative()&&C.registerPlugin)return window._bbaN||(window._bbaN=C.registerPlugin('BbaNative')); /* Capacitor'un belgelenmiş yolu; bir kez kaydedilir */}catch(_){}return null;};
+window.bbaCanShare=()=>!!(bbaNat()||navigator.share);
+window.bbaShare=function(title,text){const N=bbaNat();if(N)return N.shareText({title,text});if(navigator.share)return navigator.share({title,text});return Promise.reject('paylaşım yok');};
+window.bbaSaveFile=function(name,text){const N=bbaNat();if(N)return N.saveText({name,text}).then(r=>r&&r.path||'İndirilenler',e=>Promise.reject((e&&e.message)||e));
+  if(bbaIsNative())return Promise.reject('dosya köprüsü yok — yedek kodunu kopyala'); /* telefonda indirme bağlantısı çalışmaz: sahte "kaydedildi" deme */
+  return new Promise((ok,no)=>{try{const u=URL.createObjectURL(new Blob([text],{type:'text/plain'})),a=document.createElement('a');a.href=u;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);ok('İndirilenler/'+name);}catch(e){no(e.message||e);}});};
+/* 0-02 / H-04: hata raporu (Ayarlar → Hakkında → kopyala/paylaş) */
+window.bbaDevice=function(){const n=navigator,ua=n.userAgent||'',an=(ua.match(/Android [\d.]+/)||['Android ?'])[0],md=(ua.match(/Android [\d.]+; ([^;)]+)/)||[,'?'])[1],cr=(ua.match(/Chrome\/([\d.]+)/)||[,'?'])[1];
+  return {android:an,model:md.trim(),webview:cr,bellekGB:n.deviceMemory||'?',cekirdek:n.hardwareConcurrency||'?',ekran:screen.width+'x'+screen.height,pencere:innerWidth+'x'+innerHeight,dpr:window.devicePixelRatio||1,dil:n.language||'?',ua:ua.slice(0,200)};};
+window.bbaReport=function(){const L=[];const d=bbaDevice();
+  L.push('BLACKBALL ARENA HATA RAPORU','Sürüm: surum-'+(String(BBA_SURUM).replace(/\D/g,'')||'test')+' · '+new Date().toLocaleString('tr-TR'),'Oyuncu ID: '+(save.pid||'-')+' · Seviye '+(save.level||1));
+  L.push('','CİHAZ: '+d.android+' · '+d.model+' · WebView '+d.webview+' · Bellek '+d.bellekGB+' GB · '+d.cekirdek+' çekirdek','Ekran '+d.ekran+' · Pencere '+d.pencere+' · DPR '+d.dpr+' · '+d.dil);
+  const ekr=document.querySelector('.screen.show');L.push('Şu anki ekran: '+(ekr?ekr.id:'YOK')+' · Kayıt: '+((window._saveInfo||{}).src||'?'));
+  const iz=(k,b)=>{try{const o=JSON.parse(localStorage.getItem(k)||'null');if(!o)return;L.push('',b+' ('+o.t+', surum '+(String(o.s).replace(/\D/g,'')||'test')+'):');for(const [ms,n] of o.iz)L.push('  '+String(ms).padStart(6)+' ms  '+n);}catch(_){}};
+  iz('bba_iz_onceki','ÖNCEKİ AÇILIŞ İZİ');L.push('','BU AÇILIŞ İZİ:');for(const [ms,n] of BBA_IZ)L.push('  '+String(ms).padStart(6)+' ms  '+n);
+  let E=[];try{E=JSON.parse(localStorage.getItem('bba_err')||'[]');}catch(_){}
+  L.push('','HATALAR (son '+E.length+'):');for(const x of E)L.push('  '+x.t+' · '+x.m+(x.s?' ('+x.s+')':''));if(!E.length)L.push('  yok');
+  return L.join('\n');};
+/* açılış izi işaretleri: tüm betikler, giriş efekti, ekran geçişleri, 3. ve 10. saniyede durum, arka plan */
+try{bbaIz('tüm betikler yüklendi');
+  {const _s=show;let last='';show=function(id){try{if(id!==last){last=id;bbaIz('ekran: '+id);}}catch(_){}return _s.apply(this,arguments);};} /* aynı ekranın tekrar gösterilmesi (öne gelince 3 kez) ize yazılmaz */
+  {let n=0;const iv=setInterval(()=>{if(!document.getElementById('intro')||++n>300){clearInterval(iv);bbaIz(n>300?'giriş efekti 30 sn sonra hâlâ ekranda':'giriş efekti bitti');}},100);}
+  const st=t=>{const e=document.querySelector('.screen.show'),r=e&&e.getBoundingClientRect();bbaIz('durum@'+t+': ekran='+(e?e.id+' '+Math.round(r.width)+'x'+Math.round(r.height):'YOK')+' · pencere '+innerWidth+'x'+innerHeight+(document.getElementById('intro')?' · giriş efekti açık':''));};
+  setTimeout(()=>st('3sn'),3000);setTimeout(()=>st('10sn'),10000);
+  document.addEventListener('visibilitychange',()=>bbaIz(document.hidden?'arka plana geçti':'öne geldi'));
+}catch(_){}
+/* H-01: ana kayıt bozuk çıkıp yedekten açıldıysa oyuncuya bilgi */
+try{if(window._saveInfo&&window._saveInfo.bozuk){save.inbox=save.inbox||[];save.inbox.unshift({id:Date.now()+7,ic:'🛟',t:'Kayıt kurtarıldı',txt:window._saveInfo.src==='yedek'?'Kayıt dosyan bozulmuştu; son sağlam yedekten açıldı. Son birkaç saniyelik ilerleme eksik olabilir.':'Kayıt dosyan bozulmuştu ve yedek bulunamadı. Bozuk dosya saklandı; destekle iletişime geç.'});persist();}}catch(_){}
 /* yarım kalan çark/kart ödülü (oyun kapandıysa): açılışta bir kez verilir */
 (function pendReward(){try{const P=save.pendRw;if(!P||!P.rw)return;delete save.pendRw;const t=give(P.rw);
   try{save.inbox.unshift({id:Date.now(),ic:'🎁',t:(P.src||'Ödül')+' ödülü',txt:'Oyun kapandığı için yarım kalan ödülün hesabına eklendi: '+t});}catch(_){}persist();}catch(e){try{bbaLog(e,'pendRw');}catch(_){}}})();

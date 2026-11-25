@@ -8,7 +8,33 @@ permissions:
   contents: write
 
 jobs:
+  # 1-01: otomatik testler. Biri bile kırmızıysa APK derlenmez ve yayınlanmaz.
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Test araclarini kur
+        run: |
+          pip install "pytest==9.1.1" "playwright==1.63.0"
+          python -m playwright install --with-deps chromium
+
+      - name: Testleri calistir
+        run: python -m pytest -q tests -p no:cacheprovider --junitxml=test-sonuc.xml
+
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: test-sonuclari
+          path: test-sonuc.xml
+
   build:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -32,6 +58,8 @@ jobs:
           mkdir -p www
           cp index.html www/index.html
           cp -r a www/a
+          sed -i "s/__SURUM__/${{ github.run_number }}/" www/index.html
+          grep -c "BBA_SURUM='${{ github.run_number }}'" www/index.html
           ls www/a | wc -l
 
       - name: Capacitor kur
