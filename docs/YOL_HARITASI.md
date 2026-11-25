@@ -274,5 +274,6 @@ Kozmetik dondurma burada kalkar.
 ---
 
 ## Değişiklik günlüğü (bu defterin)
+- 25.11.2026 — **surum-73: hata avı, 22 düzeltme** (Furkan'ın isteği; denetçi alt ajan her düzeltmeyi ayrıca test edip onayladı). En önemlileri: pes edince çift maç sonucu, resimli avatarla açılışta betiğin yarıda kalması (fullFit/hile koruması çalışmıyordu), sıfırla/yedekten yükle çalışmıyordu, çift kutu alımı, kayıp çark/kart ödülleri, iade sonrası bedava maç, isimde HTML kodu. Liste: `PROJE_NOTLARI.md` → surum-73. Plan sırası değişmedi.
 - 25.11.2026 — `GOREV_HARITASI.md` eklendi. Claude'un önerisi: önce hatalar ve temel, görsel entegrasyonu sonda. Furkan'ın "önce görseller" seçimiyle farklı; son karar Furkan'ın.
 - 25.11.2026 — Defter oluşturuldu. surum-72 kararları işlendi: paket adı, 1'e 1 ülke masası, Özel Teklif 11/31. Sıradaki iş: **Faz G (görseller)**, ardından Faz 1.1.

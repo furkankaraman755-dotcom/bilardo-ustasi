@@ -28,7 +28,7 @@ Sebebi: görsel eklemek kolay ve her zaman yapılabilir. Ama temel sağlam olmad
 
 | Aşama | Konu | Görev sayısı | Durum |
 |---|---|---|---|
-| H | Bilinen hatalar | 8 | ⬜ |
+| H | Bilinen hatalar | 9 | 🟡 (H-09 ✅) |
 | 0 | Güvenlik ağı (kayıt, hata raporu) | 4 | ⬜ |
 | 1 | Kod ve test temeli | 10 | ⬜ |
 | 2 | Oyun kuralları ve fizik doğruluğu | 4 | ⬜ |
@@ -82,6 +82,11 @@ Kabaca toplam: **60–75 oturum.** Düzenli çalışmayla çıkışa 3–4 ay.
 **H-08 · Liderlik ekranı bellek tutuyor** · K · ⬜
 - Sorun: Liderlik ekranından çıkınca yaklaşık 4 MB çizim alanı boşaltılmıyor.
 - Yapılacak: Ekrandan çıkınca bu alanlar boşaltılır.
+
+**H-09 · Hata avı (surum-73)** · O · ✅
+- Furkan'ın isteğiyle kod baştan tarandı, 22 hata düzeltildi (liste: `PROJE_NOTLARI.md` → surum-73). Bir denetçi alt ajan her düzeltmeyi ayrıca test edip onayladı.
+- H-03'e katkı: gelen kutusu artık alınmamış ödülleri silmiyor (son 20 mesaj + ödüllüler, en fazla 100).
+- Test betikleri şimdilik oturum çalışma alanında. Depoya taşınması 1-01 (testler depoya) görevinde yapılacak.
 
 ---
 
@@ -416,4 +421,5 @@ Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama bek
 **H-01 / 0-01 — Çift yuvalı, doğrulamalı kayıt.** Küçük, hızlı ve oyuncu verisini koruyor. Ardından 0-02, 0-04, sonra 1-01.
 
 ## Değişiklik günlüğü
+- 25.11.2026 — H-09 eklendi ve bitti: surum-73 hata avı (22 düzeltme).
 - 25.11.2026 — Görev haritası oluşturuldu (Claude'un görüşü). Kod incelemesinden 8 bilinen hata eklendi.

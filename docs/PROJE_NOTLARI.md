@@ -3,7 +3,7 @@
 Yeni bir sohbette her şeyi baştan anlatmamak için tutulur.
 Yeni sohbette ilk mesaj: **"docs/PROJE_NOTLARI.md dosyasını oku, oradan devam et."**
 
-Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-72**
+Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-73**
 
 ---
 
@@ -163,6 +163,36 @@ Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-72**
 - **Özel Teklif fiyatı:** Destansı Kutu 1 tane **11**, 3 tane **31** nakit (`OFFER_PRICE`, `buyOffer`). Sürpriz Kutuları'ndaki normal fiyat 16/44 aynı kaldı. Şimdilik günlük sınır yok.
 - **Paket adı değişti:** `capacitor.config.json`, `native/MainActivity.java`, `build.yml`. Yeni APK eski uygulamanın yanına ayrı uygulama olarak kurulur; eski "Blackball Arena" silinmeli.
 
+### 25 Kasım — surum-73 (hata avı: 22 düzeltme)
+Kod baştan tarandı. Bir denetçi alt ajan bağımsız tarama yaptı ve her düzeltmeyi ayrıca test edip onayladı. Testler tarayıcıda yapıldı (Playwright + Chrome); 2 kişilik kural simülasyonunda binlerce atış ve fizik fuzz testi çalıştırıldı.
+- **Kritik**
+  - Pes et/ayrıl sırasında yuvarlanan 8 → maç hem kayıp hem galibiyet sayılıyor, ödül veriliyordu. Çözüm: `goDone` bayrağı (gameOver maç başına bir kez) ve `endShot` başında `if(over)return`.
+  - Resimli avatar seçen oyuncuda her açılışta `AV_ART` TDZ hatası oluyordu. Büyük betiğin kalanı çalışmıyordu: `fullFit`, lifecycle (30 sn) ve antiCheat devre dışıydı. Siyah/bozuk ekran şikâyetiyle ilgili olabilir. Çözüm: `myAvT` artık `window.AV_ART` kullanıyor, açılış çağrısı try/catch içinde.
+  - Ayarlar → "İlerlemeyi sıfırla" ve "Yedekten geri yükle" hiç çalışmıyordu: sayfa kapanırken `persist()` eski kaydı geri yazıyordu. Çözüm: `window._bbaNoSave` bayrağı.
+- **Para / ödül**
+  - Sürpriz Kutusu efekti sürerken ikinci basışta nakit iki kez düşüyordu. Çözüm: `_boxLock`.
+  - Gizemli Kart kazınmadan kapatılırsa ödül kayboluyordu; çark dönerken oyun kapanırsa ödül gidiyordu. Çözüm: ödül `save.pendRw` olarak hemen kayda geçiyor, kapatınca veriliyor, yarım kalırsa açılışta gelen kutusuna not düşülerek veriliyor.
+  - Ücret zaman aşımıyla iade edildikten sonra eşleşme yine maç açabiliyordu (bedava maç). Çözüm: `_feeVoid`.
+  - 9 Top / Kılavuzsuz odalarında 20. galibiyet yanlışlıkla İtalya/Fransa istakası veriyordu. Artık sadece ülke odaları rozet veriyor.
+  - Gelen kutusu 20 mesajı aşınca alınmamış ödülleri siliyordu. Artık ödüllüler korunuyor.
+- **Güvenlik**
+  - Oyuncu adındaki HTML kodu çalışıyordu. Çözüm: `cleanName` (< > & " ' ` \ temizlenir, en fazla 14 karakter).
+  - Yedek kodundan gelen avatar, ID ve gelen kutusu alanları yüklemede temizleniyor.
+- **Küçükler**
+  - Turnuva eşleşme ekranı giriş ücretini 3.750 gösteriyordu (doğrusu 1.000); 2. ve 3. turda artık sadece ödül görünüyor.
+  - Kutu ödül penceresi başka pencereyle ezilince çıkan hata giderildi.
+  - "Kopyalandı" mesajı artık kopyalama başarısızsa çıkmıyor (`bbaCopy`: yedek kodu, ID, profil).
+  - Altın Atış sonucunda Android geri tuşu menüye götürüyor; cep bilgisi yoksa NaN koruması var.
+  - Yapay zekâ hedef bulamazsa çökmüyor.
+  - Görev metni "Bursa" yerine "İtalya veya üstü".
+  - Menüdeki sandık yuvaları artık her saniye değil, sadece yazı değişince yeniden çiziliyor.
+  - 780 px ekranda ıstaka etiketi ("İMPARATOR") kesilmiyor.
+  - Kayıtta artık olmayan ıstaka/masa seçiliyse açılışta Başlangıç ıstakası / Turnuva masasına dönülüyor.
+- **Bilerek bırakılanlar**
+  - `openGifts` iki kez tanımlı (ölü kod, zararsız).
+  - Lig puanı sadece kazançla artıyor (kayıp düşmüyor), tasarım kararı.
+  - Yedek kodu ile bakiye değiştirilebiliyor; sunucu ekonomisi (ADIM 3) gelince çözülecek.
+
 ### Bugünkü içerik (özet)
 - **Ülke masaları (1'e 1):** 17 oda. Ödül = 2 × giriş, net kazanç = giriş.
   - Portekiz 250 · İtalya 1K · Fransa 4K · Hollanda 5K · Brezilya 10K · Japonya 50K · Mısır 100K
@@ -190,6 +220,9 @@ Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-72**
 | Çipler sola uçuyordu | Gizli kapsayıcıyı hedef alıyordu | Görünen sayaca uçuş, sabit katman |
 | Mağazada masa adı bozuk | Başka bir `.nm` CSS kuralı | Kural kapsamlandı |
 | surum-70 notunda "Dubai 25 bin" yazıldı | Yanlış bilgi | Doğrusu 25 milyon |
+| Resimli avatarla açılışta betik yarıda kalıyordu | `const` değişkene tanımlanmadan erişim (TDZ) | `window.` üzerinden erişim, açılış çağrıları try/catch |
+| Sıfırla / yedekten yükle işe yaramıyordu | Sayfa kapanırken eski kayıt geri yazılıyordu | `_bbaNoSave` bayrağı |
+| Satır içine `//` yorum eklemek kodun devamını yuttu (surum-73 sırasında yakalandı) | Tek satırlık kodda `//` | Satır ortasında sadece `/* */` kullan |
 
 > Siyah ekran ya da bozuk ekran tekrar olursa: **oyunu silmeden önce Ayarlar → Hakkında'daki "Hata kaydı"nın fotoğrafı çekilip gönderilsin.**
 
