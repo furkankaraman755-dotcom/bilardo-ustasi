@@ -39,6 +39,7 @@ Sebebi: görsel eklemek kolay ve her zaman yapılabilir. Ama temel sağlam olmad
 | 7 | Yayın hazırlığı | 7 | ⬜ |
 | 8 | Kapalı test ve çıkış | 6 | ⬜ |
 | 9 | Büyüme ve içerik | 8 | ⬜ |
+| K | Kalite ve profesyonellik (8 Ball Pool çıtası) | denetimden sonra belli olacak | ⏸ Furkan "başla" diyecek |
 | P | Furkan'ın paralel görevleri | 8 | ⬜ |
 
 Kabaca toplam: **60–75 oturum.** Düzenli çalışmayla çıkışa 3–4 ay.
@@ -392,6 +393,27 @@ Amaç: Gerçek rakiple adil, kopmayan maç. Önce sade çalışsın, sonra güze
 
 ---
 
+## AŞAMA K — Kalite ve profesyonellik (Furkan'ın kararı, 26 Kasım)
+Furkan'ın tespiti: ✅ işareti sadece "çalışıyor ve test edildi" demek, "profesyonel" demek değil. Oyunun eksiksiz ve profesyonel görünüp hissettirmesi ayrı bir çıta.
+Karar: K aşaması eklenecek. Tahminle değil, ölçerek yapılacak. **K görevleri en sona bırakılmaz, teknik görevlerin arasına yerleştirilir.**
+
+**K-00 · Profesyonellik denetimi** · O · ⏸ (Furkan "başla" deyince ilk iş bu)
+- Oyun 8 Ball Pool ile ekran ekran ve özellik özellik karşılaştırılır. Kanıt olarak ekran görüntüleri kullanılır.
+- Bakılacak başlıklar:
+  - Oynanış hissi: nişan, güç, falso, ses, vuruş anı.
+  - Ekranların tutarlılığı: hangileri Furkan'ın görsellerinden, hangileri hâlâ kodla çizilmiş eski ekran.
+  - Canlılık: geçişler, düğme tepkisi, kutlama, müzik.
+  - İlk 5 dakika: yeni oyuncu ne görüyor, eğitim var mı.
+  - Ucuz telefonda akıcılık.
+  - Ekonomi dengesi.
+  - Mağaza vitrini: ikon, Play Store sayfası, tanıtım.
+- Her madde puanlanır: 🔴 amatör · 🟡 idare eder · 🟢 profesyonel.
+- Çıktı: ekran görüntülü eksikler listesi (`docs/KALITE_DENETIMI.md`). Eksikler önem sırasıyla K-01, K-02… görevleri olarak bu bölüme yazılır ve sıraya yerleştirilir.
+- K görevlerinin bitme şartı: "8 Ball Pool'un yanına koyunca utandırmıyor". **Son onay Furkan'ın.**
+- Denetçi alt ajan bu denetimde de bağımsız göz olarak kullanılır.
+
+---
+
 ## AŞAMA P — Furkan'ın paralel görevleri
 Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama beklemez.
 
@@ -430,11 +452,19 @@ Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama bek
 
 ---
 
-## Sıradaki görev
-**1-10 — Bütçe kontrolleri** (küçük; testler hazır olduğu için hemen yapılabilir). Ardından **1-04 — Metinleri tek yerde topla**, sonra **1-05 — CSS'i ayır**.
-**Furkan'dan beklenen (H-07 / P-1):** surum-75'i telefona kurup `CIHAZ_TEST_LISTESI.md`'yi denemek. İstersen `BlackballArena-yayin.apk`'yı da kurup gerçek oyuncunun göreceği hâli (1.000 çip, kilitli masalar) görebilirsin. İkisi aynı uygulama olduğu için biri diğerinin üstüne kurulur ama kayıtları ayrı durur.
+## Sıradaki görev — NEREDE KALDIK (26.11.2026 07:36)
+- **Durum:** Furkan "bekle, başlama" dedi. Şu an hiçbir iş yapılmıyor.
+- **Furkan "başla / devam" deyince ilk iş: K-00 Profesyonellik denetimi** (yukarıda, AŞAMA K). Sonuçlarına göre K görevleri haritaya yerleştirilir.
+- **Ondan sonra kaldığımız teknik sıra:** 1-10 (bütçe kontrolleri) → 1-04 (metinleri tek yerde topla) → 1-05 (CSS'i ayır). Son biten: 1-03 / surum-75.
+- **Furkan'ın vereceği kararlar** (denetçinin surum-75 notları):
+  1. 13 masa yayında da herkese bedava. Satılık mı olsun?
+  2. Test APK'sı ile yayın APK'sı aynı uygulama: yan yana kurulamaz, biri diğerinin üstüne kurulur. Sorun mu?
+  3. Yayında menüdeki çip sayacına dokununca mağazanın "Çip ve Nakit" sayfası açılsın mı?
+- **Furkan'dan beklenen (H-07 / P-1):** surum-75'i telefona kurup `CIHAZ_TEST_LISTESI.md`'yi denemek.
+- Denetçi alt ajan beklemede (kapatılmadı); devam edilince kaldığı yerden çalışır.
 
 ## Değişiklik günlüğü
+- 26.11.2026 — AŞAMA K (Kalite ve profesyonellik) eklendi; K-00 Profesyonellik denetimi Furkan'ın "başla"sını bekliyor. Furkan "bekle" dedi; nerede kalındığı "Sıradaki görev"e yazıldı.
 - 26.11.2026 — surum-75: 1-02, 1-03, H-05 ✅. Ayarlar → Güvenlik'te etiket taşması düzeltildi, telefonun yazı boyutu artık ekranları bozmuyor (setTextZoom 100).
 - 26.11.2026 — surum-74: H-01, H-02, H-03, H-04, H-08, 0-01, 0-02, 0-03, 0-04, 1-01 ✅ (denetçi alt ajan her birini ayrıca test edip onayladı).
 - 25.11.2026 — H-09 eklendi ve bitti: surum-73 hata avı (22 düzeltme).
