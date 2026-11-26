@@ -359,7 +359,7 @@ Amaç: Gerçek rakiple adil, kopmayan maç. Önce sade çalışsın, sonra güze
 - %5 → %20 → %50 → %100.
 
 **8-05 · Yönetim paneli** · B · ⬜
-- Oyuncu ara, bakiye gör ve düzelt, banla, etkinlik ve fiyat ayarla. Panelix deneyimi kullanılır.
+- Oyuncu ara, bakiye gör ve düzelt, banla, etkinlik ve fiyat ayarla.
 
 **8-06 · Destek akışı** · K · ⬜
 - E-posta, oyun içinden şikâyet, sık sorulan sorular.
@@ -462,6 +462,7 @@ Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama bek
   3. Yayında menüdeki çip sayacına dokununca mağazanın "Çip ve Nakit" sayfası açılsın mı?
 - **Furkan'dan beklenen (H-07 / P-1):** surum-75'i telefona kurup `CIHAZ_TEST_LISTESI.md`'yi denemek.
 - Denetçi alt ajan beklemede (kapatılmadı); devam edilince kaldığı yerden çalışır.
+- **Sunucu kararı (Furkan, 26.11.2026):** Oyun sunucusu **Hetzner**'de olacak. Firebase'in de kullanılıp kullanılmayacağı sonra konuşulacak. Aşama 3–5 bu karara göre yeniden düzenlenecek.
 
 ## Değişiklik günlüğü
 - 26.11.2026 — AŞAMA K (Kalite ve profesyonellik) eklendi; K-00 Profesyonellik denetimi Furkan'ın "başla"sını bekliyor. Furkan "bekle" dedi; nerede kalındığı "Sıradaki görev"e yazıldı.
