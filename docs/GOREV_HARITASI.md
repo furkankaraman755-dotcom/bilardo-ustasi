@@ -465,6 +465,19 @@ Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama bek
 - **Giriş efekti:** oyun açılışındaki logo efekti (şu an ~4,5 sn) bu görselden yeniden yapılacak. Süre ve sonrasında açılan ekran değişmez; başka hiçbir ayar bozulmaz.
 - Bitti: telefonda simge ve açılış kontrolü, görünüş testi `[görünüş]`.
 
+**G-03 · Ödül alırken eski mor mağaza ekranı çıkıyor** · K · ⏸ (Furkan "bekle, başlama" dedi, 26.11.2026 21:13)
+- Ekran görüntüsü: `docs/bekleyen_gorseller/eski_magaza_efsane_sandiklar.jpg` (eski mor "Mağaza", sekmeler Özel Teklif / Sürpriz Kutuları / Çip ve Nakit / Efsane Sandıklar / Masalar; 1K, 2,5K, 5K, Bronz Sandık… Topla listesi).
+- **İnceleme (kod okundu, değişiklik yapılmadı):**
+  1. Hediyeler → "Efsane Sandıklar" (ve eski menüdeki `tFree`) `openShop('free')` çağırıyor; surum-76'daki sarmalayıcı `'free'`'yi bilerek eski mağazaya gönderiyor (index.html ~5835). Ücretsiz ödül listesi bu yüzden eski mor ekranda açılıyor.
+  2. **Hata:** Eski sekme çubuğu gizlenemiyor. surum-76'da eklenen `#shopTabs{display:none!important}` kuralı, eski CSS'teki `#shop #shopTabs{…display:block!important}` (~1176) kuralına yeniliyor (iki kimlik seçicisi daha güçlü). Sonuç: oyuncu bu ekrandan eski Sürpriz Kutuları'na, sahte TL fiyatlı eski "Çip ve Nakit"e ve eski Masalar'a geçebiliyor.
+  3. Eski ekranın üst çubuğu (💎 / 💵 / çip ve "+") da eski tasarım.
+- **Düzeltme planı:**
+  - Ücretsiz ödül listesi (10 adım, 30 dk aralık, günlük sıfırlama, Bronz Sandık → sandık yuvası) yeni mavi tasarıma taşınır: yeni mağazanın içinde ya da kendi tam ekran penceresi olarak. İşlev (`save.free`, `FREE`) aynen korunur.
+  - Furkan'ın kuralı gereği ekran görselden yapılır: **Furkan'dan bu ekranın görseli istenecek**; gelmezse yeni mağaza görsellerinin parçalarıyla (çerçeve, düğme, rozet) kurulur.
+  - Eski `#shop` ekranına hiçbir yoldan düşülmeyecek; eski sekme çubuğu gerçekten gizlenecek (seçici gücü düzeltilir).
+  - Bütün ödül yolları tek tek denetlenir (Hediyeler'in 5 kartı, gelen kutusu, sandık yuvaları, lig ödülü, görev ödülleri, günlük ödül) → eski ekrana çıkan başka yol varsa aynı işte düzeltilir.
+- Bitti: `test_dokunus` ile Efsane Sandıklar → Topla → ödül; hiçbir dokunuş yolunun eski `#shop`'u göstermediğini sınayan test; görünüş testi `[görünüş]`.
+
 ## Sıradaki görev — NEREDE KALDIK (26.11.2026 07:36)
 - **Durum:** Furkan "bekle, başlama" dedi. Şu an hiçbir iş yapılmıyor.
 - **Furkan "başla / devam" deyince ilk iş: K-00 Profesyonellik denetimi** (yukarıda, AŞAMA K). Sonuçlarına göre K görevleri haritaya yerleştirilir.
@@ -476,10 +489,12 @@ Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama bek
 - **Furkan'dan beklenen (H-07 / P-1):** surum-75'i telefona kurup `CIHAZ_TEST_LISTESI.md`'yi denemek.
 - **Yeni not (26.11.2026 21:10):** Furkan pot çipi görselini gönderdi → **G-01** (yukarıda). "Bekle, başlama" dedi; "başla" deyince yapılacak.
 - **Yeni not (26.11.2026 21:12):** Yeni uygulama amblemi ve giriş efekti → **G-02**. Beklemede.
+- **Yeni not (26.11.2026 21:13):** Ödül alırken eski mor mağaza çıkıyor (+ eski sekmeler gizlenemiyor) → **G-03**. Beklemede.
 - Denetçi alt ajan beklemede (kapatılmadı); devam edilince kaldığı yerden çalışır.
 - **Sunucu kararı (Furkan, 26.11.2026):** Oyun sunucusu **Hetzner**'de olacak. Firebase'in de kullanılıp kullanılmayacağı sonra konuşulacak. Aşama 3–5 bu karara göre yeniden düzenlenecek.
 
 ## Değişiklik günlüğü
+- 26.11.2026 21:13 — G-03 eklendi (ödül alırken eski mor mağaza; eski sekme çubuğu CSS hatası bulundu). Beklemede.
 - 26.11.2026 21:12 — G-02 eklendi (uygulama amblemi + giriş efekti). Beklemede.
 - 26.11.2026 21:10 — G-01 eklendi (maç ekranı pot çipi, miktar bahse göre). Beklemede.
 - 26.11.2026 — surum-76: Furkan'ın 12 yeni görseli araya alındı (giriş + pencereler + 6 dil, mavi ana menü, 4 sekmeli mağaza, 3B Masalar ekranı). 9-02 Görsel paketinin bir kısmı öne çekildi. Teknik sıra değişmedi (sırada K-00 / 1-10).

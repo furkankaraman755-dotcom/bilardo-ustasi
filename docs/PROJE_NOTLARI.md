@@ -369,7 +369,7 @@ Furkan: "görev haritasına disiplinli şekilde uy." Haritadaki eksik/hatalı g�
 **⏸ BEKLEMEDE — Furkan "başla" deyince:**
 1. **K-00 Profesyonellik denetimi** (oyun 8 Ball Pool ile ekran ekran karşılaştırılır → ekran görüntülü eksikler listesi → K görevleri).
 2. Teknik sıra: **1-10** (bütçe kontrolleri) → **1-04** (metinleri tek yerde topla; bütün oyun 6 dile çevrilebilsin) → **1-05** (CSS'i ayır). Son biten: 1-03 / surum-75.
-3. Görseller (Faz G) Furkan gönderince araya alınır. **Bekleyen: G-01** — maç ekranında üst ortadaki pot çipleri Furkan'ın yeni çip görseliyle değişecek, altındaki miktar maçın bahsine göre (örn. İstanbul 500M, Portekiz 500). **G-02** — yeni uygulama amblemi (gümüş çerçeve, 8 topu, BLACKBALL ARENA) telefon simgesi olacak, açılıştaki giriş efekti de bundan yapılacak. Görseller `docs/bekleyen_gorseller/` içinde.
+3. Görseller (Faz G) Furkan gönderince araya alınır. **Bekleyen: G-01** — maç ekranında üst ortadaki pot çipleri Furkan'ın yeni çip görseliyle değişecek, altındaki miktar maçın bahsine göre (örn. İstanbul 500M, Portekiz 500). **G-02** — yeni uygulama amblemi (gümüş çerçeve, 8 topu, BLACKBALL ARENA) telefon simgesi olacak, açılıştaki giriş efekti de bundan yapılacak. **G-03** — Hediyeler → Efsane Sandıklar eski mor mağazayı açıyor; eski sekme çubuğu da CSS hatası yüzünden gizlenemiyor (oyuncu eski Sürpriz Kutuları / Çip ve Nakit / Masalar'a gidebiliyor). Görseller `docs/bekleyen_gorseller/` içinde.
 - Ayrıntı: `GOREV_HARITASI.md` → "Sıradaki görev — NEREDE KALDIK".
 
 ### Furkan'dan beklenen cevaplar
@@ -383,7 +383,7 @@ Furkan: "görev haritasına disiplinli şekilde uy." Haritadaki eksik/hatalı g�
 - **Sadece "yakında" mesajı veren düğmeler:** VIP, Arkadaşlar, Google/Facebook/Apple girişi, Şifremi Unuttum (e-posta), Lig'deki Arkadaş/Ülke/Dünya sekmeleri, Hesap bağla, yayında TL paketleri. → Sunucu (Hetzner) ve ödeme gelince çalışacak.
 - **Aynı yere giden düğmeler:** Lig ve Sezon; Gelişim ve Profil; Mağaza ve Özel Teklif.
 - **Adıyla tam uyuşmayan hedefler:** Arkadaşla Oyna → eski "Özel Oyun" ekranı.
-- **Eski mor tasarımda kalan 9 ekran** (yeni mavi/3B görsellerle uyumsuz).
+- **Eski mor tasarımda kalan 9 ekran** (yeni mavi/3B görsellerle uyumsuz). Bunlardan biri ödül alırken açılan eski mağaza (G-03).
 - **Etkisiz ödüller:** VIP ve tebeşir sadece kayda yazılıyor.
 - **Dil:** sadece giriş ekranları çevrili (1-04 ile çözülecek).
 - **Hesaplar** ayrı kayıt değil (aynı telefonda iki hesap aynı ilerlemeyi görür).
