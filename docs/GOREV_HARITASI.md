@@ -452,6 +452,13 @@ Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama bek
 
 ---
 
+**G-01 · Maç ekranı: pot çipi yeni görselle** · K · ⏸ (Furkan "bekle, başlama" dedi, 26.11.2026 21:10)
+- Furkan'ın 2 fotoğrafı: `docs/bekleyen_gorseller/pot_cip_500M.png` (altın çerçeveli çip yığını, altta "500M", taç süsü) ve `docs/bekleyen_gorseller/oyun_ekrani_pot_yeri.jpg` (maç ekranı; üst ortada iki oyuncu arasındaki pot kutusu).
+- İstenen: maç ekranında üst ortadaki eski çip yığınının yerine 1. fotoğraftaki çipler gelecek.
+- Altındaki miktar sabit "500M" olmayacak: o maçın bahsine (potuna) göre değişecek. Örnek: İstanbul 250M giriş → 500M; Portekiz 250 → 500.
+- Yapılışı: görsel parçalanır, "500M" yazısı silinip canlı yazı konur (Furkan'ın kuralı). Görsel `a/` klasörüne. Pot kutusunun yeri ve boyu bozulmaz; diğer hiçbir ayar değişmez. 9 Top, Turnuva ve ücretsiz modlarda ne görüneceği uygulamada kontrol edilir.
+- Bitti: bütün odalarda doğru miktar, görünüş testi `[görünüş]`, telefonda 780×360 ve 2400×1080 kontrol.
+
 ## Sıradaki görev — NEREDE KALDIK (26.11.2026 07:36)
 - **Durum:** Furkan "bekle, başlama" dedi. Şu an hiçbir iş yapılmıyor.
 - **Furkan "başla / devam" deyince ilk iş: K-00 Profesyonellik denetimi** (yukarıda, AŞAMA K). Sonuçlarına göre K görevleri haritaya yerleştirilir.
@@ -461,10 +468,12 @@ Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama bek
   2. Test APK'sı ile yayın APK'sı aynı uygulama: yan yana kurulamaz, biri diğerinin üstüne kurulur. Sorun mu?
   3. Yayında menüdeki çip sayacına dokununca mağazanın "Çip ve Nakit" sayfası açılsın mı?
 - **Furkan'dan beklenen (H-07 / P-1):** surum-75'i telefona kurup `CIHAZ_TEST_LISTESI.md`'yi denemek.
+- **Yeni not (26.11.2026 21:10):** Furkan pot çipi görselini gönderdi → **G-01** (yukarıda). "Bekle, başlama" dedi; "başla" deyince yapılacak.
 - Denetçi alt ajan beklemede (kapatılmadı); devam edilince kaldığı yerden çalışır.
 - **Sunucu kararı (Furkan, 26.11.2026):** Oyun sunucusu **Hetzner**'de olacak. Firebase'in de kullanılıp kullanılmayacağı sonra konuşulacak. Aşama 3–5 bu karara göre yeniden düzenlenecek.
 
 ## Değişiklik günlüğü
+- 26.11.2026 21:10 — G-01 eklendi (maç ekranı pot çipi, miktar bahse göre). Beklemede.
 - 26.11.2026 — surum-76: Furkan'ın 12 yeni görseli araya alındı (giriş + pencereler + 6 dil, mavi ana menü, 4 sekmeli mağaza, 3B Masalar ekranı). 9-02 Görsel paketinin bir kısmı öne çekildi. Teknik sıra değişmedi (sırada K-00 / 1-10).
 - 26.11.2026 — AŞAMA K (Kalite ve profesyonellik) eklendi; K-00 Profesyonellik denetimi Furkan'ın "başla"sını bekliyor. Furkan "bekle" dedi; nerede kalındığı "Sıradaki görev"e yazıldı.
 - 26.11.2026 — surum-75: 1-02, 1-03, H-05 ✅. Ayarlar → Güvenlik'te etiket taşması düzeltildi, telefonun yazı boyutu artık ekranları bozmuyor (setTextZoom 100).
