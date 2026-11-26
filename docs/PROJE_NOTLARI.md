@@ -255,7 +255,11 @@ Kod baştan tarandı. Bir denetçi alt ajan bağımsız tarama yaptı ve her dü
 Ayrıntılı, adım adım plan ve durum takibi **`docs/YOL_HARITASI.md`** defterindedir. Tek kaynak orasıdır; plan değişince orası güncellenir.
 Oturum oturum somut görevler (bilinen hatalar dahil): **`docs/GOREV_HARITASI.md`**.
 
-**Sıradaki iş (Furkan seçti, 25 Kasım): Faz G — yeni görseller.** Ülke masası fotoğrafları ve yeni ejderha ıstakaları. Firebase bundan sonra.
+**⏸ BEKLEMEDE (26 Kasım 07:36) — Furkan "bekle, başlama" dedi.**
+- Karar: Görev haritasına **AŞAMA K (Kalite ve profesyonellik)** eklendi. Furkan "başla" deyince ilk iş **K-00 Profesyonellik denetimi**: oyun 8 Ball Pool ile ekran ekran karşılaştırılacak, ekran görüntülü eksikler listesi çıkacak, eksikler K görevleri olarak haritaya girecek.
+- Teknik sırada kalınan yer: 1-10 → 1-04 → 1-05 (son biten 1-03 / surum-75).
+- Ayrıntı: `GOREV_HARITASI.md` → "Sıradaki görev — NEREDE KALDIK".
+- Görseller (Faz G) Furkan gönderince araya alınır.
 
 Kısaca sıra:
 - **0.** Kararlar (çoğu verildi)

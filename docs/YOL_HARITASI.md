@@ -274,6 +274,7 @@ Kozmetik dondurma burada kalkar.
 ---
 
 ## Değişiklik günlüğü (bu defterin)
+- 26.11.2026 07:36 — Furkan'ın kararı: oyun sadece çalışır değil, **eksiksiz ve profesyonel** olmalı. Görev haritasına AŞAMA K (Kalite ve profesyonellik) eklendi; ilk iş K-00 Profesyonellik denetimi (8 Ball Pool karşılaştırması). Şu an ⏸ beklemede; Furkan "başla" deyince oradan devam.
 - 26.11.2026 — **surum-75**: Test modu tek bayrağa bağlandı (1.5 ✅). CI artık test APK'sı ile yayın APK'sını ayrı veriyor. Görünüş karşılaştırma testi eklendi.
 - 26.11.2026 — **surum-74**: Görev haritasındaki güvenlik ağı tamamlandı: çift yuvalı kayıt, hafıza dolu koruması, liste sınırları, hata raporu + açılış izi, dosyaya yedek, cihaz test listesi, liderlik belleği. Testler depoya taşındı ve CI'da APK'dan önce çalışıyor (1.1 ✅).
 - 25.11.2026 — **surum-73: hata avı, 22 düzeltme** (Furkan'ın isteği; denetçi alt ajan her düzeltmeyi ayrıca test edip onayladı). En önemlileri: pes edince çift maç sonucu, resimli avatarla açılışta betiğin yarıda kalması (fullFit/hile koruması çalışmıyordu), sıfırla/yedekten yükle çalışmıyordu, çift kutu alımı, kayıp çark/kart ödülleri, iade sonrası bedava maç, isimde HTML kodu. Liste: `PROJE_NOTLARI.md` → surum-73. Plan sırası değişmedi.
