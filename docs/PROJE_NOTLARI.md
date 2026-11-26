@@ -208,7 +208,7 @@ Kod baştan tarandı. Bir denetçi alt ajan bağımsız tarama yaptı ve her dü
   - **6 dil** (tr, en, es, de, fr, ar; Arapça sağdan sola): giriş ekranları çevrili, oyunun geri kalanı 1-04 ile çevrilecek.
 - **Ana menü (mavi):**
   - Canlı: isim, seviye, XP çubuğu, para, avatar (seçildiyse), posta ve ıstaka rozetleri, Sezon, Günlük Sandık ve Özel Teklif süreleri.
-  - OYNA: parasının yettiği en yüksek açık ülke masası. Dünya Çapında Oyna: ülke listesi. Arkadaşla Oyna: Özel Oyun. Gelişim: Profil.
+  - OYNA: giriş ücreti bakiyenin en fazla %15'i olan en yüksek açık ülke masası (birikim tek dokunuşta gitmesin). Dünya Çapında Oyna: ülke listesi. Arkadaşla Oyna: Özel Oyun. Gelişim: Profil.
 - **Mağaza (4 sekme):** Özel Teklifler, Çip Paketleri, Dolar Paketleri, Sandıklar (fiyatlar görseldeki gibi).
   - TL paketleri: test APK'sında onayla bedava, yayında "ödeme Google Play sürümünde".
   - Günlük Hediye (10.000 çip) ve Günlük Sandık (1 Nadir parça + 5.000 çip): günde bir, reklam (AdMob) gelene kadar reklamsız.
