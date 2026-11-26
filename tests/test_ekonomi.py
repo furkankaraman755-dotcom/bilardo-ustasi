@@ -22,13 +22,18 @@ def test_oda_maci_ucret_ve_odul(game):
     g = game(fast=0.25, seed=777); g.login()
     for ri in (0, 1):
         c0, fee, prize = g.js(f"[save.coins,ROOMS[{ri}].fee,ROOMS[{ri}].prize]")
+        lv0, w0 = g.js("[save.level,save.wins]")
         g.js(f"show('rooms');startRoom(ROOMS[{ri}])"); g.wait(100)
         assert g.js("save.coins") == c0 - fee, 'giriş ücreti düşmedi'
         assert play(g), 'maç bitmedi'
         won = 'Kazandın' in g.js("document.getElementById('ot').textContent")
         c1 = g.js("save.coins")
         if won: assert c1 >= c0 - fee + prize, 'ödül eksik'   # seviye ödülü ek gelebilir
-        else: assert c0 - fee <= c1 < c0 - fee + prize, 'kayıpta ödül verildi'
+        else:
+            # kayıpta maç ödülü yok; ama kayıp XP'si seviye atlatırsa seviye ödülü gelebilir — onu ayrıca hesapla
+            lv_bonus = g.js(f"(()=>{{let s=0;for(let l={lv0}+1;l<=save.level;l++){{s+=l*250;if(l%10===1)s+=titleReward(Math.floor((l-1)/10)).coins;}}return s;}})()")
+            assert c0 - fee <= c1 <= c0 - fee + lv_bonus + 1, ('kayıpta ödül verildi', c0, fee, c1, lv_bonus)
+            assert g.js("save.wins") == w0, 'kayıp galibiyet sayıldı'
         assert g.js("!save.live&&!save.pendFee"), 'canlı maç/ücret kaydı kaldı'
         g.js("document.getElementById('omenu').click()")
     no_errors(g)
