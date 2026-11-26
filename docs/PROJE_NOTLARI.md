@@ -3,7 +3,7 @@
 Yeni bir sohbette her şeyi baştan anlatmamak için tutulur.
 Yeni sohbette ilk mesaj: **"docs/PROJE_NOTLARI.md dosyasını oku, oradan devam et."**
 
-Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-74**
+Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-75**
 
 ---
 
@@ -17,7 +17,7 @@ Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-74**
 | Örnek alınan | 8 Ball Pool |
 | Sahibi | Furkan. Sadece telefondan çalışıyor, bilgisayar yok |
 | Depo | github.com/furkankaraman755-dotcom/bilardo-ustasi |
-| APK indirme | `…/releases/download/surum-N/BilardoUstasi.apk` |
+| APK indirme | `…/releases/download/surum-N/BilardoUstasi.apk` (test modu açık) · `…/BlackballArena-yayin.apk` (test modu kapalı, ayrı kayıt) |
 | Paket adı | **`com.blackballarena.game`** (kalıcı ad, surum-72'den itibaren; eskisi `com.bilardoustasi.oyun`) |
 | Tasarım dili | Siyah + altın; mor vurgular; turnuva mavisi varsayılan masa |
 | Para birimleri | **Çip** (siyah-altın taçlı "B" çip görseli), **Nakit** (yeşil banknot destesi), **Elmas** |
@@ -29,7 +29,7 @@ Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-74**
 4. Masa görselleri toplu gelir, "yap" denince soru sormadan her biri ayrı tema olarak eklenir.
 5. Gerçek kişi benzerliği ve telifli karakter (Naruto, Goku vb.) yapılmaz.
 6. Yeni APK kurmadan önce eskisi silinmeli (şu an test imzası kullanılıyor).
-7. Play Store öncesi: test parası (10B) ve test kilit açmaları kaldırılacak. İsim TÜRKPATENT/WIPO'da kontrol edilecek.
+7. Test parası, kilit açmalar ve kısayollar tek bayrağa bağlı (`window.BBA_DEV`); yayın APK'sında kapalı. İsim TÜRKPATENT/WIPO'da kontrol edilecek.
 8. Furkan görsel üretir (kendi yapay zekâ aracıyla). Claude resim üretemez; görselleri oyuna yerleştirir, temizler ve hizalar.
 
 ---
@@ -50,7 +50,9 @@ Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-74**
   - Sıfırla/yedekten yükle `window._bbaNoSave=1` ile sayfa kapanırken eski kaydın geri yazılmasını engeller.
 - **Teşhis:** `bbaLog` (son 50 hata), `bbaIz` (açılış izi; önceki açılış `bba_iz_onceki`), `bbaReport()` → Ayarlar → Hakkında'dan kopyala/paylaş. `BBA_SURUM` CI'da yazılır.
 - **Telefon köprüsü:** `native/MainActivity.java` içinde `BbaNative` Capacitor eklentisi (`saveText`, `shareText`); JS'te `bbaNat()`, `bbaSaveFile()`, `bbaShare()`.
-- **Testler:** `tests/` (pytest + Playwright, 32 test). CI'da `test` işi geçmezse APK derlenmez. Yeni düzeltilen her hataya bir test eklenir.
+- **Testler:** `tests/` (pytest + Playwright, 35 test). CI'da `test` işi geçmezse APK derlenmez. Yeni düzeltilen her hataya bir test eklenir.
+  - Görünüş testi (`test_gorunus.py`): 23 ekran önceki commit'le karşılaştırılır. Bilerek görünüş değiştiren commit mesajına **`[görünüş]`** yazılır.
+- **Test modu:** `window.BBA_DEV=true;/*DEV*/` (kaynakta açık). CI yayın APK'sında `false` yazar. Yayın sürümünün kayıt anahtarı `bilardo_ustasi_v1_yayin`.
 - **Yöntem:** Yeni özellikler, eski fonksiyonları sarmalayan ve dosyanın sonuna eklenen betiklerle yapılır. Böylece eski kod bozulmaz.
 - **Görsel ekranlar:** Tasarım koordinatlarıyla kurulur (`--x/--y/--w/--h`), `--k` ile ölçeklenir, `fullFit` ile tam ekrana gerilir.
 - **Önemli kod parçaları:**
@@ -197,6 +199,11 @@ Kod baştan tarandı. Bir denetçi alt ajan bağımsız tarama yaptı ve her dü
   - `openGifts` iki kez tanımlı (ölü kod, zararsız).
   - Lig puanı sadece kazançla artıyor (kayıp düşmüyor), tasarım kararı.
   - Yedek kodu ile bakiye değiştirilebiliyor; sunucu ekonomisi (ADIM 3) gelince çözülecek.
+
+### 26 Kasım — surum-75 (1-02, 1-03, H-05)
+- **1-03 / H-05:** Test modu tek bayrak: `BBA_DEV`. Bağlı olanlar: test parası (5B + 10B), `TEST_UNLOCK` (masa kilitleri, bütün ıstaka/masa açma), menü sayacına 5 dokunuş kısayolu. Hakkında ve raporda "TEST MODU" yazar. CI iki APK verir: **BilardoUstasi.apk** (test) ve **BlackballArena-yayin.apk** (gerçek oyuncu hâli: 1.000 çip, kilitli masalar, ayrı kayıt).
+- **1-02:** Görünüş testi: 23 ekran önceki commit'le piksel piksel karşılaştırılıyor (gürültü 0, eşik 25 piksel).
+- Ayarlar → Güvenlik: "Dosyaya yedek" etiketi düğmeye değmiyor. Telefonun sistem yazı boyutu artık oyunun ekranlarını bozmuyor (`setTextZoom(100)`).
 
 ### 26 Kasım — surum-74 (görev haritası: güvenlik ağı)
 - **H-01/H-02 (0-01):** Çift yuvalı, doğrulamalı kayıt; bozuk kayıtta yedekten açılış + "Kayıt kurtarıldı" notu; hafıza dolu olunca temizleyip tekrar deneme, olmazsa uyarı; NaN gibi bozuk değerler onarılır. Yedek kodu da `validSave`'den geçer.

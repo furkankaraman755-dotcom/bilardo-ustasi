@@ -14,6 +14,8 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 2   # 1-02: görünüş testi önceki commit'le karşılaştırır
 
       - uses: actions/setup-python@v5
         with:
@@ -21,17 +23,22 @@ jobs:
 
       - name: Test araclarini kur
         run: |
-          pip install "pytest==9.1.1" "playwright==1.63.0"
+          pip install "pytest==9.1.1" "playwright==1.63.0" "pillow==12.3.0"
           python -m playwright install --with-deps chromium
 
       - name: Testleri calistir
+        env:
+          BBA_PREV_REF: HEAD~1
         run: python -m pytest -q tests -p no:cacheprovider --junitxml=test-sonuc.xml
 
       - uses: actions/upload-artifact@v5
         if: always()
         with:
           name: test-sonuclari
-          path: test-sonuc.xml
+          path: |
+            test-sonuc.xml
+            tests/_cikti/fark/
+            tests/_cikti/fark_raporu.txt
 
   build:
     needs: test
@@ -102,10 +109,22 @@ jobs:
       - name: APK adini duzenle
         run: cp android/app/build/outputs/apk/debug/app-debug.apk BilardoUstasi.apk
 
+      # 1-03: ikinci derleme, test modu KAPALI (test parası, kilit açma ve kısayollar yok; ayrı kayıt)
+      - name: Yayin surumu derle (test modu kapali)
+        run: |
+          sed -i 's#window.BBA_DEV=true;/\*DEV\*/#window.BBA_DEV=false;/*DEV*/#' www/index.html
+          grep -c 'window.BBA_DEV=false;/\*DEV\*/' www/index.html
+          if grep -q 'window.BBA_DEV=true' www/index.html; then echo "TEST MODU KAPANMADI"; exit 1; fi
+          npx cap copy android
+          cd android && ./gradlew assembleDebug
+          cp app/build/outputs/apk/debug/app-debug.apk ../BlackballArena-yayin.apk
+
       - uses: actions/upload-artifact@v5
         with:
           name: bilardo-ustasi-apk
-          path: BilardoUstasi.apk
+          path: |
+            BilardoUstasi.apk
+            BlackballArena-yayin.apk
 
       - name: Indirme sayfasina koy
         uses: softprops/action-gh-release@v2
@@ -113,4 +132,6 @@ jobs:
           tag_name: surum-${{ github.run_number }}
           name: Bilardo Ustasi surum ${{ github.run_number }}
           make_latest: true
-          files: BilardoUstasi.apk
+          files: |
+            BilardoUstasi.apk
+            BlackballArena-yayin.apk

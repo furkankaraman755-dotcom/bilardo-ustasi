@@ -30,6 +30,8 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(BbaNativePlugin.class);
         super.onCreate(savedInstanceState);
         tamEkran();
+        // Telefonun sistem yazı boyutu, görsellere birebir kurulan ekranları bozmasın
+        try { getBridge().getWebView().getSettings().setTextZoom(100); } catch (Exception e) { }
         // Android geri tuşu: oyunun kendi geri mantığına sorulur (pencereyi kapat / önceki sayfa);
         // ana menüdeyse uygulama kapanmaz, arka plana alınır
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {

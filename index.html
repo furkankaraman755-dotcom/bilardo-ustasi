@@ -1206,6 +1206,8 @@ img.ci{display:inline-block;height:1.15em;width:auto;vertical-align:-.22em;margi
 window.BBA_LIM={inbox:20,inboxMax:100,lgHist:24,lgDone:80,lgPaid:40,err:50,iz:60};
 /* H-04: açılış izi — her açılışın adımları ve süreleri saklanır; bir önceki açılışın izi de tutulur (siyah ekran olduysa sebebi orada görünür) */
 window.BBA_SURUM='__SURUM__'; /* CI derlemede sürüm numarasını yazar */
+/* 1-03: TEK test modu bayrağı. Test parası, bütün kilit açmalar ve test kısayolları buna bağlı. CI yayın derlemesinde false yazar ve doğrular. */
+window.BBA_DEV=true;/*DEV*/
 (function(){window.BBA_IZ=[];try{const o=localStorage.getItem('bba_iz');if(o)localStorage.setItem('bba_iz_onceki',o);}catch(_){}
   let w=0;window.bbaIz=function(n){try{BBA_IZ.push([Math.round(performance.now()),String(n).slice(0,80)]);if(BBA_IZ.length>BBA_LIM.iz)BBA_IZ.splice(12,1); /* ilk 12 satır (açılışın kendisi) hep korunur */
     clearTimeout(w);w=setTimeout(()=>{try{localStorage.setItem('bba_iz',JSON.stringify({t:new Date().toLocaleString('tr-TR'),s:BBA_SURUM,iz:BBA_IZ}));}catch(_){}},50);}catch(_){}};
@@ -1600,7 +1602,7 @@ function crownHTML(lv,h){ // ad korunuyor; artık altıgen kristal seviye amblem
   </svg>`;}
 const frameOf=lv=>lv>=60?'fr4':lv>=35?'fr3':lv>=15?'fr2':lv>=5?'fr1':'fr0';
 /* ================= KAYIT ================= */
-const KEY='bilardo_ustasi_v1';
+const KEY='bilardo_ustasi_v1'+(window.BBA_DEV?'':'_yayin'); /* yayın sürümü test kaydını (15B test parası) okumaz */
 let save={coins:1000,cues:['basic'],tables:['pro','osm','mor'],cue:'basic',table:'pro',wins:0,losses:0,name:'',pid:0,level:1,xp:0,cash:5,lastDaily:0,streak:0,rw:{},chestCnt:0,chestNext:2,eco:2,gems:10,cl:{},slots:[null,null,null,null],free:{day:0,n:0,next:0},offer:-1,lucky:0,week:{id:0,earn:0}};
 
 /* H-01: çift yuvalı, doğrulamalı kayıt. Ana yuva (KEY) bozuksa yedek yuvadan (KEY_B = bir önceki sağlam kayıt) açılır.
@@ -1619,9 +1621,9 @@ window._saveInfo={src:'yeni',bozuk:false};
   try{bbaIz('kayıt yüklendi · '+window._saveInfo.src+(A.bad!=null?' (ana bozuktu)':''));}catch(_){}
 })();
 // TEST: yayından önce kaldırılacak — bir kerelik 5 milyar altın, sonra 10'ar milyar çip/elmas/dolar
-if(!save.test5b){save.test5b=1;save.coins+=5e9;}
-if(!save.test10b){save.test10b=1;save.coins+=10e9;save.gems+=10e9;save.cash+=10e9;}
-const TEST_UNLOCK=true; // TEST: tüm kilitler açık
+if(window.BBA_DEV&&!save.test5b){save.test5b=1;save.coins+=5e9;}
+if(window.BBA_DEV&&!save.test10b){save.test10b=1;save.coins+=10e9;save.gems+=10e9;save.cash+=10e9;}
+const TEST_UNLOCK=!!window.BBA_DEV; // TEST: tüm kilitler açık (sadece test modunda)
 // yeni ekonomiye geçiş: eski kayıtlar en az 1.000 ile başlar
 if(!save.eco||save.eco<2){save.eco=2;save.coins=Math.max(save.coins,1000);}
 if(!save.rw)save.rw={};
@@ -2265,9 +2267,9 @@ function openPreview(it,k){
 }
 $('pvx').onclick=()=>{pvOpen=false;$('pvm').style.display='none';};
 $('pvm').onclick=e=>{if(e.target.id==='pvm')$('pvx').onclick();};
-// TEST: menüdeki paraya 3 sn içinde 5 kez dokununca +10.000 para (Play Store'dan önce kaldırılacak)
+// TEST: menüdeki paraya 3 sn içinde 5 kez dokununca +10.000 para (sadece test modunda)
 let tapN=0,tapT=0;
-$('mcoins').onclick=()=>{const t=Date.now();if(t-tapT>3000)tapN=0;tapT=t;if(++tapN>=5){tapN=0;save.coins+=10000;persist();refreshCoins();}};
+$('mcoins').onclick=()=>{if(!window.BBA_DEV)return;const t=Date.now();if(t-tapT>3000)tapN=0;tapT=t;if(++tapN>=5){tapN=0;save.coins+=10000;persist();refreshCoins();}};
 function openShop(tab){shopTab=tab||shopTab;$('smsg').textContent='';renderShop();show('shop');}
 $('m4Prof').onclick=openProfile;
 $('tShop').onclick=()=>openShop('box');$('tCues').onclick=()=>openCues();$('tDaily').onclick=openDaily;$('tFree').onclick=()=>openShop('free');$('tLead').onclick=()=>{openLead();};
@@ -4331,9 +4333,9 @@ $('xMis').onclick=openMissions;$('xWheel').onclick=openWheel;$('xScr').onclick=o
     for(const t of ns){const parts=t.nodeValue.split(CH),fr=document.createDocumentFragment();parts.forEach((pt,i)=>{if(pt)fr.append(pt);if(i<parts.length-1){const c=document.createElement('i');c.className='chip';fr.append(c);}});t.replaceWith(fr);}};
   fix(document.body);new MutationObserver(ms=>{for(const m of ms){if(m.type==='characterData'){if(m.target.nodeValue&&m.target.nodeValue.includes(CH)&&m.target.parentNode)fix(m.target.parentNode);}else for(const a of m.addedNodes){if(a.nodeType===3){if(a.nodeValue.includes(CH)&&a.parentNode)fix(a.parentNode);}else if(a.nodeType===1&&a.textContent.includes(CH))fix(a);}}}).observe(document.body,{subtree:true,childList:true,characterData:true});
 })();
-if(TEST_UNLOCK&&save.u46&&!save.u52){save.u52=1;for(const id of ['dr_kiyamet'])if(!save.cues.includes(id)){save.cues.push(id);save.cl[id]={lv:1,pc:0};}try{localStorage.setItem(KEY,JSON.stringify(save));}catch(e){}}
-if(TEST_UNLOCK&&!save.u50&&save.u46){save.u49=save.u50=1;for(const c of ALL_CUES)if(!save.cues.includes(c.id)){save.cues.push(c.id);save.cl[c.id]=save.cl[c.id]||{lv:1,pc:0};}try{localStorage.setItem(KEY,JSON.stringify(save));}catch(e){}}
-if(TEST_UNLOCK&&!save.u46){save.u49=save.u50=save.u52=1;save.u46=1;for(const c of ALL_CUES)if(!save.cues.includes(c.id)){save.cues.push(c.id);save.cl[c.id]=save.cl[c.id]||{lv:1,pc:0};}save.cl.dr_firtina={lv:3,pc:0};save.cl.dr_galaksi={lv:4,pc:3};try{localStorage.setItem(KEY,JSON.stringify(save));}catch(e){}}
+if(TEST_UNLOCK&&save.u46&&!save.u52){save.u52=1;for(const id of ['dr_kiyamet'])if(!save.cues.includes(id)){save.cues.push(id);save.cl[id]={lv:1,pc:0};}persist();}
+if(TEST_UNLOCK&&!save.u50&&save.u46){save.u49=save.u50=1;for(const c of ALL_CUES)if(!save.cues.includes(c.id)){save.cues.push(c.id);save.cl[c.id]=save.cl[c.id]||{lv:1,pc:0};}persist();}
+if(TEST_UNLOCK&&!save.u46){save.u49=save.u50=save.u52=1;save.u46=1;for(const c of ALL_CUES)if(!save.cues.includes(c.id)){save.cues.push(c.id);save.cl[c.id]=save.cl[c.id]||{lv:1,pc:0};}save.cl.dr_firtina={lv:3,pc:0};save.cl.dr_galaksi={lv:4,pc:3};persist();}
 if(TEST_UNLOCK&&!save.unlockAll){save.unlockAll=1;for(const c of ALL_CUES)if(!save.cues.includes(c.id)){save.cues.push(c.id);save.cl[c.id]=save.cl[c.id]||{lv:1,pc:0};}for(const t of TABLES)if(!save.tables.includes(t.id))save.tables.push(t.id);persist();}
 window.EXTRAS_READY=1;try{inboxCheck();refreshCoins();}catch(e){try{bbaLog(e,'açılış');}catch(_){}} /* bir hata betiğin kalanını (tam ekran, hile koruması) durdurmasın */ setInterval(()=>{if($('menu').classList.contains('show'))extrasDots();},30000);
 
@@ -4876,9 +4878,9 @@ function stRender(){
   else if(stTab==='ses')h=ses+`<div class="stR">${stIco('rSes','rIc')}<span class="stL">Ses testi</span><button class="st4Sm" id="stTest">🔊 Dinle</button></div><div class="stNote">Sesi kapatırsan oyun içi bütün efektler susar. Ses düzeyi istaka, top, cep ve çip seslerinin hepsini etkiler.</div>`;
   else if(stTab==='bil')h=stRow('mBil','Menü uyarı rozetleri',stTog('stBadge',D.badges))+`<div class="stNote">Açıkken ana menüde ödül, görev, çark ve gelen kutusu için kırmızı uyarı işaretleri görünür. Telefon bildirimleri Play Store sürümünde eklenecek.</div>`;
   else if(stTab==='hes')h=ad+avr+stRow('rBilgi','Oyuncu ID',`<div class="stMid"><b class="stId">${save.pid}</b></div><button class="st4Sm" id="stCopy">⧉ Kopyala</button>`)+stRow('mHes','Hesap bağla',`<div class="stMid"></div><button class="st4Sm" id="stLink">G / f Bağla</button>`)+info;
-  else if(stTab==='guv')h=stRow('mGuv','Yedek kodu',`<div class="stMid"></div><button class="st4Sm" id="stBak">⧉ Kopyala</button>`)+stRow('sYenile','Yedekten geri yükle',`<input class="stIn" id="stImp" placeholder="Yedek kodunu yapıştır"><button class="st4Sm" id="stImpB">Yükle</button>`)+stRow('mGuv','Dosyaya yedek',`<div class="stMid"></div><button class="st4Sm" id="stFile">💾 Kaydet</button>${(window.bbaCanShare&&bbaCanShare())?'<button class="st4Sm" id="stFileS">📤 Paylaş</button>':''}<button class="st4Sm" id="stFileR">📂 Dosyadan yükle</button><input type="file" id="stFileIn" accept=".txt,text/plain" style="display:none">`)+`<div class="stNote">Yedek kodu ve yedek dosyası tüm ilerlemeni (para, istaka, seviye) içerir. Kimseyle paylaşma. Dosya telefonda İndirilenler/BlackballArena klasörüne kaydedilir. İstersen Paylaş ile Drive'a da kaydet.</div>`+rst;
+  else if(stTab==='guv')h=stRow('mGuv','Yedek kodu',`<div class="stMid"></div><button class="st4Sm" id="stBak">⧉ Kopyala</button>`)+stRow('sYenile','Yedekten geri yükle',`<input class="stIn" id="stImp" placeholder="Yedek kodunu yapıştır"><button class="st4Sm" id="stImpB">Yükle</button>`)+stRow('mGuv','Dosyaya yedek',`<div class="stMid"></div><button class="st4Sm" id="stFile">💾 Kaydet</button>${(window.bbaCanShare&&bbaCanShare())?'<button class="st4Sm" id="stFileS">📤 Paylaş</button>':''}<button class="st4Sm" id="stFileR">📂 Dosyadan yükle</button><input type="file" id="stFileIn" accept=".txt,text/plain" style="display:none">`,'stFRow')+`<div class="stNote">Yedek kodu ve yedek dosyası tüm ilerlemeni (para, istaka, seviye) içerir. Kimseyle paylaşma. Dosya telefonda İndirilenler/BlackballArena klasörüne kaydedilir. İstersen Paylaş ile Drive'a da kaydet.</div>`+rst;
   else if(stTab==='gor')h=stRow('sHedef','Hassas nişan modu',stTog('stPrec',D.prec))+stRow('mGor','Giriş animasyonu',stTog('stIntro',D.intro))+`<div class="stNote">Hassas nişan modunda istaka çok daha yavaş döner, ince atışlar için idealdir (oyun içindeki 🎯 düğmesiyle aynı).</div>`;
-  else h=`<div class="stAbout"><img src="${ST_IC.gearBig}" alt=""><b>Blackball Arena</b><span>Sürüm 1.0 (surum-${String(window.BBA_SURUM).replace(/\D/g,'')||'test'}) · Türkçe</span><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0"><button class="st4Sm" id="stRap">📋 Hata raporunu kopyala</button>${(window.bbaCanShare&&bbaCanShare())?'<button class="st4Sm" id="stRapP">📤 Paylaş</button>':''}</div><small style="opacity:.75">${(()=>{let n=0;try{n=JSON.parse(localStorage.getItem('bba_err')||'[]').length;}catch(_){}return n?n+' hata kaydı var. Sorun yaşarsan raporu kopyalayıp gönder.':'Hata kaydı yok.';})()}</small>${(window.bbaErrText&&bbaErrText())?`<small style="white-space:pre-wrap;text-align:left;font-size:10px;opacity:.75;max-height:90px;overflow:auto;user-select:text">Hata kaydı:\n${bbaErrText().replace(/</g,'&lt;')}</small>`:''}<small>Gerçekçi fizik motoru, 8 top ve 9 top, ülke masaları, istaka koleksiyonu ve lig sistemi.</small><small>© 2026 Blackball Arena</small></div>`;
+  else h=`<div class="stAbout"><img src="${ST_IC.gearBig}" alt=""><b>Blackball Arena</b><span>Sürüm 1.0 (surum-${String(window.BBA_SURUM).replace(/\D/g,'')||'test'})${window.BBA_DEV?' · <b style="color:#ffb02e">TEST MODU</b>':''} · Türkçe</span><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0"><button class="st4Sm" id="stRap">📋 Hata raporunu kopyala</button>${(window.bbaCanShare&&bbaCanShare())?'<button class="st4Sm" id="stRapP">📤 Paylaş</button>':''}</div><small style="opacity:.75">${(()=>{let n=0;try{n=JSON.parse(localStorage.getItem('bba_err')||'[]').length;}catch(_){}return n?n+' hata kaydı var. Sorun yaşarsan raporu kopyalayıp gönder.':'Hata kaydı yok.';})()}</small>${(window.bbaErrText&&bbaErrText())?`<small style="white-space:pre-wrap;text-align:left;font-size:10px;opacity:.75;max-height:90px;overflow:auto;user-select:text">Hata kaydı:\n${bbaErrText().replace(/</g,'&lt;')}</small>`:''}<small>Gerçekçi fizik motoru, 8 top ve 9 top, ülke masaları, istaka koleksiyonu ve lig sistemi.</small><small>© 2026 Blackball Arena</small></div>`;
   C.innerHTML=h;C.scrollTop=0;
   const on=(id,f)=>{const e=$(id);if(e)f(e);};
   on('stRap',e=>e.onclick=()=>bbaCopy(bbaReport(),()=>stMsg('Hata raporu kopyalandı. WhatsApp vb. ile gönderebilirsin.'),()=>stMsg('Kopyalanamadı.',1)));
@@ -5359,6 +5361,7 @@ function buyOffer(n){const B=BOXES[1],o1=B.c1,o3=B.c3;B.c1=OFFER_PRICE.c1;B.c3=O
     if(b)b.textContent=n===3?OFFER_PRICE.c3:OFFER_PRICE.c1;el.onclick=()=>buyOffer(n);});}catch(e){try{bbaLog(e,'offer');}catch(_){}}
   return r;};})();
 </script>
+<style>/* Ayarlar → Güvenlik → Dosyaya yedek: etiket düğmelere değmesin, düğmeler sağda sıkı dursun */.st4 .stR.stFRow .stL{flex:0 1 auto;min-width:0!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}.st4 .stR.stFRow .stMid{flex:1 1 0;min-width:calc(var(--u)*8)}.st4 .stR.stFRow{gap:calc(var(--u)*10)}.st4 .stR.stFRow .st4Sm{margin-left:0!important;padding-left:calc(var(--u)*14);padding-right:calc(var(--u)*14);flex-shrink:0}</style>
 <style>/* dar telefonlarda ıstaka sınıf etiketi (İMPARATOR vb.) kesilmesin */@media (max-width:860px){#cues .cr .cqSub .ccat{letter-spacing:0;padding:1px 4px;font-size:9px}}</style>
 <script>
 /* panoya kopyala: önce modern yöntem, izin yoksa eski yöntem; ikisi de olmazsa fail ("kopyalandı" yalanı yok) */
@@ -5380,7 +5383,7 @@ window.bbaSaveFile=function(name,text){const N=bbaNat();if(N)return N.saveText({
 window.bbaDevice=function(){const n=navigator,ua=n.userAgent||'',an=(ua.match(/Android [\d.]+/)||['Android ?'])[0],md=(ua.match(/Android [\d.]+; ([^;)]+)/)||[,'?'])[1],cr=(ua.match(/Chrome\/([\d.]+)/)||[,'?'])[1];
   return {android:an,model:md.trim(),webview:cr,bellekGB:n.deviceMemory||'?',cekirdek:n.hardwareConcurrency||'?',ekran:screen.width+'x'+screen.height,pencere:innerWidth+'x'+innerHeight,dpr:window.devicePixelRatio||1,dil:n.language||'?',ua:ua.slice(0,200)};};
 window.bbaReport=function(){const L=[];const d=bbaDevice();
-  L.push('BLACKBALL ARENA HATA RAPORU','Sürüm: surum-'+(String(BBA_SURUM).replace(/\D/g,'')||'test')+' · '+new Date().toLocaleString('tr-TR'),'Oyuncu ID: '+(save.pid||'-')+' · Seviye '+(save.level||1));
+  L.push('BLACKBALL ARENA HATA RAPORU','Sürüm: surum-'+(String(BBA_SURUM).replace(/\D/g,'')||'test')+' · '+new Date().toLocaleString('tr-TR'),'Oyuncu ID: '+(save.pid||'-')+' · Seviye '+(save.level||1)+' · '+(window.BBA_DEV?'TEST MODU':'yayın'));
   L.push('','CİHAZ: '+d.android+' · '+d.model+' · WebView '+d.webview+' · Bellek '+d.bellekGB+' GB · '+d.cekirdek+' çekirdek','Ekran '+d.ekran+' · Pencere '+d.pencere+' · DPR '+d.dpr+' · '+d.dil);
   const ekr=document.querySelector('.screen.show');L.push('Şu anki ekran: '+(ekr?ekr.id:'YOK')+' · Kayıt: '+((window._saveInfo||{}).src||'?'));
   const iz=(k,b)=>{try{const o=JSON.parse(localStorage.getItem(k)||'null');if(!o)return;L.push('',b+' ('+o.t+', surum '+(String(o.s).replace(/\D/g,'')||'test')+'):');for(const [ms,n] of o.iz)L.push('  '+String(ms).padStart(6)+' ms  '+n);}catch(_){}};

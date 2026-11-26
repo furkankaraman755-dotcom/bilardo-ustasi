@@ -97,7 +97,7 @@ Amaç: Online sistemi taşıyacak sağlam ve test edilebilir bir kod. **Oyunun g
   - Fizik içinde rastgelelik yok (gerekirse tohumlu rastgele).
   - **Test:** Aynı vuruş 100 kez → hep aynı sonuç.
   - Online maçın temel şartı budur.
-- [ ] **1.5 Test modunu tek yere topla.**
+- [x] **1.5 Test modunu tek yere topla.** ✅ surum-75 (`BBA_DEV`; yayın APK'sı ayrıca derleniyor)
   - `TEST_UNLOCK`, test parası (10B), test kısayolları tek bir `DEV_MODE` ayarına bağlanır.
   - Yayın sürümünde otomatik kapanır.
 - [ ] **1.6 Gerçek cihaz testi.** Furkan ve yakınlarından en az 1 eski/ucuz telefonda deneme yapılır. Hata kaydı ekranı kontrol edilir.
@@ -274,6 +274,7 @@ Kozmetik dondurma burada kalkar.
 ---
 
 ## Değişiklik günlüğü (bu defterin)
+- 26.11.2026 — **surum-75**: Test modu tek bayrağa bağlandı (1.5 ✅). CI artık test APK'sı ile yayın APK'sını ayrı veriyor. Görünüş karşılaştırma testi eklendi.
 - 26.11.2026 — **surum-74**: Görev haritasındaki güvenlik ağı tamamlandı: çift yuvalı kayıt, hafıza dolu koruması, liste sınırları, hata raporu + açılış izi, dosyaya yedek, cihaz test listesi, liderlik belleği. Testler depoya taşındı ve CI'da APK'dan önce çalışıyor (1.1 ✅).
 - 25.11.2026 — **surum-73: hata avı, 22 düzeltme** (Furkan'ın isteği; denetçi alt ajan her düzeltmeyi ayrıca test edip onayladı). En önemlileri: pes edince çift maç sonucu, resimli avatarla açılışta betiğin yarıda kalması (fullFit/hile koruması çalışmıyordu), sıfırla/yedekten yükle çalışmıyordu, çift kutu alımı, kayıp çark/kart ödülleri, iade sonrası bedava maç, isimde HTML kodu. Liste: `PROJE_NOTLARI.md` → surum-73. Plan sırası değişmedi.
 - 25.11.2026 — `GOREV_HARITASI.md` eklendi. Claude'un önerisi: önce hatalar ve temel, görsel entegrasyonu sonda. Furkan'ın "önce görseller" seçimiyle farklı; son karar Furkan'ın.

@@ -28,9 +28,9 @@ Sebebi: görsel eklemek kolay ve her zaman yapılabilir. Ama temel sağlam olmad
 
 | Aşama | Konu | Görev sayısı | Durum |
 |---|---|---|---|
-| H | Bilinen hatalar | 9 | 🟡 (H-01–04, 08, 09 ✅; 05 ve 07 bekliyor, 06 sunucuyla) |
+| H | Bilinen hatalar | 9 | 🟡 (H-01–05, 08, 09 ✅; 07 Furkan'ın telefonda denemesini bekliyor, 06 sunucuyla) |
 | 0 | Güvenlik ağı (kayıt, hata raporu) | 4 | ✅ |
-| 1 | Kod ve test temeli | 10 | 🟡 (1-01 ✅) |
+| 1 | Kod ve test temeli | 10 | 🟡 (1-01, 1-02, 1-03 ✅) |
 | 2 | Oyun kuralları ve fizik doğruluğu | 4 | ⬜ |
 | 3 | Firebase: hesap ve bulut kayıt | 6 | ⬜ |
 | 4 | Sunucuda ekonomi | 8 | ⬜ |
@@ -71,9 +71,10 @@ Kabaca toplam: **60–75 oturum.** Düzenli çalışmayla çıkışa 3–4 ay.
 - Bağımlı: 0-02
 - ✅ surum-74: açılış izi (bu ve önceki açılış), 3. ve 10. saniyede ekran durumu, cihaz bilgisi raporda. Sebep bir sonraki olayda rapordan görülecek.
 
-**H-05 · Test modu açık** · K · ⬜
+**H-05 · Test modu açık** · K · ✅
 - Sorun: `TEST_UNLOCK=true` ve 10B test parası açık.
 - Yapılacak: Şimdilik dokunulmaz (test için gerekli). 1-03 ile tek bayrağa bağlanır ve yayında kapanır.
+- ✅ surum-75: test modu tek bayrağa (`BBA_DEV`) bağlandı; yayın APK'sında test parası, kilit açmalar ve 5 dokunuş kısayolu yok.
 
 **H-06 · Telefon saatiyle oynanabilen ödüller** · — · ⏸
 - Sorun: 46 yerde telefon saati kullanılıyor; saat ileri alınarak günlük ödül, çark vb. alınabilir.
@@ -130,15 +131,17 @@ Amaç: Online sistemi taşıyacak, kırılmayan ve test edilebilir bir kod. **G�
 - Bitti: GitHub'da test raporu yeşil.
 - ✅ surum-74: `tests/` altında 32 test; GitHub'da `test` işi, kırmızıysa `build` çalışmaz.
 
-**1-02 · Duman testi** · K · ⬜
+**1-02 · Duman testi** · K · ✅
 - Bütün ekranlar tek tek açılır, konsolda hata olmaması kontrol edilir.
 - Ekran görüntüleri kaydedilip bir önceki sürümle karşılaştırılır (görünüş bozuldu mu?).
 - Bağımlı: 1-01
+- ✅ surum-75: `tests/test_gorunus.py` 23 ekranı açar (hata olmamalı) ve önceki commit ile aynı ortamda karşılaştırır. Gürültü 0 piksel, eşik 25 piksel (bir rakam değişikliği bile yakalanır). Bilerek görünüş değiştiren commit mesajına `[görünüş]` yazılır. Fark resimleri CI'da "test-sonuclari" içinde.
 
-**1-03 · Tek test modu bayrağı (DEV_MODE)** · K · ⬜
+**1-03 · Tek test modu bayrağı (DEV_MODE)** · K · ✅
 - Test parası, kilit açmalar ve kısayollar tek bayrağa bağlanır.
 - Derleme iki çıktı verir: **test APK** (açık) ve **yayın AAB** (kapalı).
 - Bağımlı: 1-01
+- ✅ surum-75: `window.BBA_DEV`. CI iki APK verir: `BilardoUstasi.apk` (test modu açık) ve `BlackballArena-yayin.apk` (kapalı, ayrı kayıt). AAB ve kalıcı imza 7-01'de.
 
 **1-04 · Metinleri tek yerde topla** · O · ⬜
 - Bütün Türkçe yazılar tek bir dil dosyasına taşınır.
@@ -428,10 +431,11 @@ Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama bek
 ---
 
 ## Sıradaki görev
-**1-02 — Duman testi + ekran görüntüsü karşılaştırma.** Ardından 1-03 (DEV_MODE; H-05 onunla kapanır), 1-10 (bütçe kontrolleri), sonra 1-04.
-**Furkan'dan beklenen (H-07 / P-1):** surum-74'ü telefona kurup `CIHAZ_TEST_LISTESI.md`'deki 15 maddeyi denemek. Özellikle 4 (geri tuşu), 9 (kutu videosu), 15 (dosyaya yedek).
+**1-10 — Bütçe kontrolleri** (küçük; testler hazır olduğu için hemen yapılabilir). Ardından **1-04 — Metinleri tek yerde topla**, sonra **1-05 — CSS'i ayır**.
+**Furkan'dan beklenen (H-07 / P-1):** surum-75'i telefona kurup `CIHAZ_TEST_LISTESI.md`'yi denemek. İstersen `BlackballArena-yayin.apk`'yı da kurup gerçek oyuncunun göreceği hâli (1.000 çip, kilitli masalar) görebilirsin. İkisi aynı uygulama olduğu için biri diğerinin üstüne kurulur ama kayıtları ayrı durur.
 
 ## Değişiklik günlüğü
+- 26.11.2026 — surum-75: 1-02, 1-03, H-05 ✅. Ayarlar → Güvenlik'te etiket taşması düzeltildi, telefonun yazı boyutu artık ekranları bozmuyor (setTextZoom 100).
 - 26.11.2026 — surum-74: H-01, H-02, H-03, H-04, H-08, 0-01, 0-02, 0-03, 0-04, 1-01 ✅ (denetçi alt ajan her birini ayrıca test edip onayladı).
 - 25.11.2026 — H-09 eklendi ve bitti: surum-73 hata avı (22 düzeltme).
 - 25.11.2026 — Görev haritası oluşturuldu (Claude'un görüşü). Kod incelemesinden 8 bilinen hata eklendi.
