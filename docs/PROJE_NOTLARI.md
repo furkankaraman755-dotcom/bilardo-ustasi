@@ -369,7 +369,7 @@ Furkan: "görev haritasına disiplinli şekilde uy." Haritadaki eksik/hatalı g�
 **⏸ BEKLEMEDE — Furkan "başla" deyince:**
 1. **K-00 Profesyonellik denetimi** (oyun 8 Ball Pool ile ekran ekran karşılaştırılır → ekran görüntülü eksikler listesi → K görevleri).
 2. Teknik sıra: **1-10** (bütçe kontrolleri) → **1-04** (metinleri tek yerde topla; bütün oyun 6 dile çevrilebilsin) → **1-05** (CSS'i ayır). Son biten: 1-03 / surum-75.
-3. Görseller (Faz G) Furkan gönderince araya alınır. **Bekleyen: G-01** — maç ekranında üst ortadaki pot çipleri Furkan'ın yeni çip görseliyle değişecek, altındaki miktar maçın bahsine göre (örn. İstanbul 500M, Portekiz 500). Görseller `docs/bekleyen_gorseller/` içinde.
+3. Görseller (Faz G) Furkan gönderince araya alınır. **Bekleyen: G-01** — maç ekranında üst ortadaki pot çipleri Furkan'ın yeni çip görseliyle değişecek, altındaki miktar maçın bahsine göre (örn. İstanbul 500M, Portekiz 500). **G-02** — yeni uygulama amblemi (gümüş çerçeve, 8 topu, BLACKBALL ARENA) telefon simgesi olacak, açılıştaki giriş efekti de bundan yapılacak. Görseller `docs/bekleyen_gorseller/` içinde.
 - Ayrıntı: `GOREV_HARITASI.md` → "Sıradaki görev — NEREDE KALDIK".
 
 ### Furkan'dan beklenen cevaplar

@@ -459,6 +459,12 @@ Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama bek
 - Yapılışı: görsel parçalanır, "500M" yazısı silinip canlı yazı konur (Furkan'ın kuralı). Görsel `a/` klasörüne. Pot kutusunun yeri ve boyu bozulmaz; diğer hiçbir ayar değişmez. 9 Top, Turnuva ve ücretsiz modlarda ne görüneceği uygulamada kontrol edilir.
 - Bitti: bütün odalarda doğru miktar, görünüş testi `[görünüş]`, telefonda 780×360 ve 2400×1080 kontrol.
 
+**G-02 · Yeni uygulama amblemi + giriş efekti** · K · ⏸ (Furkan "bekle" dedi, 26.11.2026 21:12)
+- Görsel: `docs/bekleyen_gorseller/uygulama_amblemi.jpg` (1254×1254; gümüş çerçeveli kare, mavi çuhada 8 topu, 1-3-4 topları, "BLACKBALL ARENA" yazısı, tebeşir ve ıstaka).
+- **Amblem:** telefondaki uygulama simgesi bu olacak (`native/res` içindeki bütün boylar + yuvarlak/adaptif simge). Çerçevenin köşeleri Android maskesinde kesilmemeli; gerekirse adaptif simgede ön plan/arka plan ayrılır.
+- **Giriş efekti:** oyun açılışındaki logo efekti (şu an ~4,5 sn) bu görselden yeniden yapılacak. Süre ve sonrasında açılan ekran değişmez; başka hiçbir ayar bozulmaz.
+- Bitti: telefonda simge ve açılış kontrolü, görünüş testi `[görünüş]`.
+
 ## Sıradaki görev — NEREDE KALDIK (26.11.2026 07:36)
 - **Durum:** Furkan "bekle, başlama" dedi. Şu an hiçbir iş yapılmıyor.
 - **Furkan "başla / devam" deyince ilk iş: K-00 Profesyonellik denetimi** (yukarıda, AŞAMA K). Sonuçlarına göre K görevleri haritaya yerleştirilir.
@@ -469,10 +475,12 @@ Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama bek
   3. Yayında menüdeki çip sayacına dokununca mağazanın "Çip ve Nakit" sayfası açılsın mı?
 - **Furkan'dan beklenen (H-07 / P-1):** surum-75'i telefona kurup `CIHAZ_TEST_LISTESI.md`'yi denemek.
 - **Yeni not (26.11.2026 21:10):** Furkan pot çipi görselini gönderdi → **G-01** (yukarıda). "Bekle, başlama" dedi; "başla" deyince yapılacak.
+- **Yeni not (26.11.2026 21:12):** Yeni uygulama amblemi ve giriş efekti → **G-02**. Beklemede.
 - Denetçi alt ajan beklemede (kapatılmadı); devam edilince kaldığı yerden çalışır.
 - **Sunucu kararı (Furkan, 26.11.2026):** Oyun sunucusu **Hetzner**'de olacak. Firebase'in de kullanılıp kullanılmayacağı sonra konuşulacak. Aşama 3–5 bu karara göre yeniden düzenlenecek.
 
 ## Değişiklik günlüğü
+- 26.11.2026 21:12 — G-02 eklendi (uygulama amblemi + giriş efekti). Beklemede.
 - 26.11.2026 21:10 — G-01 eklendi (maç ekranı pot çipi, miktar bahse göre). Beklemede.
 - 26.11.2026 — surum-76: Furkan'ın 12 yeni görseli araya alındı (giriş + pencereler + 6 dil, mavi ana menü, 4 sekmeli mağaza, 3B Masalar ekranı). 9-02 Görsel paketinin bir kısmı öne çekildi. Teknik sıra değişmedi (sırada K-00 / 1-10).
 - 26.11.2026 — AŞAMA K (Kalite ve profesyonellik) eklendi; K-00 Profesyonellik denetimi Furkan'ın "başla"sını bekliyor. Furkan "bekle" dedi; nerede kalındığı "Sıradaki görev"e yazıldı.
