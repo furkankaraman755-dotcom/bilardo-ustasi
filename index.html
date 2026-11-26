@@ -5408,10 +5408,11 @@ try{if(window._saveInfo&&window._saveInfo.bozuk){save.inbox=save.inbox||[];save.
 <style>
 /* ===== V6: Furkan'ın 26 Kasım görselleri (giriş, pencereler, dil, ana menü, mağaza, masalar). Tasarım ölçüsü 1600x900. ===== */
 .v6{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0;overflow:hidden;font-family:'Roboto Condensed','sans-serif-condensed',Roboto,Arial,sans-serif;color:#fff;-webkit-user-select:none;user-select:none;z-index:5}
-.v6Bg{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;pointer-events:none}
+.v6Bg{position:absolute;left:0;top:0;right:0;bottom:0;width:100%;height:100%;object-fit:fill;pointer-events:none}
 .v6h{position:absolute;display:block;padding:0;margin:0;border:0;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent;border-radius:24px;outline:none}
 .v6 .v6h,.v6 button.v6h{position:absolute!important;display:block!important;background:transparent!important;border:0!important;box-shadow:none!important;min-width:0!important;min-height:0!important;padding:0!important;margin:0!important;filter:none!important;transform:none!important;color:transparent!important;font-size:0!important;opacity:1!important;animation:none!important}
 .v6 .v6h:active{background:rgba(255,255,255,.10)!important}
+.v6 .v6h{pointer-events:auto!important;touch-action:manipulation}
 .v6t{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;white-space:nowrap;line-height:1;pointer-events:none;font-weight:900}
 .v6t.l{justify-content:flex-start;text-align:left}.v6t.r{justify-content:flex-end;text-align:right}
 .v6t.two{white-space:normal;line-height:1.08}
@@ -5420,7 +5421,7 @@ try{if(window._saveInfo&&window._saveInfo.bozuk){save.inbox=save.inbox||[];save.
 .v6gold{color:#ffd21a;text-shadow:0 2px 0 rgba(0,0,0,.6),0 0 8px rgba(255,180,0,.35)}
 #login.v6on>.l4,#menu.v6on>.m4{display:none!important}
 /* modallar (giriş ekranının üstünde, tam ekran resim) */
-.v6m{position:absolute;inset:0;z-index:20}
+.v6m{position:absolute;left:0;top:0;right:0;bottom:0;z-index:20}
 .v6m .v6Bg{pointer-events:auto}
 .v6in{position:absolute;border:0;outline:none;background:transparent;color:#fff;font:600 30px 'Roboto Condensed',Roboto,Arial,sans-serif;padding:0;caret-color:#7fd3ff}
 .v6in::placeholder{color:#e9edf6;opacity:1}
@@ -5445,9 +5446,9 @@ try{if(window._saveInfo&&window._saveInfo.bozuk){save.inbox=save.inbox||[];save.
 .v6Row{position:absolute;left:36px;top:594px;width:1528px;height:292px;overflow-x:auto;overflow-y:hidden;display:flex;gap:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
 .v6Row::-webkit-scrollbar{display:none}
 .v6C{position:relative;flex:0 0 382px;height:284px;scroll-snap-align:start;cursor:pointer}
-.v6C>img.v6fr{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.v6C>img.v6fr{position:absolute;left:0;top:0;right:0;bottom:0;width:100%;height:100%;pointer-events:none}
 .v6C .v6w{position:absolute;left:20px;top:19px;width:342px;height:171px;overflow:hidden}
-.v6C .v6w>img.v6bdi{position:absolute;inset:0;width:100%;height:100%}
+.v6C .v6w>img.v6bdi{position:absolute;left:0;top:0;right:0;bottom:0;width:100%;height:100%}
 .v6C.pv{filter:drop-shadow(0 0 10px rgba(110,220,255,.9))}
 .v6C .v6nm{position:absolute;left:50%;top:-2px;transform:translateX(-50%);padding:3px 16px;border-radius:12px;background:linear-gradient(180deg,#1b2440,#0b1022);border:2px solid #e2b64a;color:#ffe08a;font:900 19px 'Roboto Condensed',Roboto,Arial,sans-serif;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.6);z-index:2;pointer-events:none}
 .v6C .v6pl{position:absolute;display:flex;align-items:center;justify-content:center;font:900 34px 'Roboto Condensed',Roboto,Arial,sans-serif;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.55);pointer-events:none}
@@ -5675,7 +5676,7 @@ function buildMenu(){
   hot(V,1372,14,62,58,'Gelen kutusu',()=>openInbox(),14);
   hot(V,1444,14,56,58,'Arkadaşlar',()=>toast(V,'Arkadaş listesi online sürümle gelecek.'),14);
   hot(V,1500,14,52,58,'Ayarlar',()=>openSettings(),14);
-  hot(V,1552,14,44,58,'Bağlantı',()=>toast(V,navigator.onLine===false?'İnternet yok':'Bağlantı iyi'),14);
+  hot(V,1552,14,44,58,'Bağlantı',()=>toast(V,navigator.onLine===false?'İnternet bağlantısı yok':'İnternete bağlı (online maçlar sunucuyla gelecek)'),14);
   hot(V,13,183,300,140,'Sezon Ödülleri',()=>openLead(),18);
   hot(V,1287,183,300,140,'Günlük Sandık',()=>{if(chestReady())openDailyChest();else openShop6('sandik');},18);
   hot(V,20,374,264,167,'Arkadaşla Oyna',ck('mPriv'),18);
@@ -5729,7 +5730,7 @@ function buildShop(){
   hot(SV,20,15,110,82,'Geri',()=>show('menu'),40);
   hot(SV,1180,18,66,62,'Dolar al',()=>setTab('dolar'),30);hot(SV,1470,18,66,62,'Çip al',()=>setTab('cip'),30);
   [['ozel',73,354],['cip',447,346],['dolar',809,364],['sandik',1196,344]].forEach(([k,x,w])=>hot(SV,x,147,w,69,k,()=>setTab(k),30));
-  SU.layer=el('div','',box(0,0,1600,900)+'position:absolute');SV.append(SU.layer);
+  SU.layer=el('div','',box(0,0,1600,900)+'position:absolute;pointer-events:none');SV.append(SU.layer); /* katman dokunuşu yutmasın; içindeki düğmeler dokunulabilir */
 }
 function setTab(k){stab=k;SU.bg.src=IMG['sh_'+k];const P=SU.layer;P.innerHTML='';
   if(k==='ozel'){[[43,371],[421,371],[800,371]].forEach(([x,w],i)=>hot(P,x,262,w,500,TL_OZEL[i].t,()=>tlBuy(TL_OZEL[i]),26));

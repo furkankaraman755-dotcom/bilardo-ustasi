@@ -3,7 +3,7 @@
 Yeni bir sohbette her şeyi baştan anlatmamak için tutulur.
 Yeni sohbette ilk mesaj: **"docs/PROJE_NOTLARI.md dosyasını oku, oradan devam et."**
 
-Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-76**
+Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-77**
 
 ---
 
@@ -199,6 +199,11 @@ Kod baştan tarandı. Bir denetçi alt ajan bağımsız tarama yaptı ve her dü
   - `openGifts` iki kez tanımlı (ölü kod, zararsız).
   - Lig puanı sadece kazançla artıyor (kayıp düşmüyor), tasarım kararı.
   - Yedek kodu ile bakiye değiştirilebiliyor; sunucu ekonomisi (ADIM 3) gelince çözülecek.
+
+### 26 Kasım — surum-77 (acil: mağaza düğmeleri)
+- Furkan: "çoğu buton çalışmıyor". Sebep: mağazada tam ekran görünmez bir katman Geri, sekmeler ve "+" düğmelerinin üstündeydi. `.click()` ile yapılan testler bunu yakalayamadı. Düzeltildi (`pointer-events:none`).
+- Yeni kalıcı test `tests/test_dokunus.py`: yeni ekranlardaki 100'den fazla düğmenin her birine gerçek parmak dokunuşu yapılıyor. Eski sürümde bu test kırmızı veriyor.
+- Denetçinin listesi (`eksikler`): dokunuşu engelleyen başka bir şey yok. "Çalışmıyor gibi görünenler": sadece "yakında" mesajı veren düğmeler (VIP, Arkadaşlar, sosyal girişler, Lig'deki Arkadaş/Ülke/Dünya sekmeleri), aynı yere giden düğmeler, eski mor tasarımda kalan 9 ekran, etkisiz VIP/tebeşir. Bunlar Furkan'a soruldu.
 
 ### 26 Kasım — surum-76 (Furkan'ın 12 yeni görseli: giriş, menü, mağaza, masalar)
 - Bütün ekranlar Furkan'ın görsellerinden parçalandı (yazılar silindi, değişen yazılar canlı). Tasarım ölçüsü 1600×900; `.v6` katmanı, `v6fit()` ile tam ekrana yayılıyor. Kod: index.html sonunda `/* ===== V6 */` bloğu. Eski ekranlar silinmedi; yeni katman üstte, eski düğmelerin işlevleri çağrılıyor.
