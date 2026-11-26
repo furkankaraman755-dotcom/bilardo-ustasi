@@ -3,7 +3,7 @@
 Yeni bir sohbette her şeyi baştan anlatmamak için tutulur.
 Yeni sohbette ilk mesaj: **"docs/PROJE_NOTLARI.md dosyasını oku, oradan devam et."**
 
-Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-75**
+Son güncelleme: 25 Kasım 2026 · Son sürüm: **surum-76**
 
 ---
 
@@ -199,6 +199,25 @@ Kod baştan tarandı. Bir denetçi alt ajan bağımsız tarama yaptı ve her dü
   - `openGifts` iki kez tanımlı (ölü kod, zararsız).
   - Lig puanı sadece kazançla artıyor (kayıp düşmüyor), tasarım kararı.
   - Yedek kodu ile bakiye değiştirilebiliyor; sunucu ekonomisi (ADIM 3) gelince çözülecek.
+
+### 26 Kasım — surum-76 (Furkan'ın 12 yeni görseli: giriş, menü, mağaza, masalar)
+- Bütün ekranlar Furkan'ın görsellerinden parçalandı (yazılar silindi, değişen yazılar canlı). Tasarım ölçüsü 1600×900; `.v6` katmanı, `v6fit()` ile tam ekrana yayılıyor. Kod: index.html sonunda `/* ===== V6 */` bloğu. Eski ekranlar silinmedi; yeni katman üstte, eski düğmelerin işlevleri çağrılıyor.
+- **Giriş:** Giriş Yap / Üye Ol / Misafir / Google-Facebook-Apple (sunucu gelince) / ses / dil.
+  - Pencereler: Giriş Yap (hata hâli ayrı görsel), Şifremi Unuttum, Üye Ol, Dil Seçimi.
+  - **Hesaplar şimdilik telefonda** (`bba_acc`, şifre PBKDF2 ile, açık saklanmaz). Hetzner gelince sunucuya taşınacak.
+  - **6 dil** (tr, en, es, de, fr, ar; Arapça sağdan sola): giriş ekranları çevrili, oyunun geri kalanı 1-04 ile çevrilecek.
+- **Ana menü (mavi):**
+  - Canlı: isim, seviye, XP çubuğu, para, avatar (seçildiyse), posta ve ıstaka rozetleri, Sezon, Günlük Sandık ve Özel Teklif süreleri.
+  - OYNA: parasının yettiği en yüksek açık ülke masası. Dünya Çapında Oyna: ülke listesi. Arkadaşla Oyna: Özel Oyun. Gelişim: Profil.
+- **Mağaza (4 sekme):** Özel Teklifler, Çip Paketleri, Dolar Paketleri, Sandıklar (fiyatlar görseldeki gibi).
+  - TL paketleri: test APK'sında onayla bedava, yayında "ödeme Google Play sürümünde".
+  - Günlük Hediye (10.000 çip) ve Günlük Sandık (1 Nadir parça + 5.000 çip): günde bir, reklam (AdMob) gelene kadar reklamsız.
+  - Sandıklar Dolar ile: Arena 20 (2 parça + çip), Şampiyon 50 (5 parça + tebeşir), Kralın Hazinesi 120 (10 Efsanevi parça + VIP 7 gün). Tebeşir ve VIP şimdilik sadece kayda yazılıyor; etkileri sonra.
+  - Eski Sürpriz Kutuları ve Destansı Özel Teklif (11/31) arayüzden kalktı. Hediyeler → Efsane Sandıklar eski ücretsiz ödül listesini açıyor.
+- **Masalar ekranı:** Büyük 3B önizleme ve kart sırası. Mevcut 13 masanın hepsi, isimleriyle.
+  - Her masanın üst yüzeyi görseldeki 3B masa gövdesine perspektifle oturtuluyor (`homog` → CSS `matrix3d`). Yeni masa eklenince otomatik 3B olur.
+  - Karta dokun: önizle. KULLAN: seç.
+- Testler: `tests/test_v6.py` eklendi, sandık testi yeniden yazıldı, görünüş testine yeni ekranlar eklendi.
 
 ### 26 Kasım — surum-75 (1-02, 1-03, H-05)
 - **1-03 / H-05:** Test modu tek bayrak: `BBA_DEV`. Bağlı olanlar: test parası (5B + 10B), `TEST_UNLOCK` (masa kilitleri, bütün ıstaka/masa açma), menü sayacına 5 dokunuş kısayolu. Hakkında ve raporda "TEST MODU" yazar. CI iki APK verir: **BilardoUstasi.apk** (test) ve **BlackballArena-yayin.apk** (gerçek oyuncu hâli: 1.000 çip, kilitli masalar, ayrı kayıt).

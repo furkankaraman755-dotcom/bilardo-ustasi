@@ -2101,7 +2101,7 @@ function renderShop(){
   }
 }
 function buyBox(rar,n){const b=BOXES[rar-1],cost=n===3?b.c3:b.c1;
-  if(save.cash<cost){$('smsg').textContent=`Yeterli 💵 yok (${cost} gerekli, sende ${save.cash}).`;return;}
+  if(!(save.cash>=cost)){$('smsg').textContent=`Yeterli 💵 yok (${cost} gerekli, sende ${save.cash}).`;return;}
   save.cash-=cost;persist();openBoxes(rar,n);}
 function boxLoot(rar){
   const items=[];const pick=r=>{const pool=BOX_CUES.filter(c=>c.rar===r);return pool[Math.floor(Math.random()*pool.length)];};
@@ -5404,6 +5404,450 @@ try{if(window._saveInfo&&window._saveInfo.bozuk){save.inbox=save.inbox||[];save.
 /* yarım kalan çark/kart ödülü (oyun kapandıysa): açılışta bir kez verilir */
 (function pendReward(){try{const P=save.pendRw;if(!P||!P.rw)return;delete save.pendRw;const t=give(P.rw);
   try{save.inbox.unshift({id:Date.now(),ic:'🎁',t:(P.src||'Ödül')+' ödülü',txt:'Oyun kapandığı için yarım kalan ödülün hesabına eklendi: '+t});}catch(_){}persist();}catch(e){try{bbaLog(e,'pendRw');}catch(_){}}})();
+</script>
+<style>
+/* ===== V6: Furkan'ın 26 Kasım görselleri (giriş, pencereler, dil, ana menü, mağaza, masalar). Tasarım ölçüsü 1600x900. ===== */
+.v6{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0;overflow:hidden;font-family:'Roboto Condensed','sans-serif-condensed',Roboto,Arial,sans-serif;color:#fff;-webkit-user-select:none;user-select:none;z-index:5}
+.v6Bg{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;pointer-events:none}
+.v6h{position:absolute;display:block;padding:0;margin:0;border:0;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent;border-radius:24px;outline:none}
+.v6 .v6h,.v6 button.v6h{position:absolute!important;display:block!important;background:transparent!important;border:0!important;box-shadow:none!important;min-width:0!important;min-height:0!important;padding:0!important;margin:0!important;filter:none!important;transform:none!important;color:transparent!important;font-size:0!important;opacity:1!important;animation:none!important}
+.v6 .v6h:active{background:rgba(255,255,255,.10)!important}
+.v6t{position:absolute;display:flex;align-items:center;justify-content:center;text-align:center;white-space:nowrap;line-height:1;pointer-events:none;font-weight:900}
+.v6t.l{justify-content:flex-start;text-align:left}.v6t.r{justify-content:flex-end;text-align:right}
+.v6t.two{white-space:normal;line-height:1.08}
+.v6sh{text-shadow:0 2px 0 rgba(0,0,0,.55),0 0 10px rgba(0,0,0,.45)}
+.v6gl{text-shadow:0 0 12px rgba(120,200,255,.9),0 2px 0 rgba(0,0,0,.6)}
+.v6gold{color:#ffd21a;text-shadow:0 2px 0 rgba(0,0,0,.6),0 0 8px rgba(255,180,0,.35)}
+#login.v6on>.l4,#menu.v6on>.m4{display:none!important}
+/* modallar (giriş ekranının üstünde, tam ekran resim) */
+.v6m{position:absolute;inset:0;z-index:20}
+.v6m .v6Bg{pointer-events:auto}
+.v6in{position:absolute;border:0;outline:none;background:transparent;color:#fff;font:600 30px 'Roboto Condensed',Roboto,Arial,sans-serif;padding:0;caret-color:#7fd3ff}
+.v6in::placeholder{color:#e9edf6;opacity:1}
+.v6in.err{color:#fff}
+.v6chk{position:absolute;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font:900 34px Arial,sans-serif;color:#46e06a;pointer-events:none}
+.v6msg{position:absolute;left:400px;width:800px;text-align:center;font:700 22px Roboto,Arial,sans-serif;color:#ffd21a;text-shadow:0 2px 3px #000;pointer-events:none}
+.v6msg.bad{color:#ff5a4e}
+.v6link{color:#ffd21a;text-decoration:underline;text-underline-offset:4px;pointer-events:auto;cursor:pointer}
+.v6tst{position:absolute;left:50%;bottom:70px;transform:translateX(-50%);background:rgba(8,14,30,.92);border:2px solid #3fa9ff;color:#fff;font:800 24px Roboto,Arial,sans-serif;padding:12px 26px;border-radius:18px;box-shadow:0 0 20px rgba(63,169,255,.5);z-index:40;pointer-events:none;white-space:nowrap}
+/* dil seçimi: seçili satır katmanı */
+.v6sel{position:absolute;width:401px;height:112px;pointer-events:none}
+[dir=rtl] .v6in{text-align:right;padding-right:26px;box-sizing:border-box}
+[dir=rtl] #v6p,[dir=rtl] #v6p1,[dir=rtl] #v6p2{padding-right:70px}
+[dir=rtl] .v6t.l{direction:rtl;justify-content:flex-end}
+/* ana menü */
+.v6xp{position:absolute;left:214px;top:69px;height:25px;border-radius:13px;background:linear-gradient(180deg,#5cd0ff,#1d7cff 60%,#0f4fc4);box-shadow:0 0 10px rgba(60,170,255,.8);pointer-events:none}
+.v6bd{position:absolute;min-width:28px;height:28px;padding:0 7px;border-radius:14px;background:#e3192b;border:2px solid #fff;color:#fff;font:900 18px Roboto,Arial,sans-serif;display:none;align-items:center;justify-content:center;box-shadow:0 2px 5px rgba(0,0,0,.5);pointer-events:none}
+.v6av{position:absolute;left:37px;top:16px;width:86px;height:86px;clip-path:polygon(25% 3%,75% 3%,100% 50%,75% 97%,25% 97%,0 50%);display:none;align-items:center;justify-content:center;overflow:hidden;pointer-events:none;font:900 44px Roboto,Arial,sans-serif}
+.v6av img{width:100%;height:100%;object-fit:cover}
+/* masalar */
+.v6Top{position:absolute;left:0;top:0;transform-origin:0 0;pointer-events:none;backface-visibility:hidden}
+.v6Row{position:absolute;left:36px;top:594px;width:1528px;height:292px;overflow-x:auto;overflow-y:hidden;display:flex;gap:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+.v6Row::-webkit-scrollbar{display:none}
+.v6C{position:relative;flex:0 0 382px;height:284px;scroll-snap-align:start;cursor:pointer}
+.v6C>img.v6fr{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.v6C .v6w{position:absolute;left:20px;top:19px;width:342px;height:171px;overflow:hidden}
+.v6C .v6w>img.v6bdi{position:absolute;inset:0;width:100%;height:100%}
+.v6C.pv{filter:drop-shadow(0 0 10px rgba(110,220,255,.9))}
+.v6C .v6nm{position:absolute;left:50%;top:-2px;transform:translateX(-50%);padding:3px 16px;border-radius:12px;background:linear-gradient(180deg,#1b2440,#0b1022);border:2px solid #e2b64a;color:#ffe08a;font:900 19px 'Roboto Condensed',Roboto,Arial,sans-serif;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.6);z-index:2;pointer-events:none}
+.v6C .v6pl{position:absolute;display:flex;align-items:center;justify-content:center;font:900 34px 'Roboto Condensed',Roboto,Arial,sans-serif;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.55);pointer-events:none}
+.v6C .v6lk{position:absolute;right:26px;top:24px;width:42px;height:42px;pointer-events:none}
+</style>
+<script>
+/* ===== V6 (surum-76): Furkan'ın 26 Kasım görselleri =====
+   Ekranlar onun görsellerinden parçalandı; değişen yazılar (isim, para, süre, fiyat durumu, dil) canlı.
+   Eski ekranlar silinmedi: yeni katman onların üstüne kuruldu, eski düğmelerin işlevleri .click() ile çağrılıyor. */
+(function V6(){
+const IMG={"balls":"a/9c7b413c48e0.webp","card_lock":"a/7c48539ed037.webp","card_norm":"a/c0d8ad91a953.webp","card_sel":"a/41302b94f68c.webp","card_vip":"a/d6976f1b9031.webp","dil":"a/31a7d4621189.webp","dil_sec":"a/285ac2a5ac77.webp","giris":"a/f39502057a68.webp","hata":"a/32cdfcdfc0ba.webp","lock":"a/578427b2801f.webp","login":"a/d612b1dc7b32.webp","masalar":"a/b53b7274f4ef.webp","menu":"a/bfca73ff44eb.webp","sh_cip":"a/f53c22e5511f.webp","sh_dolar":"a/7424ae5a7999.webp","sh_ozel":"a/35744ac61b13.webp","sh_sandik":"a/7156a5dfcd68.webp","sifre":"a/44cb4974f247.webp","tbody":"a/b5118e65d7d3.webp","uye":"a/931558d9ad63.webp"};
+const $$=id=>document.getElementById(id);
+const el=(tag,cls,css,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(css)e.style.cssText=css;if(html!=null)e.innerHTML=html;return e;};
+const box=(x,y,w,h)=>`left:${x}px;top:${y}px;width:${w}px;height:${h}px;`;
+const hot=(p,x,y,w,h,label,fn,r)=>{const b=el('button','v6h',box(x,y,w,h)+(r?`border-radius:${r}px;`:''));b.setAttribute('aria-label',label);b.onclick=e=>{e.stopPropagation();try{ensureAudio();play('click',.4,1.4);}catch(_){}fn(e);};p.append(b);return b;};
+const txt=(p,x,y,w,h,size,cls,extra)=>{const t=el('b','v6t '+(cls||''),box(x,y,w,h)+`font-size:${size}px;`+(extra||''));p.append(t);return t;};
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dur=ms=>{ms=Math.max(0,ms);const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4),s=Math.floor(ms%6e4/1e3);return d?`${d}g ${h}s`:h?`${h}s ${m}d`:`${m}d ${s}sn`;};
+function toast(p,t){const o=p.querySelector('.v6tst');if(o)o.remove();const d=el('div','v6tst','',esc(t));p.append(d);clearTimeout(d._t);setTimeout(()=>d.remove(),2600);}
+
+/* ---------- dil ---------- */
+const LANGS=['tr','en','es','de','fr','ar'];
+const T={
+tr:{giris:'GİRİŞ YAP',uye:'ÜYE OL',misafir:'MİSAFİR OLARAK OYNA',devam:'VEYA HESABINLA DEVAM ET',gG:'Google ile<br>Giriş Yap',gF:'Facebook ile<br>Giriş Yap',gA:'Apple ile<br>Giriş Yap',uG:'Google ile<br>Üye Ol',uF:'Facebook ile<br>Üye Ol',uA:'Apple ile<br>Üye Ol',
+ kul:'Kullanıcı Adı veya E-posta',sifre:'Şifre',hatirla:'Beni Hatırla',unuttum:'Şifremi Unuttum?',veya:'VEYA',yok:'Hesabın yok mu?',uyeOl:'Üye Ol',hata:'Hatalı e-posta adresi veya şifre!',
+ unT:'ŞİFREMİ UNUTTUM',unD:'Sıfırlama bağlantısı için kayıtlı e-posta adresinizi girin.',eposta:'E-posta Adresi',gonder:'BAĞLANTI GÖNDER',
+ uyeT:'ÜYE OL',ad:'Kullanıcı Adı',sifre2:'Şifre Tekrarı',kos:'Kullanım Koşulları',ve:'ve',giz:'Gizlilik Politikasını',kabul:'kabul ediyorum.',olustur:'HESAP OLUŞTUR',var:'Zaten hesabın var mı?',girisYap:'Giriş Yap',
+ dilT:'DİL SEÇİMİ',onay:'ONAYLA',
+ eAd:'Kullanıcı adı en az 3 karakter olmalı.',eMail:'Geçerli bir e-posta adresi yaz.',ePass:'Şifre en az 6 karakter olmalı.',ePass2:'Şifreler aynı değil.',eKos:'Devam etmek için koşulları kabul et.',eVar:'Bu kullanıcı adı veya e-posta zaten kayıtlı.',eBos:'Kullanıcı adını ve şifreni yaz.',
+ sosyal:'Bu giriş yöntemi sunucu kurulunca açılacak.',gonderildi:'E-posta gönderimi sunucu kurulunca açılacak.',hosgeldin:'Hoş geldin',sesA:'Ses açık',sesK:'Ses kapalı',belge:'Bu sayfa yayından önce hazırlanacak.'},
+en:{giris:'LOG IN',uye:'SIGN UP',misafir:'PLAY AS GUEST',devam:'OR CONTINUE WITH',gG:'Log in with<br>Google',gF:'Log in with<br>Facebook',gA:'Log in with<br>Apple',uG:'Sign up with<br>Google',uF:'Sign up with<br>Facebook',uA:'Sign up with<br>Apple',
+ kul:'Username or E-mail',sifre:'Password',hatirla:'Remember Me',unuttum:'Forgot Password?',veya:'OR',yok:'No account?',uyeOl:'Sign Up',hata:'Wrong e-mail address or password!',
+ unT:'FORGOT PASSWORD',unD:'Enter your registered e-mail address to get a reset link.',eposta:'E-mail Address',gonder:'SEND LINK',
+ uyeT:'SIGN UP',ad:'Username',sifre2:'Repeat Password',kos:'Terms of Use',ve:'and',giz:'Privacy Policy',kabul:'I accept.',olustur:'CREATE ACCOUNT',var:'Already have an account?',girisYap:'Log In',
+ dilT:'LANGUAGE',onay:'CONFIRM',
+ eAd:'Username must be at least 3 characters.',eMail:'Enter a valid e-mail address.',ePass:'Password must be at least 6 characters.',ePass2:'Passwords do not match.',eKos:'Accept the terms to continue.',eVar:'This username or e-mail is already registered.',eBos:'Enter your username and password.',
+ sosyal:'This login method will open when the server is ready.',gonderildi:'E-mail sending will open when the server is ready.',hosgeldin:'Welcome',sesA:'Sound on',sesK:'Sound off',belge:'This page will be ready before launch.'},
+es:{giris:'INICIAR SESIÓN',uye:'REGISTRARSE',misafir:'JUGAR COMO INVITADO',devam:'O CONTINÚA CON TU CUENTA',gG:'Entrar con<br>Google',gF:'Entrar con<br>Facebook',gA:'Entrar con<br>Apple',uG:'Registrarse<br>con Google',uF:'Registrarse<br>con Facebook',uA:'Registrarse<br>con Apple',
+ kul:'Usuario o correo',sifre:'Contraseña',hatirla:'Recordarme',unuttum:'¿Olvidaste la contraseña?',veya:'O',yok:'¿No tienes cuenta?',uyeOl:'Regístrate',hata:'¡Correo o contraseña incorrectos!',
+ unT:'RECUPERAR CONTRASEÑA',unD:'Escribe tu correo registrado para recibir el enlace.',eposta:'Correo electrónico',gonder:'ENVIAR ENLACE',
+ uyeT:'REGISTRARSE',ad:'Nombre de usuario',sifre2:'Repetir contraseña',kos:'Términos de uso',ve:'y',giz:'Política de privacidad',kabul:'acepto.',olustur:'CREAR CUENTA',var:'¿Ya tienes cuenta?',girisYap:'Inicia sesión',
+ dilT:'IDIOMA',onay:'CONFIRMAR',
+ eAd:'El usuario debe tener al menos 3 caracteres.',eMail:'Escribe un correo válido.',ePass:'La contraseña debe tener al menos 6 caracteres.',ePass2:'Las contraseñas no coinciden.',eKos:'Acepta los términos para continuar.',eVar:'Este usuario o correo ya está registrado.',eBos:'Escribe tu usuario y contraseña.',
+ sosyal:'Este método se activará cuando el servidor esté listo.',gonderildi:'El envío de correos se activará con el servidor.',hosgeldin:'Bienvenido',sesA:'Sonido activado',sesK:'Sonido desactivado',belge:'Esta página estará lista antes del lanzamiento.'},
+de:{giris:'ANMELDEN',uye:'REGISTRIEREN',misafir:'ALS GAST SPIELEN',devam:'ODER WEITER MIT KONTO',gG:'Mit Google<br>anmelden',gF:'Mit Facebook<br>anmelden',gA:'Mit Apple<br>anmelden',uG:'Mit Google<br>registrieren',uF:'Mit Facebook<br>registrieren',uA:'Mit Apple<br>registrieren',
+ kul:'Benutzername oder E-Mail',sifre:'Passwort',hatirla:'Angemeldet bleiben',unuttum:'Passwort vergessen?',veya:'ODER',yok:'Kein Konto?',uyeOl:'Registrieren',hata:'Falsche E-Mail-Adresse oder falsches Passwort!',
+ unT:'PASSWORT VERGESSEN',unD:'Gib deine E-Mail-Adresse für den Link zum Zurücksetzen ein.',eposta:'E-Mail-Adresse',gonder:'LINK SENDEN',
+ uyeT:'REGISTRIEREN',ad:'Benutzername',sifre2:'Passwort wiederholen',kos:'Nutzungsbedingungen',ve:'und',giz:'Datenschutzerklärung',kabul:'akzeptiere ich.',olustur:'KONTO ERSTELLEN',var:'Schon ein Konto?',girisYap:'Anmelden',
+ dilT:'SPRACHE',onay:'BESTÄTIGEN',
+ eAd:'Der Benutzername braucht mindestens 3 Zeichen.',eMail:'Gib eine gültige E-Mail-Adresse ein.',ePass:'Das Passwort braucht mindestens 6 Zeichen.',ePass2:'Die Passwörter stimmen nicht überein.',eKos:'Akzeptiere die Bedingungen, um fortzufahren.',eVar:'Dieser Benutzername oder diese E-Mail ist schon registriert.',eBos:'Gib Benutzername und Passwort ein.',
+ sosyal:'Diese Anmeldung wird mit dem Server freigeschaltet.',gonderildi:'E-Mails werden mit dem Server freigeschaltet.',hosgeldin:'Willkommen',sesA:'Ton an',sesK:'Ton aus',belge:'Diese Seite wird vor dem Start fertig.'},
+fr:{giris:'CONNEXION',uye:'INSCRIPTION',misafir:'JOUER EN INVITÉ',devam:'OU CONTINUER AVEC TON COMPTE',gG:'Connexion<br>avec Google',gF:'Connexion<br>avec Facebook',gA:'Connexion<br>avec Apple',uG:'Inscription<br>avec Google',uF:'Inscription<br>avec Facebook',uA:'Inscription<br>avec Apple',
+ kul:"Nom d'utilisateur ou e-mail",sifre:'Mot de passe',hatirla:'Se souvenir de moi',unuttum:'Mot de passe oublié ?',veya:'OU',yok:'Pas de compte ?',uyeOl:"S'inscrire",hata:'Adresse e-mail ou mot de passe incorrect !',
+ unT:'MOT DE PASSE OUBLIÉ',unD:'Saisis ton adresse e-mail pour recevoir le lien.',eposta:'Adresse e-mail',gonder:'ENVOYER LE LIEN',
+ uyeT:'INSCRIPTION',ad:"Nom d'utilisateur",sifre2:'Répéter le mot de passe',kos:"Conditions d'utilisation",ve:'et',giz:'Politique de confidentialité',kabul:"j'accepte.",olustur:'CRÉER UN COMPTE',var:'Déjà un compte ?',girisYap:'Connexion',
+ dilT:'LANGUE',onay:'CONFIRMER',
+ eAd:"Le nom d'utilisateur doit avoir au moins 3 caractères.",eMail:'Saisis une adresse e-mail valide.',ePass:'Le mot de passe doit avoir au moins 6 caractères.',ePass2:'Les mots de passe ne correspondent pas.',eKos:'Accepte les conditions pour continuer.',eVar:'Ce nom ou cet e-mail est déjà enregistré.',eBos:"Saisis ton nom d'utilisateur et ton mot de passe.",
+ sosyal:'Cette connexion sera disponible avec le serveur.',gonderildi:"L'envoi d'e-mails sera disponible avec le serveur.",hosgeldin:'Bienvenue',sesA:'Son activé',sesK:'Son coupé',belge:'Cette page sera prête avant le lancement.'},
+ar:{giris:'تسجيل الدخول',uye:'إنشاء حساب',misafir:'العب كضيف',devam:'أو تابع بحسابك',gG:'الدخول عبر<br>Google',gF:'الدخول عبر<br>Facebook',gA:'الدخول عبر<br>Apple',uG:'التسجيل عبر<br>Google',uF:'التسجيل عبر<br>Facebook',uA:'التسجيل عبر<br>Apple',
+ kul:'اسم المستخدم أو البريد',sifre:'كلمة المرور',hatirla:'تذكرني',unuttum:'نسيت كلمة المرور؟',veya:'أو',yok:'ليس لديك حساب؟',uyeOl:'أنشئ حساباً',hata:'البريد الإلكتروني أو كلمة المرور غير صحيحة!',
+ unT:'نسيت كلمة المرور',unD:'أدخل بريدك الإلكتروني المسجل لتلقي رابط إعادة التعيين.',eposta:'البريد الإلكتروني',gonder:'إرسال الرابط',
+ uyeT:'إنشاء حساب',ad:'اسم المستخدم',sifre2:'تأكيد كلمة المرور',kos:'شروط الاستخدام',ve:'و',giz:'سياسة الخصوصية',kabul:'أوافق على',olustur:'إنشاء الحساب',var:'لديك حساب بالفعل؟',girisYap:'سجّل الدخول',
+ dilT:'اختيار اللغة',onay:'تأكيد',
+ eAd:'يجب أن يتكون اسم المستخدم من 3 أحرف على الأقل.',eMail:'أدخل بريداً إلكترونياً صحيحاً.',ePass:'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.',ePass2:'كلمتا المرور غير متطابقتين.',eKos:'وافق على الشروط للمتابعة.',eVar:'اسم المستخدم أو البريد مسجل بالفعل.',eBos:'أدخل اسم المستخدم وكلمة المرور.',
+ sosyal:'ستتوفر طريقة الدخول هذه عند تجهيز الخادم.',gonderildi:'سيتوفر إرسال البريد عند تجهيز الخادم.',hosgeldin:'أهلاً',sesA:'الصوت مفعّل',sesK:'الصوت مغلق',belge:'ستكون هذه الصفحة جاهزة قبل الإطلاق.'}
+};
+let lang=(()=>{try{const l=localStorage.getItem('bba_lang')||save.lang;return LANGS.includes(l)?l:'tr';}catch(_){return 'tr';}})();
+const L=k=>(T[lang]&&T[lang][k])||T.tr[k]||k;
+window.bbaLang=()=>lang;
+function setLang(l){lang=LANGS.includes(l)?l:'tr';try{localStorage.setItem('bba_lang',lang);}catch(_){}try{save.lang=lang;persist();}catch(_){}buildLogin();}
+
+/* ---------- ekran sığdırma: genişliğe yay, üst/alt güvenli bölgeyi koru (eski fullFit ile aynı mantık) ---------- */
+function fit(){const vw=innerWidth||document.documentElement.clientWidth,vh=innerHeight||document.documentElement.clientHeight;if(!(vw>40&&vh>40))return;
+  document.querySelectorAll('.v6').forEach(v=>{const t=+v.dataset.t||0,b=+v.dataset.b||900,sx=vw/1600;
+    const sy=Math.min(Math.max(sx,vh/900),vh/(b-t)),vis=vh/sy,yc=Math.min(Math.max((t+b)/2,vis/2),900-vis/2),T=vh/2-yc*sy;
+    v.style.transform=`translate(0px,${T.toFixed(2)}px) scale(${sx.toFixed(5)},${sy.toFixed(5)})`;});}
+window.v6fit=fit;addEventListener('resize',()=>setTimeout(fit,60));
+
+/* ---------- yerel hesap (Hetzner sunucusu gelene kadar bu telefonda) ---------- */
+const ACC='bba_acc';
+const accAll=()=>{try{const a=JSON.parse(localStorage.getItem(ACC)||'[]');return Array.isArray(a)?a:[];}catch(_){return [];}};
+const accSave=a=>{try{localStorage.setItem(ACC,JSON.stringify(a));}catch(_){}};
+const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+async function hashPw(pw,salt){try{if(crypto&&crypto.subtle){const k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveBits']);
+    return 'p2:'+hex(await crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode(salt),iterations:60000,hash:'SHA-256'},k,256));}}catch(_){}
+  let h=2166136261;for(const c of salt+'|'+pw){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return 'f1:'+(h>>>0).toString(16);}
+const newSalt=()=>{try{return hex(crypto.getRandomValues(new Uint8Array(12)));}catch(_){return String(Math.random()).slice(2);}};
+function enterGame(name,isNew){
+  if(name)save.name=cleanName(name);
+  if(!save.pid)save.pid=100000+Math.floor(Math.random()*900000);
+  persist();try{inboxCheck();}catch(_){}refreshCoins();closeModal();show('menu');
+  try{toast($$('menu').querySelector('.v6')||document.body,L('hosgeldin')+', '+save.name+'!');}catch(_){}}
+
+/* ---------- GİRİŞ EKRANI ---------- */
+let modal=null;
+function closeModal(){if(modal){modal.remove();modal=null;}}
+function buildLogin(){
+  const S=$$('login');if(!S)return;S.classList.add('v6on');let V=S.querySelector('.v6');if(V)V.remove();closeModal();
+  V=el('div','v6');V.dataset.t='10';V.dataset.b='870';V.setAttribute('dir',lang==='ar'?'rtl':'ltr');S.append(V);
+  V.append(el('img','v6Bg','',null));V.lastChild.src=IMG.login;V.lastChild.alt='';
+  txt(V,690,296,380,76,lang==='tr'?46:38,'v6gl').innerHTML=L('giris');
+  txt(V,690,410,380,80,lang==='tr'?46:36,'','color:#1a1206;text-shadow:0 1px 0 rgba(255,255,255,.35)').innerHTML=L('uye');
+  txt(V,690,525,390,78,lang==='tr'?31:28,'v6sh').innerHTML=L('misafir');
+  txt(V,640,636,322,32,21,'','color:#e3e9f6;font-weight:800;letter-spacing:.5px').innerHTML=L('devam');
+  [[496,'gG'],[770,'gF'],[1062,'gA']].forEach(([x,k])=>{const t=txt(V,x,692,140,66,22,'two v6sh');t.innerHTML=L(k);});
+  txt(V,56,818,86,34,22,'v6gold').textContent='v1.0.'+(String(window.BBA_SURUM).replace(/\D/g,'')||'0');
+  hot(V,505,290,590,88,L('giris'),()=>openGiris(false),44);
+  hot(V,505,406,590,88,L('uye'),openUye,44);
+  hot(V,505,520,590,88,L('misafir'),()=>enterGame('Misafir'+(1000+Math.floor(Math.random()*9000)),true),44);
+  [[438,'Google'],[717,'Facebook'],[1000,'Apple']].forEach(([x,n])=>hot(V,x,686,186,76,n,()=>toast(V,n+': '+L('sosyal')),38));
+  const snd=hot(V,1377,25,88,80,'Ses',()=>{save.set=save.set||{};save.set.mute=!save.set.mute;persist();try{ensureAudio();applyVol();}catch(_){}toast(V,save.set.mute?L('sesK'):L('sesA'));},22);
+  hot(V,1482,25,86,80,'Dil',openDil,22);
+  fit();
+}
+function mkModal(bgKey){closeModal();const V=$$('login').querySelector('.v6');modal=el('div','v6m');V.append(modal);
+  const bg=el('img','v6Bg');bg.src=IMG[bgKey];bg.alt='';modal.append(bg);
+  txt(modal,56,818,86,34,22,'v6gold').textContent='v1.0.'+(String(window.BBA_SURUM).replace(/\D/g,'')||'0');return modal;}
+function input(M,x,y,w,h,ph,type,id){const i=el('input','v6in',box(x,y,w,h));i.placeholder=ph;i.type=type||'text';i.id=id;i.autocomplete='off';i.spellcheck=false;if(lang==='ar')i.dir='rtl';M.append(i);return i;}
+function eye(M,x,y,inp){hot(M,x-30,y-28,60,56,'Göster',()=>{inp.type=inp.type==='password'?'text':'password';},28);}
+function checkbox(M,x,y,on){const c=el('span','v6chk',box(x-20,y-20,40,40));c.textContent=on?'✓':'';M.append(c);
+  const b=hot(M,x-26,y-26,52,52,'Seç',()=>{b.on=!b.on;c.textContent=b.on?'✓':'';},8);b.on=!!on;return b;}
+function msg(M,y,t,bad){let m=M.querySelector('.v6msg');if(!m){m=el('div','v6msg');M.append(m);}m.style.top=y+'px';m.className='v6msg'+(bad?' bad':'');m.textContent=t||'';}
+function socials(M,y,keys){[[432,keys[0],'Google'],[686,keys[1],'Facebook'],[942,keys[2],'Apple']].forEach(([x,k,n])=>{txt(M,x+84,y,148,70,20,'two v6sh').innerHTML=L(k);hot(M,x,y,236,70,n,()=>msg(M,y+76,n+': '+L('sosyal')),35);});}
+function openGiris(err,pre){
+  const M=mkModal(err?'hata':'giris'),dy=err?18:0;
+  txt(M,600,262,410,54,lang==='tr'?44:36,'v6gl').innerHTML=L('giris');
+  hot(M,436,262,70,58,'Geri',closeModal,20);hot(M,1110,262,66,58,'Kapat',closeModal,20);
+  const u=input(M,558,342-(err?2:0),540,52,L('kul'),'text','v6u');const p=input(M,558,414-(err?4:0),520,52,L('sifre'),'password','v6p');
+  if(pre){u.value=pre.u||'';p.value=pre.p||'';}else{try{if(localStorage.getItem('bba_rem')==='1')u.value=localStorage.getItem('bba_remU')||'';}catch(_){}}
+  eye(M,1110,440-(err?4:0),p);
+  if(err){txt(M,522,470,640,34,22,'l','color:#ff3b3b;font-weight:800').innerHTML=L('hata');}
+  const rem=checkbox(M,465,500+dy*1.55,(()=>{try{return localStorage.getItem('bba_rem')==='1';}catch(_){return false;}})());
+  txt(M,500,484+dy*1.55,300,34,25,'l','font-weight:700').innerHTML=L('hatirla');
+  const f=txt(M,880,484+dy*1.55,275,34,24,'r v6gold','pointer-events:auto;cursor:pointer;font-weight:800');f.innerHTML=L('unuttum');f.onclick=openSifre;
+  txt(M,560,547+dy*.85,480,48,40,'v6gl').innerHTML=L('giris');
+  hot(M,548,538+dy*.85,504,64,L('giris'),async()=>{
+    const id=u.value.trim().toLowerCase(),pw=p.value;if(!id||!pw){msg(M,604+dy,L('eBos'),1);return;}
+    const a=accAll().find(x=>x.u.toLowerCase()===id||x.e===id);
+    if(!a||(await hashPw(pw,a.s))!==a.h){openGiris(true,{u:u.value,p:''});return;}
+    try{localStorage.setItem('bba_rem',rem.on?'1':'0');if(rem.on)localStorage.setItem('bba_remU',a.u);else localStorage.removeItem('bba_remU');}catch(_){}
+    save.email=a.e;enterGame(a.u);},32);
+  txt(M,740,618,120,32,24,'','font-weight:800').innerHTML=L('veya');
+  socials(M,662,['gG','gF','gA']);
+  const b=txt(M,560,752,480,40,27,'','pointer-events:auto;font-weight:800');b.innerHTML=`${esc(L('yok'))}&nbsp;<span class="v6link">${esc(L('uyeOl'))}</span>`;b.querySelector('.v6link').onclick=openUye;
+  fit();
+}
+function openSifre(){
+  const M=mkModal('sifre');
+  txt(M,590,266,430,64,lang==='tr'?44:34,'v6sh').innerHTML=L('unT');
+  hot(M,430,270,72,60,'Geri',()=>openGiris(false),20);hot(M,1110,270,72,60,'Kapat',closeModal,20);
+  txt(M,440,526,720,40,23,'','font-weight:700;white-space:normal').innerHTML=L('unD');
+  const e=input(M,585,598,560,50,L('eposta'),'email','v6e');
+  txt(M,600,706,400,52,lang==='tr'?36:30,'','color:#1a1206').innerHTML=L('gonder');
+  hot(M,520,695,560,75,L('gonder'),()=>{const v=e.value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){msg(M,782,L('eMail'),1);return;}msg(M,782,L('gonderildi'));},38);
+  fit();
+}
+function openUye(){
+  const M=mkModal('uye');
+  txt(M,690,252,225,54,lang==='tr'?44:32,'v6sh').innerHTML=L('uyeT');
+  hot(M,436,252,70,58,'Geri',closeModal,20);hot(M,1110,252,66,58,'Kapat',closeModal,20);
+  const n=input(M,556,321,560,44,L('ad'),'text','v6n'),e=input(M,556,378,560,44,L('eposta'),'email','v6e2'),
+        p=input(M,556,434,530,44,L('sifre'),'password','v6p1'),p2=input(M,556,490,530,44,L('sifre2'),'password','v6p2');
+  [n,e,p,p2].forEach(i=>i.style.fontSize='27px');n.maxLength=14;
+  eye(M,1110,456,p);eye(M,1110,512,p2);
+  const k=checkbox(M,465,560,false);
+  const kt=txt(M,500,542,650,36,21,'l','pointer-events:auto;font-weight:700');
+  kt.innerHTML=`<span class="v6link">${esc(L('kos'))}</span>&nbsp;${esc(L('ve'))}&nbsp;<span class="v6link">${esc(L('giz'))}</span>&nbsp;${esc(L('kabul'))}`;
+  kt.querySelectorAll('.v6link').forEach(a=>a.onclick=()=>msg(M,832,L('belge')));
+  txt(M,560,592,480,48,lang==='tr'?36:30,'','color:#1a1206').innerHTML=L('olustur');
+  hot(M,548,588,504,56,L('olustur'),async()=>{
+    const un=cleanName(n.value),em=e.value.trim().toLowerCase(),pw=p.value;
+    if(un.length<3)return msg(M,832,L('eAd'),1);
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))return msg(M,832,L('eMail'),1);
+    if(pw.length<6)return msg(M,832,L('ePass'),1);
+    if(pw!==p2.value)return msg(M,832,L('ePass2'),1);
+    if(!k.on)return msg(M,832,L('eKos'),1);
+    const all=accAll();if(all.some(a=>a.u.toLowerCase()===un.toLowerCase()||a.e===em))return msg(M,832,L('eVar'),1);
+    const s=newSalt();all.push({u:un,e:em,s,h:await hashPw(pw,s),t:Date.now()});accSave(all);
+    save.email=em;enterGame(un,true);},28);
+  txt(M,740,650,120,30,24,'','font-weight:800').innerHTML=L('veya');
+  socials(M,688,['uG','uF','uA']);
+  const b=txt(M,560,774,480,40,27,'','pointer-events:auto;font-weight:800');b.innerHTML=`${esc(L('var'))}&nbsp;<span class="v6link">${esc(L('girisYap'))}</span>`;b.querySelector('.v6link').onclick=()=>openGiris(false);
+  fit();
+}
+function openDil(){
+  const M=mkModal('dil');let cur=lang;
+  txt(M,690,272,330,64,lang==='tr'?46:36,'v6sh').innerHTML=L('dilT');
+  hot(M,1130,268,72,70,'Kapat',closeModal,20);
+  const sel=el('img','v6sel');sel.src=IMG.dil_sec;sel.alt='';M.append(sel);
+  const pos=i=>[401+(i%2)*400,354+Math.floor(i/2)*104];
+  const put=()=>{const [x,y]=pos(LANGS.indexOf(cur));sel.style.left=x+'px';sel.style.top=y+'px';};put();
+  LANGS.forEach((l,i)=>{const [x,y]=pos(i);hot(M,x+16,y+14,370,84,l,()=>{cur=l;put();},30);});
+  txt(M,600,706,400,54,lang==='tr'?40:34,'','color:#1a1206').innerHTML=L('onay');
+  hot(M,510,692,580,80,L('onay'),()=>{closeModal();setLang(cur);},40);
+  fit();
+}
+
+/* ---------- ANA MENÜ ---------- */
+const nextMidnight=()=>{const d=new Date();d.setHours(24,0,0,0);return d.getTime();};
+const G6=()=>{save.g6=save.g6||{gift:0,chest:0};return save.g6;};
+const chestReady=()=>Date.now()-G6().chest>=24*HOUR,giftReady=()=>Date.now()-G6().gift>=24*HOUR;
+let MV=null;const MU={};
+function buildMenu(){
+  const S=$$('menu');if(!S)return;S.classList.add('v6on');let V=S.querySelector('.v6');if(V)V.remove();
+  V=el('div','v6');V.dataset.t='8';V.dataset.b='872';S.append(V);MV=V;
+  const bg=el('img','v6Bg');bg.src=IMG.menu;bg.alt='';V.append(bg);
+  MU.av=el('div','v6av');V.append(MU.av);
+  MU.lv=txt(V,160,30,56,36,24,'v6sh');
+  MU.nm=txt(V,240,20,176,40,32,'l v6sh');
+  MU.xp=el('div','v6xp');V.append(MU.xp);
+  MU.xt=txt(V,214,68,246,26,20,'v6sh');
+  MU.cash=txt(V,970,26,100,40,30,'l v6sh');
+  MU.chip=txt(V,1190,26,110,40,30,'l v6sh');MU.chip.innerHTML='<span class="cv">0</span>';
+  MU.mail=el('div','v6bd',box(1410,2,28,28));V.append(MU.mail);
+  MU.cue=el('div','v6bd',box(458,754,30,30));MU.cue.textContent='!';V.append(MU.cue);
+  MU.mis=el('div','v6bd',box(214,754,30,30));V.append(MU.mis);MU.gift=el('div','v6bd',box(232,578,30,30));V.append(MU.gift);
+  MU.sez=txt(V,158,287,124,30,17,'l','font-weight:700');
+  MU.chest=txt(V,1478,296,100,26,19,'l','font-weight:700');
+  MU.ot=txt(V,1360,626,110,26,19,'l','font-weight:700');
+  const ck=id=>()=>{const e=$$(id);if(e)e.click();};
+  hot(V,18,0,450,112,'Profil',()=>openProfile(),40);
+  hot(V,500,8,108,100,'VIP',()=>{const v=save.vipUntil&&save.vipUntil>Date.now();toast(V,v?'VIP aktif · '+dur(save.vipUntil-Date.now()):'VIP: Mağaza → Sandıklar → Kralın Hazinesi');},30);
+  hot(V,880,12,225,66,'Dolar',()=>openShop6('dolar'),33);
+  hot(V,1120,12,225,66,'Çip',()=>openShop6('cip'),33);
+  hot(V,1372,14,62,58,'Gelen kutusu',()=>openInbox(),14);
+  hot(V,1444,14,56,58,'Arkadaşlar',()=>toast(V,'Arkadaş listesi online sürümle gelecek.'),14);
+  hot(V,1500,14,52,58,'Ayarlar',()=>openSettings(),14);
+  hot(V,1552,14,44,58,'Bağlantı',()=>toast(V,navigator.onLine===false?'İnternet yok':'Bağlantı iyi'),14);
+  hot(V,13,183,300,140,'Sezon Ödülleri',()=>openLead(),18);
+  hot(V,1287,183,300,140,'Günlük Sandık',()=>{if(chestReady())openDailyChest();else openShop6('sandik');},18);
+  hot(V,20,374,264,167,'Arkadaşla Oyna',ck('mPriv'),18);
+  hot(V,313,374,247,167,'Turnuva',ck('mEv'),18);
+  hot(V,573,330,454,225,'Oyna',quickPlay,40);
+  hot(V,1040,374,250,167,'Lig',()=>openLead(),18);
+  hot(V,1320,374,260,167,'Dünya Çapında Oyna',()=>{try{renderRooms();}catch(_){}show('rooms');},18);
+  hot(V,20,580,267,82,'Ücretsiz Ödül',()=>openGifts(),18);
+  hot(V,1287,580,306,86,'Özel Teklif',()=>openShop6('ozel'),18);
+  const nav=[[24,229,'Görevler',ck('xMis')],[273,223,'İstakalar',()=>openCues()],[513,214,'Mağaza',()=>openShop6('ozel')],[733,134,'Masalar',()=>openTables6()],
+    [873,214,'Gelişim',()=>openProfile()],[1107,226,'Başarılar',ck('xAch')],[1351,229,'Ayarlar',()=>openSettings()]];
+  for(const [x,w,n,f] of nav)hot(V,x,764,w,n==='Masalar'?96:76,n,f,20);
+  refreshMenu();fit();
+}
+function quickPlay(){ // OYNA: giriş ücreti bakiyenin en fazla %15'i olan, kilidi açık en yüksek ülke masası (en az ilk masa)
+  let best=null;for(const r of ROOMS){const lock=!TEST_UNLOCK&&save.level<r.lvl;if(!lock&&save.coins>=r.fee&&(r.fee<=save.coins*.15||!best))best=r;}
+  if(!best){try{renderRooms();}catch(_){}show('rooms');return;}
+  startRoom(best);}
+function refreshMenu(){
+  if(!MV||!MV.isConnected)return;
+  try{
+    MU.lv.textContent=save.level;MU.nm.textContent=save.name||'Oyuncu';
+    const need=xpNeed(save.level),pc=Math.max(0,Math.min(1,save.xp/need));MU.xp.style.width=(246*pc)+'px';MU.xp.style.display=pc>0?'block':'none';
+    MU.xt.textContent=`${fmt(save.xp)} / ${fmt(need)}`;
+    MU.cash.textContent=bigN(save.cash);
+    const a=save.avatar;if(a&&(a.img||a.e)){MU.av.style.display='flex';MU.av.style.background=myAvC();MU.av.innerHTML=myAvT();}else MU.av.style.display='none';
+    const m=(save.inbox||[]).filter(x=>x.rw&&!x.c).length;MU.mail.style.display=m?'flex':'none';MU.mail.textContent=m;
+    const bd=(e,n)=>{e.style.display=n?'flex':'none';e.textContent=n;};
+    try{const m2=msDay();bd(MU.mis,m2.ids.filter(i=>(m2.prog[i]||0)>=MISSIONS.find(x=>x.id===i).n&&!m2.done[i]).length);}catch(_){}
+    try{bd(MU.gift,giftCounts().reduce((a,b)=>a+b,0));}catch(_){}
+    MU.cue.style.display=ALL_CUES.some(c=>{try{return canUp(c);}catch(_){return false;}})?'flex':'none';
+    MU.sez.textContent='Bitmesine: '+dur(lgEnd(lgSid())-Date.now()).replace(' ','');
+    MU.chest.textContent=chestReady()?'Hazır!':dur(G6().chest+24*HOUR-Date.now());MU.chest.style.color=chestReady()?'#46e06a':'#fff';
+    MU.ot.textContent=dur(nextMidnight()-Date.now());
+  }catch(e){try{bbaLog(e,'menü6');}catch(_){}}
+}
+setInterval(()=>{if($$('menu').classList.contains('show'))refreshMenu();if($$('shop6')&&$$('shop6').classList.contains('show'))refreshShop();},1000);
+
+/* ---------- MAĞAZA (4 sekme) ---------- */
+const TL_OZEL=[{t:'Başlangıç Paketi',c:20000,d:20,p:'₺71,99'},{t:'Şampiyon Paketi',c:256000,d:250,p:'₺719,99'},{t:'Efsane Kasa',c:2000000,d:2000,p:'₺3.599,99'}];
+const TL_CIP=[{t:'Küçük Yığın',c:20000,p:'₺71,99'},{t:'Orta Yığın',c:52000,p:'₺179,99'},{t:'Büyük Yığın',c:112000,p:'₺359,99'},{t:'Arena Çantası',c:256000,p:'₺719,99'},{t:'Şampiyon Kulesi',c:800000,p:'₺1.727,99'},{t:'Kraliyet Hazinesi',c:2000000,p:'₺3.599,99'}];
+const TL_DOL=[{t:'Küçük Deste',d:20,p:'₺71,99'},{t:'Orta Deste',d:50,p:'₺179,99'},{t:'Büyük Deste',d:110,p:'₺359,99'},{t:'Nakit Çantası',d:250,p:'₺719,99'},{t:'Şampiyon Yığını',d:800,p:'₺1.727,99'},{t:'Kraliyet Kasası',d:2000,p:'₺3.599,99'}];
+const SANDIK=[{t:'Arena Kasası',cost:20,rar:1,pc:2,coins:5000,col:'#5fb8ff'},{t:'Şampiyon Sandığı',cost:50,rar:2,pc:5,chalk:1,col:'#c27bff'},{t:'Kralın Hazinesi',cost:120,rar:3,pc:10,vip:7,col:'#ffd21a'}];
+window.SHOP6={TL_OZEL,TL_CIP,TL_DOL,SANDIK};
+let SV=null,stab='ozel';const SU={};
+function buildShop(){
+  let S=$$('shop6');if(!S){S=el('div','screen');S.id='shop6';document.body.append(S);}
+  S.innerHTML='';SV=el('div','v6');SV.dataset.t='8';SV.dataset.b='880';S.append(SV);
+  SU.bg=el('img','v6Bg');SU.bg.alt='';SV.append(SU.bg);
+  SU.cash=txt(SV,1105,28,90,42,30,'l v6sh');SU.chip=txt(SV,1362,28,110,42,30,'l v6sh');SU.chip.innerHTML='<span class="cv">0</span>';
+  hot(SV,20,15,110,82,'Geri',()=>show('menu'),40);
+  hot(SV,1180,18,66,62,'Dolar al',()=>setTab('dolar'),30);hot(SV,1470,18,66,62,'Çip al',()=>setTab('cip'),30);
+  [['ozel',73,354],['cip',447,346],['dolar',809,364],['sandik',1196,344]].forEach(([k,x,w])=>hot(SV,x,147,w,69,k,()=>setTab(k),30));
+  SU.layer=el('div','',box(0,0,1600,900)+'position:absolute');SV.append(SU.layer);
+}
+function setTab(k){stab=k;SU.bg.src=IMG['sh_'+k];const P=SU.layer;P.innerHTML='';
+  if(k==='ozel'){[[43,371],[421,371],[800,371]].forEach(([x,w],i)=>hot(P,x,262,w,500,TL_OZEL[i].t,()=>tlBuy(TL_OZEL[i]),26));
+    SU.al=txt(P,1240,698,262,52,38,'v6sh');hot(P,1180,262,371,500,'Günlük Hediye',claimGift,26);}
+  if(k==='cip'||k==='dolar'){const A=k==='cip'?TL_CIP:TL_DOL,X=[57,557,1060],Y=[251,523];
+    A.forEach((pk,i)=>hot(P,X[i%3],Y[Math.floor(i/3)],482,Math.floor(i/3)?243:229,pk.t,()=>tlBuy(pk),26));}
+  if(k==='sandik'){[57,436,814].forEach((x,i)=>hot(P,x,259,357,521,SANDIK[i].t,()=>buyChest(SANDIK[i]),26));
+    SU.ac=txt(P,1235,700,282,52,40,'v6sh');hot(P,1193,259,357,521,'Günlük Sandık',openDailyChest,26);}
+  refreshShop();fit();}
+function refreshShop(){if(!SV)return;SU.cash.textContent=bigN(save.cash);
+  if(stab==='ozel'&&SU.al&&SU.al.isConnected){const r=giftReady();SU.al.textContent=r?'AL':dur(G6().gift+24*HOUR-Date.now());SU.al.style.fontSize=r?'40px':'28px';}
+  if(stab==='sandik'&&SU.ac&&SU.ac.isConnected){const r=chestReady();SU.ac.textContent=r?'AÇ':dur(G6().chest+24*HOUR-Date.now());SU.ac.style.fontSize=r?'42px':'28px';}}
+function openShop6(k){if(!SV)buildShop();show('shop6');setTab(k||stab);refreshCoins();}
+window.openShop6=openShop6;
+function okDlg(title,body){dlg(`<div style="font-size:18px;font-weight:900;color:#ffd21a;margin-bottom:6px">${esc(title)}</div><div style="font-size:14px;line-height:1.45">${body}</div><button id="v6ok" style="margin-top:12px;min-width:140px">Tamam</button>`);$$('v6ok').onclick=closeDlg;}
+function tlBuy(pk){
+  const what=[pk.c?fmt(pk.c)+' Çip':'',pk.d?fmt(pk.d)+' Dolar':''].filter(Boolean).join(' + ');
+  if(!window.BBA_DEV){okDlg(pk.t,`${esc(what)} · <b>${esc(pk.p)}</b><br><br>Gerçek parayla ödeme Google Play sürümünde açılacak.`);return;}
+  dlg(`<div style="font-size:18px;font-weight:900;color:#ffd21a">${esc(pk.t)}</div><div style="margin:6px 0">${esc(what)}<br><b>${esc(pk.p)}</b></div><div class="stats" style="color:#ffb02e">TEST MODU: ödeme alınmadan verilir.</div><button id="v6y" class="gold" style="margin-top:10px">Al (test)</button> <button id="v6n">İptal</button>`);
+  $$('v6n').onclick=closeDlg;$$('v6y').onclick=()=>{closeDlg();save.coins+=pk.c||0;save.cash+=pk.d||0;persist();refreshCoins();refreshShop();
+    try{if(pk.c)flyChips(14);}catch(_){}toast(SV,'+'+what);};}
+function claimGift(){if(!giftReady()){toast(SV,'Günlük Hediye '+dur(G6().gift+24*HOUR-Date.now())+' sonra');return;}
+  G6().gift=Date.now();persist();showLoot('Günlük Hediye','#46e06a','🎁',giveLoot([{coins:10000}]));refreshShop();}
+function cueOf(rar){const pool=BOX_CUES.filter(c=>c.rar===rar);return pool[Math.floor(Math.random()*pool.length)];}
+function extras(lines){if(!lines.length)return;const t0=Date.now(),iv=setInterval(()=>{const r=$$('chRes');const ok=r&&r.querySelector('#chOk');
+  if(ok){clearInterval(iv);const d=el('div','','margin-top:6px;display:flex;flex-direction:column;gap:4px;align-items:center',lines.map(l=>`<div style="font-weight:800;color:${l[1]}">${esc(l[0])}</div>`).join(''));ok.before(d);}
+  else if(Date.now()-t0>6000)clearInterval(iv);},120);}
+function buyChest(C){
+  if(window._boxLock>Date.now())return;
+  if(!(save.cash>=C.cost)){toast(SV,`Yeterli Dolar yok (${C.cost} gerekli, sende ${bigN(save.cash)}).`);return;}
+  window._boxLock=Date.now()+1300;save.cash-=C.cost;
+  const items=[];let left=C.pc;while(left>0){const n=Math.min(left,1+Math.floor(Math.random()*Math.min(3,left)));items.push({cue:cueOf(C.rar),n});left-=n;}
+  if(C.coins)items.push({coins:C.coins});
+  const ex=[];if(C.chalk){save.chalk=(save.chalk||0)+C.chalk;ex.push(['+'+C.chalk+' Tebeşir','#7fd3ff']);}
+  if(C.vip){save.vipUntil=Math.max(Date.now(),save.vipUntil||0)+C.vip*864e5;ex.push(['VIP '+C.vip+' gün','#ffd21a']);}
+  showLoot(C.t,C.col,'🧰',giveLoot(items));extras(ex);refreshShop();}
+function openDailyChest(){
+  if(!chestReady()){if(SV&&$$('shop6').classList.contains('show'))toast(SV,'Günlük Sandık '+dur(G6().chest+24*HOUR-Date.now())+' sonra');else openShop6('sandik');return;}
+  G6().chest=Date.now();persist();showLoot('Günlük Sandık','#46e06a','🧰',giveLoot([{cue:cueOf(1),n:1},{coins:5000}]));refreshShop();refreshMenu();}
+window.openDailyChest=openDailyChest;
+window.V6API={buyChest:c=>buyChest(c),tlBuy:p=>tlBuy(p),claimGift:()=>claimGift(),setTab:k=>setTab(k),homog};
+
+/* ---------- MASALAR ---------- */
+function homog(w,h,q){const [[x0,y0],[x1,y1],[x2,y2],[x3,y3]]=q;const dx1=x1-x2,dx2=x3-x2,dx3=x0-x1+x2-x3,dy1=y1-y2,dy2=y3-y2,dy3=y0-y1+y2-y3;
+  let a,b,c,d,e,f,g,hh;
+  if(Math.abs(dx3)<1e-9&&Math.abs(dy3)<1e-9){a=x1-x0;b=x3-x0;c=x0;d=y1-y0;e=y3-y0;f=y0;g=0;hh=0;}
+  else{const det=dx1*dy2-dx2*dy1;g=(dx3*dy2-dx2*dy3)/det;hh=(dx1*dy3-dx3*dy1)/det;a=x1-x0+g*x1;b=x3-x0+hh*x3;c=x0;d=y1-y0+g*y1;e=y3-y0+hh*y3;f=y0;}
+  return `matrix3d(${a/w},${d/w},0,${g/w},${b/h},${e/h},0,${hh/h},0,0,1,0,${c},${f},0,1)`;}
+const TOPC={};
+function topSrc(t){if(TOPC[t.id])return TOPC[t.id];
+  if(t.img&&window.TBL_SRC&&TBL_SRC[t.img])return TOPC[t.id]=TBL_SRC[t.img];
+  try{const cv=document.createElement('canvas');cv.width=W;cv.height=H;const old=ctx;ctx=cv.getContext('2d');try{drawTable(t);}finally{ctx=old;}return TOPC[t.id]=cv.toDataURL('image/webp',.9);}catch(e){try{bbaLog(e,'masa6');}catch(_){}return '';}}
+function topImg(t,q){const i=el('img','v6Top');i.alt='';i.width=844;i.height=464;i.style.width='844px';i.style.height='464px';i.style.transform=homog(844,464,q);i.src=topSrc(t);return i;}
+const BIGQ=[[445,272],[1165,272],[1285,392],[325,392]],CARDQ=[[13,60],[230,19],[330,47],[113,100]];
+let TV=null,prev=null;const TU={};
+function buildTables(){
+  let S=$$('tbl6');if(!S){S=el('div','screen');S.id='tbl6';document.body.append(S);}
+  S.innerHTML='';TV=el('div','v6');TV.dataset.t='8';TV.dataset.b='886';S.append(TV);
+  const bg=el('img','v6Bg');bg.src=IMG.masalar;bg.alt='';TV.append(bg);
+  TU.top=el('div','',box(0,0,1600,900)+'position:absolute;pointer-events:none');TV.append(TU.top);
+  TU.title=txt(TV,560,160,450,56,46,'v6sh','font-style:italic;letter-spacing:.5px');
+  TU.pill=txt(TV,660,222,280,36,26,'v6gold');
+  TU.cash=txt(TV,1158,32,90,44,30,'l v6sh');TU.chip=txt(TV,1408,32,110,44,30,'l v6sh');TU.chip.innerHTML='<span class="cv">0</span>';
+  hot(TV,14,12,110,86,'Geri',()=>show('menu'),43);
+  hot(TV,1244,22,60,62,'Dolar al',()=>openShop6('dolar'),30);hot(TV,1510,22,60,62,'Çip al',()=>openShop6('cip'),30);
+  TU.row=el('div','v6Row');TV.append(TU.row);
+}
+function tState(t){const own=save.tables.includes(t.id);return save.table===t.id?'sel':own?'norm':t.vip?'vip':'lock';}
+function renderTables6(){
+  if(!TV)buildTables();
+  const P=tableById(prev||save.table);prev=P.id;
+  TU.top.innerHTML='';TU.top.append(topImg(P,BIGQ));const b=el('img','',box(735,285,145,75)+'position:absolute');b.src=IMG.balls;b.alt='';TU.top.append(b);
+  TU.title.textContent=P.name.toLocaleUpperCase('tr-TR');
+  const st=tState(P);TU.pill.textContent=st==='sel'?'Seçili Masa':st==='norm'?'Kullanılabilir':(P.price?fmt(P.price)+' Çip':'Kilitli');
+  TU.cash.textContent=bigN(save.cash);
+  const sl=TU.row.scrollLeft;TU.row.innerHTML='';
+  for(const t of TABLES){const s=tState(t),c=el('div','v6C'+(t.id===prev?' pv':''));c.dataset.id=t.id;
+    const fr=el('img','v6fr');fr.src=IMG['card_'+s];fr.alt='';
+    const win=el('div','v6w');const bd=el('img','v6bdi');bd.src=IMG.tbody;bd.alt='';win.append(bd,topImg(t,CARDQ));
+    c.append(win,fr);
+    const nm=el('div','v6nm');nm.textContent=t.name;c.append(nm);
+    const P2={sel:[63,194,275,56],norm:[55,193,270,55],lock:[53,192,281,58],vip:[45,192,288,58]}[s];
+    const pl=el('div','v6pl',box(P2[0]+(s==='lock'||s==='vip'?60:0),P2[1],P2[2]-(s==='lock'||s==='vip'?60:0),P2[3]));
+    pl.textContent=s==='sel'?'SEÇİLİ':s==='norm'?'KULLAN':(t.price?fmt(t.price)+' Çip':'Kilitli');if(s==='lock'||s==='vip')pl.style.fontSize='30px';c.append(pl);
+    if(s==='lock'||s==='vip'){const lk=el('img','v6lk');lk.src=IMG.lock;lk.alt='';c.append(lk);}
+    c.onclick=e=>{try{ensureAudio();play('click',.35,1.4);}catch(_){}
+      const inPill=e.target===pl||(e.offsetY>185);
+      if(prev!==t.id&&!inPill){prev=t.id;renderTables6();return;}
+      if(s==='norm'){save.table=t.id;persist();prev=t.id;renderTables6();toast(TV,t.name+' seçildi');}
+      else if(s==='lock'){if(!t.price){toast(TV,'Bu masa kilitli');return;}if(save.coins<t.price){toast(TV,'Yeterli çip yok');return;}
+        save.coins-=t.price;save.tables.push(t.id);save.table=t.id;persist();refreshCoins();prev=t.id;renderTables6();}
+      else {prev=t.id;renderTables6();}};
+    TU.row.append(c);}
+  TU.row.scrollLeft=sl;
+  if(!TU.row._s){TU.row._s=1;requestAnimationFrame(()=>{const i=TABLES.findIndex(t=>t.id===prev);TU.row.scrollLeft=Math.max(0,i*382-573);});}
+  fit();}
+function openTables6(){if(!TV)buildTables();prev=save.table;if(TU.row)TU.row._s=0;show('tbl6');refreshCoins();}
+window.openTables6=openTables6;
+
+/* ---------- bağlantılar: eski çağrılar yeni ekranlara ---------- */
+const _os=openShop;window.openShop=openShop=function(tab){
+  if(tab==='free')return _os.apply(this,arguments);           // Hediyeler → Efsane Sandıklar (ücretsiz ödül listesi) eskisi gibi
+  if(tab==='tables')return openTables6();
+  return openShop6({box:'sandik',offer:'ozel',pack:'cip'}[tab]||'ozel');};
+const _sh=show;window.show=show=function(id){const r=_sh.apply(this,arguments);
+  try{if(id==='menu'){if(!MV)buildMenu();else refreshMenu();}if(id==='login'&&!$$('login').querySelector('.v6'))buildLogin();if(id==='tbl6')renderTables6();}catch(e){try{bbaLog(e,'v6');}catch(_){}}
+  requestAnimationFrame(fit);return r;};
+const _rc=refreshCoins;window.refreshCoins=refreshCoins=function(){const r=_rc.apply(this,arguments);try{refreshMenu();refreshShop();if(TU.cash)TU.cash.textContent=bigN(save.cash);}catch(_){}return r;};
+if(typeof window.bbaBack==='function'){const _bk=window.bbaBack;window.bbaBack=function(){
+  try{const shown=id=>{const e=$$(id);return e&&e.style.display==='flex';};
+    if(!shown('dlg')&&modal){closeModal();return 'ok';}
+    const cur=document.querySelector('.screen.show');if(!shown('dlg')&&cur&&(cur.id==='shop6'||cur.id==='tbl6')){show('menu');return 'ok';}}catch(_){}
+  return _bk.apply(this,arguments);};}
+// eski mağazanın sekmeleri gizli: oraya sadece "Efsane Sandıklar" (ücretsiz ödüller) ile gelinir
+try{const st=document.createElement('style');st.textContent='#shopTabs{display:none!important}';document.head.append(st);}catch(_){}
+try{buildLogin();buildMenu();const cur=document.querySelector('.screen.show');if(cur&&cur.id==='menu')refreshMenu();}catch(e){try{bbaLog(e,'v6 kurulum');}catch(_){}}
+fit();try{bbaIz('v6 ekranları kuruldu');}catch(_){}
+})();
 </script>
 </body>
 </html>

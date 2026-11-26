@@ -43,16 +43,18 @@ def test_turnuva_giris_yazisi(game):
     g.wait(6000); g.js("leaveGame();startTourRound(1)"); g.wait(1500)
     assert 'Giriş' not in g.js("document.querySelector('#mmScr .mqInfo').textContent")
 
-def test_kutu_cift_basis_ve_teklif(game):
+def test_sandik_cift_basis_ve_tl_paket(game):
+    # V6 mağaza: Sandıklar (Dolar ile) çift basışta bir kez düşer; TL paketleri test modunda onayla verilir
     g = game(); g.login()
-    g.js("openShop('box')"); g.wait(400)
-    c0 = g.js("save.cash"); g.js("buyBox(1,1);setTimeout(()=>buyBox(1,1),200)"); g.wait(2500)
-    assert c0 - g.js("save.cash") == g.js("BOXES[0].c1"), 'çift basışta iki kez para düştü'
-    g.js("closeDlg();shopTab='offer';renderShop()"); c1 = g.js("save.cash"); g.js("buyOffer(1)"); g.wait(300)
-    assert c1 - g.js("save.cash") == 11
-    g.js("closeDlg()"); c2 = g.js("save.cash"); g.js("buyOffer(3)"); g.wait(300)
-    assert c2 - g.js("save.cash") == 31
-    assert g.js("[BOXES[1].c1,BOXES[1].c3]") == [16, 44], 'normal fiyat bozuldu'
+    g.js("openShop('box')"); g.wait(300)
+    assert g.js("document.querySelector('.screen.show').id") == 'shop6'
+    c0 = g.js("save.cash"); g.js("V6API.buyChest(SHOP6.SANDIK[0]);setTimeout(()=>V6API.buyChest(SHOP6.SANDIK[0]),200)"); g.wait(2500)
+    assert c0 - g.js("save.cash") == 20, 'çift basışta iki kez para düştü'
+    g.js("closeDlg()"); c1 = g.js("save.coins")
+    g.js("V6API.tlBuy(SHOP6.TL_CIP[0])"); g.wait(200); g.js("document.getElementById('v6y').click()"); g.wait(200)
+    assert g.js("save.coins") - c1 == 20000
+    g.js("save.cash=3"); c2 = g.js("save.cash"); g.js("window._boxLock=0;V6API.buyChest(SHOP6.SANDIK[2])"); g.wait(200)
+    assert g.js("save.cash") == c2, 'para yetmezken sandık açıldı'
     no_errors(g)
 
 def test_iade_sonrasi_mac_acilmaz(game):

@@ -465,6 +465,7 @@ Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama bek
 - **Sunucu kararı (Furkan, 26.11.2026):** Oyun sunucusu **Hetzner**'de olacak. Firebase'in de kullanılıp kullanılmayacağı sonra konuşulacak. Aşama 3–5 bu karara göre yeniden düzenlenecek.
 
 ## Değişiklik günlüğü
+- 26.11.2026 — surum-76: Furkan'ın 12 yeni görseli araya alındı (giriş + pencereler + 6 dil, mavi ana menü, 4 sekmeli mağaza, 3B Masalar ekranı). 9-02 Görsel paketinin bir kısmı öne çekildi. Teknik sıra değişmedi (sırada K-00 / 1-10).
 - 26.11.2026 — AŞAMA K (Kalite ve profesyonellik) eklendi; K-00 Profesyonellik denetimi Furkan'ın "başla"sını bekliyor. Furkan "bekle" dedi; nerede kalındığı "Sıradaki görev"e yazıldı.
 - 26.11.2026 — surum-75: 1-02, 1-03, H-05 ✅. Ayarlar → Güvenlik'te etiket taşması düzeltildi, telefonun yazı boyutu artık ekranları bozmuyor (setTextZoom 100).
 - 26.11.2026 — surum-74: H-01, H-02, H-03, H-04, H-08, 0-01, 0-02, 0-03, 0-04, 1-01 ✅ (denetçi alt ajan her birini ayrıca test edip onayladı).
