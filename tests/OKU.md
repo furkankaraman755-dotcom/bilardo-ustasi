@@ -14,5 +14,9 @@
 | `test_kayit.py` | Çift yuvalı kayıt, bozuk kayıt, hafıza dolu, sıfırla, yedek kodu, dosya yedeği |
 | `test_guvenlik.py` | İsim ve yedek kodu ile kod çalıştırılamaması |
 | `test_rapor.py` | Hata raporu, açılış izi, kopyalama, liderlik belleği |
+| `test_devmode.py` | Test modu (BBA_DEV) açık/kapalı farkı, yayın hâli |
+| `test_gorunus.py` | Ekranları önceki sürümle piksel piksel karşılaştırır; bilerek değişiklikte commit'e `[görünüş]` |
+| `test_v6.py` | Yeni giriş/menü/mağaza/masalar; pot çipi görseli ve miktarı (G-01); amblem, giriş efekti, Android simgeleri (G-02) |
+| `test_dokunus.py` | Yeni ekranlardaki bütün düğmelere **gerçek parmak dokunuşu**; Efsane Sandıklar toplama; eski mağaza hiçbir yoldan açılmaz (G-03) |
 
 Yeni bir hata düzeltildiğinde, o hatanın geri gelmesini önleyen bir test buraya eklenir.

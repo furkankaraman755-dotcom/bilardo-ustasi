@@ -1192,9 +1192,9 @@ img.ci{display:inline-block;height:1.15em;width:auto;vertical-align:-.22em;margi
 #intro.out{opacity:0;transition:opacity .45s ease}
 #intro.out.fast{transition-duration:.22s}
 #intro .inSt{position:absolute;inset:0;perspective:1100px;perspective-origin:50% 45%;display:flex;align-items:center;justify-content:center}
-#inW{position:relative;flex:none;height:min(100vh,56.25vw);width:min(177.78vh,100vw);opacity:0;will-change:transform,opacity,filter}
+#inW{position:relative;flex:none;height:min(86vh,86vw);width:min(86vh,86vw);opacity:0;will-change:transform,opacity,filter}
 #inW img,#inSw{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;
- -webkit-mask-image:radial-gradient(ellipse 66% 70% at 50% 50%,#000 60%,transparent 100%);mask-image:radial-gradient(ellipse 66% 70% at 50% 50%,#000 60%,transparent 100%)}
+ border-radius:11%;object-fit:cover} /* surum-78 (G-02): Furkan'ın kare amblemi; köşeler yuvarlak, maske yok */
 #inSw{mix-blend-mode:screen}
 #inC{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 #intro .inSkip{position:absolute;right:3.2vh;bottom:2.6vh;color:rgba(255,222,150,.6);font:600 2.3vh Roboto,Arial,sans-serif;letter-spacing:.12em;opacity:0;transition:opacity .5s}
@@ -1270,7 +1270,7 @@ addEventListener('error',e=>bbaLog(e));addEventListener('unhandledrejection',e=>
 </style>
 </head>
 <body>
-<div id="intro"><div class="inSt"><div id="inW"><img id="inImg" alt="" decoding="async" src="a/26cf350d4386.webp"><canvas id="inSw"></canvas></div></div><canvas id="inC"></canvas><div class="inSkip">GEÇMEK İÇİN DOKUN</div></div>
+<div id="intro"><div class="inSt"><div id="inW"><img id="inImg" alt="" decoding="async" src="a/31f842b3c833.webp"><canvas id="inSw"></canvas></div></div><canvas id="inC"></canvas><div class="inSkip">GEÇMEK İÇİN DOKUN</div></div>
 <svg width="0" height="0" style="position:absolute"><defs>
  <linearGradient id="crG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6c2"/><stop offset=".35" stop-color="#ffd54a"/><stop offset=".7" stop-color="#e09a12"/><stop offset="1" stop-color="#8a5208"/></linearGradient>
  <linearGradient id="crB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe680"/><stop offset=".5" stop-color="#c98a10"/><stop offset="1" stop-color="#6a3c04"/></linearGradient>
@@ -2782,7 +2782,7 @@ function gameOver(w,why){if(goDone)return;goDone=true; // aynı maçın sonucu i
         save.chestCnt=(save.chestCnt||0)+1;
         try{lgCredit(r.prize-r.fee,'room');}catch(e){bbaLog(e,'lig');}
         if(save.chestCnt>=(save.chestNext||2)){save.chestCnt=0;save.chestNext=2+(Math.random()<.5?1:0);const tier=Math.min(3,Math.floor(r.idx/4));
-          up=(up?up+' · ':'')+(addChestToSlot(tier)?`📦 ${TIERN[tier]} kazandın! Ana menüdeki yuvadan aç.`:`📦 Sandık yuvaların dolu — sandık kaçtı!`);}
+          up=(up?up+' · ':'')+(addChestToSlot(tier)?`📦 ${TIERN[tier]} kazandın! Hediyeler → Efsane Sandıklar'dan aç.`:`📦 Sandık yuvaların dolu — sandık kaçtı!`);}
       }
       again='Tekrar ('+fmt(r.fee)+' 🪙)';}
     else if(w===0&&gopt.round<2){title=`✅ Tur ${gopt.round+1} kazanıldı!`;again='Sonraki tur →';}
@@ -4011,7 +4011,7 @@ addEventListener('resize',resize);
   // toz parçacıkları
   const R=Math.random,dust=[];for(let i=0;i<(LONG?80:45);i++)dust.push({x:R(),y:R(),vx:(R()-.5)*.012,vy:-.01-R()*.03,s:.4+R()*1.3,p:R()*6.28,w:.6+R()*2});
   const sparks=[];let ring=null,flash=-1,impacted=false,swd=false,dead=false,t0=0,raf=0;
-  const glints=LONG?[[.47,.33,0,.75,1.25],[.5,.05,.28,.6,.8],[.296,.733,.5,.55,.6],[.727,.733,.62,.55,.6],[.5,.86,.85,.45,.55],[.69,.6,.95,.4,.5]]:[[.47,.33,0,.5,1],[.5,.05,.12,.4,.7]];
+  const glints=LONG?[[.4,.33,0,.75,1.25],[.5,.2,.28,.6,.8],[.17,.68,.5,.55,.6],[.86,.68,.62,.55,.6],[.5,.8,.85,.45,.55],[.62,.885,.95,.4,.5]]:[[.4,.33,0,.5,1],[.5,.2,.12,.4,.7]]; /* amblem üzerindeki parıltı noktaları */
   function geo(sc){const w=W.offsetWidth,h=W.offsetHeight;return{cx:innerWidth/2,cy:innerHeight/2,w:w*sc,h:h*sc};}
   const at=(G,fx,fy)=>[(G.cx+(fx-.5)*G.w)*dpr,(G.cy+(fy-.5)*G.h)*dpr];
   function boom(){try{iAud();if(!ac||!sfxOut)return;const t=ac.currentTime+.01,k=LONG?1:.7;
@@ -4041,7 +4041,7 @@ addEventListener('resize',resize);
     // altın ışık süpürmesi
     const v=(t-T.s0)/(T.s1-T.s0);if(v>0&&v<1){if(!swd){swd=true;shing();}sweep(-.2+1.4*eio(v),Math.min(1,Math.sin(Math.PI*v)*1.6));}else if(u>0&&u<1)sweep(1.15-1.3*u,.5*Math.sin(Math.PI*u));else sweep(0,0);
     const G=geo(sc);
-    if(!impacted&&h>=0){impacted=true;flash=now;const [bx,by]=at(G,.5,.39);ring={x:bx,y:by,t:now};boom();
+    if(!impacted&&h>=0){impacted=true;flash=now;const [bx,by]=at(G,.5,.42);ring={x:bx,y:by,t:now};boom();
       for(let i=0;i<(LONG?60:30);i++){const a=R()*6.283,sp=(2+R()*9)*dpr*innerHeight/700;sparks.push({x:bx,y:by,px:bx,py:by,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-1.5*dpr,l:.55+R()*.75,t:now,s:.6+R()*1.2});}}
     x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,cw,ch);x.globalCompositeOperation='lighter';
     const da=cl((t-T.f0)/.9)*.9,unit=ch/420;
@@ -4052,7 +4052,7 @@ addEventListener('resize',resize);
       x.strokeStyle='rgba(255,214,120,1)';x.lineWidth=p.s*dpr*1.4;x.beginPath();x.moveTo(p.px-(p.x-p.px)*2,p.py-(p.y-p.py)*2);x.lineTo(p.x,p.y);x.stroke();
       const r=p.s*unit*4;x.drawImage(DOT,p.x-r,p.y-r,r*2,r*2);}
     if(ring){const a=(now-ring.t)/(LONG?650:420);if(a>=1)ring=null;else{x.globalAlpha=(1-a)*.85;x.strokeStyle='rgba(255,210,120,1)';x.lineWidth=(1-a)*7*dpr;x.beginPath();x.arc(ring.x,ring.y,eo(a)*ch*.55,0,6.283);x.stroke();}}
-    if(flash>0){const a=(now-flash)/(LONG?420:300);if(a<1){const [bx,by]=at(G,.5,.39),rr=ch*(.25+.5*a),g=x.createRadialGradient(bx,by,0,bx,by,rr);
+    if(flash>0){const a=(now-flash)/(LONG?420:300);if(a<1){const [bx,by]=at(G,.5,.42),rr=ch*(.25+.5*a),g=x.createRadialGradient(bx,by,0,bx,by,rr);
       g.addColorStop(0,'rgba(255,248,225,1)');g.addColorStop(.35,'rgba(255,214,130,.55)');g.addColorStop(1,'rgba(255,170,60,0)');x.globalAlpha=(1-a)*.95;x.fillStyle=g;x.fillRect(0,0,cw,ch);
       if(a<.35){x.globalAlpha=(1-a/.35)*.28;x.fillStyle='#fff3d6';x.fillRect(0,0,cw,ch);}}}
     for(const g of glints){const a=(t-T.g-g[2])/g[3];if(a<=0||a>=1)continue;const [gx,gy]=at(G,g[0],g[1]),env=Math.sin(Math.PI*a),r=ch*.11*g[4]*(.5+.5*env);
@@ -5772,6 +5772,7 @@ function openDailyChest(){
   G6().chest=Date.now();persist();showLoot('Günlük Sandık','#46e06a','🧰',giveLoot([{cue:cueOf(1),n:1},{coins:5000}]));refreshShop();refreshMenu();}
 window.openDailyChest=openDailyChest;
 window.V6API={buyChest:c=>buyChest(c),tlBuy:p=>tlBuy(p),claimGift:()=>claimGift(),setTab:k=>setTab(k),homog};
+window.V6UI={el,box,hot,txt,esc,dur,toast,fit}; /* surum-78: sonradan eklenen ekranlar aynı parçaları kullansın */
 
 /* ---------- MASALAR ---------- */
 function homog(w,h,q){const [[x0,y0],[x1,y1],[x2,y2],[x3,y3]]=q;const dx1=x1-x2,dx2=x3-x2,dx3=x0-x1+x2-x3,dy1=y1-y2,dy2=y3-y2,dy3=y0-y1+y2-y3;
@@ -5845,9 +5846,109 @@ if(typeof window.bbaBack==='function'){const _bk=window.bbaBack;window.bbaBack=f
     const cur=document.querySelector('.screen.show');if(!shown('dlg')&&cur&&(cur.id==='shop6'||cur.id==='tbl6')){show('menu');return 'ok';}}catch(_){}
   return _bk.apply(this,arguments);};}
 // eski mağazanın sekmeleri gizli: oraya sadece "Efsane Sandıklar" (ücretsiz ödüller) ile gelinir
-try{const st=document.createElement('style');st.textContent='#shopTabs{display:none!important}';document.head.append(st);}catch(_){}
+try{const st=document.createElement('style');st.textContent='#shop #shopTabs,#shopTabs{display:none!important}';document.head.append(st);}catch(_){} /* surum-78: eski kural #shop #shopTabs{display:block!important} daha güçlüydü */
 try{buildLogin();buildMenu();const cur=document.querySelector('.screen.show');if(cur&&cur.id==='menu')refreshMenu();}catch(e){try{bbaLog(e,'v6 kurulum');}catch(_){}}
 fit();try{bbaIz('v6 ekranları kuruldu');}catch(_){}
+})();
+</script>
+<style>
+/* ===== surum-78: Efsane Sandıklar (ücretsiz ödüller) yeni tasarımda ===== */
+#free6 .v6fRow{position:absolute;box-sizing:border-box;border-style:solid;border-width:34px 40px;border-image:url(a/fc82f0105d7e.webp) 34 40 34 40 fill stretch;pointer-events:none}
+#free6 .v6fGlow{position:absolute;border-radius:59px;box-shadow:0 0 22px 4px rgba(70,224,106,.55),inset 0 0 0 2px rgba(70,224,106,.65);pointer-events:none}
+#free6 .v6fNo{position:absolute;width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 50% 35%,#1d3157,#070d1c);border:3px solid #ffd21a;color:#fff;font:900 32px Roboto,Arial,sans-serif;display:flex;align-items:center;justify-content:center;box-shadow:0 0 12px rgba(255,190,0,.45);pointer-events:none}
+#free6 .v6fIc{position:absolute;pointer-events:none;object-fit:contain}
+#free6 .v6fBtn{position:absolute;pointer-events:none;width:300px;height:78px}
+#free6 .v6fBtn.off{filter:grayscale(1) brightness(.55)}
+#free6 .v6fBtn.got{filter:grayscale(.85) brightness(.75)}
+#free6 .v6fEmp{opacity:.55}
+/* surum-78 (G-01): maç ekranı pot çipi = Furkan'ın yeni çip görseli (miktar yazısı canlı: fmt(r.prize)) */
+#game #stake .hstk.hpile{background-image:url('a/ab5caad93a35.webp');width:calc(var(--u)*140);height:calc(var(--u)*82);margin-top:calc(var(--u)*2)}
+#free6 .v6fLk{position:absolute;width:46px;height:40px;pointer-events:none}
+</style>
+<script>
+/* ===== surum-78 (G-03): Hediyeler → Efsane Sandıklar artık eski mor mağazayı değil, yeni tasarımdaki kendi ekranını açar.
+   Ödül mantığı eskisiyle aynı: save.free {day,n,next}, FREE listesi, 30 dk ara, 24 saatte sıfırlama, Bronz Sandık → sandık yuvası. */
+(function FREE6(){
+const U=window.V6UI;if(!U)return;const {el,box,hot,txt,esc,dur,toast,fit}=U;const $$=id=>document.getElementById(id);
+const IMGF={bg:'a/1067b1cb9c4a.webp',btn:'a/bd709fb2f640.webp',chip:'a/5a85aea621fc.webp',chest:'a/2b812dc65feb.webp',lock:'a/578427b2801f.webp'};
+let V=null;const F={};
+function st(){const f=save.free;if(!f||typeof f!=='object'){save.free={day:Date.now(),n:0,next:0};}
+  const g=save.free;if(!(Date.now()-g.day<24*HOUR)){g.day=Date.now();g.n=0;g.next=0;persist();}return g;}
+function build(){
+  let S=$$('free6');if(!S){S=el('div','screen');S.id='free6';document.body.append(S);}
+  S.innerHTML='';V=el('div','v6');V.dataset.t='8';V.dataset.b='880';S.append(V);
+  const bg=el('img','v6Bg');bg.src=IMGF.bg;bg.alt='';V.append(bg);
+  F.head=txt(V,128,30,262,54,36,'v6sh','font-style:italic');F.head.textContent='HEDİYELER';
+  F.title=txt(V,600,160,400,56,44,'v6sh','font-style:italic;letter-spacing:.5px');F.title.textContent='EFSANE SANDIKLAR';
+  F.pill=txt(V,662,222,276,36,22,'v6gold');
+  F.cash=txt(V,1158,32,90,44,30,'l v6sh');F.chip=txt(V,1408,32,110,44,30,'l v6sh');F.chip.innerHTML='<span class="cv">0</span>';
+  hot(V,14,12,390,86,'Geri',back,43);
+  hot(V,1244,22,60,62,'Dolar al',()=>openShop6('dolar'),30);hot(V,1510,22,60,62,'Çip al',()=>openShop6('cip'),30);
+  F.rows=el('div','',box(0,0,1600,900)+'position:absolute;pointer-events:none');V.append(F.rows);
+}
+function back(){show('menu');try{openGifts();}catch(_){}}
+function render(){
+  if(!V)build();const f=st(),P=F.rows;P.innerHTML='';
+  F.pill.textContent='Sıfırlanmasına: '+dur(f.day+24*HOUR-Date.now());
+  F.cash.textContent=bigN(save.cash);
+  const X=160,W=1280,H=100;
+  FREE.forEach((r,i)=>{const y=268+i*108,got=i<f.n,cur=i===f.n,wait=cur&&Date.now()<f.next;
+    if(cur&&!wait)P.append(el('div','v6fGlow',box(X+4,y+4,W-8,H-8)));P.append(el('div','v6fRow',box(X,y,W,H)));
+    const no=el('div','v6fNo',box(X+44,y+18,64,64));no.textContent=i+1;P.append(no);
+    const chest=r.t!=='c',ic=el('img','v6fIc',chest?box(X+136,y+6,140,88):box(X+156,y+14,72,72));ic.src=chest?IMGF.chest:IMGF.chip;ic.alt='';P.append(ic);
+    txt(P,X+(chest?290:250),y+20,560,60,chest?42:46,'l v6sh').textContent=chest?'Bronz Sandık':fmt(r.v)+' Çip';
+    const bx=X+W-340,by=y+14,b=el('img','v6fBtn'+(got?' got':(cur&&!wait)?'':' off'),box(bx,by,300,72));b.src=IMGF.btn;b.alt='';P.append(b);
+    if(!got&&!cur){const lk=el('img','v6fLk',box(bx+127,by+19,46,40));lk.src=IMGF.lock;lk.alt='';P.append(lk);}
+    else{const t=txt(P,bx,by+6,300,60,got?28:wait?30:40,'v6sh');t.textContent=got?'✓ TOPLANDI':wait?dur(f.next-Date.now()):'TOPLA';
+      if(cur&&wait)t.dataset.w='1';}
+    hot(P,bx,by,300,72,chest?'Bronz Sandık':fmt(r.v)+' Çip',()=>claim(i),36);});
+  slots(P);fit();}
+/* Sandık yuvaları: maç galibiyetinden ve Bronz Sandık adımından gelen sandıklar burada açılır (yeni menüde yuva yok — denetçi bulgusu). */
+const TINT=['','grayscale(1) brightness(1.25)','sepia(.6) saturate(2) hue-rotate(-5deg) brightness(1.1)','hue-rotate(110deg) saturate(1.4) brightness(1.1)'];
+function slots(P){
+  txt(P,160,694,300,30,24,'l v6gold','font-style:italic').textContent='SANDIKLARIM';
+  const busy=save.slots.some(s=>s&&s.start&&chestLeft(s)>0);
+  save.slots.forEach((s,i)=>{const x=160+i*326,y=724,w=302,h=132;
+    P.append(el('div','v6fRow'+(s?'':' v6fEmp'),box(x,y,w,h)));
+    if(!s){txt(P,x,y+44,w,44,30,'v6sh','color:#8fa3c8').textContent='Boş Yuva';return;}
+    const left=chestLeft(s),ready=left===0;
+    if(ready)P.append(el('div','v6fGlow',box(x+4,y+4,w-8,h-8)));
+    const ic=el('img','v6fIc',box(x+18,y+22,140,88));ic.src=IMGF.chest;ic.alt='';ic.style.filter=TINT[s.tier]||'';P.append(ic);
+    const n=txt(P,x+150,y+24,146,38,28,'l v6sh');n.textContent=TIERN[s.tier].replace(' Sandık','');n.style.color=TIERC[s.tier];
+    const t=txt(P,x+150,y+66,146,42,left===null?25:29,'l v6sh');
+    t.textContent=left===null?(busy?'Sırada':'Kilidi Aç'):left>0?hm(left):'AÇ!';if(left>0)t.dataset.s=i;if(ready)t.style.color='#46e06a';
+    hot(P,x,y,w,h,'Yuva '+(i+1)+': '+TIERN[s.tier],()=>tapSlot(i),40);});}
+function tapSlot(i){const s=save.slots[i];if(!s)return;const left=chestLeft(s);
+  if(left===null){if(save.slots.some(x=>x&&x.start&&chestLeft(x)>0)){toast(V,'Önce açılmakta olan sandığı bekle.');return;}
+    s.start=Date.now();persist();toast(V,TIERN[s.tier]+' açılıyor: '+hm(CHEST_MIN[s.tier]*60e3));render();return;}
+  if(left>0){skipChest(i);return;}
+  openSlot(i);render();}
+function claim(i){const f=st();
+  if(i<f.n){toast(V,'Bu ödülü bugün topladın.');return;}
+  if(i>f.n){toast(V,'Önce önceki ödülü topla.');return;}
+  if(Date.now()<f.next){toast(V,'Sonraki ödül '+dur(f.next-Date.now())+' sonra');return;}
+  const r=FREE[i];if(!r)return;
+  if(r.t==='c'){save.coins+=r.v;try{flyChips(10);}catch(_){}toast(V,'+'+fmt(r.v)+' Çip');}
+  else{if(!addChestToSlot(0)){toast(V,'Sandık yuvaların dolu, önce birini aç.');return;}toast(V,'Bronz Sandık yuvana eklendi.');}
+  f.n++;f.next=Date.now()+30*60e3;persist();refreshCoins();try{giftDots();}catch(_){}render();}
+function open6(){if(!V)build();show('free6');render();}
+window.openFree6=open6;
+/* bağlantılar */
+const _os=window.openShop;window.openShop=openShop=function(tab){if(tab==='free')return open6();return _os.apply(this,arguments);};
+setInterval(()=>{const S=$$('free6');if(!S||!S.classList.contains('show'))return;const f=st();
+  F.pill.textContent='Sıfırlanmasına: '+dur(f.day+24*HOUR-Date.now());
+  const w=F.rows.querySelector('[data-w]');if(w){if(Date.now()>=f.next)return render();else w.textContent=dur(f.next-Date.now());}
+  else if(f.n===0&&F.rows.querySelector('.got'))return render();
+  for(const e of F.rows.querySelectorAll('[data-s]')){const l=chestLeft(save.slots[+e.dataset.s]);if(!(l>0))return render();e.textContent=hm(l);}},1000);
+/* eski yuva işlevleri (kilit aç, elmasla aç, aç) yuvaları değiştirince bu ekran da yenilensin */
+const _rs=window.renderSlots;window.renderSlots=renderSlots=function(){const r=_rs.apply(this,arguments);try{const S=$$('free6');if(S&&S.classList.contains('show'))render();}catch(_){}return r;};
+/* Hediyeler'deki Efsane Sandıklar rozeti: açılmaya hazır sandıkları da sayar */
+const _gc=window.giftCounts;window.giftCounts=giftCounts=function(){const c=_gc.apply(this,arguments);try{c[0]+=save.slots.filter(s=>s&&chestLeft(s)===0).length;}catch(_){}return c;};
+const _rc=window.refreshCoins;window.refreshCoins=refreshCoins=function(){const r=_rc.apply(this,arguments);try{if(F.cash)F.cash.textContent=bigN(save.cash);}catch(_){}return r;};
+if(typeof window.bbaBack==='function'){const _bk=window.bbaBack;window.bbaBack=function(){
+  try{const S=$$('free6');const d=$$('dlg');if(S&&S.classList.contains('show')&&!(d&&d.style.display==='flex')){back();return 'ok';}}catch(_){}
+  return _bk.apply(this,arguments);};}
+try{bbaIz('free6 kuruldu');}catch(_){}
 })();
 </script>
 </body>

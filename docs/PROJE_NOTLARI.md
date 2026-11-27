@@ -3,12 +3,12 @@
 Bu defter, yeni bir sohbette her şeyi baştan anlatmamak için tutulur.
 Yeni sohbette ilk mesaj: **"docs/PROJE_NOTLARI.md dosyasını oku, oradan devam et."**
 
-Son güncelleme: 26 Kasım 2026 · Son sürüm: **surum-77** · Durum: **⏸ Beklemede** (Furkan "başla" deyince K-00, bkz. Bölüm 4)
+Son güncelleme: 27 Kasım 2026 · Son sürüm: **surum-78** · Sıradaki iş: **K-00 Profesyonellik denetimi** (bkz. Bölüm 7)
 
 **İçindekiler**
 1. Projenin kimliği ve Furkan'ın kuralları
 2. Teknik altyapı (kod, kayıt, ekranlar, testler, derleme)
-3. Şimdiye kadar ne yaptık (19 Kasım → surum-77, tarih sırasıyla)
+3. Şimdiye kadar ne yaptık (19 Kasım → surum-78, tarih sırasıyla)
 4. Oyunun içeriği (masalar, fiyatlar, sandıklar, lig)
 5. Yaşanan hatalar ve dersler
 6. Konuşulan kararlar (maliyet, sunucu, paket adı)
@@ -95,13 +95,15 @@ Son güncelleme: 26 Kasım 2026 · Son sürüm: **surum-77** · Durum: **⏸ Bek
 - Dışa açık: `window.V6API`, `SHOP6`, `openShop6`, `openTables6`, `openDailyChest`.
 - **3B masalar:** `homog(w,h,quad)` → CSS `matrix3d`. Üstten çizilmiş masa resmi görseldeki 3B gövdeye perspektifle oturtulur (`BIGQ` büyük önizleme, `CARDQ` kartlar). Yeni masa eklenince kendiliğinden 3B olur.
 - RTL (Arapça): `[dir=rtl] .v6t.l{direction:rtl;justify-content:flex-end}`, şifre alanlarında sağ boşluk 70.
+- **Efsane Sandıklar ekranı (`#free6`, surum-78):** dosya sonunda `FREE6` bloğu. `window.V6UI` (V6'nın el/hot/txt/toast/fit parçaları) ile kurulur. `openShop('free')` → `openFree6()`. Ödül mantığı eskisiyle aynı (`save.free`, `FREE`). Altında **SANDIKLARIM** (4 yuva: Kilidi Aç / Sırada / süre → elmasla aç / AÇ!). `renderSlots` ve `giftCounts` sarmalandı.
+- **Eski `#shop` ekranı artık hiçbir yoldan açılmaz.** Kodda duruyor (silinmedi), sekme çubuğu `#shop #shopTabs,#shopTabs{display:none!important}` ile gizli.
 - Görsel temizleme araçları (Claude'un çalışma klasöründe, depoda değil): `sil.py` (silme / yatay-dikey doldurma), `warp.py`, `assets.py`, `map.json`.
 
 ### Test modu
 - `window.BBA_DEV=true;/*DEV*/` kaynakta açık. Bağlı olanlar: test parası (5B çip + 10B), `TEST_UNLOCK` (masa kilitleri, bütün ıstaka/masa), menü sayacına 5 dokunuş kısayolu. Hakkında'da ve raporda "TEST MODU" yazar.
 - CI yayın APK'sında `sed` ile `false` yazar ve `grep` ile doğrular.
 
-### Testler (`tests/`, pytest + Playwright, **41 test**)
+### Testler (`tests/`, pytest + Playwright, **45 test**)
 | Dosya | Ne sınar |
 |---|---|
 | `conftest.py` | `Game` yardımcısı: sabit tohum (mulberry32), zaman hızlandırma (≥5000 ms süreler hızlandırılmaz), temiz `bba_err`; `no_errors` hata kaydını da kontrol eder |
@@ -114,8 +116,8 @@ Son güncelleme: 26 Kasım 2026 · Son sürüm: **surum-77** · Durum: **⏸ Bek
 | `test_rapor` | Hata raporu, iz, cihaz bilgisi |
 | `test_devmode` | Test modu açık/kapalı farkı |
 | `test_gorunus` + `gorunus.py` | Ekranlar önceki commit'le piksel piksel karşılaştırılır (eşik 25 piksel). Bilerek görünüş değiştiren commit'e **`[görünüş]`** yazılır |
-| `test_v6` | Yeni giriş, menü, mağaza, masalar ekranlarının işlevleri |
-| `test_dokunus` | **Gerçek parmak dokunuşu** (`touchscreen.tap`): yeni ekranlardaki 108+ düğmenin her biri; her dokunuştan önce ekran sıfırlanır |
+| `test_v6` | Yeni giriş, menü, mağaza, masalar ekranlarının işlevleri; pot çipi görseli ve miktarı; amblem/giriş efekti ve Android simge boyutları |
+| `test_dokunus` | **Gerçek parmak dokunuşu** (`touchscreen.tap`): yeni ekranlardaki 108+ düğmenin her biri; her dokunuştan önce ekran sıfırlanır. Efsane Sandıklar toplama akışı ve "eski mağaza hiçbir yoldan açılmaz" testi |
 - Ayrıntı: `tests/OKU.md`. Yeni düzeltilen her hataya bir test eklenir.
 
 ### Derleme (CI) — `.github/workflows/build.yml`
@@ -306,9 +308,26 @@ Furkan: "görev haritasına disiplinli şekilde uy." Haritadaki eksik/hatalı g�
 - **Yeni kalıcı test `tests/test_dokunus.py`:** yeni ekranlardaki 108+ düğmenin her birine gerçek dokunuş. Eski sürümde kırmızı, yenide yeşil. CI: 41 test geçti.
 - Denetçi bütün oyunu taradı; dokunuşu engelleyen başka bir şey bulmadı. "Çalışmıyor gibi görünenler" listesi Bölüm 7'de.
 
+### 26 Kasım (gece) — Furkan'ın 3 görsel isteği, "bekle"
+- Pot çipi görseli (G-01), yeni uygulama amblemi (G-02), ödül alırken çıkan eski mor mağaza ekranı (G-03). Hepsi not alındı, görseller `docs/bekleyen_gorseller/`'e kondu.
+
+### 27 Kasım — surum-78 (G-03, G-01, G-02)
+Furkan: "Devam et." Denetçi alt ajan yeniden başlatıldı, önce bağımsız hazırlık taraması yaptı, sonra her işi ayrı test edip onayladı.
+- **G-03 — Efsane Sandıklar yeni ekranda:**
+  - Hediyeler → Efsane Sandıklar artık yeni mavi tasarımda kendi ekranını açıyor: Masalar görselinden başlık silinip gövdesi bulanıklaştırılan arka plan; satır çerçevesi, yeşil düğme, çip ve sandık mağaza görselinden parçalar. 1K / 2,5K / 5K Çip / Bronz Sandık, TOPLA, 30 dk bekleme, kilit, "✓ TOPLANDI", sıfırlanma süresi.
+  - **Hata:** eski mağazanın sekme çubuğu gizlenemiyordu (eski CSS kuralı daha güçlüydü). Oyuncu bu yoldan eski Özel Teklif'ten (11/31) ve eski Sürpriz Kutuları'ndan gerçek alım yapabiliyordu → kapandı. Denetçi 19 bağlamdaki bütün düğmeleri taradı: eski mağazaya hiçbir yol kalmadı.
+  - **Denetçinin bulgusu:** sandık yuvaları yeni menüde yoktu. Maç galibiyeti ve Bronz Sandık adımından gelen sandıklar açılamıyordu → aynı ekrana **SANDIKLARIM** (4 yuva) eklendi. Hazır sandıklar Hediyeler rozetinde sayılıyor; galibiyet mesajı "Hediyeler → Efsane Sandıklar'dan aç." oldu.
+  - Android geri tuşu: menüye döner ve Hediyeler penceresini açar.
+- **G-01 — Pot çipi:** maç ekranında üst ortadaki çip yığını Furkan'ın yeni çip görseli (arka plan temizlendi, saydam). Miktar canlı ve odanın ödülüne göre: Portekiz 500 … İstanbul 500M. Turnuva, Şans, Egzersiz, 2 Kişi eskisi gibi (pot göstermiyorlardı).
+- **G-02 — Amblem:**
+  - Giriş efekti yeni kare amblemle (dönerek gelme, 8 topuna çarpma parlaması, ışık süpürmesi, parıltılar amblemin üstündeki noktalara göre). Süre ve dokununca geçme aynı.
+  - Telefon simgesi: köşeleri saydam amblem; uyarlanabilir simgede amblem (54 dp) lacivert degrade zemin üstünde, daire/kare/squircle maskelerinin hiçbirinde çerçeve kesilmiyor.
+  - Play Store için `docs/magaza/play_ikon_512.png`.
+- Testler: 45 (yeni: Efsane Sandıklar toplama, eski mağaza kapalı, pot görseli/miktarı, simge boyutları).
+
 ---
 
-## BÖLÜM 4 — Oyunun içeriği (surum-77 itibarıyla)
+## BÖLÜM 4 — Oyunun içeriği (surum-78 itibarıyla)
 - **Ülke masaları (1'e 1):** 17 oda. Ödül = 2 × giriş, net kazanç = giriş. 1'e 1'de ülkenin kendi masası kullanılır.
   - Portekiz 250 · İtalya 1K · Fransa 4K · Hollanda 5K · Brezilya 10K · Japonya 50K · Mısır 100K
   - İspanya 250K · Almanya 500K · İngiltere 1M · Rusya 2,5M · Kore 5M · Amerika 10M
@@ -366,10 +385,10 @@ Furkan: "görev haritasına disiplinli şekilde uy." Haritadaki eksik/hatalı g�
 
 ## BÖLÜM 7 — Bundan sonra ne yapacağız
 
-**⏸ BEKLEMEDE — Furkan "başla" deyince:**
+**Sıradaki işler (27 Kasım, surum-78'den sonra):**
 1. **K-00 Profesyonellik denetimi** (oyun 8 Ball Pool ile ekran ekran karşılaştırılır → ekran görüntülü eksikler listesi → K görevleri).
 2. Teknik sıra: **1-10** (bütçe kontrolleri) → **1-04** (metinleri tek yerde topla; bütün oyun 6 dile çevrilebilsin) → **1-05** (CSS'i ayır). Son biten: 1-03 / surum-75.
-3. Görseller (Faz G) Furkan gönderince araya alınır. **Bekleyen: G-01** — maç ekranında üst ortadaki pot çipleri Furkan'ın yeni çip görseliyle değişecek, altındaki miktar maçın bahsine göre (örn. İstanbul 500M, Portekiz 500). **G-02** — yeni uygulama amblemi (gümüş çerçeve, 8 topu, BLACKBALL ARENA) telefon simgesi olacak, açılıştaki giriş efekti de bundan yapılacak. **G-03** — Hediyeler → Efsane Sandıklar eski mor mağazayı açıyor; eski sekme çubuğu da CSS hatası yüzünden gizlenemiyor (oyuncu eski Sürpriz Kutuları / Çip ve Nakit / Masalar'a gidebiliyor). Görseller `docs/bekleyen_gorseller/` içinde.
+3. Görseller (Faz G) Furkan gönderince araya alınır. (G-01, G-02, G-03 surum-78'de bitti.)
 - Ayrıntı: `GOREV_HARITASI.md` → "Sıradaki görev — NEREDE KALDIK".
 
 ### Furkan'dan beklenen cevaplar
@@ -383,7 +402,7 @@ Furkan: "görev haritasına disiplinli şekilde uy." Haritadaki eksik/hatalı g�
 - **Sadece "yakında" mesajı veren düğmeler:** VIP, Arkadaşlar, Google/Facebook/Apple girişi, Şifremi Unuttum (e-posta), Lig'deki Arkadaş/Ülke/Dünya sekmeleri, Hesap bağla, yayında TL paketleri. → Sunucu (Hetzner) ve ödeme gelince çalışacak.
 - **Aynı yere giden düğmeler:** Lig ve Sezon; Gelişim ve Profil; Mağaza ve Özel Teklif.
 - **Adıyla tam uyuşmayan hedefler:** Arkadaşla Oyna → eski "Özel Oyun" ekranı.
-- **Eski mor tasarımda kalan 9 ekran** (yeni mavi/3B görsellerle uyumsuz). Bunlardan biri ödül alırken açılan eski mağaza (G-03).
+- **Eski mor tasarımda kalan ekranlar** (yeni mavi/3B görsellerle uyumsuz): ödül penceresi (showLoot), Günlük Hazine, Çark, Gizemli Kartlar, Görevler, Başarımlar, Gelen Kutusu, Altın Atış, Hediyeler paneli, Profil. Eski mağaza G-03 ile kapandı.
 - **Etkisiz ödüller:** VIP ve tebeşir sadece kayda yazılıyor.
 - **Dil:** sadece giriş ekranları çevrili (1-04 ile çözülecek).
 - **Hesaplar** ayrı kayıt değil (aynı telefonda iki hesap aynı ilerlemeyi görür).
@@ -391,7 +410,7 @@ Furkan: "görev haritasına disiplinli şekilde uy." Haritadaki eksik/hatalı g�
 - **780×360 ekranda** Gizemli Kartlar düğmeleri kenara yapışık.
 
 ### Denetçi alt ajan
-- surum-77 denetimini bitirdi, listeyi verdi. **Kapatılmadı**; K-00 başlayınca aynı ajan devam ettirilecek. Furkan'a haber vermeden kapatılmaz.
+- surum-77 denetimini, 27 Kasım'da G-01/G-02/G-03 hazırlık taramasını ve onaylarını yaptı. **Kapatılmadı**; K-00'da aynı ajan devam edecek. Furkan'a haber vermeden kapatılmaz.
 
 ### Büyük plan (ayrıntı `docs/YOL_HARITASI.md`)
 - **0.** Kararlar (çoğu verildi) · **G.** Görsel paketi · **K.** Kalite ve profesyonellik

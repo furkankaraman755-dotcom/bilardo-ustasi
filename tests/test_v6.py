@@ -72,3 +72,30 @@ def test_gunluk_hediye_ve_sandik(game):
     g.js("openDailyChest()"); g.wait(1500); g.js("closeDlg()")
     assert g.js("save.g6.chest>0")
     no_errors(g)
+
+
+def test_pot_cipi_yeni_gorsel_ve_bahse_gore_miktar(game):
+    """surum-78 (G-01): maç ekranında pot kutusu Furkan'ın yeni çip görseli; miktar odanın ödülü."""
+    g = game(fast=0.25); g.login()
+    g.js("startRoom(ROOMS[16])"); g.page.wait_for_function("document.querySelector('#stake .hpile')", timeout=20000)
+    assert 'ab5caad93a35' in g.js("getComputedStyle(document.querySelector('#stake .hpile')).backgroundImage")
+    assert g.js("document.querySelector('#stake .hpv').textContent") == g.js("fmt(ROOMS[16].prize)") == '500M'
+    no_errors(g)
+
+def test_amblem_giris_efekti_ve_simgeler():
+    """surum-78 (G-02): giriş efekti yeni amblemi kullanır; Android simgeleri doğru boyutta ve saydam."""
+    import pathlib
+    from PIL import Image
+    root = pathlib.Path(__file__).resolve().parent.parent
+    html = (root / 'index.html').read_text(encoding='utf-8')
+    assert 'id="inImg" alt="" decoding="async" src="a/31f842b3c833.webp"' in html
+    assert (root / 'a' / '31f842b3c833.webp').exists()
+    for k, f in {'mdpi': 1, 'hdpi': 1.5, 'xhdpi': 2, 'xxhdpi': 3, 'xxxhdpi': 4}.items():
+        d = root / 'native' / 'res' / f'mipmap-{k}'
+        for n, dp in [('ic_launcher', 48), ('ic_launcher_round', 48), ('ic_launcher_foreground', 108), ('ic_launcher_background', 108)]:
+            im = Image.open(d / f'{n}.png')
+            assert im.size == (round(dp * f),) * 2, (k, n, im.size)
+        fg = Image.open(d / 'ic_launcher_foreground.png')
+        assert fg.mode == 'RGBA' and fg.getpixel((0, 0))[3] == 0  # köşeler saydam (maskede kesilmesin)
+    for x in ['ic_launcher.xml', 'ic_launcher_round.xml']:
+        assert '@mipmap/ic_launcher_background' in (root / 'native/res/mipmap-anydpi-v26' / x).read_text()

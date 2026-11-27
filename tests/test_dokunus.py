@@ -10,6 +10,7 @@ SETUP = {
     'dil-pencere': "show('login');[...document.querySelectorAll('#login .v6h')].find(b=>b.getAttribute('aria-label')==='Dil').click()",
     'mağaza-özel': "openShop6('ozel')", 'mağaza-çip': "openShop6('cip')", 'mağaza-dolar': "openShop6('dolar')", 'mağaza-sandık': "openShop6('sandik')",
     'masalar': "openTables6()",
+    'efsane-sandıklar': "openShop('free')",
 }
 SCOPE = {'giriş-pencere': '#login .v6m .v6h', 'üye-pencere': '#login .v6m .v6h', 'dil-pencere': '#login .v6m .v6h', 'giriş': '#login .v6>.v6h', 'menü': '#menu .v6h'}
 RESET = """()=>{try{closeDlg()}catch(_){}for(let i=0;i<6;i++){try{if(bbaBack()==='exit')break;}catch(_){break;}}try{closeDlg()}catch(_){}
@@ -34,3 +35,30 @@ def test_butun_v6_dugmeleri_dokunusla_calisir(browser):
     ctx.close()
     assert tot >= 100, tot
     assert not bad, 'dokunuşla çalışmayan düğmeler: ' + str(bad)
+
+
+def test_efsane_sandiklar_yeni_ekran_ve_toplama(game):
+    """surum-78 (G-03): Hediyeler → Efsane Sandıklar eski mor mağazayı değil yeni ekranı açar; Topla dokunuşla çalışır."""
+    g = game(); g.login(); g.js("show('menu');openGifts()"); g.wait(400)
+    b = g.page.locator('#gf4 .gfC').first.bounding_box()
+    g.page.touchscreen.tap(b['x'] + b['width'] / 2, b['y'] + b['height'] / 2); g.wait(500)
+    assert g.js("document.querySelector('.screen.show').id") == 'free6'
+    assert g.js("getComputedStyle(document.getElementById('shop')).display") == 'none'
+    c0 = g.js("save.coins")
+    t = g.page.locator('#free6 .v6h').nth(3).bounding_box()
+    g.page.touchscreen.tap(t['x'] + t['width'] / 2, t['y'] + t['height'] / 2); g.wait(300)
+    assert g.js("save.coins") - c0 == 1000 and g.js("save.free.n") == 1
+    g.page.touchscreen.tap(t['x'] + t['width'] / 2, t['y'] + t['height'] / 2); g.wait(200)
+    assert g.js("save.free.n") == 1  # aynı ödül iki kez alınmaz
+    assert g.js("bbaBack()") == 'ok' and g.js("document.querySelector('.screen.show').id") == 'menu'
+    no_errors(g)
+
+def test_eski_magaza_hicbir_yoldan_acilmaz(game):
+    """Eski #shop ekranı ve eski sekme çubuğu hiçbir openShop çağrısıyla görünmez."""
+    g = game(); g.login()
+    for tab in ['free', 'box', 'offer', 'pack', 'tables', 'xyz', None]:
+        g.js(f"openShop({tab!r})" if tab else "openShop()"); g.wait(150)
+        assert g.js("document.querySelector('.screen.show').id") != 'shop', tab
+    g.js("document.getElementById('shop').classList.add('show')")
+    assert g.js("getComputedStyle(document.getElementById('shopTabs')).display") == 'none'
+    no_errors(g)
