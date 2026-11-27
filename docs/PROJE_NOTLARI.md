@@ -389,6 +389,7 @@ Furkan: "Devam et." Denetçi alt ajan yeniden başlatıldı, önce bağımsız h
 1. **K-00 Profesyonellik denetimi** (oyun 8 Ball Pool ile ekran ekran karşılaştırılır → ekran görüntülü eksikler listesi → K görevleri).
 2. Teknik sıra: **1-10** (bütçe kontrolleri) → **1-04** (metinleri tek yerde topla; bütün oyun 6 dile çevrilebilsin) → **1-05** (CSS'i ayır). Son biten: 1-03 / surum-75.
 3. Görseller (Faz G) Furkan gönderince araya alınır. (G-01, G-02, G-03 surum-78'de bitti.)
+   - **Bekleyen: G-04** — telefon simgesi yanlış: surum-78'de amblem lacivert dairenin içinde küçük kaldı. Furkan simgenin amblemin kendisi olmasını istiyor (tam dolduracak). Başlamadan sorulacak: dairede çerçeve köşeleri kesilsin mi?
 - Ayrıntı: `GOREV_HARITASI.md` → "Sıradaki görev — NEREDE KALDIK".
 
 ### Furkan'dan beklenen cevaplar

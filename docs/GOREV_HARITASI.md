@@ -478,8 +478,16 @@ Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama bek
   - Bütün ödül yolları tek tek denetlenir (Hediyeler'in 5 kartı, gelen kutusu, sandık yuvaları, lig ödülü, görev ödülleri, günlük ödül) → eski ekrana çıkan başka yol varsa aynı işte düzeltilir.
 - Bitti: `test_dokunus` ile Efsane Sandıklar → Topla → ödül; hiçbir dokunuş yolunun eski `#shop`'u göstermediğini sınayan test; görünüş testi `[görünüş]`.
 
+**G-04 · Uygulama simgesi yanlış: amblem küçük, lacivert dairenin içinde kalmış** · K · ⏸ (Furkan "not al, bekle" dedi, 27.11.2026 21:26)
+- Furkan'ın telefonu (surum-78): `docs/bekleyen_gorseller/telefonda_simge_surum78.jpg`. Telefon simgeyi daire olarak kesiyor; G-02'de güvenli bölge için amblemi 54 dp'ye küçültüp lacivert zemine koymuştum → amblem küçük ve çerçevesiyle "simge içinde simge" görünüyor.
+- İstenen: simge **amblemin kendisi** olsun (`docs/bekleyen_gorseller/uygulama_amblemi_2.jpg` — G-02'deki görselle piksel piksel aynı).
+- Yapılacak: amblem simgenin tamamını doldurur (lacivert zemin kalkar). Uyarlanabilir simgede amblem 108 dp tuvale görünür alanı (72 dp) tam kaplayacak şekilde büyütülür; arka plan katmanı da amblemin kendisi olur. Eski Android simgeleri (ic_launcher, ic_launcher_round) de tam amblem.
+- Dikkat: Furkan'ın telefonu daire maskesi kullanıyor → tam doldurunca gümüş çerçevenin köşeleri dairede kesilir, "BLACKBALL ARENA" yazısının uçları kenara yaklaşır. Başlamadan Furkan'a sorulacak: dairede köşeler kesilsin mi (amblem büyük), yoksa gümüş çerçeve hiç kesilmesin mi (daha küçük)? Telefonundaki daireyle önizleme gösterilir.
+- Bitti: telefonda simge (uygulama listesi, ana ekran, Uygulama bilgisi) Furkan'ın onayı.
+
 ## Sıradaki görev — NEREDE KALDIK (27.11.2026)
 - **Durum:** Furkan "devam et" dedi (27.11.2026 20:28). G-03 → G-01 → G-02 yapıldı, surum-78 yayınlandı.
+- **Yeni not (27.11.2026 21:26):** Uygulama simgesi yanlış (amblem küçük, lacivert dairede) → **G-04**. Furkan "bekle" dedi.
 - **Sıradaki iş: K-00 Profesyonellik denetimi** (yukarıda, AŞAMA K). Sonuçlarına göre K görevleri haritaya yerleştirilir.
 - **Ondan sonra kaldığımız teknik sıra:** 1-10 (bütçe kontrolleri) → 1-04 (metinleri tek yerde topla) → 1-05 (CSS'i ayır). Son biten: 1-03 / surum-75.
 - **Furkan'ın vereceği kararlar** (denetçinin surum-75 notları):
@@ -492,6 +500,7 @@ Claude kod yazarken Furkan bunları hazırlayabilir. Böylece hiçbir aşama bek
 - **Sunucu kararı (Furkan, 26.11.2026):** Oyun sunucusu **Hetzner**'de olacak. Firebase'in de kullanılıp kullanılmayacağı sonra konuşulacak. Aşama 3–5 bu karara göre yeniden düzenlenecek.
 
 ## Değişiklik günlüğü
+- 27.11.2026 21:26 — G-04 eklendi (simge amblemin kendisi olmalı; surum-78'deki küçük/lacivert daire yanlış). Beklemede.
 - 27.11.2026 — surum-78: G-01 ✅ (pot çipi yeni görsel), G-02 ✅ (amblem + giriş efekti + Android simgeleri), G-03 ✅ (Efsane Sandıklar yeni ekran; eski mor mağazaya bütün yollar kapandı; sandık yuvaları yeni ekranda — yeni menüde hiç yoktu, denetçi buldu).
 - 26.11.2026 21:13 — G-03 eklendi (ödül alırken eski mor mağaza; eski sekme çubuğu CSS hatası bulundu). Beklemede.
 - 26.11.2026 21:12 — G-02 eklendi (uygulama amblemi + giriş efekti). Beklemede.
